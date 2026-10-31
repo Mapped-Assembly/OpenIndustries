@@ -24,7 +24,7 @@ jobs:
         with:
           fetch-depth: 0
       - name: Verify conservative browser change filter
-        run: python3 -m unittest scripts/test_ci_browser_changes.py -v
+        run: python3 -m unittest scripts/test_ci_browser_changes.py scripts/test_ci_run_metrics.py -v
       - name: Classify changes
         id: detect
         env:
