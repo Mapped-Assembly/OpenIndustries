@@ -3,15 +3,39 @@ on:
   pull_request:
   push:
     branches: [main]
+
 permissions:
   contents: read
+
+# Keep push-to-main validation, but cancel obsolete iterations of the same PR.
+concurrency:
+  group: game-runtime-${{ github.event.pull_request.number || github.ref }}
+  cancel-in-progress: ${{ github.event_name == 'pull_request' }}
+
 jobs:
-  mcp:
-    strategy:
-      matrix:
-        os: [ubuntu-latest, windows-latest]
-    runs-on: ${{ matrix.os }}
-    timeout-minutes: 35
+  changes:
+    name: Browser change detection
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    outputs:
+      browser: ${{ steps.detect.outputs.browser }}
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+      - name: Verify conservative browser change filter
+        run: python3 -m unittest scripts/test_ci_browser_changes.py scripts/test_ci_run_metrics.py -v
+      - name: Classify changes
+        id: detect
+        env:
+          OI_PR_BASE_SHA: ${{ github.event.pull_request.base.sha }}
+          OI_PUSH_BEFORE_SHA: ${{ github.event.before }}
+        run: python3 scripts/ci_browser_changes.py
+
+  ubuntu-suite:
+    name: Ubuntu suite
+    runs-on: ubuntu-latest
+    timeout-minutes: 65
     steps:
       - uses: actions/checkout@v4
       - uses: actions/setup-node@v4
@@ -19,18 +43,31 @@ jobs:
           node-version: 22
           cache: npm
       - run: npm ci
-      - run: npm run build:materials
-      - run: git diff --exit-code -- packages/material-science/dist
-      - run: npm run test:materials
-      - run: npm run test:simulation
-      - run: npm run test:mcp-game
-      - run: npm run test:mcp
-  manufacturing:
-    strategy:
-      matrix:
-        os: [ubuntu-latest, windows-latest]
-    runs-on: ${{ matrix.os }}
-    timeout-minutes: 35
+      - name: Build material-science package
+        run: npm run build:materials
+      - name: Verify committed material-science output
+        run: git diff --exit-code -- packages/material-science/dist
+      - name: Materials tests
+        run: npm run test:materials
+      - name: Simulation tests
+        run: npm run test:simulation
+      - name: Game and robot MCP tests
+        run: npm run test:mcp-game
+      - name: MCP tests
+        run: npm run test:mcp
+      - name: Manufacturing tests
+        run: npm run test:manufacturing
+      - name: Units tests
+        run: npm run test:units
+      - name: Combat tests
+        run: npm run test:combat
+      - name: Victory tests
+        run: npm run test:victory
+
+  windows-compat:
+    name: Windows compatibility
+    runs-on: windows-latest
+    timeout-minutes: 80
     steps:
       - uses: actions/checkout@v4
       - uses: actions/setup-node@v4
@@ -38,50 +75,30 @@ jobs:
           node-version: 22
           cache: npm
       - run: npm ci
-      - run: npm run test:manufacturing
-  units:
-    strategy:
-      matrix:
-        os: [ubuntu-latest, windows-latest]
-    runs-on: ${{ matrix.os }}
-    timeout-minutes: 35
-    steps:
-      - uses: actions/checkout@v4
-      - uses: actions/setup-node@v4
-        with:
-          node-version: 22
-          cache: npm
-      - run: npm ci
-      - run: npm run test:units
-  combat:
-    strategy:
-      matrix:
-        os: [ubuntu-latest, windows-latest]
-    runs-on: ${{ matrix.os }}
-    timeout-minutes: 35
-    steps:
-      - uses: actions/checkout@v4
-      - uses: actions/setup-node@v4
-        with:
-          node-version: 22
-          cache: npm
-      - run: npm ci
-      - run: npm run test:combat
-  victory:
-    strategy:
-      matrix:
-        os: [ubuntu-latest, windows-latest]
-    runs-on: ${{ matrix.os }}
-    timeout-minutes: 35
-    steps:
-      - uses: actions/checkout@v4
-      - uses: actions/setup-node@v4
-        with:
-          node-version: 22
-          cache: npm
-      - run: npm ci
-      - run: npm run test:victory
+      - name: Build material-science package
+        run: npm run build:materials
+      - name: Verify committed material-science output
+        run: git diff --exit-code -- packages/material-science/dist
+      - name: Materials tests
+        run: npm run test:materials
+      - name: Simulation tests
+        run: npm run test:simulation
+      - name: Game and robot MCP tests
+        run: npm run test:mcp-game
+      - name: MCP tests
+        run: npm run test:mcp
+      - name: Manufacturing tests
+        run: npm run test:manufacturing
+      - name: Units tests
+        run: npm run test:units
+      - name: Combat tests
+        run: npm run test:combat
+      - name: Victory tests
+        run: npm run test:victory
+
   downstream-browser:
+    needs: changes
+    if: ${{ needs.changes.outputs.browser == 'true' }}
     runs-on: ubuntu-latest
     timeout-minutes: 35
     env:
