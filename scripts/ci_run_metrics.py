@@ -15,23 +15,51 @@ def to_timestamp(value: str) -> float:
     return datetime.fromisoformat(value.replace("Z", "+00:00")).timestamp()
 
 
-def summarize_jobs(data: Mapping[str, Any]) -> dict[str, float | int]:
-    """Measure started jobs and elapsed runner minutes, excluding queue delay."""
+def summarize_jobs(data: Mapping[str, Any]) -> dict[str, float | int | bool]:
+    """Measure a complete jobs response without treating partial runs as wins.
+
+    These are elapsed allocation minutes, not billable minutes or currency.
+    Conclusions are reported separately: timing a failed run does not validate it.
+    """
+    if not isinstance(data, Mapping):
+        raise ValueError("Expected a GitHub Actions jobs response object")
     jobs = data.get("jobs", [])
     if not isinstance(jobs, list):
         raise ValueError("Expected GitHub Actions jobs array")
+    if not jobs:
+        raise ValueError("No jobs returned; completed run metrics are unavailable")
+    if data.get("total_count", len(jobs)) != len(jobs):
+        raise ValueError("Incomplete jobs response; fetch every page before measuring")
     spans: list[tuple[float, float]] = []
+    successful = unsuccessful = skipped = 0
     for job in jobs:
+        if not isinstance(job, Mapping):
+            raise ValueError("Expected a GitHub Actions job object")
+        if job.get("status") != "completed" or not job.get("conclusion"):
+            raise ValueError(f"Job is not complete: {job.get('name')}")
+        if job["conclusion"] == "skipped":
+            # GitHub can supply timestamps for skipped jobs without allocating a
+            # runner. Counting those would inflate cost and wall-clock duration.
+            skipped += 1
+            continue
         start, end = job.get("started_at"), job.get("completed_at")
         if not start or not end:
-            continue
+            raise ValueError(f"Missing execution timestamps for {job.get('name')}")
         a, b = to_timestamp(start), to_timestamp(end)
         if b < a:
             raise ValueError(f"Negative duration for {job.get('name')}")
         spans.append((a, b))
+        if job["conclusion"] == "success":
+            successful += 1
+        else:
+            unsuccessful += 1
     return {
         "visible_jobs": len(jobs),
         "executed_jobs": len(spans),
+        "successful_jobs": successful,
+        "unsuccessful_jobs": unsuccessful,
+        "skipped_jobs": skipped,
+        "all_jobs_successful": unsuccessful == 0 and successful > 0,
         "aggregate_runner_minutes": round(sum(b - a for a, b in spans) / 60, 2),
         "wall_clock_minutes": round((max(b for _, b in spans) - min(a for a, _ in spans)) / 60, 2) if spans else 0.0,
     }
@@ -39,8 +67,12 @@ def summarize_jobs(data: Mapping[str, Any]) -> dict[str, float | int]:
 
 def main() -> None:
     """Read one Actions jobs API response from standard input and print metrics."""
-    data = json.load(sys.stdin)
-    print(json.dumps(summarize_jobs(data), indent=2))
+    try:
+        data = json.load(sys.stdin)
+        summary = summarize_jobs(data)
+    except (ValueError, TypeError) as error:
+        raise SystemExit(f"Cannot report completed CI metrics: {error}") from error
+    print(json.dumps(summary, indent=2))
 
 
 if __name__ == "__main__":

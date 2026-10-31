@@ -62,7 +62,8 @@ unchanged; the identical request then commits once and replays exactly. Registry
 entity/evidence changes together and sanitize private callback errors.
 
 The `Game runtime` CI workflow runs native/material/shared suites in one Ubuntu job and
-one Windows compatibility job, preserving the previously separate tests on both OSes. Its
+one focused Windows compatibility job. Every original Ubuntu suite remains on each PR; the
+long units/combat/victory manufacturing chains additionally run on Windows weekly or manually. Its
 conditional `downstream-browser` job runs the immutable tower-defense client against the PR authority
 on any non-documentation change, including shared runtime/dependency/workflow changes,
 with actual HTTP/MCP and desktop/mobile two-account recovery; screenshots are uploaded as

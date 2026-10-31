@@ -35,7 +35,7 @@ jobs:
   ubuntu-suite:
     name: Ubuntu suite
     runs-on: ubuntu-latest
-    timeout-minutes: 65
+    timeout-minutes: 35
     steps:
       - uses: actions/checkout@v4
       - uses: actions/setup-node@v4
@@ -47,27 +47,15 @@ jobs:
         run: npm run build:materials
       - name: Verify committed material-science output
         run: git diff --exit-code -- packages/material-science/dist
-      - name: Materials tests
-        run: npm run test:materials
-      - name: Simulation tests
-        run: npm run test:simulation
-      - name: Game and robot MCP tests
-        run: npm run test:mcp-game
-      - name: MCP tests
-        run: npm run test:mcp
-      - name: Manufacturing tests
-        run: npm run test:manufacturing
-      - name: Units tests
-        run: npm run test:units
-      - name: Combat tests
-        run: npm run test:combat
-      - name: Victory tests
-        run: npm run test:victory
+      - name: Verify suite inventory, concurrency and failure reporting
+        run: python3 -m unittest scripts/test_ci_game_suites.py -v
+      - name: All Ubuntu suites (two processes, named output and timings)
+        run: npm run ci:game:ubuntu
 
   windows-compat:
     name: Windows compatibility
     runs-on: windows-latest
-    timeout-minutes: 80
+    timeout-minutes: 35
     steps:
       - uses: actions/checkout@v4
       - uses: actions/setup-node@v4
@@ -79,26 +67,16 @@ jobs:
         run: npm run build:materials
       - name: Verify committed material-science output
         run: git diff --exit-code -- packages/material-science/dist
-      - name: Materials tests
-        run: npm run test:materials
-      - name: Simulation tests
-        run: npm run test:simulation
-      - name: Game and robot MCP tests
-        run: npm run test:mcp-game
-      - name: MCP tests
-        run: npm run test:mcp
-      - name: Manufacturing tests
-        run: npm run test:manufacturing
-      - name: Units tests
-        run: npm run test:units
-      - name: Combat tests
-        run: npm run test:combat
-      - name: Victory tests
-        run: npm run test:victory
+      - name: Verify suite inventory, concurrency and failure reporting
+        run: python -m unittest scripts/test_ci_game_suites.py -v
+      - name: Windows native and process compatibility (two processes)
+        run: npm run ci:game:windows
 
   downstream-browser:
     needs: changes
-    if: ${{ needs.changes.outputs.browser == 'true' }}
+    # Only an explicit successful docs-only classification may skip this job.
+    # A failed detector must not suppress integration coverage; cancellation still stops it.
+    if: ${{ !cancelled() && (needs.changes.result != 'success' || needs.changes.outputs.browser != 'false') }}
     runs-on: ubuntu-latest
     timeout-minutes: 35
     env:
