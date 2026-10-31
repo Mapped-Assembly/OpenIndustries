@@ -732,9 +732,482 @@
       ]
     },
     {
+      "run_id": 41247889417,
+      "url": "https://github.com/Mapped-Assembly/OpenIndustries/actions/runs/41247889417",
+      "architecture": "PR70 serialized repeat",
+      "metrics": {
+        "visible_jobs": 4,
+        "executed_jobs": 4,
+        "successful_jobs": 4,
+        "unsuccessful_jobs": 0,
+        "skipped_jobs": 0,
+        "all_jobs_successful": true,
+        "aggregate_runner_minutes": 99.78,
+        "wall_clock_minutes": 43.82
+      },
+      "runner_minutes_by_os": {
+        "windows": 43.65,
+        "ubuntu": 56.1333
+      },
+      "jobs": [
+        {
+          "id": 124675020441,
+          "name": "Windows compatibility",
+          "status": "completed",
+          "conclusion": "success",
+          "head_sha": "25c1f95c7769a7c9ef953b9e7343b8bb636ab9ae",
+          "labels": [
+            "windows-latest"
+          ],
+          "started_at": "2026-10-31T22:22:35Z",
+          "completed_at": "2026-10-31T23:06:14Z",
+          "elapsed_seconds": 2619.0,
+          "steps": [
+            {
+              "name": "Set up job",
+              "status": "completed",
+              "conclusion": "success",
+              "started_at": "2026-10-31T22:22:36Z",
+              "completed_at": "2026-10-31T22:22:37Z"
+            },
+            {
+              "name": "Run actions/checkout@v4",
+              "status": "completed",
+              "conclusion": "success",
+              "started_at": "2026-10-31T22:22:37Z",
+              "completed_at": "2026-10-31T22:22:44Z"
+            },
+            {
+              "name": "Run actions/setup-node@v4",
+              "status": "completed",
+              "conclusion": "success",
+              "started_at": "2026-10-31T22:22:44Z",
+              "completed_at": "2026-10-31T22:22:51Z"
+            },
+            {
+              "name": "Run npm ci",
+              "status": "completed",
+              "conclusion": "success",
+              "started_at": "2026-10-31T22:22:51Z",
+              "completed_at": "2026-10-31T22:23:08Z"
+            },
+            {
+              "name": "Build material-science package",
+              "status": "completed",
+              "conclusion": "success",
+              "started_at": "2026-10-31T22:23:08Z",
+              "completed_at": "2026-10-31T22:23:12Z"
+            },
+            {
+              "name": "Verify committed material-science output",
+              "status": "completed",
+              "conclusion": "success",
+              "started_at": "2026-10-31T22:23:12Z",
+              "completed_at": "2026-10-31T22:23:12Z"
+            },
+            {
+              "name": "Materials tests",
+              "status": "completed",
+              "conclusion": "success",
+              "started_at": "2026-10-31T22:23:12Z",
+              "completed_at": "2026-10-31T22:24:14Z"
+            },
+            {
+              "name": "Simulation tests",
+              "status": "completed",
+              "conclusion": "success",
+              "started_at": "2026-10-31T22:24:14Z",
+              "completed_at": "2026-10-31T22:25:46Z"
+            },
+            {
+              "name": "Game and robot MCP tests",
+              "status": "completed",
+              "conclusion": "success",
+              "started_at": "2026-10-31T22:25:46Z",
+              "completed_at": "2026-10-31T22:32:38Z"
+            },
+            {
+              "name": "MCP tests",
+              "status": "completed",
+              "conclusion": "success",
+              "started_at": "2026-10-31T22:32:38Z",
+              "completed_at": "2026-10-31T22:32:40Z"
+            },
+            {
+              "name": "Manufacturing tests",
+              "status": "completed",
+              "conclusion": "success",
+              "started_at": "2026-10-31T22:32:40Z",
+              "completed_at": "2026-10-31T22:41:37Z"
+            },
+            {
+              "name": "Units tests",
+              "status": "completed",
+              "conclusion": "success",
+              "started_at": "2026-10-31T22:41:37Z",
+              "completed_at": "2026-10-31T22:48:49Z"
+            },
+            {
+              "name": "Combat tests",
+              "status": "completed",
+              "conclusion": "success",
+              "started_at": "2026-10-31T22:48:49Z",
+              "completed_at": "2026-10-31T22:57:16Z"
+            },
+            {
+              "name": "Victory tests",
+              "status": "completed",
+              "conclusion": "success",
+              "started_at": "2026-10-31T22:57:16Z",
+              "completed_at": "2026-10-31T23:06:10Z"
+            },
+            {
+              "name": "Post Run actions/setup-node@v4",
+              "status": "completed",
+              "conclusion": "success",
+              "started_at": "2026-10-31T23:06:10Z",
+              "completed_at": "2026-10-31T23:06:10Z"
+            },
+            {
+              "name": "Post Run actions/checkout@v4",
+              "status": "completed",
+              "conclusion": "success",
+              "started_at": "2026-10-31T23:06:10Z",
+              "completed_at": "2026-10-31T23:06:12Z"
+            },
+            {
+              "name": "Complete job",
+              "status": "completed",
+              "conclusion": "success",
+              "started_at": "2026-10-31T23:06:12Z",
+              "completed_at": "2026-10-31T23:06:12Z"
+            }
+          ]
+        },
+        {
+          "id": 124675020573,
+          "name": "Browser change detection",
+          "status": "completed",
+          "conclusion": "success",
+          "head_sha": "25c1f95c7769a7c9ef953b9e7343b8bb636ab9ae",
+          "labels": [
+            "ubuntu-latest"
+          ],
+          "started_at": "2026-10-31T22:22:25Z",
+          "completed_at": "2026-10-31T22:22:30Z",
+          "elapsed_seconds": 5.0,
+          "steps": [
+            {
+              "name": "Set up job",
+              "status": "completed",
+              "conclusion": "success",
+              "started_at": "2026-10-31T22:22:26Z",
+              "completed_at": "2026-10-31T22:22:26Z"
+            },
+            {
+              "name": "Run actions/checkout@v4",
+              "status": "completed",
+              "conclusion": "success",
+              "started_at": "2026-10-31T22:22:26Z",
+              "completed_at": "2026-10-31T22:22:28Z"
+            },
+            {
+              "name": "Verify conservative browser change filter",
+              "status": "completed",
+              "conclusion": "success",
+              "started_at": "2026-10-31T22:22:28Z",
+              "completed_at": "2026-10-31T22:22:28Z"
+            },
+            {
+              "name": "Classify changes",
+              "status": "completed",
+              "conclusion": "success",
+              "started_at": "2026-10-31T22:22:28Z",
+              "completed_at": "2026-10-31T22:22:28Z"
+            },
+            {
+              "name": "Post Run actions/checkout@v4",
+              "status": "completed",
+              "conclusion": "success",
+              "started_at": "2026-10-31T22:22:28Z",
+              "completed_at": "2026-10-31T22:22:28Z"
+            },
+            {
+              "name": "Complete job",
+              "status": "completed",
+              "conclusion": "success",
+              "started_at": "2026-10-31T22:22:28Z",
+              "completed_at": "2026-10-31T22:22:28Z"
+            }
+          ]
+        },
+        {
+          "id": 124675020592,
+          "name": "Ubuntu suite",
+          "status": "completed",
+          "conclusion": "success",
+          "head_sha": "25c1f95c7769a7c9ef953b9e7343b8bb636ab9ae",
+          "labels": [
+            "ubuntu-latest"
+          ],
+          "started_at": "2026-10-31T22:22:26Z",
+          "completed_at": "2026-10-31T22:56:49Z",
+          "elapsed_seconds": 2063.0,
+          "steps": [
+            {
+              "name": "Set up job",
+              "status": "completed",
+              "conclusion": "success",
+              "started_at": "2026-10-31T22:22:27Z",
+              "completed_at": "2026-10-31T22:22:28Z"
+            },
+            {
+              "name": "Run actions/checkout@v4",
+              "status": "completed",
+              "conclusion": "success",
+              "started_at": "2026-10-31T22:22:28Z",
+              "completed_at": "2026-10-31T22:22:29Z"
+            },
+            {
+              "name": "Run actions/setup-node@v4",
+              "status": "completed",
+              "conclusion": "success",
+              "started_at": "2026-10-31T22:22:29Z",
+              "completed_at": "2026-10-31T22:22:36Z"
+            },
+            {
+              "name": "Run npm ci",
+              "status": "completed",
+              "conclusion": "success",
+              "started_at": "2026-10-31T22:22:36Z",
+              "completed_at": "2026-10-31T22:22:45Z"
+            },
+            {
+              "name": "Build material-science package",
+              "status": "completed",
+              "conclusion": "success",
+              "started_at": "2026-10-31T22:22:45Z",
+              "completed_at": "2026-10-31T22:22:48Z"
+            },
+            {
+              "name": "Verify committed material-science output",
+              "status": "completed",
+              "conclusion": "success",
+              "started_at": "2026-10-31T22:22:48Z",
+              "completed_at": "2026-10-31T22:22:48Z"
+            },
+            {
+              "name": "Materials tests",
+              "status": "completed",
+              "conclusion": "success",
+              "started_at": "2026-10-31T22:22:48Z",
+              "completed_at": "2026-10-31T22:23:36Z"
+            },
+            {
+              "name": "Simulation tests",
+              "status": "completed",
+              "conclusion": "success",
+              "started_at": "2026-10-31T22:23:36Z",
+              "completed_at": "2026-10-31T22:24:56Z"
+            },
+            {
+              "name": "Game and robot MCP tests",
+              "status": "completed",
+              "conclusion": "success",
+              "started_at": "2026-10-31T22:24:56Z",
+              "completed_at": "2026-10-31T22:30:08Z"
+            },
+            {
+              "name": "MCP tests",
+              "status": "completed",
+              "conclusion": "success",
+              "started_at": "2026-10-31T22:30:08Z",
+              "completed_at": "2026-10-31T22:30:10Z"
+            },
+            {
+              "name": "Manufacturing tests",
+              "status": "completed",
+              "conclusion": "success",
+              "started_at": "2026-10-31T22:30:10Z",
+              "completed_at": "2026-10-31T22:37:10Z"
+            },
+            {
+              "name": "Units tests",
+              "status": "completed",
+              "conclusion": "success",
+              "started_at": "2026-10-31T22:37:10Z",
+              "completed_at": "2026-10-31T22:42:59Z"
+            },
+            {
+              "name": "Combat tests",
+              "status": "completed",
+              "conclusion": "success",
+              "started_at": "2026-10-31T22:42:59Z",
+              "completed_at": "2026-10-31T22:49:40Z"
+            },
+            {
+              "name": "Victory tests",
+              "status": "completed",
+              "conclusion": "success",
+              "started_at": "2026-10-31T22:49:40Z",
+              "completed_at": "2026-10-31T22:56:46Z"
+            },
+            {
+              "name": "Post Run actions/setup-node@v4",
+              "status": "completed",
+              "conclusion": "success",
+              "started_at": "2026-10-31T22:56:46Z",
+              "completed_at": "2026-10-31T22:56:46Z"
+            },
+            {
+              "name": "Post Run actions/checkout@v4",
+              "status": "completed",
+              "conclusion": "success",
+              "started_at": "2026-10-31T22:56:46Z",
+              "completed_at": "2026-10-31T22:56:47Z"
+            },
+            {
+              "name": "Complete job",
+              "status": "completed",
+              "conclusion": "success",
+              "started_at": "2026-10-31T22:56:47Z",
+              "completed_at": "2026-10-31T22:56:47Z"
+            }
+          ]
+        },
+        {
+          "id": 124675048343,
+          "name": "downstream-browser",
+          "status": "completed",
+          "conclusion": "success",
+          "head_sha": "25c1f95c7769a7c9ef953b9e7343b8bb636ab9ae",
+          "labels": [
+            "ubuntu-latest"
+          ],
+          "started_at": "2026-10-31T22:22:32Z",
+          "completed_at": "2026-10-31T22:44:12Z",
+          "elapsed_seconds": 1300.0,
+          "steps": [
+            {
+              "name": "Set up job",
+              "status": "completed",
+              "conclusion": "success",
+              "started_at": "2026-10-31T22:22:33Z",
+              "completed_at": "2026-10-31T22:22:34Z"
+            },
+            {
+              "name": "Run actions/checkout@v4",
+              "status": "completed",
+              "conclusion": "success",
+              "started_at": "2026-10-31T22:22:34Z",
+              "completed_at": "2026-10-31T22:22:36Z"
+            },
+            {
+              "name": "Run actions/checkout@v4",
+              "status": "completed",
+              "conclusion": "success",
+              "started_at": "2026-10-31T22:22:36Z",
+              "completed_at": "2026-10-31T22:22:37Z"
+            },
+            {
+              "name": "Run actions/setup-node@v4",
+              "status": "completed",
+              "conclusion": "success",
+              "started_at": "2026-10-31T22:22:37Z",
+              "completed_at": "2026-10-31T22:22:41Z"
+            },
+            {
+              "name": "Run npm ci",
+              "status": "completed",
+              "conclusion": "success",
+              "started_at": "2026-10-31T22:22:41Z",
+              "completed_at": "2026-10-31T22:22:48Z"
+            },
+            {
+              "name": "Run npm ci",
+              "status": "completed",
+              "conclusion": "success",
+              "started_at": "2026-10-31T22:22:48Z",
+              "completed_at": "2026-10-31T22:22:50Z"
+            },
+            {
+              "name": "Run npm run check:materials",
+              "status": "completed",
+              "conclusion": "success",
+              "started_at": "2026-10-31T22:22:50Z",
+              "completed_at": "2026-10-31T22:22:51Z"
+            },
+            {
+              "name": "Run npm run test:integration",
+              "status": "completed",
+              "conclusion": "success",
+              "started_at": "2026-10-31T22:22:51Z",
+              "completed_at": "2026-10-31T22:23:44Z"
+            },
+            {
+              "name": "Run npx playwright install --with-deps chromium",
+              "status": "completed",
+              "conclusion": "success",
+              "started_at": "2026-10-31T22:23:44Z",
+              "completed_at": "2026-10-31T22:24:03Z"
+            },
+            {
+              "name": "Run npm run test:browser:results",
+              "status": "completed",
+              "conclusion": "success",
+              "started_at": "2026-10-31T22:24:03Z",
+              "completed_at": "2026-10-31T22:25:51Z"
+            },
+            {
+              "name": "Run npm run test:browser:full",
+              "status": "completed",
+              "conclusion": "success",
+              "started_at": "2026-10-31T22:25:51Z",
+              "completed_at": "2026-10-31T22:44:08Z"
+            },
+            {
+              "name": "Run actions/upload-artifact@v4",
+              "status": "completed",
+              "conclusion": "success",
+              "started_at": "2026-10-31T22:44:08Z",
+              "completed_at": "2026-10-31T22:44:10Z"
+            },
+            {
+              "name": "Post Run actions/setup-node@v4",
+              "status": "completed",
+              "conclusion": "success",
+              "started_at": "2026-10-31T22:44:10Z",
+              "completed_at": "2026-10-31T22:44:10Z"
+            },
+            {
+              "name": "Post Run actions/checkout@v4",
+              "status": "completed",
+              "conclusion": "success",
+              "started_at": "2026-10-31T22:44:10Z",
+              "completed_at": "2026-10-31T22:44:10Z"
+            },
+            {
+              "name": "Post Run actions/checkout@v4",
+              "status": "completed",
+              "conclusion": "success",
+              "started_at": "2026-10-31T22:44:10Z",
+              "completed_at": "2026-10-31T22:44:10Z"
+            },
+            {
+              "name": "Complete job",
+              "status": "completed",
+              "conclusion": "success",
+              "started_at": "2026-10-31T22:44:10Z",
+              "completed_at": "2026-10-31T22:44:11Z"
+            }
+          ]
+        }
+      ]
+    },
+    {
       "run_id": 41248769031,
       "url": "https://github.com/Mapped-Assembly/OpenIndustries/actions/runs/41248769031",
-      "architecture": "bounded concurrency / focused Windows",
+      "architecture": "native-installer prototype: bounded concurrency / focused Windows",
       "metrics": {
         "visible_jobs": 4,
         "executed_jobs": 4,
@@ -803,6 +1276,395 @@
           "elapsed_seconds": 1291.0
         }
       ]
+    },
+    {
+      "run_id": 41250492156,
+      "url": "https://github.com/Mapped-Assembly/OpenIndustries/actions/runs/41250492156",
+      "architecture": "identical native-installer prototype repeat",
+      "metrics": {
+        "visible_jobs": 4,
+        "executed_jobs": 4,
+        "successful_jobs": 4,
+        "unsuccessful_jobs": 0,
+        "skipped_jobs": 0,
+        "all_jobs_successful": true,
+        "aggregate_runner_minutes": 52.32,
+        "wall_clock_minutes": 29.3
+      },
+      "runner_minutes_by_os": {
+        "ubuntu": 40.6333,
+        "windows": 11.6833
+      },
+      "jobs": [
+        {
+          "id": 124682814095,
+          "name": "Ubuntu suite",
+          "status": "completed",
+          "conclusion": "success",
+          "head_sha": "fb2a10b693d201fa32bc2a2d74e61b5ace7f7f30",
+          "labels": [
+            "ubuntu-latest"
+          ],
+          "started_at": "2026-10-31T22:58:14Z",
+          "completed_at": "2026-10-31T23:09:37Z",
+          "elapsed_seconds": 683.0,
+          "steps": [
+            {
+              "name": "Set up job",
+              "status": "completed",
+              "conclusion": "success",
+              "started_at": "2026-10-31T22:58:15Z",
+              "completed_at": "2026-10-31T22:58:15Z"
+            },
+            {
+              "name": "Run actions/checkout@v4",
+              "status": "completed",
+              "conclusion": "success",
+              "started_at": "2026-10-31T22:58:15Z",
+              "completed_at": "2026-10-31T22:58:16Z"
+            },
+            {
+              "name": "Run actions/setup-node@v4",
+              "status": "completed",
+              "conclusion": "success",
+              "started_at": "2026-10-31T22:58:16Z",
+              "completed_at": "2026-10-31T22:58:19Z"
+            },
+            {
+              "name": "Run npm ci",
+              "status": "completed",
+              "conclusion": "success",
+              "started_at": "2026-10-31T22:58:19Z",
+              "completed_at": "2026-10-31T22:58:23Z"
+            },
+            {
+              "name": "Build material-science package",
+              "status": "completed",
+              "conclusion": "success",
+              "started_at": "2026-10-31T22:58:23Z",
+              "completed_at": "2026-10-31T22:58:24Z"
+            },
+            {
+              "name": "Verify committed material-science output",
+              "status": "completed",
+              "conclusion": "success",
+              "started_at": "2026-10-31T22:58:24Z",
+              "completed_at": "2026-10-31T22:58:24Z"
+            },
+            {
+              "name": "Verify suite inventory, concurrency and failure reporting",
+              "status": "completed",
+              "conclusion": "success",
+              "started_at": "2026-10-31T22:58:24Z",
+              "completed_at": "2026-10-31T22:58:29Z"
+            },
+            {
+              "name": "All Ubuntu suites (two processes, named output and timings)",
+              "status": "completed",
+              "conclusion": "success",
+              "started_at": "2026-10-31T22:58:29Z",
+              "completed_at": "2026-10-31T23:09:35Z"
+            },
+            {
+              "name": "Post Run actions/setup-node@v4",
+              "status": "completed",
+              "conclusion": "success",
+              "started_at": "2026-10-31T23:09:35Z",
+              "completed_at": "2026-10-31T23:09:35Z"
+            },
+            {
+              "name": "Post Run actions/checkout@v4",
+              "status": "completed",
+              "conclusion": "success",
+              "started_at": "2026-10-31T23:09:35Z",
+              "completed_at": "2026-10-31T23:09:35Z"
+            },
+            {
+              "name": "Complete job",
+              "status": "completed",
+              "conclusion": "success",
+              "started_at": "2026-10-31T23:09:35Z",
+              "completed_at": "2026-10-31T23:09:35Z"
+            }
+          ]
+        },
+        {
+          "id": 124682814248,
+          "name": "Browser change detection",
+          "status": "completed",
+          "conclusion": "success",
+          "head_sha": "fb2a10b693d201fa32bc2a2d74e61b5ace7f7f30",
+          "labels": [
+            "ubuntu-latest"
+          ],
+          "started_at": "2026-10-31T22:58:14Z",
+          "completed_at": "2026-10-31T22:58:19Z",
+          "elapsed_seconds": 5.0,
+          "steps": [
+            {
+              "name": "Set up job",
+              "status": "completed",
+              "conclusion": "success",
+              "started_at": "2026-10-31T22:58:15Z",
+              "completed_at": "2026-10-31T22:58:16Z"
+            },
+            {
+              "name": "Run actions/checkout@v4",
+              "status": "completed",
+              "conclusion": "success",
+              "started_at": "2026-10-31T22:58:16Z",
+              "completed_at": "2026-10-31T22:58:17Z"
+            },
+            {
+              "name": "Verify conservative browser change filter",
+              "status": "completed",
+              "conclusion": "success",
+              "started_at": "2026-10-31T22:58:17Z",
+              "completed_at": "2026-10-31T22:58:17Z"
+            },
+            {
+              "name": "Classify changes",
+              "status": "completed",
+              "conclusion": "success",
+              "started_at": "2026-10-31T22:58:17Z",
+              "completed_at": "2026-10-31T22:58:17Z"
+            },
+            {
+              "name": "Post Run actions/checkout@v4",
+              "status": "completed",
+              "conclusion": "success",
+              "started_at": "2026-10-31T22:58:17Z",
+              "completed_at": "2026-10-31T22:58:18Z"
+            },
+            {
+              "name": "Complete job",
+              "status": "completed",
+              "conclusion": "success",
+              "started_at": "2026-10-31T22:58:18Z",
+              "completed_at": "2026-10-31T22:58:18Z"
+            }
+          ]
+        },
+        {
+          "id": 124682814293,
+          "name": "Windows compatibility",
+          "status": "completed",
+          "conclusion": "success",
+          "head_sha": "fb2a10b693d201fa32bc2a2d74e61b5ace7f7f30",
+          "labels": [
+            "windows-latest"
+          ],
+          "started_at": "2026-10-31T22:58:14Z",
+          "completed_at": "2026-10-31T23:09:55Z",
+          "elapsed_seconds": 701.0,
+          "steps": [
+            {
+              "name": "Set up job",
+              "status": "completed",
+              "conclusion": "success",
+              "started_at": "2026-10-31T22:58:15Z",
+              "completed_at": "2026-10-31T22:58:15Z"
+            },
+            {
+              "name": "Run actions/checkout@v4",
+              "status": "completed",
+              "conclusion": "success",
+              "started_at": "2026-10-31T22:58:15Z",
+              "completed_at": "2026-10-31T22:58:22Z"
+            },
+            {
+              "name": "Run actions/setup-node@v4",
+              "status": "completed",
+              "conclusion": "success",
+              "started_at": "2026-10-31T22:58:22Z",
+              "completed_at": "2026-10-31T22:58:30Z"
+            },
+            {
+              "name": "Run npm ci",
+              "status": "completed",
+              "conclusion": "success",
+              "started_at": "2026-10-31T22:58:30Z",
+              "completed_at": "2026-10-31T22:58:47Z"
+            },
+            {
+              "name": "Build material-science package",
+              "status": "completed",
+              "conclusion": "success",
+              "started_at": "2026-10-31T22:58:47Z",
+              "completed_at": "2026-10-31T22:58:51Z"
+            },
+            {
+              "name": "Verify committed material-science output",
+              "status": "completed",
+              "conclusion": "success",
+              "started_at": "2026-10-31T22:58:51Z",
+              "completed_at": "2026-10-31T22:58:51Z"
+            },
+            {
+              "name": "Verify suite inventory, concurrency and failure reporting",
+              "status": "completed",
+              "conclusion": "success",
+              "started_at": "2026-10-31T22:58:51Z",
+              "completed_at": "2026-10-31T22:58:59Z"
+            },
+            {
+              "name": "Windows native and process compatibility (two processes)",
+              "status": "completed",
+              "conclusion": "success",
+              "started_at": "2026-10-31T22:58:59Z",
+              "completed_at": "2026-10-31T23:09:52Z"
+            },
+            {
+              "name": "Post Run actions/setup-node@v4",
+              "status": "completed",
+              "conclusion": "success",
+              "started_at": "2026-10-31T23:09:52Z",
+              "completed_at": "2026-10-31T23:09:52Z"
+            },
+            {
+              "name": "Post Run actions/checkout@v4",
+              "status": "completed",
+              "conclusion": "success",
+              "started_at": "2026-10-31T23:09:52Z",
+              "completed_at": "2026-10-31T23:09:54Z"
+            },
+            {
+              "name": "Complete job",
+              "status": "completed",
+              "conclusion": "success",
+              "started_at": "2026-10-31T23:09:54Z",
+              "completed_at": "2026-10-31T23:09:54Z"
+            }
+          ]
+        },
+        {
+          "id": 124682842527,
+          "name": "downstream-browser",
+          "status": "completed",
+          "conclusion": "success",
+          "head_sha": "fb2a10b693d201fa32bc2a2d74e61b5ace7f7f30",
+          "labels": [
+            "ubuntu-latest"
+          ],
+          "started_at": "2026-10-31T22:58:22Z",
+          "completed_at": "2026-10-31T23:27:32Z",
+          "elapsed_seconds": 1750.0,
+          "steps": [
+            {
+              "name": "Set up job",
+              "status": "completed",
+              "conclusion": "success",
+              "started_at": "2026-10-31T22:58:23Z",
+              "completed_at": "2026-10-31T22:58:23Z"
+            },
+            {
+              "name": "Run actions/checkout@v4",
+              "status": "completed",
+              "conclusion": "success",
+              "started_at": "2026-10-31T22:58:23Z",
+              "completed_at": "2026-10-31T22:58:24Z"
+            },
+            {
+              "name": "Run actions/checkout@v4",
+              "status": "completed",
+              "conclusion": "success",
+              "started_at": "2026-10-31T22:58:24Z",
+              "completed_at": "2026-10-31T22:58:25Z"
+            },
+            {
+              "name": "Run actions/setup-node@v4",
+              "status": "completed",
+              "conclusion": "success",
+              "started_at": "2026-10-31T22:58:25Z",
+              "completed_at": "2026-10-31T22:58:27Z"
+            },
+            {
+              "name": "Run npm ci",
+              "status": "completed",
+              "conclusion": "success",
+              "started_at": "2026-10-31T22:58:27Z",
+              "completed_at": "2026-10-31T22:58:35Z"
+            },
+            {
+              "name": "Run npm ci",
+              "status": "completed",
+              "conclusion": "success",
+              "started_at": "2026-10-31T22:58:35Z",
+              "completed_at": "2026-10-31T22:58:37Z"
+            },
+            {
+              "name": "Run npm run check:materials",
+              "status": "completed",
+              "conclusion": "success",
+              "started_at": "2026-10-31T22:58:37Z",
+              "completed_at": "2026-10-31T22:58:38Z"
+            },
+            {
+              "name": "Run npm run test:integration",
+              "status": "completed",
+              "conclusion": "success",
+              "started_at": "2026-10-31T22:58:38Z",
+              "completed_at": "2026-10-31T22:59:29Z"
+            },
+            {
+              "name": "Run npx playwright install --with-deps chromium",
+              "status": "completed",
+              "conclusion": "success",
+              "started_at": "2026-10-31T22:59:29Z",
+              "completed_at": "2026-10-31T23:07:28Z"
+            },
+            {
+              "name": "Run npm run test:browser:results",
+              "status": "completed",
+              "conclusion": "success",
+              "started_at": "2026-10-31T23:07:28Z",
+              "completed_at": "2026-10-31T23:09:15Z"
+            },
+            {
+              "name": "Run npm run test:browser:full",
+              "status": "completed",
+              "conclusion": "success",
+              "started_at": "2026-10-31T23:09:15Z",
+              "completed_at": "2026-10-31T23:27:28Z"
+            },
+            {
+              "name": "Run actions/upload-artifact@v4",
+              "status": "completed",
+              "conclusion": "success",
+              "started_at": "2026-10-31T23:27:28Z",
+              "completed_at": "2026-10-31T23:27:30Z"
+            },
+            {
+              "name": "Post Run actions/setup-node@v4",
+              "status": "completed",
+              "conclusion": "success",
+              "started_at": "2026-10-31T23:27:30Z",
+              "completed_at": "2026-10-31T23:27:30Z"
+            },
+            {
+              "name": "Post Run actions/checkout@v4",
+              "status": "completed",
+              "conclusion": "success",
+              "started_at": "2026-10-31T23:27:30Z",
+              "completed_at": "2026-10-31T23:27:30Z"
+            },
+            {
+              "name": "Post Run actions/checkout@v4",
+              "status": "completed",
+              "conclusion": "success",
+              "started_at": "2026-10-31T23:27:30Z",
+              "completed_at": "2026-10-31T23:27:30Z"
+            },
+            {
+              "name": "Complete job",
+              "status": "completed",
+              "conclusion": "success",
+              "started_at": "2026-10-31T23:27:30Z",
+              "completed_at": "2026-10-31T23:27:30Z"
+            }
+          ]
+        }
+      ]
     }
   ],
   "local_harness_profile": {
@@ -821,5 +1683,69 @@
     "node": "24.22.1",
     "qualification": "One profiled diagnostic pair on a shared local host; not comparable to Actions Node22 allocation timings.",
     "pass_output_identical": true
+  },
+  "native_installer_repeat_analysis": {
+    "implementation_identical": true,
+    "commits": [
+      "d5f64e12812f2e6a4ca1e838f6b92d79784ed452",
+      "fb2a10b693d201fa32bc2a2d74e61b5ace7f7f30"
+    ],
+    "second_commit_changes": "documentation and evidence only",
+    "run_ids": [
+      41248769031,
+      41250492156
+    ],
+    "all_eight_repository_workflows_passed_each_run": true,
+    "mean_runner_minutes": 49.875,
+    "mean_wall_minutes": 25.4833333333,
+    "repeat_wall_target_met": false,
+    "installer_seconds": [
+      18,
+      479
+    ],
+    "repeat_apt_font_transfer_seconds_reported": 461,
+    "repeat_apt_font_transfer_megabytes_reported": 17.9,
+    "repeat_apt_mirrors": [
+      "azure.archive.ubuntu.com",
+      "archive.ubuntu.com"
+    ],
+    "repeat_apt_behavior": "Slow package transfer and Ign/retry entries; eventual success. Native shared libraries already installed.",
+    "repeat_browser_download_seconds": {
+      "full_chromium": 3.73,
+      "ffmpeg": 0.54,
+      "headless_shell": 2.81
+    },
+    "browser_step_seconds": {
+      "integration": [
+        50,
+        51
+      ],
+      "results": [
+        105,
+        107
+      ],
+      "full": [
+        1098,
+        1093
+      ]
+    },
+    "qualification": "Keep full measured allocations including the slow APT sample. Only-shell removes about four seconds and does not address the measured APT stall."
+  },
+  "final_architecture_validation": {
+    "status": "pending actual GitHub Actions run",
+    "browser_image": "mcr.microsoft.com/playwright:v1.63.0-noble@sha256:eff16c30e6f3f4af0a03fa4b706120d5e9b0891c344a27d64559aff5900a4a27",
+    "playwright_version_guard": "1.63.0",
+    "browser_execution": "At most two independent full/results/integration processes; full retains its gesture precheck and internal client sequence.",
+    "apt_install_during_job": false,
+    "image_pull_cost": "unknown until measured",
+    "local_validation": {
+      "node_major": 22,
+      "ubuntu_suites_passed": 8,
+      "application_build": "passed",
+      "material_build_and_dist_verification": "passed",
+      "ci_regression_methods_passed": 32,
+      "actionlint": "passed"
+    },
+    "qualification": "Native-installer prototype timings do not establish container compatibility or final performance."
   }
 }

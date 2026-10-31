@@ -20,6 +20,11 @@ UBUNTU_SUITES = {
     "materials", "simulation", "mcp-game", "mcp", "manufacturing", "units", "combat", "victory",
 }
 WINDOWS_SUITES = {"materials", "simulation", "mcp-game", "mcp", "manufacturing"}
+BROWSER_COMMANDS = [
+    "npm --prefix .integration/tower-defense run test:browser:full",
+    "npm --prefix .integration/tower-defense run test:browser:results",
+    "npm --prefix .integration/tower-defense run test:integration",
+]
 
 
 def suite_command(profile: str) -> tuple[list[str], list[str]]:
@@ -28,7 +33,7 @@ def suite_command(profile: str) -> tuple[list[str], list[str]]:
     words = shlex.split(scripts[f"ci:game:{profile}"])
     if not words or words[0] != "concurrently":
         raise AssertionError("Game CI must use the existing concurrently executable")
-    first_command = next(index for index, word in enumerate(words) if word.startswith("npm run "))
+    first_command = next(index for index, word in enumerate(words) if word.startswith("npm "))
     return words[1:first_command], words[first_command:]
 
 
@@ -44,12 +49,17 @@ class GameSuiteTests(unittest.TestCase):
                 self.assertEqual(len(commands), len(expected), "Do not run duplicate suites")
         self.assertEqual(UBUNTU_SUITES - WINDOWS_SUITES, {"units", "combat", "victory"})
 
+    def test_browser_inventory_preserves_pinned_entrypoints(self) -> None:
+        """Start the full match first while retaining results, integration and its gesture prefix."""
+        _, commands = suite_command("browser")
+        self.assertEqual(commands, BROWSER_COMMANDS)
+
     def test_bounded_named_runner_options(self) -> None:
         """Bound CPU contention and keep per-suite labels, timing and failure status."""
-        for profile in ("ubuntu", "windows"):
+        for profile in ("ubuntu", "windows", "browser"):
             with self.subTest(profile=profile):
                 options, commands = suite_command(profile)
-                names = [command.removeprefix("npm run test:") for command in commands]
+                names = [command.rsplit(":", 1)[1] for command in commands]
                 self.assertEqual(options, [
                     "--max-processes", "2", "--success", "all", "--timings", "--no-color",
                     "--names", ",".join(names),
@@ -74,6 +84,14 @@ class GameSuiteTests(unittest.TestCase):
         )
         self.assertIn(condition, browser.splitlines())
         self.assertIn("    needs: changes", browser.splitlines())
+        self.assertIn("        run: npm run ci:game:browser", browser.splitlines())
+        self.assertIn("      image: mcr.microsoft.com/playwright:v1.63.0-noble@sha256:eff16c30e6f3f4af0a03fa4b706120d5e9b0891c344a27d64559aff5900a4a27", browser.splitlines())
+        self.assertIn("      options: --ipc=host --init", browser.splitlines())
+        self.assertIn("if (v !== '1.63.0')", browser)
+        self.assertIn('"$GITHUB_WORKSPACE" >> "$GITHUB_ENV"', browser)
+        self.assertNotIn("playwright install", browser)
+        self.assertIn("          ref: 831085fec8a2638ef8a668b5d8de195bb1462bfb", browser.splitlines())
+        self.assertNotIn("PLAYWRIGHT_CHROMIUM_EXECUTABLE_PATH", browser)
         self.assertRegex(runtime, r"(?m)^  pull_request:\s*$")
         self.assertNotRegex(runtime, r"(?m)^    paths(?:-ignore)?:")
         self.assertIn("  cancel-in-progress: ${{ github.event_name == 'pull_request' }}", runtime.splitlines())
@@ -103,7 +121,7 @@ class GameSuiteTests(unittest.TestCase):
         runner = ROOT / "node_modules/concurrently/dist/bin/concurrently.js"
         self.assertTrue(runner.is_file(), "Run npm ci before CI suite regressions")
         options, commands = suite_command(profile)
-        names = [command.removeprefix("npm run test:") for command in commands]
+        names = [command.rsplit(":", 1)[1] for command in commands]
         with tempfile.TemporaryDirectory(prefix="oi-ci-suites-") as directory:
             fixture = Path(directory) / "suite.cjs"
             fixture.write_text(
@@ -129,7 +147,7 @@ class GameSuiteTests(unittest.TestCase):
     def assert_complete_execution(self, profile: str, output: str) -> None:
         """Check every child completed, at most two overlapped, and logs identify suites."""
         _, commands = suite_command(profile)
-        expected = {command.removeprefix("npm run test:") for command in commands}
+        expected = {command.rsplit(":", 1)[1] for command in commands}
         active: set[str] = set()
         started: set[str] = set()
         completed: set[str] = set()
@@ -157,7 +175,7 @@ class GameSuiteTests(unittest.TestCase):
 
     def test_failure_propagates_without_cancelling_remaining_suites(self) -> None:
         """An early failing suite fails CI after every queued suite has reported."""
-        for profile in ("ubuntu", "windows"):
+        for profile in ("ubuntu", "windows", "browser"):
             with self.subTest(profile=profile):
                 result = self.run_fixture(profile, failure=True)
                 output = result.stdout + result.stderr
@@ -166,8 +184,8 @@ class GameSuiteTests(unittest.TestCase):
                 self.assertIn("exited with code 23", output)
 
     def test_all_successful_suites_pass(self) -> None:
-        """Successful children make both actual CI runner commands succeed."""
-        for profile in ("ubuntu", "windows"):
+        """Successful children make every actual CI runner command succeed."""
+        for profile in ("ubuntu", "windows", "browser"):
             with self.subTest(profile=profile):
                 result = self.run_fixture(profile, failure=False)
                 output = result.stdout + result.stderr

@@ -22,6 +22,7 @@
     "astra": "cli/astra.mjs"
   },
   "scripts": {
+    "ci:game:browser": "concurrently --max-processes 2 --success all --timings --no-color --names full,results,integration \"npm --prefix .integration/tower-defense run test:browser:full\" \"npm --prefix .integration/tower-defense run test:browser:results\" \"npm --prefix .integration/tower-defense run test:integration\"",
     "ci:game:ubuntu": "concurrently --max-processes 2 --success all --timings --no-color --names victory,manufacturing,combat,units,mcp-game,simulation,materials,mcp \"npm run test:victory\" \"npm run test:manufacturing\" \"npm run test:combat\" \"npm run test:units\" \"npm run test:mcp-game\" \"npm run test:simulation\" \"npm run test:materials\" \"npm run test:mcp\"",
     "ci:game:windows": "concurrently --max-processes 2 --success all --timings --no-color --names manufacturing,mcp-game,simulation,materials,mcp \"npm run test:manufacturing\" \"npm run test:mcp-game\" \"npm run test:simulation\" \"npm run test:materials\" \"npm run test:mcp\"",
     "test:mcp-game": "node --import tsx scripts/game-robots-test.ts && node --import tsx scripts/game-spatial-sensing-test.ts && node --import tsx scripts/game-world-test.ts && node --import tsx scripts/mcp-game-test.ts && node --import tsx scripts/game-all-waste-test.ts",

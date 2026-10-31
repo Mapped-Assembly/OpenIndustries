@@ -79,8 +79,11 @@ jobs:
     if: ${{ !cancelled() && (needs.changes.result != 'success' || needs.changes.outputs.browser != 'false') }}
     runs-on: ubuntu-latest
     timeout-minutes: 35
-    env:
-      OI_CHECKOUT: ${{ github.workspace }}
+    # Match the pinned client's Playwright 1.63.0. This includes browsers, OS
+    # libraries and fonts, avoiding the measured eight-minute apt mirror stall.
+    container:
+      image: mcr.microsoft.com/playwright:v1.63.0-noble@sha256:eff16c30e6f3f4af0a03fa4b706120d5e9b0891c344a27d64559aff5900a4a27
+      options: --ipc=host --init
     steps:
       - uses: actions/checkout@v4
       - uses: actions/checkout@v4
@@ -88,6 +91,8 @@ jobs:
           repository: isayahc/tower-defense
           ref: 831085fec8a2638ef8a668b5d8de195bb1462bfb
           path: .integration/tower-defense
+      - name: Use the workspace path inside the container
+        run: printf 'OI_CHECKOUT=%s\n' "$GITHUB_WORKSPACE" >> "$GITHUB_ENV"
       - uses: actions/setup-node@v4
         with:
           node-version: 22
@@ -100,14 +105,13 @@ jobs:
         working-directory: .integration/tower-defense
       - run: npm run check:materials
         working-directory: .integration/tower-defense
-      - run: npm run test:integration
+      - name: Verify Playwright package matches the pinned browser image
+        run: node -e "const v = require('playwright/package.json').version; if (v !== '1.63.0') throw new Error('Update the pinned Playwright image for package version ' + v)"
         working-directory: .integration/tower-defense
-      - run: npx playwright install --with-deps chromium
-        working-directory: .integration/tower-defense
-      - run: npm run test:browser:results
-        working-directory: .integration/tower-defense
-      - run: npm run test:browser:full
-        working-directory: .integration/tower-defense
+      # Each command owns its DB, service ports and screenshot names. The full
+      # match retains its internal gesture -> real-time two-client sequence.
+      - name: Downstream suites (two isolated processes, named output and timings)
+        run: npm run ci:game:browser
       - uses: actions/upload-artifact@v4
         if: always()
         with:
