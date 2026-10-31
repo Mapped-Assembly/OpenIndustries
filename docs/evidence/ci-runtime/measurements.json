@@ -1,0 +1,825 @@
+{
+  "scope": "Game runtime workflow only; elapsed allocation time is not billed cost. Separate workflows and weekly/manual Windows full are excluded.",
+  "method": "Sum whole-job allocation endpoints; wall envelope includes staggered starts but excludes initial queue delay. All recorded runs completed successfully.",
+  "runs": [
+    {
+      "run_id": 41231502401,
+      "url": "https://github.com/Mapped-Assembly/OpenIndustries/actions/runs/41231502401",
+      "architecture": "original matrix",
+      "metrics": {
+        "visible_jobs": 11,
+        "executed_jobs": 11,
+        "successful_jobs": 11,
+        "unsuccessful_jobs": 0,
+        "skipped_jobs": 0,
+        "all_jobs_successful": true,
+        "aggregate_runner_minutes": 91.42,
+        "wall_clock_minutes": 24.85
+      },
+      "runner_minutes_by_os": {
+        "ubuntu": 47.9,
+        "windows": 43.5167
+      },
+      "jobs": [
+        {
+          "id": 124626491734,
+          "name": "victory (ubuntu-latest)",
+          "status": "completed",
+          "conclusion": "success",
+          "head_sha": "67da0f2fca7cfb5cde460cff3a39670004e6885d",
+          "labels": [
+            "ubuntu-latest"
+          ],
+          "started_at": "2026-10-31T18:52:29Z",
+          "completed_at": "2026-10-31T18:59:43Z",
+          "elapsed_seconds": 434.0
+        },
+        {
+          "id": 124626491853,
+          "name": "units (ubuntu-latest)",
+          "status": "completed",
+          "conclusion": "success",
+          "head_sha": "67da0f2fca7cfb5cde460cff3a39670004e6885d",
+          "labels": [
+            "ubuntu-latest"
+          ],
+          "started_at": "2026-10-31T18:53:09Z",
+          "completed_at": "2026-10-31T18:57:50Z",
+          "elapsed_seconds": 281.0
+        },
+        {
+          "id": 124626491869,
+          "name": "mcp (windows-latest)",
+          "status": "completed",
+          "conclusion": "success",
+          "head_sha": "67da0f2fca7cfb5cde460cff3a39670004e6885d",
+          "labels": [
+            "windows-latest"
+          ],
+          "started_at": "2026-10-31T18:52:39Z",
+          "completed_at": "2026-10-31T19:02:57Z",
+          "elapsed_seconds": 618.0
+        },
+        {
+          "id": 124626491889,
+          "name": "mcp (ubuntu-latest)",
+          "status": "completed",
+          "conclusion": "success",
+          "head_sha": "67da0f2fca7cfb5cde460cff3a39670004e6885d",
+          "labels": [
+            "ubuntu-latest"
+          ],
+          "started_at": "2026-10-31T18:56:47Z",
+          "completed_at": "2026-10-31T19:02:53Z",
+          "elapsed_seconds": 366.0
+        },
+        {
+          "id": 124626491900,
+          "name": "manufacturing (windows-latest)",
+          "status": "completed",
+          "conclusion": "success",
+          "head_sha": "67da0f2fca7cfb5cde460cff3a39670004e6885d",
+          "labels": [
+            "windows-latest"
+          ],
+          "started_at": "2026-10-31T18:53:58Z",
+          "completed_at": "2026-10-31T19:03:24Z",
+          "elapsed_seconds": 566.0
+        },
+        {
+          "id": 124626491914,
+          "name": "victory (windows-latest)",
+          "status": "completed",
+          "conclusion": "success",
+          "head_sha": "67da0f2fca7cfb5cde460cff3a39670004e6885d",
+          "labels": [
+            "windows-latest"
+          ],
+          "started_at": "2026-10-31T18:53:26Z",
+          "completed_at": "2026-10-31T18:59:16Z",
+          "elapsed_seconds": 350.0
+        },
+        {
+          "id": 124626491941,
+          "name": "combat (ubuntu-latest)",
+          "status": "completed",
+          "conclusion": "success",
+          "head_sha": "67da0f2fca7cfb5cde460cff3a39670004e6885d",
+          "labels": [
+            "ubuntu-latest"
+          ],
+          "started_at": "2026-10-31T18:57:39Z",
+          "completed_at": "2026-10-31T19:02:42Z",
+          "elapsed_seconds": 303.0
+        },
+        {
+          "id": 124626491945,
+          "name": "combat (windows-latest)",
+          "status": "completed",
+          "conclusion": "success",
+          "head_sha": "67da0f2fca7cfb5cde460cff3a39670004e6885d",
+          "labels": [
+            "windows-latest"
+          ],
+          "started_at": "2026-10-31T18:56:36Z",
+          "completed_at": "2026-10-31T19:06:25Z",
+          "elapsed_seconds": 589.0
+        },
+        {
+          "id": 124626491957,
+          "name": "downstream-browser",
+          "status": "completed",
+          "conclusion": "success",
+          "head_sha": "67da0f2fca7cfb5cde460cff3a39670004e6885d",
+          "labels": [
+            "ubuntu-latest"
+          ],
+          "started_at": "2026-10-31T18:56:24Z",
+          "completed_at": "2026-10-31T19:17:20Z",
+          "elapsed_seconds": 1256.0
+        },
+        {
+          "id": 124626492019,
+          "name": "units (windows-latest)",
+          "status": "completed",
+          "conclusion": "success",
+          "head_sha": "67da0f2fca7cfb5cde460cff3a39670004e6885d",
+          "labels": [
+            "windows-latest"
+          ],
+          "started_at": "2026-10-31T18:59:05Z",
+          "completed_at": "2026-10-31T19:07:13Z",
+          "elapsed_seconds": 488.0
+        },
+        {
+          "id": 124626492041,
+          "name": "manufacturing (ubuntu-latest)",
+          "status": "completed",
+          "conclusion": "success",
+          "head_sha": "67da0f2fca7cfb5cde460cff3a39670004e6885d",
+          "labels": [
+            "ubuntu-latest"
+          ],
+          "started_at": "2026-10-31T18:57:52Z",
+          "completed_at": "2026-10-31T19:01:46Z",
+          "elapsed_seconds": 234.0
+        }
+      ]
+    },
+    {
+      "run_id": 41236666779,
+      "url": "https://github.com/Mapped-Assembly/OpenIndustries/actions/runs/41236666779",
+      "architecture": "original matrix",
+      "metrics": {
+        "visible_jobs": 11,
+        "executed_jobs": 11,
+        "successful_jobs": 11,
+        "unsuccessful_jobs": 0,
+        "skipped_jobs": 0,
+        "all_jobs_successful": true,
+        "aggregate_runner_minutes": 98.83,
+        "wall_clock_minutes": 21.65
+      },
+      "runner_minutes_by_os": {
+        "ubuntu": 53.45,
+        "windows": 45.3833
+      },
+      "jobs": [
+        {
+          "id": 124641786966,
+          "name": "combat (windows-latest)",
+          "status": "completed",
+          "conclusion": "success",
+          "head_sha": "4c4b9a6412f2577f0dec08086f5371640e3fb239",
+          "labels": [
+            "windows-latest"
+          ],
+          "started_at": "2026-10-31T19:58:17Z",
+          "completed_at": "2026-10-31T20:08:08Z",
+          "elapsed_seconds": 591.0
+        },
+        {
+          "id": 124641787124,
+          "name": "mcp (windows-latest)",
+          "status": "completed",
+          "conclusion": "success",
+          "head_sha": "4c4b9a6412f2577f0dec08086f5371640e3fb239",
+          "labels": [
+            "windows-latest"
+          ],
+          "started_at": "2026-10-31T19:58:17Z",
+          "completed_at": "2026-10-31T20:04:54Z",
+          "elapsed_seconds": 397.0
+        },
+        {
+          "id": 124641787143,
+          "name": "victory (windows-latest)",
+          "status": "completed",
+          "conclusion": "success",
+          "head_sha": "4c4b9a6412f2577f0dec08086f5371640e3fb239",
+          "labels": [
+            "windows-latest"
+          ],
+          "started_at": "2026-10-31T19:58:17Z",
+          "completed_at": "2026-10-31T20:08:54Z",
+          "elapsed_seconds": 637.0
+        },
+        {
+          "id": 124641787185,
+          "name": "victory (ubuntu-latest)",
+          "status": "completed",
+          "conclusion": "success",
+          "head_sha": "4c4b9a6412f2577f0dec08086f5371640e3fb239",
+          "labels": [
+            "ubuntu-latest"
+          ],
+          "started_at": "2026-10-31T19:58:17Z",
+          "completed_at": "2026-10-31T20:05:32Z",
+          "elapsed_seconds": 435.0
+        },
+        {
+          "id": 124641787220,
+          "name": "units (ubuntu-latest)",
+          "status": "completed",
+          "conclusion": "success",
+          "head_sha": "4c4b9a6412f2577f0dec08086f5371640e3fb239",
+          "labels": [
+            "ubuntu-latest"
+          ],
+          "started_at": "2026-10-31T19:58:17Z",
+          "completed_at": "2026-10-31T20:04:18Z",
+          "elapsed_seconds": 361.0
+        },
+        {
+          "id": 124641787229,
+          "name": "manufacturing (windows-latest)",
+          "status": "completed",
+          "conclusion": "success",
+          "head_sha": "4c4b9a6412f2577f0dec08086f5371640e3fb239",
+          "labels": [
+            "windows-latest"
+          ],
+          "started_at": "2026-10-31T19:58:17Z",
+          "completed_at": "2026-10-31T20:08:40Z",
+          "elapsed_seconds": 623.0
+        },
+        {
+          "id": 124641787254,
+          "name": "mcp (ubuntu-latest)",
+          "status": "completed",
+          "conclusion": "success",
+          "head_sha": "4c4b9a6412f2577f0dec08086f5371640e3fb239",
+          "labels": [
+            "ubuntu-latest"
+          ],
+          "started_at": "2026-10-31T19:58:17Z",
+          "completed_at": "2026-10-31T20:02:47Z",
+          "elapsed_seconds": 270.0
+        },
+        {
+          "id": 124641787269,
+          "name": "combat (ubuntu-latest)",
+          "status": "completed",
+          "conclusion": "success",
+          "head_sha": "4c4b9a6412f2577f0dec08086f5371640e3fb239",
+          "labels": [
+            "ubuntu-latest"
+          ],
+          "started_at": "2026-10-31T19:58:17Z",
+          "completed_at": "2026-10-31T20:05:06Z",
+          "elapsed_seconds": 409.0
+        },
+        {
+          "id": 124641787320,
+          "name": "manufacturing (ubuntu-latest)",
+          "status": "completed",
+          "conclusion": "success",
+          "head_sha": "4c4b9a6412f2577f0dec08086f5371640e3fb239",
+          "labels": [
+            "ubuntu-latest"
+          ],
+          "started_at": "2026-10-31T19:58:17Z",
+          "completed_at": "2026-10-31T20:05:30Z",
+          "elapsed_seconds": 433.0
+        },
+        {
+          "id": 124641787327,
+          "name": "units (windows-latest)",
+          "status": "completed",
+          "conclusion": "success",
+          "head_sha": "4c4b9a6412f2577f0dec08086f5371640e3fb239",
+          "labels": [
+            "windows-latest"
+          ],
+          "started_at": "2026-10-31T19:58:18Z",
+          "completed_at": "2026-10-31T20:06:13Z",
+          "elapsed_seconds": 475.0
+        },
+        {
+          "id": 124641787367,
+          "name": "downstream-browser",
+          "status": "completed",
+          "conclusion": "success",
+          "head_sha": "4c4b9a6412f2577f0dec08086f5371640e3fb239",
+          "labels": [
+            "ubuntu-latest"
+          ],
+          "started_at": "2026-10-31T19:58:17Z",
+          "completed_at": "2026-10-31T20:19:56Z",
+          "elapsed_seconds": 1299.0
+        }
+      ]
+    },
+    {
+      "run_id": 41239187367,
+      "url": "https://github.com/Mapped-Assembly/OpenIndustries/actions/runs/41239187367",
+      "architecture": "original matrix",
+      "metrics": {
+        "visible_jobs": 11,
+        "executed_jobs": 11,
+        "successful_jobs": 11,
+        "unsuccessful_jobs": 0,
+        "skipped_jobs": 0,
+        "all_jobs_successful": true,
+        "aggregate_runner_minutes": 97.85,
+        "wall_clock_minutes": 20.6
+      },
+      "runner_minutes_by_os": {
+        "ubuntu": 50.4333,
+        "windows": 47.4167
+      },
+      "jobs": [
+        {
+          "id": 124649291938,
+          "name": "mcp (windows-latest)",
+          "status": "completed",
+          "conclusion": "success",
+          "head_sha": "aeb94e4b7623e4e20839532d4a753b547ef0e43c",
+          "labels": [
+            "windows-latest"
+          ],
+          "started_at": "2026-10-31T20:30:12Z",
+          "completed_at": "2026-10-31T20:40:14Z",
+          "elapsed_seconds": 602.0
+        },
+        {
+          "id": 124649292127,
+          "name": "units (windows-latest)",
+          "status": "completed",
+          "conclusion": "success",
+          "head_sha": "aeb94e4b7623e4e20839532d4a753b547ef0e43c",
+          "labels": [
+            "windows-latest"
+          ],
+          "started_at": "2026-10-31T20:30:12Z",
+          "completed_at": "2026-10-31T20:38:06Z",
+          "elapsed_seconds": 474.0
+        },
+        {
+          "id": 124649292146,
+          "name": "units (ubuntu-latest)",
+          "status": "completed",
+          "conclusion": "success",
+          "head_sha": "aeb94e4b7623e4e20839532d4a753b547ef0e43c",
+          "labels": [
+            "ubuntu-latest"
+          ],
+          "started_at": "2026-10-31T20:30:13Z",
+          "completed_at": "2026-10-31T20:36:01Z",
+          "elapsed_seconds": 348.0
+        },
+        {
+          "id": 124649292150,
+          "name": "mcp (ubuntu-latest)",
+          "status": "completed",
+          "conclusion": "success",
+          "head_sha": "aeb94e4b7623e4e20839532d4a753b547ef0e43c",
+          "labels": [
+            "ubuntu-latest"
+          ],
+          "started_at": "2026-10-31T20:30:13Z",
+          "completed_at": "2026-10-31T20:36:46Z",
+          "elapsed_seconds": 393.0
+        },
+        {
+          "id": 124649292151,
+          "name": "victory (windows-latest)",
+          "status": "completed",
+          "conclusion": "success",
+          "head_sha": "aeb94e4b7623e4e20839532d4a753b547ef0e43c",
+          "labels": [
+            "windows-latest"
+          ],
+          "started_at": "2026-10-31T20:30:12Z",
+          "completed_at": "2026-10-31T20:40:15Z",
+          "elapsed_seconds": 603.0
+        },
+        {
+          "id": 124649292157,
+          "name": "combat (windows-latest)",
+          "status": "completed",
+          "conclusion": "success",
+          "head_sha": "aeb94e4b7623e4e20839532d4a753b547ef0e43c",
+          "labels": [
+            "windows-latest"
+          ],
+          "started_at": "2026-10-31T20:30:12Z",
+          "completed_at": "2026-10-31T20:39:33Z",
+          "elapsed_seconds": 561.0
+        },
+        {
+          "id": 124649292216,
+          "name": "manufacturing (ubuntu-latest)",
+          "status": "completed",
+          "conclusion": "success",
+          "head_sha": "aeb94e4b7623e4e20839532d4a753b547ef0e43c",
+          "labels": [
+            "ubuntu-latest"
+          ],
+          "started_at": "2026-10-31T20:30:13Z",
+          "completed_at": "2026-10-31T20:35:58Z",
+          "elapsed_seconds": 345.0
+        },
+        {
+          "id": 124649292240,
+          "name": "victory (ubuntu-latest)",
+          "status": "completed",
+          "conclusion": "success",
+          "head_sha": "aeb94e4b7623e4e20839532d4a753b547ef0e43c",
+          "labels": [
+            "ubuntu-latest"
+          ],
+          "started_at": "2026-10-31T20:30:21Z",
+          "completed_at": "2026-10-31T20:37:28Z",
+          "elapsed_seconds": 427.0
+        },
+        {
+          "id": 124649292268,
+          "name": "manufacturing (windows-latest)",
+          "status": "completed",
+          "conclusion": "success",
+          "head_sha": "aeb94e4b7623e4e20839532d4a753b547ef0e43c",
+          "labels": [
+            "windows-latest"
+          ],
+          "started_at": "2026-10-31T20:30:12Z",
+          "completed_at": "2026-10-31T20:40:17Z",
+          "elapsed_seconds": 605.0
+        },
+        {
+          "id": 124649292282,
+          "name": "combat (ubuntu-latest)",
+          "status": "completed",
+          "conclusion": "success",
+          "head_sha": "aeb94e4b7623e4e20839532d4a753b547ef0e43c",
+          "labels": [
+            "ubuntu-latest"
+          ],
+          "started_at": "2026-10-31T20:30:43Z",
+          "completed_at": "2026-10-31T20:36:04Z",
+          "elapsed_seconds": 321.0
+        },
+        {
+          "id": 124649292338,
+          "name": "downstream-browser",
+          "status": "completed",
+          "conclusion": "success",
+          "head_sha": "aeb94e4b7623e4e20839532d4a753b547ef0e43c",
+          "labels": [
+            "ubuntu-latest"
+          ],
+          "started_at": "2026-10-31T20:30:56Z",
+          "completed_at": "2026-10-31T20:50:48Z",
+          "elapsed_seconds": 1192.0
+        }
+      ]
+    },
+    {
+      "run_id": 41243311718,
+      "url": "https://github.com/Mapped-Assembly/OpenIndustries/actions/runs/41243311718",
+      "architecture": "original matrix",
+      "metrics": {
+        "visible_jobs": 11,
+        "executed_jobs": 11,
+        "successful_jobs": 11,
+        "unsuccessful_jobs": 0,
+        "skipped_jobs": 0,
+        "all_jobs_successful": true,
+        "aggregate_runner_minutes": 101.9,
+        "wall_clock_minutes": 20.32
+      },
+      "runner_minutes_by_os": {
+        "ubuntu": 53.3,
+        "windows": 48.6
+      },
+      "jobs": [
+        {
+          "id": 124661490706,
+          "name": "combat (ubuntu-latest)",
+          "status": "completed",
+          "conclusion": "success",
+          "head_sha": "afcbaac0124166789956f8b54f98e82364408fe6",
+          "labels": [
+            "ubuntu-latest"
+          ],
+          "started_at": "2026-10-31T21:22:47Z",
+          "completed_at": "2026-10-31T21:29:32Z",
+          "elapsed_seconds": 405.0
+        },
+        {
+          "id": 124661490816,
+          "name": "manufacturing (windows-latest)",
+          "status": "completed",
+          "conclusion": "success",
+          "head_sha": "afcbaac0124166789956f8b54f98e82364408fe6",
+          "labels": [
+            "windows-latest"
+          ],
+          "started_at": "2026-10-31T21:22:48Z",
+          "completed_at": "2026-10-31T21:32:24Z",
+          "elapsed_seconds": 576.0
+        },
+        {
+          "id": 124661490838,
+          "name": "mcp (windows-latest)",
+          "status": "completed",
+          "conclusion": "success",
+          "head_sha": "afcbaac0124166789956f8b54f98e82364408fe6",
+          "labels": [
+            "windows-latest"
+          ],
+          "started_at": "2026-10-31T21:22:48Z",
+          "completed_at": "2026-10-31T21:33:28Z",
+          "elapsed_seconds": 640.0
+        },
+        {
+          "id": 124661490843,
+          "name": "manufacturing (ubuntu-latest)",
+          "status": "completed",
+          "conclusion": "success",
+          "head_sha": "afcbaac0124166789956f8b54f98e82364408fe6",
+          "labels": [
+            "ubuntu-latest"
+          ],
+          "started_at": "2026-10-31T21:22:47Z",
+          "completed_at": "2026-10-31T21:29:57Z",
+          "elapsed_seconds": 430.0
+        },
+        {
+          "id": 124661490853,
+          "name": "combat (windows-latest)",
+          "status": "completed",
+          "conclusion": "success",
+          "head_sha": "afcbaac0124166789956f8b54f98e82364408fe6",
+          "labels": [
+            "windows-latest"
+          ],
+          "started_at": "2026-10-31T21:22:48Z",
+          "completed_at": "2026-10-31T21:32:19Z",
+          "elapsed_seconds": 571.0
+        },
+        {
+          "id": 124661490860,
+          "name": "victory (windows-latest)",
+          "status": "completed",
+          "conclusion": "success",
+          "head_sha": "afcbaac0124166789956f8b54f98e82364408fe6",
+          "labels": [
+            "windows-latest"
+          ],
+          "started_at": "2026-10-31T21:22:55Z",
+          "completed_at": "2026-10-31T21:33:01Z",
+          "elapsed_seconds": 606.0
+        },
+        {
+          "id": 124661490901,
+          "name": "downstream-browser",
+          "status": "completed",
+          "conclusion": "success",
+          "head_sha": "afcbaac0124166789956f8b54f98e82364408fe6",
+          "labels": [
+            "ubuntu-latest"
+          ],
+          "started_at": "2026-10-31T21:22:47Z",
+          "completed_at": "2026-10-31T21:43:06Z",
+          "elapsed_seconds": 1219.0
+        },
+        {
+          "id": 124661490907,
+          "name": "units (windows-latest)",
+          "status": "completed",
+          "conclusion": "success",
+          "head_sha": "afcbaac0124166789956f8b54f98e82364408fe6",
+          "labels": [
+            "windows-latest"
+          ],
+          "started_at": "2026-10-31T21:23:09Z",
+          "completed_at": "2026-10-31T21:31:52Z",
+          "elapsed_seconds": 523.0
+        },
+        {
+          "id": 124661490909,
+          "name": "units (ubuntu-latest)",
+          "status": "completed",
+          "conclusion": "success",
+          "head_sha": "afcbaac0124166789956f8b54f98e82364408fe6",
+          "labels": [
+            "ubuntu-latest"
+          ],
+          "started_at": "2026-10-31T21:22:48Z",
+          "completed_at": "2026-10-31T21:28:39Z",
+          "elapsed_seconds": 351.0
+        },
+        {
+          "id": 124661490925,
+          "name": "victory (ubuntu-latest)",
+          "status": "completed",
+          "conclusion": "success",
+          "head_sha": "afcbaac0124166789956f8b54f98e82364408fe6",
+          "labels": [
+            "ubuntu-latest"
+          ],
+          "started_at": "2026-10-31T21:22:47Z",
+          "completed_at": "2026-10-31T21:30:00Z",
+          "elapsed_seconds": 433.0
+        },
+        {
+          "id": 124661491068,
+          "name": "mcp (ubuntu-latest)",
+          "status": "completed",
+          "conclusion": "success",
+          "head_sha": "afcbaac0124166789956f8b54f98e82364408fe6",
+          "labels": [
+            "ubuntu-latest"
+          ],
+          "started_at": "2026-10-31T21:22:47Z",
+          "completed_at": "2026-10-31T21:28:47Z",
+          "elapsed_seconds": 360.0
+        }
+      ]
+    },
+    {
+      "run_id": 41243871762,
+      "url": "https://github.com/Mapped-Assembly/OpenIndustries/actions/runs/41243871762",
+      "architecture": "PR70 serialized",
+      "metrics": {
+        "visible_jobs": 4,
+        "executed_jobs": 4,
+        "successful_jobs": 4,
+        "unsuccessful_jobs": 0,
+        "skipped_jobs": 0,
+        "all_jobs_successful": true,
+        "aggregate_runner_minutes": 95.5,
+        "wall_clock_minutes": 43.25
+      },
+      "runner_minutes_by_os": {
+        "ubuntu": 52.2667,
+        "windows": 43.2333
+      },
+      "jobs": [
+        {
+          "id": 124663171256,
+          "name": "Ubuntu suite",
+          "status": "completed",
+          "conclusion": "success",
+          "head_sha": "360a255b23b12f1e518240cdd3965ec0c5d34fda",
+          "labels": [
+            "ubuntu-latest"
+          ],
+          "started_at": "2026-10-31T21:30:11Z",
+          "completed_at": "2026-10-31T22:04:05Z",
+          "elapsed_seconds": 2034.0
+        },
+        {
+          "id": 124663171471,
+          "name": "Browser change detection",
+          "status": "completed",
+          "conclusion": "success",
+          "head_sha": "360a255b23b12f1e518240cdd3965ec0c5d34fda",
+          "labels": [
+            "ubuntu-latest"
+          ],
+          "started_at": "2026-10-31T21:30:11Z",
+          "completed_at": "2026-10-31T21:30:15Z",
+          "elapsed_seconds": 4.0
+        },
+        {
+          "id": 124663171481,
+          "name": "Windows compatibility",
+          "status": "completed",
+          "conclusion": "success",
+          "head_sha": "360a255b23b12f1e518240cdd3965ec0c5d34fda",
+          "labels": [
+            "windows-latest"
+          ],
+          "started_at": "2026-10-31T21:30:12Z",
+          "completed_at": "2026-10-31T22:13:26Z",
+          "elapsed_seconds": 2594.0
+        },
+        {
+          "id": 124663198984,
+          "name": "downstream-browser",
+          "status": "completed",
+          "conclusion": "success",
+          "head_sha": "360a255b23b12f1e518240cdd3965ec0c5d34fda",
+          "labels": [
+            "ubuntu-latest"
+          ],
+          "started_at": "2026-10-31T21:30:18Z",
+          "completed_at": "2026-10-31T21:48:36Z",
+          "elapsed_seconds": 1098.0
+        }
+      ]
+    },
+    {
+      "run_id": 41248769031,
+      "url": "https://github.com/Mapped-Assembly/OpenIndustries/actions/runs/41248769031",
+      "architecture": "bounded concurrency / focused Windows",
+      "metrics": {
+        "visible_jobs": 4,
+        "executed_jobs": 4,
+        "successful_jobs": 4,
+        "unsuccessful_jobs": 0,
+        "skipped_jobs": 0,
+        "all_jobs_successful": true,
+        "aggregate_runner_minutes": 47.43,
+        "wall_clock_minutes": 21.67
+      },
+      "runner_minutes_by_os": {
+        "ubuntu": 40.1833,
+        "windows": 7.25
+      },
+      "jobs": [
+        {
+          "id": 124677655914,
+          "name": "Windows compatibility",
+          "status": "completed",
+          "conclusion": "success",
+          "head_sha": "d5f64e12812f2e6a4ca1e838f6b92d79784ed452",
+          "labels": [
+            "windows-latest"
+          ],
+          "started_at": "2026-10-31T22:34:11Z",
+          "completed_at": "2026-10-31T22:41:26Z",
+          "elapsed_seconds": 435.0
+        },
+        {
+          "id": 124677656190,
+          "name": "Browser change detection",
+          "status": "completed",
+          "conclusion": "success",
+          "head_sha": "d5f64e12812f2e6a4ca1e838f6b92d79784ed452",
+          "labels": [
+            "ubuntu-latest"
+          ],
+          "started_at": "2026-10-31T22:34:11Z",
+          "completed_at": "2026-10-31T22:34:17Z",
+          "elapsed_seconds": 6.0
+        },
+        {
+          "id": 124677656221,
+          "name": "Ubuntu suite",
+          "status": "completed",
+          "conclusion": "success",
+          "head_sha": "d5f64e12812f2e6a4ca1e838f6b92d79784ed452",
+          "labels": [
+            "ubuntu-latest"
+          ],
+          "started_at": "2026-10-31T22:34:11Z",
+          "completed_at": "2026-10-31T22:52:45Z",
+          "elapsed_seconds": 1114.0
+        },
+        {
+          "id": 124677692972,
+          "name": "downstream-browser",
+          "status": "completed",
+          "conclusion": "success",
+          "head_sha": "d5f64e12812f2e6a4ca1e838f6b92d79784ed452",
+          "labels": [
+            "ubuntu-latest"
+          ],
+          "started_at": "2026-10-31T22:34:20Z",
+          "completed_at": "2026-10-31T22:55:51Z",
+          "elapsed_seconds": 1291.0
+        }
+      ]
+    }
+  ],
+  "local_harness_profile": {
+    "baseline": {
+      "elapsed": 679.3472781659948,
+      "user": 636.500774,
+      "system": 89.796684,
+      "exit": 0
+    },
+    "optimized": {
+      "elapsed": 509.6446678249995,
+      "user": 491.305245,
+      "system": 54.714931,
+      "exit": 0
+    },
+    "node": "24.22.1",
+    "qualification": "One profiled diagnostic pair on a shared local host; not comparable to Actions Node22 allocation timings.",
+    "pass_output_identical": true
+  }
+}
