@@ -18,6 +18,7 @@ import numpy as np
 
 from .model import RobotModel
 from .policy import Policy
+from . import joint
 from .cabinet import check_tcp_path, dataset_state, load_fixture, preflight
 
 Json = dict[str, Any]
@@ -42,6 +43,8 @@ class Runtime:
         """Load one persistent station, rejecting incompatible pins and pausing on restart."""
         self.model = RobotModel(fixture)
         self.cabinet = load_fixture(cabinet_path, self.model) if cabinet_path else None
+        if self.cabinet and self.cabinet.get('fastening'):
+            joint.validate_fixture(self.cabinet,self.model)
         directory.mkdir(parents=True, exist_ok=True, mode=0o700)
         self.lease = (directory / 'station.lock').open('a+b')
         try:
@@ -92,6 +95,10 @@ class Runtime:
         elif self.cabinet:
             self.state.update({'scene_id':self.cabinet['id'], 'cabinet_sha256':self.cabinet['sha256'],
                                'objects':deepcopy(self.cabinet['objects']), 'preflight':None})
+        if not row and self.cabinet and self.cabinet.get('fastening'):
+            self.state.update({'q':list(self.cabinet['initial_q_rad']), 'spindle_angle_rad':0.,
+                               'connections':deepcopy(self.cabinet['connections'])})
+            joint.update_tool(self.state,self.cabinet,self.model)
         require(self.state.get('controller_version') == 'so101-kinematic-v1', 'CONTROLLER_VERSION_MISMATCH')
         require(self.state['model_sha256'] == self.model.sha, 'MODEL_PIN_MISMATCH')
         if self.state['task'] and self.state['task']['stage'] in ACTIVE:
@@ -140,6 +147,8 @@ class Runtime:
                   'healthy': self.failure is None, 'cadence_ms': 50,
                   'observation_basis': 'privileged_simulated_state; no camera/contact/physical evidence'}
         if self.cabinet:
+            if self.cabinet.get('fastening'):
+                result['skills'] = ['inspect','assemble corner']
             result['dataset_state'] = dataset_state(self.state, self.cabinet, self.model)
         return result
 
@@ -154,7 +163,8 @@ class Runtime:
                     'source_revision':self.code_revision, 'model_sha256':self.model.sha, 'machine_contract':deepcopy(self.model.contract),
                     'initial_state_id':states[0]['dataset_state']['state_id'], 'final_state_id':states[-1]['dataset_state']['state_id'],
                     'complete':revisions==list(range(revisions[-1]+1)), 'retention':'S_i and latest 511 revisions; gaps are explicit',
-                    'states':states, 'receipts':receipts, 'replay_dispatches_commands':False, 'assembly_status':'not_executed'}
+                    'states':states, 'receipts':receipts, 'replay_dispatches_commands':False, 'assembly_status':joint.assembly_status(self.state),
+                    'operation_receipts':[r for t in [*self.state.get('task_history',[]),self.state.get('task')] if t for r in t.get('controller_receipts',[])]}
 
     def request(self, body: Json) -> Json:
         """Commit user intent and its immutable receipt once; accepted is not completed."""
@@ -231,17 +241,28 @@ class Runtime:
             if action == 'cancel':
                 task['stage'] = 'cancelled'
                 task['generation'] += 1
-                self.message('assistant', 'Cancelled at the saved joint pose. No object was held or moved.', task['id'])
+                if task.get('capability')==joint.CAPABILITY:
+                    operation = task['operations'][task['operation_index']]
+                    operation.update({'status':'cancelled','end_revision':self.state['revision']+1})
+                    for receipt in task.get('controller_receipts',[]):
+                        if receipt['operation_id']==operation['id']:
+                            receipt['cancelled_revision'] = self.state['revision']+1
+                    task['result'] = {'status':'cancelled','partial_state_preserved':True,'physical_validated':False}
+                self.message('assistant', 'Cancelled. Saved arm, tool and component state retained.', task['id'])
             elif action == 'stop':
                 task['stage'] = 'paused'
                 task['generation'] += 1  # Late model/IK result cannot dispatch after Stop.
                 task['stopped_at_ms'] = int(time.time() * 1000)
-                self.message('assistant', 'Controller acknowledged stopped. Joint pose retained; no object is held.', task['id'])
+                self.message('assistant', 'Controller acknowledged stopped. Arm/tool poses and partial component state retained.', task['id'])
             else:
                 require(task['stage'] == 'paused', 'NOT_PAUSED')
                 require(task['scene_revision'] == self.state['scene_revision'], 'SCENE_CHANGED')
                 self.observe(task)
-                task['stage'] = 'running' if task.get('goal_q') else 'planning'
+                if task.get('capability')==joint.CAPABILITY:
+                    verb = task['operations'][task['operation_index']]['verb']
+                    joint.require_ready(joint.evaluate(self.state,self.cabinet,self.model,engaged=verb in ('fasten','verify')))
+                    joint.tool_clearance(self.state,self.model,self.state['q'])
+                task['stage'] = 'running' if task.get('goal_q') or task.get('capability')==joint.CAPABILITY else 'planning'
                 self.last_tick = time.monotonic()
                 self.message('assistant', 'Resuming the same task from its saved joint pose.', task['id'])
             return {'status': task['stage'], 'task_id': task['id']}
@@ -270,6 +291,21 @@ class Runtime:
     def plan(self, task: Json, snapshot: Json) -> None:
         """Resolve one bounded proposal off-lock, then revalidate before authoritative dispatch."""
         try:
+            if task['text'].strip().lower() == 'assemble corner':
+                require(self.cabinet is not None, 'CABINET_FIXTURE_REQUIRED')
+                prepared = joint.prepare(snapshot,self.cabinet,self.model,task)
+                with self.lock:
+                    current = self.state['task']
+                    if current['id']!=task['id'] or current['stage']!='planning' or current['generation']!=task['generation']:
+                        return
+                    require(self.state['scene_revision']==task['scene_revision'] and self.state['q']==snapshot['q'] and self.state['objects']==snapshot['objects'] and self.state.get('connections')==snapshot.get('connections') and self.state.get('spindle_angle_rad')==snapshot.get('spindle_angle_rad'), 'STATE_CHANGED')
+                    current.update(prepared)
+                    current.update({'skill':'assemble corner','target_id':'corner','stage':'running',
+                                    'before_observation':self.observe(current)['id']})
+                    self.message('assistant','Executing supported joint: inspect, align tool, modeled fastening, independent verification. Panels were manually clamped; no grasp/contact or hardware validation.',current['id'])
+                    self.state['revision'] += 1
+                    self.persist()
+                return
             decision = self.policy.decide(task['text'], task['selected_id'], {'objects': snapshot['objects'], 'destination': snapshot['destination'], 'recent_conversation': snapshot['messages'][-8:]})
             require(isinstance(decision, dict) and set(decision) == {'skill', 'target_id'}, 'INVALID_MODEL_PROPOSAL')
             skill, target = decision['skill'], decision['target_id']
@@ -287,6 +323,8 @@ class Runtime:
             if skill == 'clarify' or skill in ('approach', 'inspect') and not targets:
                 raise ValueError('CLARIFICATION_REQUIRED: select red-block or blue-block, then submit the request again.')
             require(skill != 'unsupported', 'UNSUPPORTED: pick/place, grasp/contact and physical control are not implemented in this milestone.')
+            if self.cabinet and self.cabinet.get('fastening'):
+                require(skill=='inspect','USE_ASSEMBLE_CORNER: mounted-tool motion is restricted to the registered joint procedure')
             if self.cabinet:
                 check = preflight(self.cabinet, snapshot['objects'], {'verb':skill, 'component_ids':[target] if target else [],
                                   'frame':self.cabinet['frame'], 'units':self.cabinet['units']}, self.model, snapshot['q'])
@@ -323,6 +361,9 @@ class Runtime:
                 if current['id'] == task['id'] and current['stage'] == 'planning' and current['generation'] == task['generation']:
                     current['stage'] = 'needs_review'
                     current['reason'] = str(error) if isinstance(error, ValueError) else 'PLANNING_FAILED'
+                    if task['text'].strip().lower()=='assemble corner':
+                        current['stage'] = 'blocked'
+                        current['result'] = {'status':'blocked','reason':current['reason'],'physical_validated':False}
                     self.message('assistant', current['reason'], current['id'])
                     self.state['revision'] += 1
                     self.persist()
@@ -345,6 +386,27 @@ class Runtime:
                         self.policy_busy = True
                         threading.Thread(target=self.plan, args=(deepcopy(task), deepcopy(self.state)), daemon=True).start()
                     if task['stage'] != 'running':
+                        continue
+                    if task.get('capability')==joint.CAPABILITY:
+                        before = deepcopy(self.state)
+                        self.state['revision'] += 1
+                        try:
+                            joint.advance(self.state,self.cabinet,self.model,task,dt)
+                        except ValueError as error:
+                            self.state = before
+                            task = self.state['task']
+                            self.state['revision'] += 1
+                            operation = task['operations'][task['operation_index']]
+                            operation.update({'status':'failed','end_revision':self.state['revision']})
+                            for receipt in task.get('controller_receipts',[]):
+                                if receipt['operation_id']==operation['id']:
+                                    receipt['failed_revision'] = self.state['revision']
+                            task.update({'stage':'failed','reason':str(error),
+                                         'result':{'status':'failed','reason':str(error),'partial_state_preserved':True,'physical_validated':False}})
+                        if task['stage'] in ('completed','failed'):
+                            task['after_observation'] = self.observe(task)['id']
+                            self.message('assistant','Independent joint checks passed in the simplified simulation.' if task['stage']=='completed' else 'Joint execution stopped: '+task['reason'],task['id'])
+                        self.persist()
                         continue
                     task['elapsed_s'] = min(task['duration_s'], task['elapsed_s'] + dt)
                     fraction = task['elapsed_s'] / task['duration_s']

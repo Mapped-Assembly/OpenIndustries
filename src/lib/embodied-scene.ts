@@ -12,7 +12,7 @@ export type RunSnapshot = {
   task:null|{id:string;stage:string;progress:number;skill?:string;reason?:string;command_id:string;result?:unknown};
   messages:{id:string;role:string;text:string;task_id:string|null}[];
   observations:{id:string;kind:string;task_id:string}[];
-  cabinet?:{id:string;name:string;sha256:string;frame:string;units:Record<string,string>;room_m:Vec3;inventory:string[];limitations:string[];approach_targets:string[]};
+  cabinet?:{id:string;name:string;sha256:string;frame:string;units:Record<string,string>;room_m:Vec3;inventory:string[];limitations:string[];approach_targets:string[];tools?:{gripper?:{mounted:boolean}}};
   dataset_state?:{state_id:string;phase:string;assembly_status:string;M:{actuators:{id:string;position:number;command_target:number|null;unit:string}[]}};
   preflight?:{status:string;reasons:string[]}|null;
 };
@@ -54,7 +54,7 @@ function box(id:string,size:Vec3,color:Vec3,digest='tabletop-v1',metadata:Record
 
 /** Apply authoritative link/object transforms with empty keyframe tracks in Run mode. */
 export function runWorkspace(run:RunSnapshot,assets:Record<string,Asset>,revealContents=false):Workspace {
-  const items:SceneItem[]=Object.entries(assets).map(([link,asset])=>{
+  const items:SceneItem[]=Object.entries(assets).filter(([link])=>!(run.cabinet?.tools?.gripper?.mounted===false&&link==='moving_jaw_so101_v1_link')).map(([link,asset])=>{
     const transform=basis.clone().multiply(matrix(run.robot.frames[link])).multiply(inverse);
     const position=new Vector3(...asset.originOffset).applyMatrix4(transform).toArray() as Vec3;
     const rotation=new Euler().setFromRotationMatrix(transform).toArray().slice(0,3).map(v=>Number(v)*180/Math.PI) as Vec3;

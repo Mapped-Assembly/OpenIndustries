@@ -81,3 +81,26 @@ class RobotModel:
                 'tcp_m': self.tcp(q).tolist(), 'model_sha256': self.sha,
                 'evidence_kind': 'simulated_kinematics', 'collision_validated': False,
                 'physical_validation': False}
+
+    def tool_matrix(self, q: list[float] | np.ndarray) -> np.ndarray:
+        """Return the pinned TCP frame used by the declared simulated spindle adapter."""
+        tcp = self.contract['tcp']
+        return self.frames(q)[tcp['parent_link']] @ np.array(tcp['matrix_m'])
+
+    def tool_pose(self, q: list[float], position: list[float], axis: list[float]) -> list[float]:
+        """Solve TCP position and spindle Z axis; roll remains unconstrained (five DOF)."""
+        point, direction = np.array(position), np.array(axis)
+        if not np.all(np.isfinite(point)) or not np.all(np.isfinite(direction)) or abs(np.linalg.norm(direction)-1) > 1e-6:
+            raise ValueError('INVALID_TOOL_TARGET')
+        def residual(value: np.ndarray) -> np.ndarray:
+            """Weight axis alignment separately from metre position residuals."""
+            pose = self.tool_matrix(np.append(value, q[-1]))
+            return np.r_[pose[:3, 3]-point, .2*(pose[:3, 2]-direction)]
+        for seed in (np.array(q[:5]), self.home[:5]):
+            fit = least_squares(residual, np.clip(seed,self.lower[:5],self.upper[:5]),
+                                bounds=(self.lower[:5],self.upper[:5]), max_nfev=150)
+            result = np.append(fit.x,q[-1])
+            pose = self.tool_matrix(result)
+            if np.linalg.norm(pose[:3,3]-point) <= .0005 and np.arccos(np.clip(pose[:3,2]@direction,-1,1)) <= .01:
+                return result.tolist()
+        raise ValueError('UNREACHABLE_TOOL_ACCESS')

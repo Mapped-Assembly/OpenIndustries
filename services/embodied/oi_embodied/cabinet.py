@@ -133,19 +133,26 @@ def dataset_state(state: Json, fixture: Json, model: RobotModel) -> Json:
                           'position':state['q'][index], 'command_target':task['goal_q'][index] if task and task.get('goal_q') else None,
                           'lower':float(model.lower[index]), 'upper':float(model.upper[index]),
                           'measured_position':None,'velocity':None,'effort':None,'current':None,'temperature':None,'fault':None})
+    if fixture.get('fastening'):
+        from .joint import assembly_status
+        spec = fixture['fastening']
+        actuators.append({'id':'screwdriver_spindle','joint_id':None,'coordinate':'continuous','unit':'rad',
+            'mapping':{'basis':'simulated unwrapped spindle angle','pitch_m_per_revolution':spec['pitch_m'],'physical_calibration':None},
+            'position':state['spindle_angle_rad'], 'command_target':spec['required_depth_m']/spec['pitch_m']*2*np.pi if task and task.get('capability') else None,
+            'measured_position':None,'velocity':None,'effort':None,'current':None,'temperature':None,'fault':None})
     return {'state_id':f"{state['run_id']}:{state['revision']}", 'revision':state['revision'],
             'at_ms':state['at_ms'], 'time_basis':'recorded wall clock; controller advances bounded simulation dt',
             'run_id':state['run_id'], 'scene_revision':state['scene_revision'], 'domain':'sim',
-            'evidence_kind':'simulated_kinematics_with_authored_stationary_components',
+            'evidence_kind':'simplified_simulated_fastening' if fixture.get('fastening') else 'simulated_kinematics_with_authored_stationary_components',
             'frame':fixture['frame'], 'units':fixture['units'], 'quaternion_order':'xyzw',
-            'phase':task['stage'] if task else 'idle', 'operation_id':task['id'] if task else None,
-            'command_id':task['command_id'] if task and task.get('goal_q') else None,
+            'phase':task['stage'] if task else 'idle', 'operation_id':task.get('trace_operation_id') if task and task.get('operations') else task['id'] if task else None,
+            'command_id':task.get('trace_command_id') if task and task.get('operations') else task['command_id'] if task and task.get('goal_q') else None,
             'A':{'id':fixture['agent_id'],'machine_id':fixture['machine_id']},
             'S':{'components':deepcopy(state['objects']), 'inventory':deepcopy(fixture['inventory']),
-                 'connections':deepcopy(fixture['connections']), 'package':deepcopy(fixture['package'])},
+                 'connections':deepcopy(state.get('connections',fixture['connections'])), 'package':deepcopy(fixture['package'])},
             'M':{'id':fixture['machine_id'],'controller_id':fixture['controller_id'], 'model_sha256':model.sha,
                  'base_matrix_m':np.eye(4).tolist(), 'link_matrices_m':{name:m.tolist() for name,m in frames.items()},
                  'tcp_matrix_m':(frames[tcp['parent_link']]@np.array(tcp['matrix_m'])).tolist(),
-                 'tools':deepcopy(fixture['tools']), 'actuators':actuators},
+                 'tools':deepcopy(fixture['tools']), 'tool_poses':[deepcopy(o) for o in state['objects'] if o['kind']=='tool'], 'actuators':actuators},
             'observation_ids':[obs['id'] for obs in state['observations'] if task and obs['task_id']==task['id']],
-            'checks':deepcopy(task.get('result')) if task else None, 'assembly_status':'not_executed', 'feasibility':'unknown'}
+            'checks':deepcopy(task.get('result')) if task else None, 'assembly_status':assembly_status(state) if fixture.get('fastening') else 'not_executed', 'feasibility':'unknown'}

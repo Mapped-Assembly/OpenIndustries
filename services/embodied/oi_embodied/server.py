@@ -170,7 +170,7 @@ def main() -> None:
     parser.add_argument('--source', type=Path, required=True, help='Pinned SO-ARM100 checkout')
     parser.add_argument('--state-dir', type=Path, default=Path.home() / '.local/share/open-industries/embodied')
     parser.add_argument('--port', type=int, default=4197)
-    parser.add_argument('--cabinet-fixture', choices=['joint','packaged'], help='Pinned CABINET-01 scene; use a separate --state-dir per fixture')
+    parser.add_argument('--cabinet-fixture', choices=['joint','packaged','fastening-a','fastening-b','fastening-c'], help='Pinned CABINET-01 scene; use a separate --state-dir per fixture')
     args = parser.parse_args()
     root = Path(__file__).resolve().parents[3]
     fixture, web = root / 'benchmarks/embodied', root / 'dist'
