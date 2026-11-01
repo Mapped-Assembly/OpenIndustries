@@ -6,6 +6,7 @@
   },
   "include": [
     "server/mcp-scenes.ts",
+    "server/local-scene-api.ts",
     "server/mcp-game.ts",
     "server/mcp-simulation.ts",
     "src/**/*.d.ts"

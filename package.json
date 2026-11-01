@@ -95,7 +95,8 @@
     "build:render": "tsc --noEmit -p tsconfig.render.json && vite build --config vite.render.config.ts",
     "render:serve": "node --import tsx server/render/service.ts",
     "test:render": "npm run build:render && node --import tsx --test tests/render/*.test.ts",
-    "demo:render": "node --import tsx scripts/render-demo.ts"
+    "demo:render": "node --import tsx scripts/render-demo.ts",
+    "test:local-scene-sync": "node --import tsx scripts/local-scene-sync-test.ts"
   },
   "dependencies": {
     "@supabase/supabase-js": "^2.116.0",

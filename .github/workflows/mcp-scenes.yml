@@ -27,6 +27,7 @@ jobs:
       - run: npm run test:animation
       - run: npm run test:scene-links
       - run: npx playwright install --with-deps chromium
+      - run: npm run test:local-scene-sync
       - run: npm run test:render
         env:
           OI_RENDER_NO_SANDBOX: '1'

@@ -18,6 +18,8 @@ import { AuthControls } from './components/auth-controls';
 import { WorkspaceViewer } from './components/workspace-viewer';
 import { EmbodiedWorkbench } from './components/embodied-workbench';
 import { Timeline } from './components/timeline';
+import { localBinding } from './lib/local-scene-session';
+import { LocalSceneControls, OpenLocalScene, useLocalScene } from './components/local-scene-controls';
 import { SceneControls } from './components/scene-controls';
 import { ProjectInspector } from './components/project-inspector';
 import { FormGeneration } from './components/form-generation';
@@ -55,7 +57,9 @@ function App(){
     (isFullscreen?stage.current:workspaceSlot.current)?.append(workspaceHost);
     return()=>workspaceHost.remove();
   },[isFullscreen,workspaceHost]);
-  const linkMode=new URLSearchParams(location.search).has('sceneId');
+  const [localScene]=useState(()=>localBinding(new URL(location.href)));
+  const cloudLinkMode=!localScene&&new URLSearchParams(location.search).has('sceneId');
+  const linkMode=!!localScene||cloudLinkMode;
   const [linkHash,setLinkHash]=useState(location.hash);
   const [linkedScene,setLinkedScene]=useState<SavedScene|null>(null);
   const cleanroomPreview=!linkMode&&new URLSearchParams(location.search).get('scene')==='cleanroom';
@@ -65,14 +69,20 @@ function App(){
   const mainOperation=useRef(0);
   const getScope=()=>`${session.current.owner??'guest'}:${session.current.roomId}:${roomOperation.current}`;
   const[draftReady,setDraftReady]=useState(false);const draftOwner=useRef<string|null>(null);const draftEpoch=useRef(0);const[localSaved,setLocalSaved]=useState(false);
-  const busy=busyState||(!linkMode&&(!draftReady||previousOwner.current!==owner));
+  const localSync=useLocalScene(localScene,workspace,busyState,next=>{
+    const selectedId=latestWorkspace.current.items[selected]?.id;
+    latestWorkspace.current=next;session.current.workspace=next;roomOperation.current++;
+    setHistory({past:[],present:next,future:[]});setSelected(next.items.findIndex(item=>item.id===selectedId));
+    setPlaying(false);setTime(null);setBusy(false);setStatus('Persistent local scene loaded.');
+  });
+  const busy=(!!localScene&&(!localSync.view.ready||localSync.view.busy))||busyState||(!linkMode&&(!draftReady||previousOwner.current!==owner));
   const [adoptionPending,setAdoptionPending]=useState(false);
   const [draftRecovery,setDraftRecovery]=useState<{scope:string;message:string}|null>(null);
   const [samplingPlan,setSamplingPlan]=useState<SamplingRoomPlan[]>([]);
-  function change(next:Workspace){setLocalSaved(false);setHistory(old=>({past:[...old.past,old.present].slice(-50),present:next,future:[]}));}
+  function change(next:Workspace){latestWorkspace.current=next;setLocalSaved(false);setHistory(old=>({past:[...old.past,old.present].slice(-50),present:next,future:[]}));}
   function acceptSavedScene(scene:SavedScene|null){
     setCurrentScene(scene);
-    if(linkMode&&scene){
+    if(cloudLinkMode&&scene){
       setLinkedScene(scene);
       window.history.replaceState(null,'',`/?sceneId=${encodeURIComponent(scene.id)}&revision=${scene.revision}`);
     }
@@ -113,13 +123,13 @@ function App(){
     }
   },[owner,draftReady]);
   useEffect(()=>{
-    if(!linkMode)return;
+    if(!cloudLinkMode)return;
     const changed=()=>setLinkHash(location.hash);
     window.addEventListener('hashchange',changed);
     return()=>window.removeEventListener('hashchange',changed);
   },[linkMode]);
   useEffect(()=>{
-    if(!linkMode)return;
+    if(!cloudLinkMode)return;
     let active=true;
     setBusy(true);setError('');setLinkedScene(null);setCurrentScene(null);setCaptureOpen(false);replace(emptyWorkspace());
     setStatus('Opening scene link…');
@@ -220,6 +230,7 @@ function App(){
         if(!valid())return;
         if(json?.format==='astra.scene')destination=hydrateManifest(readManifest(json),assets);
       }
+      if(localScene&&destination)throw new Error('Open a browser-local room to replace a whole project. Export this draft first; local scene revisions remain attached here.');
       if(oiOnly&&!destination)throw new Error('Choose an exported OI project (.oi.json) or legacy scene JSON. Use Import project for Forma equipment and STEP files.');
       if(!destination){
         const next=await importer.files(files,{upAxis,scale},text=>{if(valid())setStatus(text);});
@@ -230,7 +241,7 @@ function App(){
         setSelectedPart(-1);setTime(null);setPlaying(false);setStatus(`Imported ${next.length} asset(s)`);
       }
     }catch(e){if(valid()){setError((e as Error).message);setStatus('Import failed');}}finally{if(valid())setBusy(false);}
-    if(destination&&valid())sceneControls.current?.requestSwitch('Open imported scene',()=>({workspace:destination!,scene:null,roomId:crypto.randomUUID(),message:'Scene JSON opened.'}));
+    if(!localScene&&destination&&valid())sceneControls.current?.requestSwitch('Open imported scene',()=>({workspace:destination!,scene:null,roomId:crypto.randomUUID(),message:'Scene JSON opened.'}));
   }
   async function generate(request:GenerationRequest){
     if(busy)return;setBusy(true);setError('');setStatus('Starting Form…');
@@ -280,25 +291,26 @@ function App(){
   }
   const side=<aside id="workspace-panel" className={isFullscreen?'fullscreen-workspace':''} hidden={isFullscreen&&!workspaceVisible}>
     <div className="eyebrow">WORKSPACE</div><h1>Make room<br/>for your ideas.</h1><p>Generate Forma equipment or import an OI project, Forma JSON, or STEP model. Arrange it, author motion, and export the project to keep or share.</p>
-    <small role="status" aria-label="Local draft status">{linkMode?'Link workspace · not autosaved':localSaved?'Local draft saved':'Local draft changes pending'}</small>
-    {linkMode&&<section aria-label="Scene link"><b>{linkedScene?`${linkedScene.name} · revision ${linkedScene.revision}`:'Scene link'}</b><p>This workspace is separate from your saved local rooms. Export edits or save to cloud to keep them.</p><a href="/">Return to saved workspace</a><button disabled={busy} onClick={()=>location.reload()}>Reload scene link</button></section>}
-    <div className="capture-actions"><button onClick={()=>document.querySelector('.timeline')?.scrollIntoView({block:'start'})}>Animate</button><button onClick={()=>document.querySelector('[aria-label="Scene persistence"]')?.scrollIntoView({block:'start'})}>Save / open scenes</button></div>
+    <small role="status" aria-label="Local draft status">{localScene?'Persistent local scene · explicit commits':linkMode?'Link workspace · not autosaved':localSaved?'Local draft saved':'Local draft changes pending'}</small>
+    {cloudLinkMode&&<section aria-label="Scene link"><b>{linkedScene?`${linkedScene.name} · revision ${linkedScene.revision}`:'Scene link'}</b><p>This workspace is separate from your saved local rooms. Export edits or save to cloud to keep them.</p><a href="/">Return to saved workspace</a><button disabled={busy} onClick={()=>location.reload()}>Reload scene link</button></section>}
+    {localScene?<LocalSceneControls binding={localScene} sync={localSync} onExport={exportScene}/>:!cloudLinkMode&&<OpenLocalScene flush={flushDraft} disabled={busy}/>}
+    <div className="capture-actions"><button onClick={()=>document.querySelector('.timeline')?.scrollIntoView({block:'start'})}>Animate</button><button onClick={()=>document.querySelector(localScene?'[aria-label="Local scene synchronization"]':'[aria-label="Scene persistence"]')?.scrollIntoView({block:'start'})}>Save / open scenes</button></div>
      {cleanroomPreview&&<section className="cleanroom-plan" aria-label="Today's cleanroom sampling plan"><div className="eyebrow">TODAY'S SAMPLING / POC</div><table aria-label="Room access and sample schedule"><thead><tr><th scope="col">Room</th><th scope="col">Samples</th><th scope="col">Proposed times</th><th scope="col">Access status</th></tr></thead><tbody>{samplingPlan.map(room=><tr key={room.room} className={room.access.status==='blocked'?'blocked-room':''}><th scope="row">{room.room}</th><td>{room.requiredSamples}</td><td>{room.proposedTimes.length?room.proposedTimes.map((time,index)=><span key={`${time.start}-${time.end}`}>{index>0&&<br/>}{time.start}–{time.end}</span>):'Not scheduled'}</td><td>{room.access.status==='available'?`Available ${room.access.window.start}–${room.access.window.end}`:`No access window; ${room.access.reason}`}</td></tr>)}</tbody></table><p>Facility map: A northwest, B northeast, C southwest; D is unplanned. The bot enters A and C only, and skips occupied Room B. Animation scale: 1 second = 1 scheduled minute from 09:00. POC only; confirm current access and sample points before operation.</p></section>}
     <input ref={input} aria-label="Import files" type="file" accept=".json,.step,.stp" multiple hidden onChange={e=>{finishFilePicker();void load(Array.from(e.target.files??[]));e.target.value='';}}/>
     <input ref={folderInput} aria-label="Import project folder" type="file" multiple hidden onChange={e=>{finishFilePicker();void load(Array.from(e.target.files??[]));e.target.value='';}}/>
     <input ref={oiInput} aria-label="Import OI project file" type="file" accept=".json" hidden onChange={e=>{finishFilePicker();void load(Array.from(e.target.files??[]),true);e.target.value='';}}/>
-    <section aria-label="Project files" className="project-files"><div className="eyebrow">PROJECT FILES</div><div className="capture-actions"><button disabled={busy} onClick={()=>openFilePicker(false,true)}>Import OI project</button><button disabled={busy} onClick={exportScene}>Export OI project</button></div><p>Includes the room, equipment geometry, layout, and animation. Opens without signing in.</p><button disabled={busy||!workspace.items[selected]?.asset.formProject} onClick={exportForma}>Export selected Forma project</button><small className="project-file-note">Forma JSON contains the equipment design and BOM. Referenced CAD files stay separate; use OI export to carry the displayed geometry.</small></section>
+    <section aria-label="Project files" className="project-files"><div className="eyebrow">PROJECT FILES</div><div className="capture-actions"><button disabled={busy||!!localScene} onClick={()=>openFilePicker(false,true)}>Import OI project</button><button disabled={busy} onClick={exportScene}>Export OI project</button></div><p>Includes the room, equipment geometry, layout, and animation. Opens without signing in.</p><button disabled={busy||!workspace.items[selected]?.asset.formProject} onClick={exportForma}>Export selected Forma project</button><small className="project-file-note">Forma JSON contains the equipment design and BOM. Referenced CAD files stay separate; use OI export to carry the displayed geometry.</small></section>
     {!cleanroomPreview&&<FormGeneration busy={busy} generate={generate}/>}
      <button className="import" disabled={busy} onClick={()=>openFilePicker()}>↑ Drop files or browse<br/><small>FORMA JSON · STEP · OI PROJECT</small></button>
      <button disabled={busy} onClick={()=>openFilePicker(true)}>Import project folder</button>
-     {!cleanroomPreview&&<section aria-label="Space brief"><div className="eyebrow">SPACE BRIEF / LOCAL DEMO</div><p>Describe the space. OpenIndustries organizes zones and workflow; Form OSS authors the actual equipment.</p><label>Space type<select aria-label="Space type" value={spaceKey} disabled={busy} onChange={e=>{const key=e.target.value as SpaceBriefKey;setSpaceKey(key);setSpaceRequirements(SPACE_BRIEFS[key].description);}}>{Object.values(SPACE_BRIEFS).map(brief=><option key={brief.key} value={brief.key}>{brief.label}</option>)}</select></label><label>Requirements<textarea aria-label="Space requirements" value={spaceRequirements} maxLength={2000} disabled={busy} onChange={e=>setSpaceRequirements(e.target.value)} /></label><button className="capture-primary" disabled={busy||!spaceRequirements.trim()} onClick={buildDemoSpace}>Build space layout</button><small>Demo output uses clearly marked planning envelopes and includes a simple material-flow animation.</small></section>}
+     {!cleanroomPreview&&<section aria-label="Space brief"><div className="eyebrow">SPACE BRIEF / LOCAL DEMO</div><p>Describe the space. OpenIndustries organizes zones and workflow; Form OSS authors the actual equipment.</p><label>Space type<select aria-label="Space type" value={spaceKey} disabled={busy} onChange={e=>{const key=e.target.value as SpaceBriefKey;setSpaceKey(key);setSpaceRequirements(SPACE_BRIEFS[key].description);}}>{Object.values(SPACE_BRIEFS).map(brief=><option key={brief.key} value={brief.key}>{brief.label}</option>)}</select></label><label>Requirements<textarea aria-label="Space requirements" value={spaceRequirements} maxLength={2000} disabled={busy} onChange={e=>setSpaceRequirements(e.target.value)} /></label><button className="capture-primary" disabled={busy||!!localScene||!spaceRequirements.trim()} onClick={buildDemoSpace}>Build space layout</button><small>Demo output uses clearly marked planning envelopes and includes a simple material-flow animation.</small></section>}
      <details><summary>STEP import settings</summary><label>Source up axis<select value={upAxis} onChange={e=>setUpAxis(e.target.value as 'Z'|'Y')}><option>Z</option><option>Y</option></select></label><label>Scale correction<input type="number" min=".000001" value={scale} onChange={e=>setScale(Number(e.target.value))}/></label></details>
-     <section><div className="eyebrow">ROOM / METERS</div><div className="dimensions">{['Width','Depth','Height'].map((name,i)=><label key={name}>{name}<input aria-label={name} type="number" min="1" max="100" step=".5" disabled={busy} value={workspace.room[i]} onChange={e=>{const n=Number(e.target.value);if(n>=1&&n<=100)change({...workspace,room:workspace.room.map((v,j)=>j===i?n:v) as Vec3});}}/></label>)}</div><div className="capture-actions"><button onClick={()=>{setSelected(-1);setSelectedPart(-1);setFocus(n=>n+1);}}>View entire room</button><button disabled={busy} onClick={requestNewRoom}>New room</button></div></section>
+     <section><div className="eyebrow">ROOM / METERS</div><div className="dimensions">{['Width','Depth','Height'].map((name,i)=><label key={name}>{name}<input aria-label={name} type="number" min="1" max="100" step=".5" disabled={busy} value={workspace.room[i]} onChange={e=>{const n=Number(e.target.value);if(n>=1&&n<=100)change({...workspace,room:workspace.room.map((v,j)=>j===i?n:v) as Vec3});}}/></label>)}</div><div className="capture-actions"><button onClick={()=>{setSelected(-1);setSelectedPart(-1);setFocus(n=>n+1);}}>View entire room</button><button disabled={busy||!!localScene} onClick={requestNewRoom}>New room</button></div></section>
     <section><div className="eyebrow">SCENE COLLECTION <span>{workspace.items.length}</span></div>{workspace.items.map((item,i)=><button className={`asset ${selected===i?'active':''}`} key={item.id} onClick={()=>{setSelected(i);setSelectedPart(-1);setFocus(n=>n+1);}}><span>◇ {item.name}{item.missing?' · MISSING GEOMETRY':''}</span><small>{item.asset.source.kind.toUpperCase()} · {item.asset.parts.length} components</small></button>)}</section>
     <div className="capture-actions"><button disabled={busy||!history.past.length} onClick={()=>{setPlaying(false);setTime(null);setHistory(old=>({past:old.past.slice(0,-1),present:old.past.at(-1)!,future:[old.present,...old.future]}));}}>Undo</button><button disabled={busy||!history.future.length} onClick={()=>{setPlaying(false);setTime(null);setHistory(old=>({past:[...old.past,old.present],present:old.future[0],future:old.future.slice(1)}));}}>Redo</button></div>
     {workspace.items.length>0&&<section><div className="eyebrow">LAYOUT / BASE TRANSFORMS</div>{workspace.items.map((item,i)=><fieldset className="placement" key={item.id}><legend>{item.name}</legend><label>Instance name<input aria-label={`${item.name} instance name`} maxLength={200} disabled={busy} value={item.name} onChange={e=>change({...workspace,items:workspace.items.map((v,j)=>i===j?{...v,name:e.target.value}:v)})}/></label>{(['position','rotation'] as const).map(kind=><div className="dimensions" key={kind}>{['X','Y','Z'].map((axis,index)=><label key={axis}>{axis}{kind==='rotation'?'°':''}<input aria-label={`${item.name} ${axis} ${kind}`} type="number" step={kind==='position'?'.1':'5'} disabled={busy} value={item[kind][index]} onChange={e=>{const n=Number(e.target.value);if(Number.isFinite(n)){setPlaying(false);setTime(null);change({...workspace,items:workspace.items.map((v,j)=>i===j?{...v,[kind]:v[kind].map((value,k)=>index===k?n:value) as Vec3}:v)});}}}/></label>)}</div>)}<label className="inline-check"><input type="checkbox" checked={item.visible} disabled={busy} onChange={e=>change({...workspace,items:workspace.items.map((v,j)=>i===j?{...v,visible:e.target.checked}:v)})}/> Visible</label><div className="capture-actions"><button disabled={busy} onClick={()=>change({...workspace,items:workspace.items.map((v,j)=>i===j?{...v,position:[0,0,0],rotation:[0,0,0]}:v)})}>Reset position</button><button disabled={busy} onClick={()=>change({...workspace,items:[...workspace.items,{...item,id:crypto.randomUUID(),name:`${item.name} copy`,position:[item.position[0]+item.asset.dimensions[0]+.25,item.position[1],item.position[2]]}]})}>Duplicate</button><button disabled={busy} onClick={()=>{change({...workspace,items:workspace.items.filter(v=>v.id!==item.id),animation:{...workspace.animation,tracks:workspace.animation.tracks.filter(t=>t.instanceId!==item.id)}});setSelected(-1);setSelectedPart(-1);}}>Delete instance</button></div></fieldset>)}</section>}
     <Timeline workspace={workspace} selected={selected} selectedPart={selectedPart} setPart={setSelectedPart} change={change} time={time} setTime={setTime} playing={playing} setPlaying={setPlaying} disabled={busy}/>
-    <SceneControls ref={sceneControls} workspace={workspace} owner={owner} roomId={roomId} current={currentScene} replace={installRoom} flushDraft={flushDraft} getScope={getScope} roomOperation={roomOperation.current} busy={busy} setBusy={setBusy} onExport={exportScene}/>
+    {!localScene&&<SceneControls ref={sceneControls} workspace={workspace} owner={owner} roomId={roomId} current={currentScene} replace={installRoom} flushDraft={flushDraft} getScope={getScope} roomOperation={roomOperation.current} busy={busy} setBusy={setBusy} onExport={exportScene}/>}
   </aside>;
   return <><header className="app-header"><div className="brand"><span className="logo">O</span> OPENINDUSTRIES</div><span className="tag">SPATIAL WORKBENCH</span><a href="/?run=so101">Robot Run</a><AuthControls returnTo={linkMode?location.origin+location.pathname+location.search:undefined} beforeSignIn={()=>linkMode?Promise.resolve():preserveAuthWorkspace(assets,workspace.room,selected,workspace.items.map(i=>i.position),workspace)}/><button disabled={busy} onClick={()=>openFilePicker()}>+ Import project</button></header>
     <main onDragOver={e=>e.preventDefault()} onDrop={e=>{e.preventDefault();void load(Array.from(e.dataTransfer.files));}}>
