@@ -68,6 +68,8 @@ jobs:
           SO101_SOURCE_ROOT="$PWD/so101-source" npm run test:embodied-browser
           npm run test:cabinet-scene
           SO101_SOURCE_ROOT="$PWD/so101-source" npm run test:cabinet-browser
+          SO101_SOURCE_ROOT="$PWD/so101-source" npm run test:cabinet-joint-browser
+          npm run demo:cabinet-joint
       - name: Replay and render FIELD-LAB-01
         run: node benchmarks/field-lab/run.mjs deliverables/field-lab --render
       - uses: actions/upload-artifact@v4
@@ -78,6 +80,7 @@ jobs:
             deliverables/field-lab
             deliverables/embodied
             deliverables/cabinet
+            deliverables/cabinet-joint
           if-no-files-found: warn
 
   motion-handoff:

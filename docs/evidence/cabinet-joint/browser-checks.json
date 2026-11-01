@@ -1,0 +1,68 @@
+{
+  "run_id": "fa50130a-e45e-4829-bf9b-4d9a9fde2e80",
+  "initial_state_id": "fa50130a-e45e-4829-bf9b-4d9a9fde2e80:0",
+  "final_state_id": "fa50130a-e45e-4829-bf9b-4d9a9fde2e80:105",
+  "complete": true,
+  "assembly_status": "succeeded_simulated_joint",
+  "checks": {
+    "base_panel_pose": {
+      "angle_error_rad": 0,
+      "position_error_m": 0,
+      "status": "pass"
+    },
+    "connection": {
+      "status": "pass"
+    },
+    "connection_progress": {
+      "status": "pass"
+    },
+    "declared_loads": {
+      "provenance": "simulation assumptions",
+      "status": "pass"
+    },
+    "insertion_depth": {
+      "actual_m": 0.006,
+      "required_m": 0.006,
+      "status": "pass"
+    },
+    "insertion_state": {
+      "status": "pass"
+    },
+    "inventory": {
+      "status": "pass"
+    },
+    "required_support": {
+      "status": "pass"
+    },
+    "screw_hole_pose": {
+      "position_error_m": 0,
+      "status": "pass"
+    },
+    "screw_identity": {
+      "status": "pass"
+    },
+    "tool_access": {
+      "status": "pass"
+    },
+    "tool_alignment": {
+      "axis_error_rad": 2.1073424255447017e-8,
+      "position_error_m": 1.0861073982494851e-11,
+      "status": "pass"
+    },
+    "tool_binding": {
+      "status": "pass"
+    },
+    "tool_pose_binding": {
+      "status": "pass"
+    },
+    "upright_panel_pose": {
+      "angle_error_rad": 0,
+      "position_error_m": 0,
+      "status": "pass"
+    }
+  },
+  "stop_resume": true,
+  "reload_retained_partial": true,
+  "replay_dispatches": 0,
+  "physical_validation": false
+}

@@ -2,8 +2,10 @@
 
 Issue #73 integrates the cabinet into OI's existing SO-101 authority and viewer.
 It provides inspection, bounded position-only approach, preflight refusals and
-recorded state replay. It does **not** implement unpacking (#75), grasp/contact
-(#54), or fastening (#74). Assembly status remains `not_executed`.
+recorded state replay. The original `joint` and `packaged` fixtures do **not** execute assembly.
+The separate [supported-joint fixtures](cabinet-joint.md) implement #74 with an
+explicit simulated spindle adapter and manually clamped panels. Unpacking (#75)
+and grasp/contact (#54) remain outside these fixtures.
 
 ## Start locally (Linux / WSL2)
 

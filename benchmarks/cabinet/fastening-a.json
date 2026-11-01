@@ -1,0 +1,498 @@
+{
+  "schema_version": 1,
+  "frame": "base_link",
+  "units": {
+    "length": "m",
+    "angle": "rad",
+    "mass": "kg"
+  },
+  "quaternion_order": "xyzw",
+  "handedness": "right",
+  "up_axis": "Z",
+  "source_sha256": "a559cb0d5a95c378452cccc8d98f14e3fb8eec9a6590c418c63ef7ab43d62ed7",
+  "model_sha256": "3dba648571df41892eeea0ac919093dd6cd66dc362203e5898f4613974ad7d15",
+  "machine_id": "so101-follower-new-calibration",
+  "agent_id": "cabinet-agent",
+  "controller_id": "so101-kinematic-v1",
+  "room_m": [
+    1.2,
+    1.2,
+    1.0
+  ],
+  "limits": {
+    "payload_kg": 0.15,
+    "tool_mass_kg": 0.035,
+    "wrist_moment_Nm": 0.15,
+    "grip_force_N": 8.0
+  },
+  "tools": {
+    "gripper": {
+      "mounted": false,
+      "interface": "pinned SO-101 jaws; gripper coordinate is radians, not aperture",
+      "calibration": null
+    },
+    "screwdriver": {
+      "mounted": true,
+      "adapter": "sim-spindle-at-so101-tcp-v1",
+      "mount_frame": "pinned_tcp",
+      "tip_matrix": [
+        [
+          1.0,
+          0.0,
+          0.0,
+          0.0
+        ],
+        [
+          0.0,
+          1.0,
+          0.0,
+          0.0
+        ],
+        [
+          0.0,
+          0.0,
+          1.0,
+          0.0
+        ],
+        [
+          0.0,
+          0.0,
+          0.0,
+          1.0
+        ]
+      ],
+      "axis_local": [
+        0,
+        0,
+        1
+      ],
+      "body_length_m": 0.09,
+      "spindle_actuator": "screwdriver_spindle",
+      "mass_kg": 0.035,
+      "center_of_mass_local_m": [
+        0,
+        0,
+        -0.045
+      ],
+      "mass_source": "declared simulation parameter",
+      "physical_adapter": null,
+      "physical_calibration": null
+    }
+  },
+  "tolerances": {
+    "position_m": 0.003,
+    "angle_rad": 0.035
+  },
+  "limitations": [
+    "Ideal rigid clamps and declared simulation loads, not measured hardware ratings.",
+    "Panels are manually staged; no grasp, pick/place, feeding or automatic tool change.",
+    "Tool-envelope and TCP path checks only; full-link collision and contact physics unvalidated.",
+    "Simplified pitch/depth model; torque and thread-contact telemetry are unavailable."
+  ],
+  "id": "cabinet-fastening-a-v1",
+  "name": "Supported joint A / simulated SO-101 spindle",
+  "objects": [
+    {
+      "id": "base_panel",
+      "name": "base panel",
+      "kind": "panel",
+      "geometry": {
+        "primitive": "box",
+        "size_m": [
+          0.08,
+          0.05,
+          0.006
+        ]
+      },
+      "geometry_sha256": "1c1c06c8ba499d87f6dfba73e5b2ef2f1ce24f268d9a2abf339fac4cb4cdf61a",
+      "size_m": [
+        0.08,
+        0.05,
+        0.006
+      ],
+      "position_m": [
+        0.346,
+        0.0,
+        0.18
+      ],
+      "orientation_xyzw": [
+        0,
+        0,
+        0,
+        1
+      ],
+      "color": [
+        0.27,
+        0.73,
+        0.75
+      ],
+      "present": true,
+      "attached_to": null,
+      "supported": true,
+      "accessible": true,
+      "collision_geometry": "oriented_box_envelope",
+      "material_class": "3d_printed_polymer_unspecified",
+      "mass_kg": 0.025,
+      "center_of_mass_m": [
+        0,
+        0,
+        0
+      ],
+      "manufacturing": {
+        "process": "3D printing",
+        "material": "PLA (simulation assumption)",
+        "print_profile": "declared coupon, not fabrication validated",
+        "shell_thickness_m": 0.0012,
+        "infill_fraction": 0.2,
+        "mass_kg": 0.025,
+        "center_of_mass_m": [
+          0,
+          0,
+          0
+        ],
+        "mass_source": "declared simulation parameter"
+      },
+      "grasp_feature": {
+        "offset_m": [
+          0,
+          0,
+          0.005
+        ],
+        "boss_size_m": [
+          0.018,
+          0.012,
+          0.004
+        ],
+        "strength_validated": false
+      },
+      "support_id": "holding_fixture"
+    },
+    {
+      "id": "upright_panel",
+      "name": "upright panel",
+      "kind": "panel",
+      "geometry": {
+        "primitive": "box",
+        "size_m": [
+          0.06,
+          0.05,
+          0.006
+        ]
+      },
+      "geometry_sha256": "69be80654ed0626b9d5017c3b797a1f95385e7a328586f44530fa129aafbd928",
+      "size_m": [
+        0.06,
+        0.05,
+        0.006
+      ],
+      "position_m": [
+        0.303,
+        0.0,
+        0.213
+      ],
+      "orientation_xyzw": [
+        0,
+        0.7071067811865475,
+        0,
+        0.7071067811865476
+      ],
+      "color": [
+        0.9,
+        0.7,
+        0.36
+      ],
+      "present": true,
+      "attached_to": null,
+      "supported": true,
+      "accessible": true,
+      "collision_geometry": "oriented_box_envelope",
+      "material_class": "3d_printed_polymer_unspecified",
+      "mass_kg": 0.025,
+      "center_of_mass_m": [
+        0,
+        0,
+        0
+      ],
+      "manufacturing": {
+        "process": "3D printing",
+        "material": "PLA (simulation assumption)",
+        "print_profile": "declared coupon, not fabrication validated",
+        "shell_thickness_m": 0.0012,
+        "infill_fraction": 0.2,
+        "mass_kg": 0.025,
+        "center_of_mass_m": [
+          0,
+          0,
+          0
+        ],
+        "mass_source": "declared simulation parameter"
+      },
+      "grasp_feature": {
+        "offset_m": [
+          0,
+          0,
+          0.005
+        ],
+        "boss_size_m": [
+          0.018,
+          0.012,
+          0.004
+        ],
+        "strength_validated": false
+      },
+      "support_id": "holding_fixture"
+    },
+    {
+      "id": "screw_1",
+      "name": "screw 1",
+      "kind": "screw",
+      "geometry": {
+        "primitive": "box",
+        "size_m": [
+          0.006,
+          0.006,
+          0.02
+        ]
+      },
+      "geometry_sha256": "6ac4673c9817cc865501a9e7b506b0f35307f5da1e29d2da9d80336ff13c20c2",
+      "size_m": [
+        0.006,
+        0.006,
+        0.02
+      ],
+      "position_m": [
+        0.29,
+        0.0,
+        0.18
+      ],
+      "orientation_xyzw": [
+        0.0,
+        0.7071067811865475,
+        0.0,
+        0.7071067811865476
+      ],
+      "color": [
+        0.65,
+        0.68,
+        0.72
+      ],
+      "present": true,
+      "attached_to": null,
+      "supported": true,
+      "accessible": true,
+      "collision_geometry": "oriented_box_envelope",
+      "material_class": "metal",
+      "mass_kg": null,
+      "center_of_mass_m": null,
+      "fastener": {
+        "nominal": "M3",
+        "length_m": 0.02,
+        "joint_id": "corner",
+        "hole_id": "corner_hole",
+        "installed": false,
+        "insertion_m": 0.0,
+        "head_type": "modeled Phillips",
+        "pitch_m": 0.0005
+      }
+    },
+    {
+      "id": "holding_fixture",
+      "name": "holding fixture",
+      "kind": "fixture",
+      "geometry": {
+        "primitive": "box",
+        "size_m": [
+          0.08,
+          0.08,
+          0.177
+        ]
+      },
+      "geometry_sha256": "eeae1109299d0db491658945c9502cb7c44cbca38d323f7e6cb4c44aa6eb1998",
+      "size_m": [
+        0.08,
+        0.08,
+        0.177
+      ],
+      "position_m": [
+        0.346,
+        0,
+        0.0885
+      ],
+      "orientation_xyzw": [
+        0,
+        0,
+        0,
+        1
+      ],
+      "color": [
+        0.3,
+        0.4,
+        0.45
+      ],
+      "present": true,
+      "attached_to": null,
+      "supported": true,
+      "accessible": true,
+      "collision_geometry": "oriented_box_envelope",
+      "material_class": "unspecified",
+      "mass_kg": null,
+      "center_of_mass_m": null,
+      "clamped_component_ids": [
+        "base_panel",
+        "upright_panel"
+      ],
+      "clamps_engaged": true,
+      "support_model": "ideal rigid corner clamps; strength not physically validated",
+      "load_capacity_kg": 0.2
+    },
+    {
+      "id": "screwdriver",
+      "name": "screwdriver",
+      "kind": "tool",
+      "geometry": {
+        "primitive": "box",
+        "size_m": [
+          0.025,
+          0.025,
+          0.09
+        ]
+      },
+      "geometry_sha256": "574b57f1630069072dcbb019e06812cd0448e7c2d0e674653590ab1366bc987f",
+      "size_m": [
+        0.025,
+        0.025,
+        0.09
+      ],
+      "position_m": [
+        0.215000044016,
+        -5.24e-10,
+        0.240000016369
+      ],
+      "orientation_xyzw": [
+        0.017758443474,
+        0.706883781387,
+        0.01775844373,
+        0.706883720971
+      ],
+      "color": [
+        0.3,
+        0.3,
+        0.35
+      ],
+      "present": true,
+      "attached_to": "pinned_tcp",
+      "supported": true,
+      "accessible": true,
+      "collision_geometry": "oriented_box_envelope",
+      "material_class": "unspecified",
+      "mass_kg": null,
+      "center_of_mass_m": null
+    }
+  ],
+  "target_assembly": {
+    "base_panel": {
+      "position_m": [
+        0.346,
+        0.0,
+        0.18
+      ],
+      "orientation_xyzw": [
+        0,
+        0,
+        0,
+        1
+      ]
+    },
+    "upright_panel": {
+      "position_m": [
+        0.303,
+        0.0,
+        0.213
+      ],
+      "orientation_xyzw": [
+        0,
+        0.7071067811865475,
+        0,
+        0.7071067811865476
+      ]
+    }
+  },
+  "connections": [
+    {
+      "id": "corner",
+      "component_ids": [
+        "base_panel",
+        "upright_panel"
+      ],
+      "screw_ids": [
+        "screw_1"
+      ],
+      "features": [
+        {
+          "hole_id": "corner_hole",
+          "screw_id": "screw_1",
+          "position_m": [
+            0.3,
+            0,
+            0.18
+          ],
+          "outward_axis": [
+            -1,
+            0,
+            0
+          ]
+        }
+      ],
+      "verified": false,
+      "state": "unconnected"
+    }
+  ],
+  "package": null,
+  "approach_targets": [],
+  "adaptation": "Derived #73 coupon raised into a declared clamped pedestal, with explicit simulated spindle adapter. Arm base unchanged.",
+  "inventory": [
+    "base_panel",
+    "upright_panel",
+    "screw_1"
+  ],
+  "parent_fixture_sha256": "39d716709bcca76d6ba9597abbafd01c1bef3e78a3199ad60c0164d9acbfa2ea",
+  "initial_q_rad": [
+    9.859905e-06,
+    -1.134549589017,
+    0.726049491599,
+    0.408509338592,
+    -0.001551591544,
+    0.0
+  ],
+  "fastening": {
+    "capability": "supported-joint-v1",
+    "controller_id": "so101-kinematic-v1",
+    "joint_id": "corner",
+    "screw_id": "screw_1",
+    "hole_id": "corner_hole",
+    "panel_ids": [
+      "base_panel",
+      "upright_panel"
+    ],
+    "support_id": "holding_fixture",
+    "tool_id": "screwdriver",
+    "frame": "base_link",
+    "length_unit": "m",
+    "angle_unit": "rad",
+    "required_depth_m": 0.006,
+    "pitch_m": 0.0005,
+    "insertion_rate_m_s": 0.0015,
+    "position_tolerance_m": 0.00075,
+    "angle_tolerance_rad": 0.015,
+    "depth_tolerance_m": 5e-05,
+    "active_deadline_s": 45.0,
+    "recovery_attempts": 0,
+    "provenance": "declared simplified simulation; no thread contact, torque or physical evidence",
+    "manual_setup": [
+      "Raise and clamp both panels in the ideal corner fixture at target poses.",
+      "Preposition screw_1 in corner_hole at zero insertion.",
+      "Replace jaws with the simulated TCP spindle adapter; initialize the declared arm pose."
+    ],
+    "cancellation": "Stop controller immediately; preserve depth, spindle and poses; re-observe before resume."
+  }
+}

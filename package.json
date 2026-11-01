@@ -89,7 +89,9 @@
     "test:embodied-browser": "node --import tsx scripts/embodied-browser-test.ts",
     "test:mcp-branding": "node --test scripts/mcp-branding-test.mjs",
     "test:cabinet-browser": "node --import tsx scripts/cabinet-browser-test.ts",
-    "test:cabinet-scene": "node --import tsx scripts/cabinet-scene-test.ts"
+    "test:cabinet-scene": "node --import tsx scripts/cabinet-scene-test.ts",
+    "test:cabinet-joint-browser": "node --import tsx scripts/cabinet-joint-browser-test.ts",
+    "demo:cabinet-joint": "python3 benchmarks/cabinet/run_joint.py"
   },
   "dependencies": {
     "@supabase/supabase-js": "^2.116.0",

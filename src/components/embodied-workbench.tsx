@@ -79,15 +79,15 @@ export function EmbodiedWorkbench() {
     <aside><h1>Robot chat</h1><p>SO-101 follower · {run?.policy_mode==='model'?'Configured model':'Manual test mode — no natural-language model connected'}</p>
       <label>Selected object <select value={selected??''} onChange={e=>setSelected(e.target.value||null)}><option value="">None</option>{run?.objects.map(o=><option key={o.id} value={o.id}>{o.name}</option>)}</select></label>
       {run?.mode==='edit'&&!run.cabinet&&<fieldset><legend>Explicit fixture edit (metres)</legend><label>X <input aria-label="Object X" type="number" step=".01" min=".05" max=".35" value={objectX} onChange={e=>setObjectX(e.target.value)}/></label><label>Y <input aria-label="Object Y" type="number" step=".01" min="-.15" max=".15" value={objectY} onChange={e=>setObjectY(e.target.value)}/></label><button disabled={!selected||stale} onClick={()=>void send('edit_object')}>Save object position</button></fieldset>}
-      <p>Available: approach an accessible component, inspect simulated state, return home. Objects remain stationary.</p>
-      {run?.cabinet&&<section aria-label="Cabinet inspection"><p>{run.cabinet.inventory.length} inventory items · assembly not executed</p>
+      <p>{run?.skills.includes('assemble corner')?'Available: assemble corner, inspect selected. Panels are manually clamped; the simulated tool and screw move.':'Available: approach an accessible component, inspect simulated state, return home. Objects remain stationary.'}</p>
+      {run?.cabinet&&<section aria-label="Cabinet inspection"><p>{run.cabinet.inventory.length} inventory items · <span data-testid="assembly-status">{displayed?.dataset_state?.assembly_status??'not_executed'}</span></p>
         <label><input type="checkbox" checked={reveal} onChange={e=>setReveal(e.target.checked)}/>Reveal contents (view only)</label>
         <button disabled={replay!==null||stale||!!active||!selected} onClick={()=>void send('preflight')}>Check lift requirements</button>
         {displayed?.preflight&&<p data-testid="preflight">{displayed.preflight.status}: {displayed.preflight.reasons.join(', ')}</p>}
         <button disabled={replay===null&&(!!active||stale)} onClick={()=>replay!==null?setReplay(null):void openReplay()}>{replay!==null?'Return to live':'Inspect recorded states'}</button>
         {replay!==null&&trace&&<><label>Recorded state <input aria-label="Recorded state" type="range" min={0} max={trace.states.length-1} value={replay} onChange={e=>setReplay(Number(e.target.value))}/></label><p>{trace.complete?'Complete retained trace':'Retention gap — partial trace'}</p></>}
         <p data-testid="state-id">{displayed?.dataset_state?.state_id}</p>
-        <table><caption>Simulated actuators (rad)</caption><thead><tr><th>Actuator</th><th>Position</th><th>Target</th></tr></thead><tbody>{displayed?.dataset_state?.M.actuators.map(a=><tr key={a.id}><td>{a.id}</td><td>{a.position.toFixed(3)}</td><td>{a.command_target?.toFixed(3)??'—'}</td></tr>)}</tbody></table>
+        <table><caption>Simulated actuators (rad; spindle unwrapped)</caption><thead><tr><th>Actuator</th><th>Position</th><th>Target</th></tr></thead><tbody>{displayed?.dataset_state?.M.actuators.map(a=><tr key={a.id}><td>{a.id}</td><td>{a.position.toFixed(3)}</td><td>{a.command_target?.toFixed(3)??'—'}</td></tr>)}</tbody></table>
         <details><summary>Selected component and fixture limits</summary><pre>{JSON.stringify({component:displayed?.objects.find(o=>o.id===selected),limitations:run.cabinet.limitations},null,2)}</pre></details>
       </section>}
       <div className="embodied-chat" aria-label="Conversation" aria-live="polite">{run?.messages.map(m=><p key={m.id}><b>{m.role==='user'?'You':'Agent'}</b> {m.text}</p>)}</div>
