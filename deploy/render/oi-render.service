@@ -1,0 +1,27 @@
+[Unit]
+Description=OpenIndustries local headless GIF renderer
+After=network.target
+
+[Service]
+Type=exec
+User=oi-render
+Group=oi-render
+WorkingDirectory=/opt/open-industries
+Environment=NODE_ENV=production
+Environment=PLAYWRIGHT_BROWSERS_PATH=/opt/open-industries/.playwright
+Environment=OI_RENDER_STATE_DIR=/var/lib/open-industries-render
+Environment=OI_RENDER_PORT=4198
+Environment=OI_RENDER_CONCURRENCY=1
+ExecStart=/usr/bin/env node --import tsx server/render/service.ts
+Restart=on-failure
+RestartSec=3
+TimeoutStopSec=15
+KillMode=control-group
+UMask=0077
+StateDirectory=open-industries-render
+StateDirectoryMode=0700
+MemoryMax=2G
+TasksMax=512
+
+[Install]
+WantedBy=multi-user.target

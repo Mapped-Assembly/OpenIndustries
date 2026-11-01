@@ -1,0 +1,94 @@
+{
+  "schema_version": 1,
+  "job_id": "18a3765b-9153-43f0-a50a-437d6c9adc01",
+  "scene_sha256": "2e6eecfa5c51c3027d0f4c59103cc003f47421bc810f7555e014946f047c59f8",
+  "source": {
+    "kind": "portable"
+  },
+  "options": {
+    "scope": "room",
+    "assetIndex": 0,
+    "region": {
+      "x": 0,
+      "z": 0,
+      "width": 8,
+      "depth": 6
+    },
+    "motion": "turntable",
+    "size": 640,
+    "duration": 4,
+    "fps": 15,
+    "allowEmptyRoom": true,
+    "camera": {
+      "azimuthDegrees": 45,
+      "elevationDegrees": 35.272421,
+      "distanceScale": 1.15,
+      "fovDegrees": 40
+    }
+  },
+  "renderer": "oi-gif-v1",
+  "renderer_build_sha256": "9f62d8e9dd7bcff68ee61c42da42106d68a6747c7090f65119348fe6bf3ed55d",
+  "chromium_version": "140.0.7339.16",
+  "rendered_at": "2026-11-01T16:34:07.697Z",
+  "media": {
+    "mime_type": "image/gif",
+    "bytes": 668684,
+    "sha256": "84e324854b03f7ede41b1dc7bf1bc5e6a69f8c87a430dca06787a1413dc53194"
+  },
+  "review": {
+    "schemaVersion": 1,
+    "units": "m",
+    "upAxis": "Y",
+    "scope": "room",
+    "motion": "turntable",
+    "width": 640,
+    "height": 640,
+    "frameCount": 60,
+    "frameDelayMs": 70,
+    "durationSeconds": 4.2,
+    "room": [
+      8,
+      6,
+      3
+    ],
+    "camera": {
+      "azimuthDegrees": 45,
+      "elevationDegrees": 35.272421,
+      "distanceScale": 1.15,
+      "fovDegrees": 40,
+      "target": [
+        0,
+        1.4875000473111868,
+        0
+      ],
+      "distance": 17.78968352244088
+    },
+    "emptyRoom": false,
+    "assets": [
+      {
+        "id": "room-geometry",
+        "instanceId": "room-instance",
+        "name": "Room with entrance and window",
+        "source": {
+          "kind": "generated",
+          "generator": "oi-fixture",
+          "filename": "backend-one-room",
+          "digest": "backend-one-room-v1"
+        },
+        "position": [
+          0,
+          -0.02500000037252903,
+          0
+        ],
+        "rotation": [
+          0,
+          0,
+          0
+        ],
+        "visible": true,
+        "warnings": []
+      }
+    ],
+    "note": "Camera orbit around current instance poses. Floor-section geometry is clipped at its boundaries."
+  }
+}

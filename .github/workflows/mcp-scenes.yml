@@ -27,6 +27,15 @@ jobs:
       - run: npm run test:animation
       - run: npm run test:scene-links
       - run: npx playwright install --with-deps chromium
+      - run: npm run test:render
+        env:
+          OI_RENDER_NO_SANDBOX: '1'
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: backend-render-evidence
+          path: deliverables/backend-render
+          if-no-files-found: warn
       - run: npm run test:project-files-browser
         env:
           OI_PROJECT_EVIDENCE_DIR: ${{ runner.temp }}/oi-project-evidence

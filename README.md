@@ -232,6 +232,7 @@ The `Publish packages` workflow validates both builds before publishing. Add a c
 - [Form handoff contract](docs/form-handoff.md) — compiled artifacts, supported formats, provenance, and CAD resolution.
 - [Revision history and restore](docs/scene-history.md) — compare saved versions, restore a new head, and preserve exact geometry bindings.
 - [Cross-agent walkthrough](docs/mcp-agent-workflows.md) — deterministic Grok/ChatGPT/Codex fixtures, local agent setup, and create/update/reopen commands.
+- [Backend scene rendering](docs/backend-rendering.md) — independent GIF worker, durable HTTP/MCP jobs, deployment, and reproducible room demo.
 - [External-agent scene authoring](docs/mcp-scenes.md) — MCP setup, typed tools, revision URLs, and the deterministic cleanroom fixture.
 - [Camera and OpenCV observations](docs/vision-service.md) — reusable camera sources, persistent evidence, machine-scoped agent tools and an executable fixture demo.
 - [Finite resource accounting](docs/architecture/simulation-resources.md) — shared reservation lifecycle, exact units and conserved inventories.
