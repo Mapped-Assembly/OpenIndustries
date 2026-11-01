@@ -1,3 +1,4 @@
+import { oiEnv } from './oi-environment.mjs';
 import { createServer } from 'node:http';
 import { resolve } from 'node:path';
 import { pathToFileURL } from 'node:url';
@@ -60,10 +61,10 @@ export async function startGameService({ database, port = 8790, allowSignup = fa
 }
 
 if (process.argv[1] && import.meta.url === pathToFileURL(resolve(process.argv[1])).href) {
-  const port = Number(process.env.ASTRA_GAME_PORT || 8790);
+  const port = Number(oiEnv('GAME_PORT') || 8790);
   if (!Number.isInteger(port) || port < 0 || port > 65535) throw new Error('INVALID_GAME_PORT');
-  const service = await startGameService({ database: resolve(process.env.ASTRA_GAME_DB || '.astra/game/runtime.sqlite'), port,
-    allowSignup: process.env.ASTRA_GAME_ALLOW_SIGNUP === 'true' });
+  const service = await startGameService({ database: resolve(oiEnv('GAME_DB') || '.astra/game/runtime.sqlite'), port,
+    allowSignup: oiEnv('GAME_ALLOW_SIGNUP') === 'true' });
   console.log(`OpenIndustries SQLite game service: ${service.origin}`);
   for (const signal of ['SIGINT', 'SIGTERM']) process.once(signal, () => { service.close().then(() => process.exit(0)); });
 }

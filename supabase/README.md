@@ -33,7 +33,7 @@ Free-plan quotas include 500 MB database size, 1 GB object storage, and 5 GB egr
 
 ## GitHub login
 
-1. Register an [OAuth app in GitHub](https://github.com/settings/applications/new), named **Mergence**. Homepage: your Mergence app URL (`http://127.0.0.1:8787` for local development). Authorization callback URL must be exactly:
+1. Register an [OAuth app in GitHub](https://github.com/settings/applications/new), named **OpenIndustries**. Homepage: your OpenIndustries app URL (`http://127.0.0.1:8787` for local development). Authorization callback URL must be exactly:
 
    `https://mrhxfmtofvrgfaikllfw.supabase.co/auth/v1/callback`
 
@@ -45,8 +45,8 @@ Free-plan quotas include 500 MB database size, 1 GB object storage, and 5 GB egr
    VITE_SUPABASE_PUBLISHABLE_KEY=your_publishable_key_from_supabase
    ```
 
-4. Under Supabase Authentication → URL Configuration, the production Site URL is `https://astra-industries.vercel.app`, and its exact origin plus local ports 8787 and 5173 have been configured as redirects. Never use a production frontend URL as GitHub's callback; GitHub calls Supabase first, and Supabase returns to Mergence.
-5. Rebuild/redeploy so Vite picks up the variables. Click **Sign in with GitHub**, authorize, and return to Mergence. The account name and **Sign out** button indicate the restored session. Login requests `read:user user:email`, not repository access.
+4. Under Supabase Authentication → URL Configuration, the production Site URL is `https://astra-industries.vercel.app`, and its exact origin plus local ports 8787 and 5173 have been configured as redirects. Never use a production frontend URL as GitHub's callback; GitHub calls Supabase first, and Supabase returns to OpenIndustries.
+5. Rebuild/redeploy so Vite picks up the variables. Click **Sign in with GitHub**, authorize, and return to OpenIndustries. The account name and **Sign out** button indicate the restored session. Login requests `read:user user:email`, not repository access.
 
 Authentication uses PKCE, persists/refreshed sessions through the Supabase client, and signs out of the current browser session. OAuth errors are shown in the UI; a disabled provider is detected before navigating away. Imported assets/room settings are temporarily saved to IndexedDB for the redirect and restored once on return in the same tab (up to one hour). This temporary snapshot is not cloud scene persistence.
 

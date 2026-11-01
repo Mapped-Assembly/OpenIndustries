@@ -7,30 +7,37 @@
       "enabled": true,
       "oauth": false
     },
-    "astra": {
+    "openindustries": {
       "type": "local",
-      "command": ["node", "server/astra-mcp.mjs"],
+      "command": [
+        "node",
+        "server/openindustries-mcp.mjs"
+      ],
       "cwd": ".",
-      "enabled": true
-    },
-    "servers": {
-      "aws": {
-        "type": "remote",
-        "url": "https://aws-mcp.us-east-1.api.aws/mcp"
-      },
-      "farm": {
-        "type": "local",
-        "command": [
-          "ssh",
-          "-T",
-          "-o",
-          "BatchMode=yes",
-          "oi-inspection",
-          "sudo",
-          "-n",
-          "/usr/local/bin/oi-farm-mcp"
-        ]
+      "enabled": true,
+      "environment": {
+        "OI_SCENE_TOOLS_ENABLED": "true",
+        "OI_SCENE_BACKEND": "local"
       }
+    },
+    "aws": {
+      "type": "remote",
+      "url": "https://aws-mcp.us-east-1.api.aws/mcp",
+      "enabled": false
+    },
+    "farm": {
+      "type": "local",
+      "command": [
+        "ssh",
+        "-T",
+        "-o",
+        "BatchMode=yes",
+        "oi-inspection",
+        "sudo",
+        "-n",
+        "/usr/local/bin/oi-farm-mcp"
+      ],
+      "enabled": false
     }
   }
 }

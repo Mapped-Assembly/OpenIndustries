@@ -1,6 +1,6 @@
 # Cleanroom POC Example
 
-This bundled Mergence scene is a local architectural visualization and schedule demo. It is opened with `/?scene=cleanroom`; that route does not replace the user's saved workspace.
+This bundled OpenIndustries scene is a local architectural visualization and schedule demo. It is opened with `/?scene=cleanroom`; that route does not replace the user's saved workspace.
 
 The example models four 20 ft rooms within an 80 ft square, 20 ft perimeter corridors, four cleanroom workbenches, and one Form swab-sampling robot. The illustrative A/B/C schedule is in `sampling-plan.json`; Room B is deliberately skipped while marked occupied. Confirm access, sample targets, egress, HVAC, classification, and fabrication requirements before real operation. The STEP robot is a mostly fused CAD pose, so its sampling contact is approximated with a short whole-robot approach/retract.
 
@@ -14,7 +14,7 @@ All bundled geometry, positions, dimensions, and MCP requests use **meters**, Y-
 | `cleanroom-robot` | Imported `swab_bot.step`; originally identified as `forma-cleanroom-swab-bot` | Form-authored source project, tessellated STEP, mostly fused CAD pose; whole-body sampling contact is approximate | Original example notes report CERN-OHL-S-2.0; upstream source archive and license notices are not bundled. Verify those documents and applicable conditions before reuse. |
 | `cleanroom-desk` | Imported `cleanroom_desk.step`; originally identified as `forma-cleanroom-desk` | Form-authored source project, tessellated STEP; four placed copies share geometry | Same reported CERN-OHL-S-2.0 status and missing upstream evidence as the robot. |
 
-The source project names above preserve the provenance recorded when the assets were added in historical PR #59, before the Form/Mergence display rename. The repository does not include original STEP files, source project URLs, or upstream license texts for independent verification. The license field records the existing declaration; it does not establish a new permission grant or claim that these files are public domain. Keep source identities, digest records, and notices with any permitted reuse. The fixture work adds no new third-party geometry.
+The source project names above preserve the provenance recorded when the assets were added in historical PR #59, before the Form/OpenIndustries display rename. The repository does not include original STEP files, source project URLs, or upstream license texts for independent verification. The license field records the existing declaration; it does not establish a new permission grant or claim that these files are public domain. Keep source identities, digest records, and notices with any permitted reuse. The fixture work adds no new third-party geometry.
 
 ## Reproduce the example
 

@@ -1,7 +1,7 @@
 # Camera observations for machine agents
 
 Open Industries provides an optional **Python OpenCV 5 service** for acquiring image
-evidence and exposing observations through the existing `server/astra-mcp.mjs` host.
+evidence and exposing observations through the existing `server/openindustries-mcp.mjs` host.
 This is a perception boundary: the service never sends a robot command or marks a
 task complete. Machine agents can use observations when proposing subsequent work.
 
@@ -17,7 +17,7 @@ existing simulated robot runtime, with durable command recovery and before/after
 | HTTP adapter | Reads a fixed operator-configured PNG/JPEG endpoint, optionally with bearer authentication; redirects are rejected |
 | OpenCV processing | BGR-to-gray quality metrics and HSV threshold/morphology/contour region detection from actual pixels |
 | Evidence store | Dedicated SQLite database retaining exact input bytes, SHA-256 hashes, immutable observations and idempotent receipts |
-| Agent interface | Seven `astra.vision_*` tools; frame reads include an MCP image preview |
+| Agent interface | Seven `openindustries.vision_*` tools; frame reads include an MCP image preview |
 
 The generic library is in `services/vision/oi_vision`; garden-specific cell geometry,
 seed classification, calibration and placement verification belong in a consuming
@@ -41,7 +41,7 @@ export OI_VISION_SERVICE_URL=http://127.0.0.1:8792
 
 python -m oi_vision --config .astra/vision-demo/config.json &
 vision_pid=$!
-node server/astra-mcp.mjs
+node server/openindustries-mcp.mjs
 # After the MCP host exits:
 kill "$vision_pid"
 ```
@@ -105,13 +105,13 @@ arbitrary filesystem paths, URLs, credentials, executable code, or detector para
 
 | MCP tool | HTTP route | Arguments |
 | --- | --- | --- |
-| `astra.vision_describe` | Local discovery only | `{}` |
-| `astra.vision_list_cameras` | `/v1/cameras/list` | `{}` |
-| `astra.vision_capture` | `/v1/frames/capture` | `camera_id`, `request_id` |
-| `astra.vision_read_frame` | `/v1/frames/read` | `frame_id` |
-| `astra.vision_analyze` | `/v1/frames/analyze` | `frame_id`, `profile_id`, `request_id`, `max_age_ms` |
-| `astra.vision_read_observation` | `/v1/observations/read` | `observation_id` |
-| `astra.vision_list_observations` | `/v1/observations/list` | `camera_id`, `limit` (1–100) |
+| `openindustries.vision_describe` | Local discovery only | `{}` |
+| `openindustries.vision_list_cameras` | `/v1/cameras/list` | `{}` |
+| `openindustries.vision_capture` | `/v1/frames/capture` | `camera_id`, `request_id` |
+| `openindustries.vision_read_frame` | `/v1/frames/read` | `frame_id` |
+| `openindustries.vision_analyze` | `/v1/frames/analyze` | `frame_id`, `profile_id`, `request_id`, `max_age_ms` |
+| `openindustries.vision_read_observation` | `/v1/observations/read` | `observation_id` |
+| `openindustries.vision_list_observations` | `/v1/observations/list` | `camera_id`, `limit` (1–100) |
 
 `GET /health` returns service/contract/OpenCV versions, without credentials or camera
 inventory. It proves library availability, not camera connectivity or detector accuracy.

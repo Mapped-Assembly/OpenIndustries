@@ -1,3 +1,4 @@
+import { oiEnv } from '../../server/oi-environment.mjs';
 import { spawn } from 'node:child_process';
 import { readFile } from 'node:fs/promises';
 import { createInterface } from 'node:readline';
@@ -26,9 +27,9 @@ export function updateRequest(profile, saved, requestId = profile.update.request
 }
 
 /** Minimal bounded stdio host shared by the replay command and interoperability tests. */
-export function startClient(profile, { root = process.env.ASTRA_ROOT || checkout, env = {}, timeoutMs = 70000 } = {}) {
-  const child = spawn(process.execPath, [resolve(checkout, 'server/astra-mcp.mjs')], {
-    cwd: checkout, env: { ...process.env, ASTRA_ROOT: root, ...env }, stdio: ['pipe', 'pipe', 'pipe'],
+export function startClient(profile, { root = oiEnv('ROOT') || checkout, env = {}, timeoutMs = 70000 } = {}) {
+  const child = spawn(process.execPath, [resolve(checkout, 'server/openindustries-mcp.mjs')], {
+    cwd: checkout, env: { ...process.env, OI_ROOT: root, ...env }, stdio: ['pipe', 'pipe', 'pipe'],
   });
   let sequence = 0, closed = false;
   const pending = new Map();
@@ -71,7 +72,7 @@ export function startClient(profile, { root = process.env.ASTRA_ROOT || checkout
   return {
     rpc, transcript,
     notify: (method, params = {}) => send({ jsonrpc: '2.0', method, params }),
-    call: (name, args) => rpc('tools/call', { name: `astra.${name}`, arguments: args }),
+    call: (name, args) => rpc('tools/call', { name: `openindustries.${name}`, arguments: args }),
     close: async () => {
       fail('MCP connection closed.'); child.stdin.end(); child.kill();
       const force = setTimeout(() => child.kill('SIGKILL'), 2000);
@@ -86,14 +87,14 @@ export async function connectWorkflow(client, profile) {
   client.notify('notifications/initialized');
   const { tools } = await client.rpc('tools/list');
   const ajv = new Ajv({ strict: false });
-  const schemas = new Map(tools.filter(tool => tool.name.startsWith('astra.') && tool.name.includes('scene')).map(tool => [tool.name, {
+  const schemas = new Map(tools.filter(tool => tool.name.startsWith('openindustries.') && tool.name.includes('scene')).map(tool => [tool.name, {
     input: ajv.compile(tool.inputSchema), output: ajv.compile(tool.outputSchema),
   }]));
   for (const name of ['list_scene_assets', 'inspect_scene_asset', 'create_scene', 'read_scene', 'update_scene']) {
-    if (!schemas.has(`astra.${name}`)) throw new Error(`Missing tool: astra.${name}`);
+    if (!schemas.has(`openindustries.${name}`)) throw new Error(`Missing tool: openindustries.${name}`);
   }
   async function call(name, args) {
-    const schema = schemas.get(`astra.${name}`);
+    const schema = schemas.get(`openindustries.${name}`);
     if (!schema?.input(args)) throw new Error(`Arguments do not match the discovered schema for ${name}.`);
     const result = await client.call(name, args);
     // Exercise both standard MCP result representations; no provider-specific parser.

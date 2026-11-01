@@ -1,3 +1,4 @@
+import { oiEnv } from '../server/oi-environment.mjs';
 /** Trusted local file bridge; MCP arguments never accept arbitrary filesystem paths. */
 import { readFile, writeFile, stat } from 'node:fs/promises';
 import { resolve } from 'node:path';
@@ -11,7 +12,7 @@ if (!input || !['import-asset', 'export'].includes(command) || (command === 'exp
   throw new Error('Usage: node --import tsx cli/local-scenes.ts import-asset asset.json | export SCENE_UUID scene.json [REVISION]');
 const revision = revisionText === undefined ? undefined : Number(revisionText);
 if (revision !== undefined && (!Number.isSafeInteger(revision) || revision < 1)) throw new Error('Revision must be a positive integer.');
-const backend = new LocalSceneBackend(resolve(process.env.ASTRA_SCENE_DATA_DIR || '.astra/scenes'));
+const backend = new LocalSceneBackend(resolve(oiEnv('SCENE_DATA_DIR') || '.astra/scenes'));
 try {
   if (command === 'import-asset') {
     if ((await stat(input)).size > 25 * 1024 * 1024) throw new Error('Asset bundle exceeds 25 MiB.');

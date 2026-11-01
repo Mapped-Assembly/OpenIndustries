@@ -1,7 +1,7 @@
 # Connect visual observations to robot execution
 
 The Python inspection policy connects the OpenCV service to the existing
-`astra.game_command` interface. A connected agent can request an inspection, advance
+`openindustries.game_command` interface. A connected agent can request an inspection, advance
 it, and read its trace. The runtime remains the authority for routing, energy, job
 progress, ownership and completion.
 
@@ -23,7 +23,7 @@ by this adapter.
    evidence. Missing/ambiguous regions or poor image quality trigger one recapture,
    followed by `needs_review` if the problem remains. Stale images stop the workflow.
 4. Recheck the observation, robot position and idle state. Persist the exact
-   `survey_robot` command before sending it through `astra.game_command`.
+   `survey_robot` command before sending it through `openindustries.game_command`.
 5. Read the specific accepted runtime job until it completes. Routing and movement
    are performed by the existing worker; the policy never assigns robot positions.
 6. Capture and analyze another image. Record completion only after the runtime job
@@ -88,7 +88,7 @@ physical-camera, garden-recognition, live-model or AWS result.
 Install the service package into the Python environment used by the MCP host. Start
 and configure the existing [vision service](vision-service.md) and
 [game runtime](mcp-game-runtime.md), including valid independent service credentials.
-Use `astra.game_read_match` to identify an owned robot and an available destination.
+Use `openindustries.game_read_match` to identify an owned robot and an available destination.
 
 Write an operator-owned JSON configuration with the following shape, replacing the
 illustrative UUIDs with the actual runtime IDs:
@@ -118,7 +118,7 @@ service. Quality thresholds are explicit heuristics, not calibrated confidence v
 The camera configuration must attach `overhead` to the exact `robot_id` above.
 
 Set these additional environment variables in the host that launches
-`server/astra-mcp.mjs`, alongside the existing vision/game settings:
+`server/openindustries-mcp.mjs`, alongside the existing vision/game settings:
 
 ```bash
 export OI_AGENT_ENABLED=true
@@ -134,8 +134,8 @@ tools to prevent recursive inspection execution.
 
 | Tool | Arguments | Meaning |
 | --- | --- | --- |
-| `astra.agent_inspect_robot` | `binding_id`, `run_id` (canonical UUID) | Start or advance one bounded phase of the same inspection |
-| `astra.agent_read_inspection` | `binding_id`, `run_id` | Read the authorized historical checkpoint without advancing it |
+| `openindustries.agent_inspect_robot` | `binding_id`, `run_id` (canonical UUID) | Start or advance one bounded phase of the same inspection |
+| `openindustries.agent_read_inspection` | `binding_id`, `run_id` | Read the authorized historical checkpoint without advancing it |
 
 Example instruction to the connected agent:
 

@@ -9,7 +9,7 @@ async function openLibrary(): Promise<IDBDatabase> {
     request.onupgradeneeded = () => request.result.createObjectStore('assets', { keyPath: 'id' });
     request.onsuccess = () => resolve(request.result);
     request.onerror = () => reject(new Error('Could not open the local asset library. Check browser storage permissions.'));
-    request.onblocked = () => reject(new Error('Close other Mergence tabs and retry opening the asset library.'));
+    request.onblocked = () => reject(new Error('Close other OpenIndustries tabs and retry opening the asset library.'));
   });
 }
 async function transaction<T>(mode: IDBTransactionMode, operation: (store: IDBObjectStore) => IDBRequest<T>): Promise<T> {

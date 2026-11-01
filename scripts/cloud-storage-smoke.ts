@@ -1,3 +1,4 @@
+import { oiEnv } from '../server/oi-environment.mjs';
 import assert from 'node:assert/strict';
 import { randomUUID } from 'node:crypto';
 import { mkdir } from 'node:fs/promises';
@@ -22,7 +23,7 @@ const prefix = `astra-storage-${randomUUID()}`;
 const authOptions = { auth: { persistSession: false, autoRefreshToken: false, detectSessionInUrl: false } };
 async function newUser() {
   const email = `${prefix}-${users.length}@example.invalid`;
-  const password = `Mergence-${randomUUID()}!`;
+  const password = `OpenIndustries-${randomUUID()}!`;
   const { data, error } = await admin.auth.admin.createUser({ email, password, email_confirm: true, user_metadata: { user_name: 'astra-storage-test' } });
   if (error || !data.user) throw new Error(`Test user setup failed: ${error?.message}`);
   const client = createClient(url, key!, authOptions);
@@ -41,7 +42,7 @@ async function userPage(session: Session) {
   });
   const page = await context.newPage();
   page.on('pageerror', error => { throw error; });
-  await page.goto(process.env.ASTRA_BASE_URL || 'http://127.0.0.1:8787');
+  await page.goto(oiEnv('BASE_URL') || 'http://127.0.0.1:8787');
   await expect(page.getByRole('button', { name: 'Sign out', exact: true })).toBeVisible();
   await page.getByRole('button', { name: 'GIF studio', exact: true }).click();
   await page.getByRole('button', { name: /Asset library/ }).click();

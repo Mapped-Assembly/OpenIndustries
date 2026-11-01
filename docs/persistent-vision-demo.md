@@ -50,15 +50,15 @@ exact `command` and `args` values. They use absolute paths and work from other
 working directories. The launcher does not edit an existing host configuration.
 
 The command runs `oi_vision.demo_cli mcp`, which checks the services, reads private
-connection settings and starts the repository's existing `server/astra-mcp.mjs`.
+connection settings and starts the repository's existing `server/openindustries-mcp.mjs`.
 Only MCP messages appear on stdout. The agent host and launcher must run on the
 same machine; a hosted browser chatbot cannot attach to this local stdio process.
 
 Ask the connected agent:
 
 > Inspect demo-inspection. Choose one new run UUID and keep using that same ID
-> with astra.agent_inspect_robot until completed or needs_review. Show the initial
-> image using astra.vision_read_frame, then the runtime action and follow-up image.
+> with openindustries.agent_inspect_robot until completed or needs_review. Show the initial
+> image using openindustries.vision_read_frame, then the runtime action and follow-up image.
 > Report the review reason if it stops. Describe the movement as simulated.
 
 The exported configuration is tested through real stdio MCP, Python policy processes,

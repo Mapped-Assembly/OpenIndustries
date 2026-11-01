@@ -22,11 +22,11 @@ coordinates, URLs, file paths or a caller-specified simulation time.
 
 | MCP tool | Purpose |
 | --- | --- |
-| `astra.farm_read` | Current pose, revision, active job, deposited crops and next action |
-| `astra.farm_capture` | Render a bed's actual MuJoCo pixels and analyze the fixed pickup ROI with OpenCV |
-| `astra.farm_read_frame` | Read the persisted observation and original PNG as MCP image content |
-| `astra.farm_command` | `move_to_next_bed`, `harvest`, `return_home`, `pause`, or `resume` |
-| `astra.farm_read_job` | Durable progress, before/after image references and harvest verification |
+| `openindustries.farm_read` | Current pose, revision, active job, deposited crops and next action |
+| `openindustries.farm_capture` | Render a bed's actual MuJoCo pixels and analyze the fixed pickup ROI with OpenCV |
+| `openindustries.farm_read_frame` | Read the persisted observation and original PNG as MCP image content |
+| `openindustries.farm_command` | `move_to_next_bed`, `harvest`, `return_home`, `pause`, or `resume` |
+| `openindustries.farm_read_job` | Durable progress, before/after image references and harvest verification |
 
 The bounded route is **bed 2 (carrots), bed 1 (lettuce), bed 0 (tomatoes), home**.
 Each move and each harvest needs a separate agent command. The agent may pause or

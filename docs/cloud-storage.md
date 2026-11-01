@@ -4,7 +4,7 @@
 
 Apply migrations with `npx supabase db push`, then set `VITE_CLOUD_STORAGE_ENABLED=true` and rebuild. The flag defaults to **off** for new environments; Postgres/Auth and the IndexedDB library work independently. The workbench runs locally against your configured backend.
 
-The existing public `VITE_SUPABASE_URL` and `VITE_SUPABASE_PUBLISHABLE_KEY` are sufficient. Users sign in with GitHub. **No S3 keys or service-role keys belong in the browser.** Supabase Storage is S3-compatible; Mergence uses its authenticated Storage API against the same bucket, with the user's JWT and storage policies. A direct S3 signing service is unnecessary for this browser workflow. If a future backend uses the S3 protocol, configure its credentials server-side and re-evaluate its access boundary; privileged S3 access may bypass these user policies.
+The existing public `VITE_SUPABASE_URL` and `VITE_SUPABASE_PUBLISHABLE_KEY` are sufficient. Users sign in with GitHub. **No S3 keys or service-role keys belong in the browser.** Supabase Storage is S3-compatible; OpenIndustries uses its authenticated Storage API against the same bucket, with the user's JWT and storage policies. A direct S3 signing service is unnecessary for this browser workflow. If a future backend uses the S3 protocol, configure its credentials server-side and re-evaluate its access boundary; privileged S3 access may bypass these user policies.
 
 For a local Supabase stack, explicitly enable `[storage]` and `[storage.s3_protocol]` in your local configuration before starting it. Core's default local configuration keeps those services disabled. The integration test can target a separate Supabase project via environment variables.
 
@@ -44,7 +44,7 @@ The cloud scene adapter now registers these references transactionally through `
 - Requests time out after 60 seconds. Retry with the same local bundle to resume its pending upload, or remove the pending copy. If session credentials expire, sign back in and retry.
 - After a partial deletion, refresh and use **Retry removal**. Interrupted file writes cannot create untracked paths: every allowed path belongs to an intent. Incomplete intents are listed rather than hidden or automatically deleted.
 - Review older pending/deleting intents in the cloud list. Administrator cleanup should use the same state transition + Storage API removal sequence; never delete `storage.objects` rows directly, which would orphan physical files. Clean up versions before deleting a user/core asset.
-- Previously downloaded bytes cannot be revoked. Previously issued signed URLs/CDN copies can remain usable until their expiry/cache lifetime. Mergence normally uses authenticated downloads and zero cache lifetime on upload; clearing metadata is not a promise to erase recipients' copies.
+- Previously downloaded bytes cannot be revoked. Previously issued signed URLs/CDN copies can remain usable until their expiry/cache lifetime. OpenIndustries normally uses authenticated downloads and zero cache lifetime on upload; clearing metadata is not a promise to erase recipients' copies.
 
 ## Verification
 

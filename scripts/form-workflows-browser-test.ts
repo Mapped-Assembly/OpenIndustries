@@ -1,3 +1,4 @@
+import { oiEnv } from '../server/oi-environment.mjs';
 import assert from 'node:assert/strict';
 import { readFile, writeFile, mkdir, mkdtemp, rm } from 'node:fs/promises';
 import { join, resolve } from 'node:path';
@@ -19,7 +20,7 @@ const web = await createServer({ envFile: false, define: {
 let browser;
 try {
   await web.listen();
-  browser = await chromium.launch({ headless: true, ...(process.env.ASTRA_CHROME_PATH ? { executablePath: process.env.ASTRA_CHROME_PATH } : {}) });
+  browser = await chromium.launch({ headless: true, ...(oiEnv('CHROME_PATH') ? { executablePath: oiEnv('CHROME_PATH') } : {}) });
   const cases = [
     { name: 'sdk-legacy', path: 'sdk/project-ir-0.1.json', parts: 5 },
     { name: 'sdk-envelope', path: 'sdk/project-ir.json', parts: 5 },

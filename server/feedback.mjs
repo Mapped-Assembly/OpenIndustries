@@ -2,7 +2,7 @@ import { mkdir, writeFile } from 'node:fs/promises';
 import { resolve } from 'node:path';
 
 export async function saveAnimationFeedback(root, payload) {
-  if (!payload || payload.format !== 'astra.animation-feedback' || payload.version !== 1) throw new Error('Unsupported Mergence animation feedback package.');
+  if (!payload || payload.format !== 'astra.animation-feedback' || payload.version !== 1) throw new Error('Unsupported OpenIndustries animation feedback package.');
   if (typeof payload.instruction !== 'string' || !payload.instruction.trim() || payload.instruction.length > 4000) throw new Error('Animation feedback needs a short instruction.');
   if (!payload.scene || payload.scene.format !== 'astra.scene' || !payload.review || payload.review.motion !== 'animation') throw new Error('Animation feedback must include a scene and authored animation review.');
   const json = JSON.stringify(payload, null, 2);

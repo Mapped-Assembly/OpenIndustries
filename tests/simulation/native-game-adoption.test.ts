@@ -59,6 +59,7 @@ test('captured native v3 upgrades once, preserves paid work/IDs/receipt bytes an
       const ownerToken=fixture.tokens[fixture.tables.accounts.findIndex(a=>a.id===row.owner)];
       const request=JSON.parse(String(row.request));
       assert.deepEqual(db.dispatch(ownerToken,request.name,request.arguments),JSON.parse(String(row.result)));
+      assert.deepEqual(db.dispatch(ownerToken,request.name.replace(/^astra\./,'openindustries.'),request.arguments),JSON.parse(String(row.result)));
       assert.throws(()=>db!.dispatch(ownerToken,request.name,{...request.arguments,action:'abandon_match'}),{code:'COMMAND_ID_REUSED'});
     }
     assert.deepEqual(receipts(db.db),stored);
@@ -89,6 +90,7 @@ test('captured native v5 retains exact active robot reservations, observations, 
     const command=fixture.tables.receipts.map(r=>({row:r,request:JSON.parse(String(r.request))})).find(r=>r.request.arguments.action==='collect_robot')!;
     const ownerIndex=fixture.tables.accounts.findIndex(a=>a.id===command.row.owner);
     assert.deepEqual(db.dispatch(fixture.tokens[ownerIndex],command.request.name,command.request.arguments),JSON.parse(String(command.row.result)));
+    assert.deepEqual(db.dispatch(fixture.tokens[ownerIndex],command.request.name.replace(/^astra\./,'openindustries.'),command.request.arguments),JSON.parse(String(command.row.result)));
     assert.equal(db.load(id).players[0].robot_jobs.at(-1).state,'running');
     const other=JSON.stringify(db.historyPage(fixture.tokens[1],{instance_id:id,cursor:null,limit:100}));
     for(const value of [original.world.seed,original.players[0].machine.id,original.players[0].surveys[0].id,original.players[0].robots[0].id]) assert(!other.includes(value));
@@ -100,6 +102,7 @@ test('captured native v5 retains exact active robot reservations, observations, 
     assert.deepEqual(receipts(db.db),stored);
     db.logout(fixture.tokens[ownerIndex]);
     assert.throws(()=>db!.dispatch(fixture.tokens[ownerIndex],command.request.name,command.request.arguments),{code:'AUTH_REQUIRED'});
+    assert.throws(()=>db!.dispatch(fixture.tokens[ownerIndex],command.request.name.replace(/^astra\./,'openindustries.'),command.request.arguments),{code:'AUTH_REQUIRED'});
   }finally{db?.close();await rm(dir,{recursive:true,force:true});}
 });
 

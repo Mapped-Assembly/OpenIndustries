@@ -37,7 +37,7 @@ const scene = Array.isArray(result.data) ? result.data[0] : result.data;
 const revisionUrl = new URL(scene.revision_url, workbenchOrigin).href;
 ```
 
-`SceneRepository.save()` and `.duplicate()` return absolute URLs in the browser, or when passed a fourth constructor argument specifying the workbench origin. The local stdio `astra.create_room` tool creates local JSON only. The separate `astra.create_scene` and `astra.update_scene` tools persist complete scenes and return these URLs; see [MCP scene authoring](mcp-scenes.md).
+`SceneRepository.save()` and `.duplicate()` return absolute URLs in the browser, or when passed a fourth constructor argument specifying the workbench origin. The local stdio `openindustries.create_room` tool creates local JSON only. The separate `openindustries.create_scene` and `openindustries.update_scene` tools persist complete scenes and return these URLs; see [MCP scene authoring](mcp-scenes.md).
 
 Read a cloud snapshot with `get_workspace_scene(p_id, p_revision, p_share_token)`. A null revision selects the head for the owner. A share requires both the exact revision and its token. Responses contain `scene` and only that revision's retained asset versions. Private reads require the user's JWT; never give an agent a service-role key.
 
@@ -62,4 +62,4 @@ npx playwright install chromium
 npm run test:scene-links-browser
 ```
 
-The first suite applies the actual migrations in PGlite/PostgreSQL with minimal Supabase auth/storage schema stubs and exercises SQL permissions, revisions, retention, sharing, and the geometry proxy. The browser suite starts its own Vite server with test-only cloud configuration and uses the real Supabase browser client, intercepted HTTP backed by the same database RPCs, and deterministic geometry. It checks a fresh browser context, animation interpolation, private access, head versus pinned revisions, UI share/revoke actions, error states, and byte-for-byte preservation of existing local records and the active-room pointer. No live cloud, agent, or provider credentials are used. `ASTRA_BASE_URL` and `ASTRA_CHROME_PATH` can override the local server and browser executable.
+The first suite applies the actual migrations in PGlite/PostgreSQL with minimal Supabase auth/storage schema stubs and exercises SQL permissions, revisions, retention, sharing, and the geometry proxy. The browser suite starts its own Vite server with test-only cloud configuration and uses the real Supabase browser client, intercepted HTTP backed by the same database RPCs, and deterministic geometry. It checks a fresh browser context, animation interpolation, private access, head versus pinned revisions, UI share/revoke actions, error states, and byte-for-byte preservation of existing local records and the active-room pointer. No live cloud, agent, or provider credentials are used. `OI_BASE_URL` and `OI_CHROME_PATH` can override the local server and browser executable.

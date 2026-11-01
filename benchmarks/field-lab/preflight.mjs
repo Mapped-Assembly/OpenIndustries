@@ -1,3 +1,4 @@
+import { oiEnv } from '../../server/oi-environment.mjs';
 import { createHash } from 'node:crypto';
 import { existsSync, mkdirSync, readFileSync, writeFileSync } from 'node:fs';
 import { dirname, join, resolve } from 'node:path';
@@ -79,7 +80,7 @@ try {
   capability('authoredFixtures', 'failed', String(error));
 }
 
-const browserPath = process.env.ASTRA_CHROME_PATH?.trim();
+const browserPath = oiEnv('CHROME_PATH')?.trim();
 let playwrightExecutable;
 try {
   const { chromium } = await import('@playwright/test');

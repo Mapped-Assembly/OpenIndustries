@@ -1,3 +1,4 @@
+import { oiEnv } from '../../server/oi-environment.mjs';
 import { chromium } from '@playwright/test';
 import { createServer } from 'vite';
 import { copyFile, cp, mkdir, readFile, writeFile } from 'node:fs/promises';
@@ -25,7 +26,7 @@ const errors = [];
 const reportPath = join(out, 'capability-report.json');
 const readJson = async (path) => JSON.parse(await readFile(path, 'utf8'));
 try {
-  const configured = process.env.ASTRA_CHROME_PATH?.trim();
+  const configured = oiEnv('CHROME_PATH')?.trim();
   if (configured && !existsSync(configured)) throw new Error(`ASTRA_CHROME_PATH does not exist: ${configured}`);
   browser = await chromium.launch({
     ...(configured ? { executablePath: configured } : {}),

@@ -1,10 +1,11 @@
+import { oiEnv } from '../server/oi-environment.mjs';
 import { chromium, expect } from '@playwright/test';
 
 const browser = await chromium.launch({ channel: 'chrome', headless: true });
 const context = await browser.newContext();
 const page = await context.newPage();
 try {
-  const base = process.env.ASTRA_BASE_URL || 'http://127.0.0.1:8787';
+  const base = oiEnv('BASE_URL') || 'http://127.0.0.1:8787';
   await page.goto(base);
   await expect(page.getByRole('button', { name: '+ Import project' })).toBeEnabled();
   await page.evaluate(async () => {

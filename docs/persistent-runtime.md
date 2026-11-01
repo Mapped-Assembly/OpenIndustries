@@ -83,14 +83,14 @@ Configure your MCP client with absolute paths (replace `/home/YOU`; use
   "mcpServers": {
     "oi-local": {
       "command": "/usr/bin/node",
-      "args": ["/opt/open-industries/local-current/server/astra-mcp.mjs"],
+      "args": ["/opt/open-industries/local-current/server/openindustries-mcp.mjs"],
       "env": {"OI_LOCAL_CLIENT_FILE": "/home/YOU/.config/open-industries/client.json"}
     }
   }
 }
 ```
 
-Use `astra.local_lab_read`, `astra.local_lab_history` and `astra.local_lab_command`.
+Use `openindustries.local_lab_read`, `openindustries.local_lab_history` and `openindustries.local_lab_command`.
 Read first, then send a pause/resume/fail/cancel command with the current revision,
 job ID and a unique command ID. Reuse the exact command after an uncertain response;
 receipts prevent duplicate spending. Closing MCP stops only its transport process.

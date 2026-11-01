@@ -8,7 +8,9 @@ on:
       - 'server/mcp-farm.mjs'
       - 'server/*vision*'
       - 'server/mcp-agent.mjs'
+      - 'server/openindustries-mcp.mjs'
       - 'server/astra-mcp.mjs'
+      - 'server/oi-environment.*'
       - 'package*.json'
       - '.github/workflows/vision.yml'
   push:
@@ -20,7 +22,9 @@ on:
       - 'server/mcp-farm.mjs'
       - 'server/*vision*'
       - 'server/mcp-agent.mjs'
+      - 'server/openindustries-mcp.mjs'
       - 'server/astra-mcp.mjs'
+      - 'server/oi-environment.*'
       - 'package*.json'
       - '.github/workflows/vision.yml'
 permissions:

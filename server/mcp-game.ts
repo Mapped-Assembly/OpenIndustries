@@ -1,15 +1,16 @@
+import { oiEnv } from './oi-environment.mjs';
 import { gameContract, gameErrors, gameFail, GameToolError, validateGameRequest, validateGameResult } from './mcp-game-contract.mjs';
 
 /** MCP is a transport only. The independently running SQLite service owns state. */
 export async function callGameTool(_root: string, name: string, raw: unknown) {
   const args = validateGameRequest(name, raw);
   if (name === 'astra.game_describe') return validateGameResult(name, gameContract);
-  if (process.env.ASTRA_GAME_TOOLS_ENABLED !== 'true') return gameFail('DISABLED');
-  const token = process.env.ASTRA_GAME_SESSION;
+  if (oiEnv('GAME_TOOLS_ENABLED') !== 'true') return gameFail('DISABLED');
+  const token = oiEnv('GAME_SESSION');
   if (!token || !/^[a-f0-9]{64}$/.test(token)) return gameFail('AUTH_REQUIRED');
   let url: URL;
   try {
-    url = new URL(process.env.ASTRA_GAME_SERVICE_URL || 'http://127.0.0.1:8790');
+    url = new URL(oiEnv('GAME_SERVICE_URL') || 'http://127.0.0.1:8790');
     if (url.protocol !== 'http:' || !['127.0.0.1', 'localhost', '[::1]'].includes(url.hostname)
       || url.username || url.password || url.pathname !== '/' || url.search || url.hash) throw new Error();
   } catch { return gameFail('UNAVAILABLE'); }

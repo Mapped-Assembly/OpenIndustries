@@ -15,7 +15,7 @@ const directory = await mkdtemp(join(tmpdir(), 'oi-local-scenes-'));
 const children: ReturnType<typeof spawn>[] = [];
 /** Exercise the real stdio server with no cloud configuration or login. */
 function connection() {
-  const child = spawn(process.execPath, [resolve('server/astra-mcp.mjs')], {
+  const child = spawn(process.execPath, [resolve('server/openindustries-mcp.mjs')], {
     env: { ...process.env, ASTRA_ROOT: directory, ASTRA_SCENE_BACKEND: 'local', ASTRA_SCENE_DATA_DIR: directory,
       ASTRA_SCENE_TOOLS_ENABLED: 'true', VITE_SUPABASE_URL: '', VITE_SUPABASE_PUBLISHABLE_KEY: '', ASTRA_CLI_CONFIG: join(directory, 'no-login.json') },
     stdio: ['pipe', 'pipe', 'pipe'],

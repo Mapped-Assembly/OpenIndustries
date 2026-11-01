@@ -87,13 +87,13 @@ history and ledger-tail compaction. Expired history cursors require a fresh snap
 Use Node 22.16+ and `npm ci`, then:
 
 ```bash
-ASTRA_FIELD_LAB_ALLOW_SIGNUP=true npm run field-lab:server
+OI_FIELD_LAB_ALLOW_SIGNUP=true npm run field-lab:server
 ```
 
 The service binds `http://127.0.0.1:8792` and stores its private database in
-`.astra/simulation/field-lab.sqlite`. Override `ASTRA_FIELD_LAB_PORT` / `ASTRA_FIELD_LAB_DB` as
+`.astra/simulation/field-lab.sqlite`. Override `OI_FIELD_LAB_PORT` / `OI_FIELD_LAB_DB` as
 needed. Signup is disabled by default. In PowerShell, set
-`$env:ASTRA_FIELD_LAB_ALLOW_SIGNUP = 'true'` before the npm command.
+`$env:OI_FIELD_LAB_ALLOW_SIGNUP = 'true'` before the npm command.
 
 Register/login using `/auth/register` or `/auth/login` with
 `{"username":"operator","password":"choose-a-local-password"}`. Send the returned session

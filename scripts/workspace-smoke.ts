@@ -1,3 +1,4 @@
+import { oiEnv } from '../server/oi-environment.mjs';
 import assert from 'node:assert/strict';
 import { randomUUID } from 'node:crypto';
 import { mkdir } from 'node:fs/promises';
@@ -15,7 +16,7 @@ const users:{id:string;client:ReturnType<typeof createClient>;session:Session|nu
 const prefix=`astra-workspace-${randomUUID()}`;
 const browser=await chromium.launch({channel:'chrome',headless:true});const errors:string[]=[];
 async function newUser(){
-  const email=`${prefix}-${users.length}@example.invalid`,password=`Mergence-${randomUUID()}!`;
+  const email=`${prefix}-${users.length}@example.invalid`,password=`OpenIndustries-${randomUUID()}!`;
   const created=await admin.auth.admin.createUser({email,password,email_confirm:true,user_metadata:{user_name:'workspace-test'}});if(created.error)throw created.error;
   const client=createClient(url,key,{auth:{persistSession:false,autoRefreshToken:false}});const result={id:created.data.user!.id,client,session:null as Session|null};users.push(result);
   const signed=await client.auth.signInWithPassword({email,password});if(signed.error)throw signed.error;result.session=signed.data.session;return result;
@@ -23,7 +24,7 @@ async function newUser(){
 async function newPage(session:Session){
   const context=await browser.newContext({viewport:{width:1440,height:1000}});
   await context.addInitScript(({session,key})=>localStorage.setItem(key,JSON.stringify(session)),{session,key:`sb-${new URL(url).hostname.split('.')[0]}-auth-token`});
-  const page=await context.newPage();page.on('pageerror',e=>errors.push(e.message));await page.goto(process.env.ASTRA_BASE_URL||'http://127.0.0.1:8787');
+  const page=await context.newPage();page.on('pageerror',e=>errors.push(e.message));await page.goto(oiEnv('BASE_URL')||'http://127.0.0.1:8787');
   await expect(page.getByRole('button',{name:'Sign out',exact:true})).toBeVisible();await expect(page.getByRole('button',{name:'+ Import project'})).toBeEnabled();return{page,context};
 }
 async function downloaded(page:Page,action:()=>Promise<unknown>){const event=page.waitForEvent('download');await action();const file=await event;const stream=await file.createReadStream();const chunks:Buffer[]=[];for await(const chunk of stream!)chunks.push(chunk as Buffer);return Buffer.concat(chunks);}
@@ -76,7 +77,7 @@ try{
   await page.reload();await expect(page.getByRole('region',{name:'Scene persistence'})).toContainText('Cloud revision 1 · Saved');
   const state=await first.context.storageState({indexedDB:true});
   for(const origin of state.origins)for(const item of origin.localStorage)if(item.name===`sb-${new URL(url).hostname.split('.')[0]}-auth-token`)item.value=JSON.stringify(b.session);
-  const switchedContext=await browser.newContext({storageState:state});const switched=await switchedContext.newPage();await switched.goto(process.env.ASTRA_BASE_URL||'http://127.0.0.1:8787');await expect(switched.getByRole('button',{name:'+ Import project'})).toBeEnabled();await expect(switched.locator('.asset')).toHaveCount(0);await switchedContext.close();
+  const switchedContext=await browser.newContext({storageState:state});const switched=await switchedContext.newPage();await switched.goto(oiEnv('BASE_URL')||'http://127.0.0.1:8787');await expect(switched.getByRole('button',{name:'+ Import project'})).toBeEnabled();await expect(switched.locator('.asset')).toHaveCount(0);await switchedContext.close();
   const versions=await new CloudStorage(a.client,a.id).list();assert.equal(versions.length,1);
   await assert.rejects(()=>new CloudStorage(a.client,a.id).remove(versions[0]),/referenced/);
   const second=await newPage(a.session!);

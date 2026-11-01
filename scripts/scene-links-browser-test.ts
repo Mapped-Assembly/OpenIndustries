@@ -1,3 +1,4 @@
+import { oiEnv } from '../server/oi-environment.mjs';
 import assert from 'node:assert/strict';
 import { randomUUID, createHash } from 'node:crypto';
 import { chromium, expect, type BrowserContext } from '@playwright/test';
@@ -9,7 +10,7 @@ import { mkdir } from 'node:fs/promises';
 import { createServer } from 'vite';
 
 // No live services are used. Start the test server in this process by default.
-let base=process.env.ASTRA_BASE_URL;
+let base=oiEnv('BASE_URL');
 let server:Awaited<ReturnType<typeof createServer>>|undefined;
 if(!base){
   process.env.VITE_SUPABASE_URL='https://scene-links.example.invalid';
@@ -27,7 +28,7 @@ const file={name:'asset.json',size:Buffer.byteLength(bundle),sha256:createHash('
 let ws=appendAssets(emptyWorkspace(),[asset],version);
 ws.animation=writeKeyframe(ws.animation,ws.items[0].id,undefined,{id:'start',time:0,position:[0,0,0],rotation:[0,0,0]});
 ws.animation=writeKeyframe(ws.animation,ws.items[0].id,undefined,{id:'finish',time:2,position:[2,0,0],rotation:[0,90,0]});
-const browser=await chromium.launch({headless:true,...(process.env.ASTRA_CHROME_PATH?{executablePath:process.env.ASTRA_CHROME_PATH}:{})});
+const browser=await chromium.launch({headless:true,...(oiEnv('CHROME_PATH')?{executablePath:oiEnv('CHROME_PATH')}:{})});
 const errors:string[]=[];
 let unavailable=false;
 // Serialize the emulated request role, just as separate PostgREST transactions do.

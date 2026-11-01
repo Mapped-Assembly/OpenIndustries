@@ -1,8 +1,9 @@
+import { oiEnv } from '../server/oi-environment.mjs';
 import { chromium, expect } from '@playwright/test';
 const browser = await chromium.launch({ channel: 'chrome', headless: true });
 try {
   const page = await browser.newPage();
-  const base = process.env.ASTRA_BASE_URL || 'http://127.0.0.1:4173';
+  const base = oiEnv('BASE_URL') || 'http://127.0.0.1:4173';
   await page.goto(base);
   await page.evaluate(async () => {
     const db = await new Promise((resolve, reject) => { const request = indexedDB.open('astra-scenes', 1); request.onsuccess = () => resolve(request.result); request.onerror = () => reject(request.error); });

@@ -19,7 +19,7 @@ not implicitly merge game/work-cell accounts. Transports resolve the current ses
 accepting a principal and never accept a trusted owner or simulation clock from the client.
 
 The versioned game module preserves published v5 event-boundary progression and exact yields.
-Creation/join remain explicit native bootstrap flows. Every `astra.game_command`, including
+Creation/join remain explicit native bootstrap flows. Every `openindustries.game_command`, including
 invite rotation, uses the common executor and registry with original request keys/results.
 Game jobs and observations have one canonical owner in the shared envelope. Native route,
 phase and recipe details are job checkpoints; native projections reconstruct the original v5
@@ -65,11 +65,11 @@ Node 22.16+ and `npm ci` are required. The TypeScript service uses the already i
 runtime, like the existing MCP TypeScript adapters. No new runtime dependency is introduced.
 
 ```bash
-ASTRA_SIMULATION_ALLOW_SIGNUP=true npm run simulation:server
+OI_SIMULATION_ALLOW_SIGNUP=true npm run simulation:server
 ```
 
 Default binding is `http://127.0.0.1:8791`, with a separate database at
-`.astra/simulation/work-cell.sqlite`. Override `ASTRA_SIMULATION_PORT` and `ASTRA_SIMULATION_DB`
+`.astra/simulation/work-cell.sqlite`. Override `OI_SIMULATION_PORT` and `OI_SIMULATION_DB`
 when needed. Signup is disabled by default; the command above enables it for the local demo.
 The existing game command remains `npm run game:server` on its own database/port.
 
@@ -103,11 +103,11 @@ and submit a new intent. If the response is lost/unknown, retry the identical co
 revision and payload; do not invent a second start. Expired history cursors require a fresh
 snapshot. Requests are JSON, bounded, loopback/server-to-server and reject browser Origins.
 
-MCP exposes `astra.simulation_describe`, `astra.simulation_create_work_cell`,
-`astra.simulation_read`, `astra.simulation_command` and `astra.simulation_history` alongside
+MCP exposes `openindustries.simulation_describe`, `openindustries.simulation_create_work_cell`,
+`openindustries.simulation_read`, `openindustries.simulation_command` and `openindustries.simulation_history` alongside
 the existing tools. Describe reports the installed modeled contract, not service readiness.
-Configure `ASTRA_SIMULATION_TOOLS_ENABLED=true`, `ASTRA_SIMULATION_SERVICE_URL` and
-`ASTRA_SIMULATION_SESSION` in the MCP server's environment. RPC request and response schemas
+Configure `OI_SIMULATION_TOOLS_ENABLED=true`, `OI_SIMULATION_SERVICE_URL` and
+`OI_SIMULATION_SESSION` in the MCP server's environment. RPC request and response schemas
 are validated; credentials are not tool arguments or projected state. Existing game discovery
 and strict version gates remain unchanged. No client is silently downgraded from v5 to v3.
 

@@ -1,3 +1,4 @@
+import { oiEnv } from '../server/oi-environment.mjs';
 import assert from 'node:assert/strict';
 import { randomUUID } from 'node:crypto';
 import { spawn } from 'node:child_process';
@@ -26,7 +27,7 @@ fixture.scene.animation.tracks[0].keys[0].visible = true;
 fixture.scene.animation.tracks[0].keys.at(-1).visible = false;
 const children: ReturnType<typeof spawn>[] = [];
 function connection(env: Record<string, string> = {}) {
-  const child = spawn(process.execPath, [resolve('server/astra-mcp.mjs')], { env: { ...process.env, ASTRA_ROOT: root, ASTRA_CLI_CONFIG: config, ASTRA_SCENE_TOOLS_ENABLED: 'true', ASTRA_WORKBENCH_ORIGIN: 'http://localhost:5173', VITE_SUPABASE_URL: service.origin, VITE_SUPABASE_PUBLISHABLE_KEY: 'fixture-public-key', ...env }, stdio: ['pipe', 'pipe', 'pipe'] });
+  const child = spawn(process.execPath, [resolve('server/openindustries-mcp.mjs')], { env: { ...process.env, ASTRA_ROOT: root, ASTRA_CLI_CONFIG: config, ASTRA_SCENE_TOOLS_ENABLED: 'true', ASTRA_WORKBENCH_ORIGIN: 'http://localhost:5173', VITE_SUPABASE_URL: service.origin, VITE_SUPABASE_PUBLISHABLE_KEY: 'fixture-public-key', ...env }, stdio: ['pipe', 'pipe', 'pipe'] });
   children.push(child); let sequence = 0; let stderr = '';
   child.stderr!.on('data', chunk => { stderr += chunk; });
   const pending = new Map<number, (result: any) => void>();
@@ -53,7 +54,7 @@ const counts = async () => (await service.sql('select (select count(*) from scen
 try {
   assert.equal((await mcp.rpc('initialize')).protocolVersion, '2025-06-18');
   const tools = (await mcp.rpc('tools/list')).tools; const ajv = new Ajv({ strict: false });
-  for (const tool of tools.filter((tool: any) => tool.name.includes('scene'))) validators.set(tool.name.replace('astra.', ''), ajv.compile(tool.outputSchema));
+  for (const tool of tools.filter((tool: any) => tool.name.includes('scene'))) validators.set(tool.name.replace('openindustries.', ''), ajv.compile(tool.outputSchema));
   assert.equal(validators.size, 5);
   const disabled = connection({ ASTRA_SCENE_TOOLS_ENABLED: 'false' });
   await bad('list_scene_assets', { version: 1 }, 'DISABLED', disabled);
@@ -197,7 +198,7 @@ try {
       await web.listen(); const origin = new URL(web.resolvedUrls!.local[0]).origin;
       const browserMcp = connection({ ASTRA_WORKBENCH_ORIGIN: origin });
       const authored = await ok('create_scene', { ...fixture, request_id: randomUUID() }, browserMcp);
-      browser = await chromium.launch({ headless: true, ...(process.env.ASTRA_CHROME_PATH ? { executablePath: process.env.ASTRA_CHROME_PATH } : {}) });
+      browser = await chromium.launch({ headless: true, ...(oiEnv('CHROME_PATH') ? { executablePath: oiEnv('CHROME_PATH') } : {}) });
       const context = await browser.newContext();
       await context.addInitScript(({ session, key, origin }) => { if (location.origin === origin) localStorage.setItem(key, JSON.stringify(session)); }, { session, key: `sb-${new URL(service.origin).hostname.split('.')[0]}-auth-token`, origin });
       const page = await context.newPage(); const errors: string[] = []; page.on('pageerror', error => errors.push(error.message));

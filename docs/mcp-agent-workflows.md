@@ -1,6 +1,6 @@
 # Local cross-agent scene walkthrough
 
-Mergence has **no chat composer**. Describe a scene to an external agent connected to its local MCP server; that agent calls typed tools and returns a URL for the local workbench. The `astra.*` tool names and `ASTRA_*` settings remain the wire contract after the Mergence rename. This server is distinct from the optional Form OSS authoring server.
+Describe a scene to an external agent connected to the local OpenIndustries MCP server. Public tools use `openindustries.*` and configuration uses `OI_*`. Existing `astra.*` calls and `ASTRA_*` settings remain compatible. This scene-authoring server is distinct from the optional Form OSS server and the bounded embodied-chat runtime.
 
 The Grok, ChatGPT, and Codex fixtures are authored examples using one provider-agnostic contract. They are not captured vendor outputs or certification of native-client compatibility. The replay and test commands below need no LLM credentials and invoke no model.
 
@@ -23,11 +23,11 @@ npx playwright install chromium
 npm run test:mcp-agent-workflows-browser
 ```
 
-CI installs Chromium system dependencies too. `ASTRA_CHROME_PATH` selects a locally installed Chromium executable. Screenshots are written to `test-results/mcp-<client>-<stage>.png` for the original, updated, pinned, comparison, and restored views. Set `MCP_WORKFLOW_EVIDENCE_DIR` to choose another output directory; CI uploads these as `mcp-workflow-browser-evidence`. Tests check create/update/read, schema discovery, owner isolation, conflicts, sanitized responses, returned URLs, and browser comparison/restore of the same MCP-authored scene. Restore must append a new head with the original geometry, placements and animation, preserve all earlier snapshots, and leave the original revision URL unchanged. Merely visiting `/?scene=cleanroom` is not this test.
+CI installs Chromium system dependencies too. `OI_CHROME_PATH` selects a locally installed Chromium executable. Screenshots are written to `test-results/mcp-<client>-<stage>.png` for the original, updated, pinned, comparison, and restored views. Set `MCP_WORKFLOW_EVIDENCE_DIR` to choose another output directory; CI uploads these as `mcp-workflow-browser-evidence`. Tests check create/update/read, schema discovery, owner isolation, conflicts, sanitized responses, returned URLs, and browser comparison/restore of the same MCP-authored scene. Restore must append a new head with the original geometry, placements and animation, preserve all earlier snapshots, and leave the original revision URL unchanged. Merely visiting `/?scene=cleanroom` is not this test.
 
 ## 2. Configure persistent scene authoring
 
-Skip this section for the deterministic tests or the bundled local demo. Real `create_scene`/`update_scene` calls require Supabase Auth, Postgres, and private Storage, even though the workbench runs locally.
+For local persistence without a cloud account, follow [the local scene setup](mcp-scenes.md#local-persistence-without-supabase): set `OI_SCENE_TOOLS_ENABLED=true` and `OI_SCENE_BACKEND=local`. The Supabase setup below is optional and applies only to the cloud backend.
 
 Use your own development Supabase project and apply **all** repository migrations through `20260929120000_scene_history.sql`, including the generated-assets and revision-link migrations:
 
@@ -47,18 +47,18 @@ VITE_SUPABASE_URL=https://YOUR_PROJECT_REF.supabase.co
 VITE_SUPABASE_PUBLISHABLE_KEY=YOUR_PUBLIC_PUBLISHABLE_KEY
 VITE_CLOUD_STORAGE_ENABLED=true
 VITE_FORM_GENERATION_ENABLED=false
-ASTRA_SCENE_TOOLS_ENABLED=true
-ASTRA_WORKBENCH_ORIGIN=http://127.0.0.1:5173
+OI_SCENE_TOOLS_ENABLED=true
+OI_WORKBENCH_ORIGIN=http://127.0.0.1:5173
 ```
 
 Use one local origin consistently; `localhost` and `127.0.0.1` have different browser sessions. Ensure the private `astra-assets` bucket and its policies exist after migration. The browser upload flag and MCP opt-in are separate. Do not add provider keys or service-role keys to this configuration for the fixture workflow.
 
 ```sh
-node cli/astra.mjs auth login
+node cli/openindustries.mjs auth login
 npm run dev
 ```
 
-Sign in to the workbench at `http://127.0.0.1:5173` with the same account as the CLI. The CLI session stays in its user configuration directory; never paste it into a prompt, fixture, or tool argument. `ASTRA_CLI_CONFIG` optionally selects a separate session file.
+Sign in to the workbench at `http://127.0.0.1:5173` with the same account as the CLI. The CLI session stays in its user configuration directory; never paste it into a prompt, fixture, or tool argument. `OI_CLI_CONFIG` optionally selects a separate session file.
 
 Private owner URLs use authenticated Storage reads and do not require a geometry Edge Function. If you also want signed-out shared links, deploy `npx supabase functions deploy scene-asset` and follow [scene-link setup](scene-links.md#deployment). Merging code or running fixture tests does not apply migrations, configure OAuth, or deploy that function.
 
@@ -71,15 +71,16 @@ The repository provides **local stdio**, not an HTTP MCP endpoint. The process n
 Add this entry to your Codex `config.toml` (for example `~/.codex/config.toml`), replacing the path:
 
 ```toml
-[mcp_servers.mergence]
+[mcp_servers.openindustries]
 command = "node"
-args = ["/absolute/path/OpenIndustries/server/astra-mcp.mjs"]
+args = ["/absolute/path/OpenIndustries/server/openindustries-mcp.mjs"]
 cwd = "/absolute/path/OpenIndustries"
 tool_timeout_sec = 90
 
-[mcp_servers.mergence.env]
-ASTRA_ROOT = "/absolute/path/OpenIndustries"
-ASTRA_SCENE_TOOLS_ENABLED = "true"
+[mcp_servers.openindustries.env]
+OI_ROOT = "/absolute/path/OpenIndustries"
+OI_SCENE_TOOLS_ENABLED = "true"
+OI_SCENE_BACKEND = "local"
 ```
 
 Run `codex mcp list` or use `/mcp` in the CLI to inspect the connection. Configuration fields are documented in the [official Codex MCP guide](https://developers.openai.com/codex/mcp). Scene calls have a 60-second server deadline; the host timeout should leave time to receive the response.
@@ -93,13 +94,14 @@ For OpenCode V2, merge this into your host configuration (do not replace unrelat
   "$schema": "https://opencode.ai/config.json",
   "mcp": {
     "servers": {
-      "mergence": {
+      "openindustries": {
         "type": "local",
-        "command": ["node", "/absolute/path/OpenIndustries/server/astra-mcp.mjs"],
+        "command": ["node", "/absolute/path/OpenIndustries/server/openindustries-mcp.mjs"],
         "cwd": "/absolute/path/OpenIndustries",
         "environment": {
-          "ASTRA_ROOT": "/absolute/path/OpenIndustries",
-          "ASTRA_SCENE_TOOLS_ENABLED": "true"
+          "OI_ROOT": "/absolute/path/OpenIndustries",
+          "OI_SCENE_TOOLS_ENABLED": "true",
+          "OI_SCENE_BACKEND": "local"
         }
       }
     }
@@ -121,7 +123,7 @@ npm run demo:mcp-scene -- --client codex --print-request
 
 The output wraps the [shared cleanroom request](../scripts/fixtures/cleanroom-scene-request.json) in `tools/call`. When using it with a real agent, replace its sample `request_id` with a fresh UUID. Ask the connected agent:
 
-> Discover the Mergence scene tools and inspect the three cleanroom example assets. Use the supplied scene request to create the six-instance cleanroom and the 110-second A/C sampling route, leaving occupied Room B unsampled. Use a fresh request UUID and your descriptive agent label. Return the scene ID, revision ID, and private revision URL. Do not call a generation provider or change my existing local workspace.
+> Discover the OpenIndustries scene tools and inspect the three cleanroom example assets. Use the supplied scene request to create the six-instance cleanroom and the 110-second A/C sampling route, leaving occupied Room B unsampled. Use a fresh request UUID and your descriptive agent label. Return the scene ID, revision ID, and private revision URL. Do not call a generation provider or change my existing local workspace.
 
 For the exact same workflow without an LLM, in a second terminal run:
 

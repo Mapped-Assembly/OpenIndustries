@@ -1,3 +1,4 @@
+import { oiEnv } from '../server/oi-environment.mjs';
 import assert from 'node:assert/strict';
 import { randomUUID } from 'node:crypto';
 import { createClient } from '@supabase/supabase-js';
@@ -119,7 +120,7 @@ try{
     const web=await createServer({server:{host:'127.0.0.1',port:4176,strictPort:true}});let browser;
     try{
       await web.listen();const origin=new URL(web.resolvedUrls!.local[0]).origin;
-      browser=await chromium.launch({headless:true,...(process.env.ASTRA_CHROME_PATH?{executablePath:process.env.ASTRA_CHROME_PATH}:{})});
+      browser=await chromium.launch({headless:true,...(oiEnv('CHROME_PATH')?{executablePath:oiEnv('CHROME_PATH')}:{})});
       const context=await browser.newContext();
       await context.addInitScript(({origin,key,session})=>{if(location.origin===origin&&!localStorage.getItem(key))localStorage.setItem(key,JSON.stringify(session));},{origin,key:`sb-${new URL(service.origin).hostname.split('.')[0]}-auth-token`,session});
       const page=await context.newPage();const errors:string[]=[];page.on('pageerror',e=>errors.push(e.message));

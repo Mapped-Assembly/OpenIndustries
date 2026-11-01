@@ -1,3 +1,4 @@
+import { oiEnv } from './oi-environment.mjs';
 import Ajv, { type AnySchemaObject } from 'ajv';
 import { simulationTools } from './mcp-simulation-contract.mjs';
 import { copyJson } from './simulation/json.mjs';
@@ -71,13 +72,13 @@ export async function callSimulationTool(name: string, raw: unknown): Promise<Js
       modeled_fixture: true,
       requires_service: true,
     };
-  if (process.env.ASTRA_SIMULATION_TOOLS_ENABLED !== 'true')
+  if (oiEnv('SIMULATION_TOOLS_ENABLED') !== 'true')
     throw new SimulationToolError('DISABLED');
-  const token = process.env.ASTRA_SIMULATION_SESSION;
+  const token = oiEnv('SIMULATION_SESSION');
   if (!token || !/^[a-f0-9]{64}$/.test(token)) throw new SimulationToolError('AUTH_REQUIRED');
   let url: URL;
   try {
-    url = new URL(process.env.ASTRA_SIMULATION_SERVICE_URL ?? 'http://127.0.0.1:8791');
+    url = new URL(oiEnv('SIMULATION_SERVICE_URL') ?? 'http://127.0.0.1:8791');
     if (
       url.protocol !== 'http:' ||
       !['127.0.0.1', 'localhost', '[::1]'].includes(url.hostname) ||

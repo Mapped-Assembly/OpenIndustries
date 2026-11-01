@@ -33,13 +33,13 @@ interprets a static robot asset as physically validated.
 ## Import into local OpenIndustries scene storage
 
 ```bash
-ASTRA_SCENE_BACKEND=local \
+OI_SCENE_BACKEND=local \
 node --import tsx cli/local-scenes.ts import-asset /tmp/my_robot_description/oi.asset.json
 ```
 
 The CLI returns an immutable `{"kind":"local","version_id":"..."}` reference.
 Use that reference as an `instance.asset` in the existing
-`astra.create_scene` MCP call with room dimensions (meters), Y-up
+`openindustries.create_scene` MCP call with room dimensions (meters), Y-up
 placement and Euler rotation (degrees). Component animation targets may use
 stable part IDs like `urdf:tip:visual:0`, but must be authored separately
 and **are not mechanically validated by this handoff**.

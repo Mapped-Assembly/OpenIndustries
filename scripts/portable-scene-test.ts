@@ -1,3 +1,4 @@
+import { oiEnv } from '../server/oi-environment.mjs';
 import assert from 'node:assert/strict';
 import { readFile, mkdtemp, rm } from 'node:fs/promises';
 import { tmpdir } from 'node:os';
@@ -109,7 +110,7 @@ if (process.argv.includes('--browser')) {
   let browser;
   try {
     await web.listen();
-    browser = await chromium.launch({ headless: true, ...(process.env.ASTRA_CHROME_PATH ? { executablePath: process.env.ASTRA_CHROME_PATH } : {}) });
+    browser = await chromium.launch({ headless: true, ...(oiEnv('CHROME_PATH') ? { executablePath: oiEnv('CHROME_PATH') } : {}) });
     const errors: string[] = [];
     const context = await browser.newContext({ viewport: { width: 1440, height: 1000 } });
     const first = await context.newPage(); first.on('pageerror', error => errors.push(error.message));
