@@ -1,0 +1,15 @@
+{
+  "extends": "./tsconfig.json",
+  "compilerOptions": {
+    "allowJs": true,
+    "checkJs": false
+  },
+  "include": [
+    "server/render/**/*.ts",
+    "tests/render/**/*.ts",
+    "src/render/main.ts",
+    "src/**/*.d.ts",
+    "scripts/render-demo.ts"
+  ],
+  "exclude": []
+}

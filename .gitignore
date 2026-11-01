@@ -24,3 +24,5 @@ build/
 *.sqlite-shm
 
 dist-field-lab/
+
+dist-render/

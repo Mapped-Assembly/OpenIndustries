@@ -13,6 +13,8 @@ import { agentTools, callAgentTool } from './mcp-agent.mjs';
 import { farmTools, callFarmTool } from './mcp-farm.mjs';
 import { scrubPortableData as scrub } from '../src/lib/portable-data.mjs';
 
+import { renderTools, callRenderTool } from './mcp-render.mjs';
+
 import { localLabTools, callLocalLabTool } from './mcp-local-lab.mjs';
 
 let sceneRuntime;
@@ -42,6 +44,7 @@ const localPath = value => {
 const textResult = value => { const clean = scrub(value); return { content: [{ type: 'text', text: JSON.stringify(clean, null, 2) }], structuredContent: clean }; };
 
 const tools = [
+  ...renderTools,
   ...localLabTools,
   ...roomTools,
   ...sceneTools,
@@ -58,6 +61,7 @@ const tools = [
 ];
 
 async function callTool(name, args = {}) {
+  if(renderTools.some(tool=>tool.name===name))return callRenderTool(root,name,args);
   if(localLabTools.some(tool=>tool.name===name))return callLocalLabTool(name,args);
   if(farmTools.some(tool=>tool.name===name))return callFarmTool(name,args);
   if(agentTools.some(tool=>tool.name===name))return callAgentTool(root,name,args);
@@ -124,6 +128,10 @@ async function handle(request, toolNamespace) {
       return response(request.id, textResult(result));
     }
     catch (error) {
+      if(renderTools.some(tool=>tool.name===request.params?.name)) {
+        const known=error?.name==='RenderToolError';
+        return response(request.id,{...textResult({error:{code:known?error.code:'RENDER_UNAVAILABLE',message:known?error.message:'Renderer unavailable.'}}),isError:true});
+      }
       if(farmTools.some(tool=>tool.name===request.params?.name)) {
         const code=error?.name==='FarmToolError'?error.code:'FARM_UNAVAILABLE';
         return response(request.id,{...textResult({error:{code,message:code}}),isError:true});
