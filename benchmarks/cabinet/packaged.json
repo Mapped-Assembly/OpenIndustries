@@ -1,0 +1,2090 @@
+{
+  "schema_version": 1,
+  "frame": "base_link",
+  "units": {
+    "length": "m",
+    "angle": "rad",
+    "mass": "kg"
+  },
+  "quaternion_order": "xyzw",
+  "handedness": "right",
+  "up_axis": "Z",
+  "source_sha256": "a559cb0d5a95c378452cccc8d98f14e3fb8eec9a6590c418c63ef7ab43d62ed7",
+  "model_sha256": "3dba648571df41892eeea0ac919093dd6cd66dc362203e5898f4613974ad7d15",
+  "machine_id": "so101-follower-new-calibration",
+  "agent_id": "cabinet-agent",
+  "controller_id": "so101-kinematic-v1",
+  "room_m": [
+    1.2,
+    1.2,
+    1.0
+  ],
+  "limits": {
+    "payload_kg": null,
+    "tool_mass_kg": null,
+    "wrist_moment_Nm": null,
+    "grip_force_N": null
+  },
+  "tools": {
+    "gripper": {
+      "mounted": true,
+      "interface": "pinned SO-101 jaws; gripper coordinate is radians, not aperture",
+      "calibration": null
+    },
+    "screwdriver": {
+      "mounted": false,
+      "adapter": null,
+      "spindle_actuator": null,
+      "mass_kg": null
+    }
+  },
+  "tolerances": {
+    "position_m": 0.003,
+    "angle_rad": 0.035
+  },
+  "limitations": [
+    "Authored box envelopes; no printable mating holes or resolved thread geometry.",
+    "Only inspect/approach/home are executable. No contact, unpacking or fastening.",
+    "TCP envelope checks are not full robot collision checking.",
+    "Unknown print/load/tool ratings block manipulation. Full-kit assembly reach is unverified."
+  ],
+  "id": "cabinet-packaged-v1",
+  "name": "Packaged cabinet / source dimensions",
+  "objects": [
+    {
+      "id": "bottom_panel",
+      "name": "bottom panel",
+      "kind": "panel",
+      "geometry": {
+        "primitive": "box",
+        "size_m": [
+          0.24,
+          0.18,
+          0.012
+        ]
+      },
+      "geometry_sha256": "d0f14f0b01fc7ef48aae8f2c7823ed9edb37c38896b92508ae2df527963058fa",
+      "size_m": [
+        0.24,
+        0.18,
+        0.012
+      ],
+      "position_m": [
+        0.24,
+        0.0,
+        0.0925588
+      ],
+      "orientation_xyzw": [
+        0.0,
+        0.0,
+        0.0,
+        1.0
+      ],
+      "color": [
+        0.27058823529411763,
+        0.7294117647058823,
+        0.7529411764705882
+      ],
+      "present": true,
+      "attached_to": null,
+      "supported": true,
+      "accessible": false,
+      "collision_geometry": "oriented_box_envelope",
+      "material_class": "3d_printed_polymer_unspecified",
+      "mass_kg": null,
+      "center_of_mass_m": null,
+      "container_id": "box",
+      "manufacturing": {
+        "process": "3D printing",
+        "material": null,
+        "print_profile": null,
+        "shell_thickness_m": null,
+        "infill_fraction": null,
+        "mass_kg": null,
+        "center_of_mass_m": null,
+        "mass_source": "unknown; obtain from a declared print estimate or physical measurement"
+      },
+      "grasp_feature": {
+        "offset_m": [
+          0,
+          0,
+          0.008
+        ],
+        "boss_size_m": [
+          0.018,
+          0.012,
+          0.004
+        ],
+        "strength_validated": false
+      }
+    },
+    {
+      "id": "left_panel",
+      "name": "left panel",
+      "kind": "panel",
+      "geometry": {
+        "primitive": "box",
+        "size_m": [
+          0.22,
+          0.18,
+          0.012
+        ]
+      },
+      "geometry_sha256": "2a3f7099f90bf6e6feaa9e14cf0fd31dc819a217f37723d6e07a6daa138be153",
+      "size_m": [
+        0.22,
+        0.18,
+        0.012
+      ],
+      "position_m": [
+        0.24,
+        0.0,
+        0.0735588
+      ],
+      "orientation_xyzw": [
+        0.0,
+        0.0,
+        0.0,
+        1.0
+      ],
+      "color": [
+        0.8941176470588236,
+        0.7058823529411765,
+        0.3607843137254902
+      ],
+      "present": true,
+      "attached_to": null,
+      "supported": true,
+      "accessible": false,
+      "collision_geometry": "oriented_box_envelope",
+      "material_class": "3d_printed_polymer_unspecified",
+      "mass_kg": null,
+      "center_of_mass_m": null,
+      "container_id": "box",
+      "manufacturing": {
+        "process": "3D printing",
+        "material": null,
+        "print_profile": null,
+        "shell_thickness_m": null,
+        "infill_fraction": null,
+        "mass_kg": null,
+        "center_of_mass_m": null,
+        "mass_source": "unknown; obtain from a declared print estimate or physical measurement"
+      },
+      "grasp_feature": {
+        "offset_m": [
+          0,
+          0,
+          0.008
+        ],
+        "boss_size_m": [
+          0.018,
+          0.012,
+          0.004
+        ],
+        "strength_validated": false
+      }
+    },
+    {
+      "id": "right_panel",
+      "name": "right panel",
+      "kind": "panel",
+      "geometry": {
+        "primitive": "box",
+        "size_m": [
+          0.22,
+          0.18,
+          0.012
+        ]
+      },
+      "geometry_sha256": "2a3f7099f90bf6e6feaa9e14cf0fd31dc819a217f37723d6e07a6daa138be153",
+      "size_m": [
+        0.22,
+        0.18,
+        0.012
+      ],
+      "position_m": [
+        0.24,
+        0.0,
+        0.0545588
+      ],
+      "orientation_xyzw": [
+        0.0,
+        0.0,
+        0.0,
+        1.0
+      ],
+      "color": [
+        0.8,
+        0.5490196078431373,
+        0.34509803921568627
+      ],
+      "present": true,
+      "attached_to": null,
+      "supported": true,
+      "accessible": false,
+      "collision_geometry": "oriented_box_envelope",
+      "material_class": "3d_printed_polymer_unspecified",
+      "mass_kg": null,
+      "center_of_mass_m": null,
+      "container_id": "box",
+      "manufacturing": {
+        "process": "3D printing",
+        "material": null,
+        "print_profile": null,
+        "shell_thickness_m": null,
+        "infill_fraction": null,
+        "mass_kg": null,
+        "center_of_mass_m": null,
+        "mass_source": "unknown; obtain from a declared print estimate or physical measurement"
+      },
+      "grasp_feature": {
+        "offset_m": [
+          0,
+          0,
+          0.008
+        ],
+        "boss_size_m": [
+          0.018,
+          0.012,
+          0.004
+        ],
+        "strength_validated": false
+      }
+    },
+    {
+      "id": "top_panel",
+      "name": "top panel",
+      "kind": "panel",
+      "geometry": {
+        "primitive": "box",
+        "size_m": [
+          0.264,
+          0.18,
+          0.012
+        ]
+      },
+      "geometry_sha256": "e5b0dc3222e9eb835b312ef7ad29977f09fa626b070eb4cede788e1e1fae36ea",
+      "size_m": [
+        0.264,
+        0.18,
+        0.012
+      ],
+      "position_m": [
+        0.24,
+        0.0,
+        0.0355588
+      ],
+      "orientation_xyzw": [
+        0.0,
+        0.0,
+        0.0,
+        1.0
+      ],
+      "color": [
+        0.47058823529411764,
+        0.6196078431372549,
+        0.8196078431372549
+      ],
+      "present": true,
+      "attached_to": null,
+      "supported": true,
+      "accessible": false,
+      "collision_geometry": "oriented_box_envelope",
+      "material_class": "3d_printed_polymer_unspecified",
+      "mass_kg": null,
+      "center_of_mass_m": null,
+      "container_id": "box",
+      "manufacturing": {
+        "process": "3D printing",
+        "material": null,
+        "print_profile": null,
+        "shell_thickness_m": null,
+        "infill_fraction": null,
+        "mass_kg": null,
+        "center_of_mass_m": null,
+        "mass_source": "unknown; obtain from a declared print estimate or physical measurement"
+      },
+      "grasp_feature": {
+        "offset_m": [
+          0,
+          0,
+          0.008
+        ],
+        "boss_size_m": [
+          0.018,
+          0.012,
+          0.004
+        ],
+        "strength_validated": false
+      }
+    },
+    {
+      "id": "back_panel",
+      "name": "back panel",
+      "kind": "panel",
+      "geometry": {
+        "primitive": "box",
+        "size_m": [
+          0.264,
+          0.244,
+          0.012
+        ]
+      },
+      "geometry_sha256": "6df4b8d89baa722bc0a70441bcfe6305ab82821d46ded7b63f57f2270ed1f153",
+      "size_m": [
+        0.264,
+        0.244,
+        0.012
+      ],
+      "position_m": [
+        0.24,
+        0.0,
+        0.0165588
+      ],
+      "orientation_xyzw": [
+        0.0,
+        0.0,
+        0.0,
+        1.0
+      ],
+      "color": [
+        0.7058823529411765,
+        0.5490196078431373,
+        0.7137254901960784
+      ],
+      "present": true,
+      "attached_to": null,
+      "supported": true,
+      "accessible": false,
+      "collision_geometry": "oriented_box_envelope",
+      "material_class": "3d_printed_polymer_unspecified",
+      "mass_kg": null,
+      "center_of_mass_m": null,
+      "container_id": "box",
+      "manufacturing": {
+        "process": "3D printing",
+        "material": null,
+        "print_profile": null,
+        "shell_thickness_m": null,
+        "infill_fraction": null,
+        "mass_kg": null,
+        "center_of_mass_m": null,
+        "mass_source": "unknown; obtain from a declared print estimate or physical measurement"
+      },
+      "grasp_feature": {
+        "offset_m": [
+          0,
+          0,
+          0.008
+        ],
+        "boss_size_m": [
+          0.018,
+          0.012,
+          0.004
+        ],
+        "strength_validated": false
+      }
+    },
+    {
+      "id": "separator_1",
+      "name": "separator 1",
+      "kind": "separator",
+      "geometry": {
+        "primitive": "box",
+        "size_m": [
+          0.276,
+          0.252,
+          0.0005588
+        ]
+      },
+      "geometry_sha256": "aecc6497c52b2d74055ef9167c4e150465414a0f17a55fcdd3509c3ab891f91f",
+      "size_m": [
+        0.276,
+        0.252,
+        0.0005588
+      ],
+      "position_m": [
+        0.24,
+        0.0,
+        0.0862794
+      ],
+      "orientation_xyzw": [
+        0.0,
+        0.0,
+        0.0,
+        1.0
+      ],
+      "color": [
+        0.7215686274509804,
+        0.6039215686274509,
+        0.4392156862745098
+      ],
+      "present": true,
+      "attached_to": null,
+      "supported": true,
+      "accessible": false,
+      "collision_geometry": "oriented_box_envelope",
+      "material_class": "paperboard",
+      "mass_kg": null,
+      "center_of_mass_m": null,
+      "container_id": "box",
+      "manufacturing": null,
+      "grasp_feature": {
+        "offset_m": [
+          0.12,
+          0,
+          0.002
+        ],
+        "boss_size_m": null,
+        "strength_validated": false
+      }
+    },
+    {
+      "id": "separator_2",
+      "name": "separator 2",
+      "kind": "separator",
+      "geometry": {
+        "primitive": "box",
+        "size_m": [
+          0.276,
+          0.252,
+          0.0005588
+        ]
+      },
+      "geometry_sha256": "aecc6497c52b2d74055ef9167c4e150465414a0f17a55fcdd3509c3ab891f91f",
+      "size_m": [
+        0.276,
+        0.252,
+        0.0005588
+      ],
+      "position_m": [
+        0.24,
+        0.0,
+        0.06727939999999999
+      ],
+      "orientation_xyzw": [
+        0.0,
+        0.0,
+        0.0,
+        1.0
+      ],
+      "color": [
+        0.7215686274509804,
+        0.6039215686274509,
+        0.4392156862745098
+      ],
+      "present": true,
+      "attached_to": null,
+      "supported": true,
+      "accessible": false,
+      "collision_geometry": "oriented_box_envelope",
+      "material_class": "paperboard",
+      "mass_kg": null,
+      "center_of_mass_m": null,
+      "container_id": "box",
+      "manufacturing": null,
+      "grasp_feature": {
+        "offset_m": [
+          0.12,
+          0,
+          0.002
+        ],
+        "boss_size_m": null,
+        "strength_validated": false
+      }
+    },
+    {
+      "id": "separator_3",
+      "name": "separator 3",
+      "kind": "separator",
+      "geometry": {
+        "primitive": "box",
+        "size_m": [
+          0.276,
+          0.252,
+          0.0005588
+        ]
+      },
+      "geometry_sha256": "aecc6497c52b2d74055ef9167c4e150465414a0f17a55fcdd3509c3ab891f91f",
+      "size_m": [
+        0.276,
+        0.252,
+        0.0005588
+      ],
+      "position_m": [
+        0.24,
+        0.0,
+        0.0482794
+      ],
+      "orientation_xyzw": [
+        0.0,
+        0.0,
+        0.0,
+        1.0
+      ],
+      "color": [
+        0.7215686274509804,
+        0.6039215686274509,
+        0.4392156862745098
+      ],
+      "present": true,
+      "attached_to": null,
+      "supported": true,
+      "accessible": false,
+      "collision_geometry": "oriented_box_envelope",
+      "material_class": "paperboard",
+      "mass_kg": null,
+      "center_of_mass_m": null,
+      "container_id": "box",
+      "manufacturing": null,
+      "grasp_feature": {
+        "offset_m": [
+          0.12,
+          0,
+          0.002
+        ],
+        "boss_size_m": null,
+        "strength_validated": false
+      }
+    },
+    {
+      "id": "separator_4",
+      "name": "separator 4",
+      "kind": "separator",
+      "geometry": {
+        "primitive": "box",
+        "size_m": [
+          0.276,
+          0.252,
+          0.0005588
+        ]
+      },
+      "geometry_sha256": "aecc6497c52b2d74055ef9167c4e150465414a0f17a55fcdd3509c3ab891f91f",
+      "size_m": [
+        0.276,
+        0.252,
+        0.0005588
+      ],
+      "position_m": [
+        0.24,
+        0.0,
+        0.0292794
+      ],
+      "orientation_xyzw": [
+        0.0,
+        0.0,
+        0.0,
+        1.0
+      ],
+      "color": [
+        0.7215686274509804,
+        0.6039215686274509,
+        0.4392156862745098
+      ],
+      "present": true,
+      "attached_to": null,
+      "supported": true,
+      "accessible": false,
+      "collision_geometry": "oriented_box_envelope",
+      "material_class": "paperboard",
+      "mass_kg": null,
+      "center_of_mass_m": null,
+      "container_id": "box",
+      "manufacturing": null,
+      "grasp_feature": {
+        "offset_m": [
+          0.12,
+          0,
+          0.002
+        ],
+        "boss_size_m": null,
+        "strength_validated": false
+      }
+    },
+    {
+      "id": "screw_carrier",
+      "name": "screw carrier",
+      "kind": "carrier",
+      "geometry": {
+        "primitive": "box",
+        "size_m": [
+          0.19,
+          0.065,
+          0.0012
+        ]
+      },
+      "geometry_sha256": "7b9010a5e0a07c8494814da09cfdfc995eb968250c19b6aa0e4f0b051c4d2c8b",
+      "size_m": [
+        0.19,
+        0.065,
+        0.0012
+      ],
+      "position_m": [
+        0.24,
+        0.06,
+        0.0991588
+      ],
+      "orientation_xyzw": [
+        0.0,
+        0.0,
+        0.0,
+        1.0
+      ],
+      "color": [
+        0.8901960784313725,
+        0.8352941176470589,
+        0.7137254901960784
+      ],
+      "present": true,
+      "attached_to": null,
+      "supported": true,
+      "accessible": false,
+      "collision_geometry": "oriented_box_envelope",
+      "material_class": "paperboard",
+      "mass_kg": null,
+      "center_of_mass_m": null,
+      "container_id": "box",
+      "manufacturing": null,
+      "grasp_feature": {
+        "offset_m": [
+          0.085,
+          0.025,
+          0.0026
+        ],
+        "boss_size_m": [
+          0.018,
+          0.008,
+          0.004
+        ],
+        "strength_validated": false
+      }
+    },
+    {
+      "id": "paper_seal",
+      "name": "paper seal",
+      "kind": "seal",
+      "geometry": {
+        "primitive": "box",
+        "size_m": [
+          0.035,
+          0.06,
+          0.0002
+        ]
+      },
+      "geometry_sha256": "a71a6f35db745ff106f1595c5b0d0b8129806b2cae1f46d80a7c89b849ce3d87",
+      "size_m": [
+        0.035,
+        0.06,
+        0.0002
+      ],
+      "position_m": [
+        0.24,
+        -0.145,
+        0.114975
+      ],
+      "orientation_xyzw": [
+        0.0,
+        0.0,
+        0.0,
+        1.0
+      ],
+      "color": [
+        0.9294117647058824,
+        0.8313725490196079,
+        0.4980392156862745
+      ],
+      "present": true,
+      "attached_to": null,
+      "supported": true,
+      "accessible": true,
+      "collision_geometry": "oriented_box_envelope",
+      "material_class": "paperboard",
+      "mass_kg": null,
+      "center_of_mass_m": null,
+      "container_id": "box",
+      "manufacturing": null,
+      "grasp_feature": {
+        "offset_m": [
+          0,
+          0,
+          0.002
+        ],
+        "boss_size_m": null,
+        "strength_validated": false
+      }
+    },
+    {
+      "id": "screw_LB_1",
+      "name": "screw LB 1",
+      "kind": "screw",
+      "geometry": {
+        "primitive": "box",
+        "size_m": [
+          0.006,
+          0.006,
+          0.02
+        ]
+      },
+      "geometry_sha256": "6ac4673c9817cc865501a9e7b506b0f35307f5da1e29d2da9d80336ff13c20c2",
+      "size_m": [
+        0.006,
+        0.006,
+        0.02
+      ],
+      "position_m": [
+        0.19,
+        0.03999999999999998,
+        0.10215880000000001
+      ],
+      "orientation_xyzw": [
+        0.0,
+        -0.7071067811865475,
+        0.0,
+        0.7071067811865476
+      ],
+      "color": [
+        0.65,
+        0.68,
+        0.72
+      ],
+      "present": true,
+      "attached_to": null,
+      "supported": true,
+      "accessible": false,
+      "collision_geometry": "oriented_box_envelope",
+      "material_class": "metal",
+      "mass_kg": null,
+      "center_of_mass_m": null,
+      "container_id": "screw_carrier",
+      "fastener": {
+        "nominal": "M3",
+        "length_m": 0.02,
+        "joint_id": "left_bottom",
+        "hole_id": "screw_LB_1_hole",
+        "installed": false,
+        "insertion_m": 0.0,
+        "head_type": null
+      }
+    },
+    {
+      "id": "screw_LB_2",
+      "name": "screw LB 2",
+      "kind": "screw",
+      "geometry": {
+        "primitive": "box",
+        "size_m": [
+          0.006,
+          0.006,
+          0.02
+        ]
+      },
+      "geometry_sha256": "6ac4673c9817cc865501a9e7b506b0f35307f5da1e29d2da9d80336ff13c20c2",
+      "size_m": [
+        0.006,
+        0.006,
+        0.02
+      ],
+      "position_m": [
+        0.23,
+        0.03999999999999998,
+        0.10215880000000001
+      ],
+      "orientation_xyzw": [
+        0.0,
+        -0.7071067811865475,
+        0.0,
+        0.7071067811865476
+      ],
+      "color": [
+        0.65,
+        0.68,
+        0.72
+      ],
+      "present": true,
+      "attached_to": null,
+      "supported": true,
+      "accessible": false,
+      "collision_geometry": "oriented_box_envelope",
+      "material_class": "metal",
+      "mass_kg": null,
+      "center_of_mass_m": null,
+      "container_id": "screw_carrier",
+      "fastener": {
+        "nominal": "M3",
+        "length_m": 0.02,
+        "joint_id": "left_bottom",
+        "hole_id": "screw_LB_2_hole",
+        "installed": false,
+        "insertion_m": 0.0,
+        "head_type": null
+      }
+    },
+    {
+      "id": "screw_RB_1",
+      "name": "screw RB 1",
+      "kind": "screw",
+      "geometry": {
+        "primitive": "box",
+        "size_m": [
+          0.006,
+          0.006,
+          0.02
+        ]
+      },
+      "geometry_sha256": "6ac4673c9817cc865501a9e7b506b0f35307f5da1e29d2da9d80336ff13c20c2",
+      "size_m": [
+        0.006,
+        0.006,
+        0.02
+      ],
+      "position_m": [
+        0.27,
+        0.03999999999999998,
+        0.10215880000000001
+      ],
+      "orientation_xyzw": [
+        0.0,
+        -0.7071067811865475,
+        0.0,
+        0.7071067811865476
+      ],
+      "color": [
+        0.65,
+        0.68,
+        0.72
+      ],
+      "present": true,
+      "attached_to": null,
+      "supported": true,
+      "accessible": false,
+      "collision_geometry": "oriented_box_envelope",
+      "material_class": "metal",
+      "mass_kg": null,
+      "center_of_mass_m": null,
+      "container_id": "screw_carrier",
+      "fastener": {
+        "nominal": "M3",
+        "length_m": 0.02,
+        "joint_id": "right_bottom",
+        "hole_id": "screw_RB_1_hole",
+        "installed": false,
+        "insertion_m": 0.0,
+        "head_type": null
+      }
+    },
+    {
+      "id": "screw_RB_2",
+      "name": "screw RB 2",
+      "kind": "screw",
+      "geometry": {
+        "primitive": "box",
+        "size_m": [
+          0.006,
+          0.006,
+          0.02
+        ]
+      },
+      "geometry_sha256": "6ac4673c9817cc865501a9e7b506b0f35307f5da1e29d2da9d80336ff13c20c2",
+      "size_m": [
+        0.006,
+        0.006,
+        0.02
+      ],
+      "position_m": [
+        0.31,
+        0.03999999999999998,
+        0.10215880000000001
+      ],
+      "orientation_xyzw": [
+        0.0,
+        -0.7071067811865475,
+        0.0,
+        0.7071067811865476
+      ],
+      "color": [
+        0.65,
+        0.68,
+        0.72
+      ],
+      "present": true,
+      "attached_to": null,
+      "supported": true,
+      "accessible": false,
+      "collision_geometry": "oriented_box_envelope",
+      "material_class": "metal",
+      "mass_kg": null,
+      "center_of_mass_m": null,
+      "container_id": "screw_carrier",
+      "fastener": {
+        "nominal": "M3",
+        "length_m": 0.02,
+        "joint_id": "right_bottom",
+        "hole_id": "screw_RB_2_hole",
+        "installed": false,
+        "insertion_m": 0.0,
+        "head_type": null
+      }
+    },
+    {
+      "id": "screw_TL_1",
+      "name": "screw TL 1",
+      "kind": "screw",
+      "geometry": {
+        "primitive": "box",
+        "size_m": [
+          0.006,
+          0.006,
+          0.02
+        ]
+      },
+      "geometry_sha256": "6ac4673c9817cc865501a9e7b506b0f35307f5da1e29d2da9d80336ff13c20c2",
+      "size_m": [
+        0.006,
+        0.006,
+        0.02
+      ],
+      "position_m": [
+        0.19,
+        0.057999999999999996,
+        0.10215880000000001
+      ],
+      "orientation_xyzw": [
+        0.0,
+        -0.7071067811865475,
+        0.0,
+        0.7071067811865476
+      ],
+      "color": [
+        0.65,
+        0.68,
+        0.72
+      ],
+      "present": true,
+      "attached_to": null,
+      "supported": true,
+      "accessible": false,
+      "collision_geometry": "oriented_box_envelope",
+      "material_class": "metal",
+      "mass_kg": null,
+      "center_of_mass_m": null,
+      "container_id": "screw_carrier",
+      "fastener": {
+        "nominal": "M3",
+        "length_m": 0.02,
+        "joint_id": "top_left",
+        "hole_id": "screw_TL_1_hole",
+        "installed": false,
+        "insertion_m": 0.0,
+        "head_type": null
+      }
+    },
+    {
+      "id": "screw_TL_2",
+      "name": "screw TL 2",
+      "kind": "screw",
+      "geometry": {
+        "primitive": "box",
+        "size_m": [
+          0.006,
+          0.006,
+          0.02
+        ]
+      },
+      "geometry_sha256": "6ac4673c9817cc865501a9e7b506b0f35307f5da1e29d2da9d80336ff13c20c2",
+      "size_m": [
+        0.006,
+        0.006,
+        0.02
+      ],
+      "position_m": [
+        0.23,
+        0.057999999999999996,
+        0.10215880000000001
+      ],
+      "orientation_xyzw": [
+        0.0,
+        -0.7071067811865475,
+        0.0,
+        0.7071067811865476
+      ],
+      "color": [
+        0.65,
+        0.68,
+        0.72
+      ],
+      "present": true,
+      "attached_to": null,
+      "supported": true,
+      "accessible": false,
+      "collision_geometry": "oriented_box_envelope",
+      "material_class": "metal",
+      "mass_kg": null,
+      "center_of_mass_m": null,
+      "container_id": "screw_carrier",
+      "fastener": {
+        "nominal": "M3",
+        "length_m": 0.02,
+        "joint_id": "top_left",
+        "hole_id": "screw_TL_2_hole",
+        "installed": false,
+        "insertion_m": 0.0,
+        "head_type": null
+      }
+    },
+    {
+      "id": "screw_TR_1",
+      "name": "screw TR 1",
+      "kind": "screw",
+      "geometry": {
+        "primitive": "box",
+        "size_m": [
+          0.006,
+          0.006,
+          0.02
+        ]
+      },
+      "geometry_sha256": "6ac4673c9817cc865501a9e7b506b0f35307f5da1e29d2da9d80336ff13c20c2",
+      "size_m": [
+        0.006,
+        0.006,
+        0.02
+      ],
+      "position_m": [
+        0.27,
+        0.057999999999999996,
+        0.10215880000000001
+      ],
+      "orientation_xyzw": [
+        0.0,
+        -0.7071067811865475,
+        0.0,
+        0.7071067811865476
+      ],
+      "color": [
+        0.65,
+        0.68,
+        0.72
+      ],
+      "present": true,
+      "attached_to": null,
+      "supported": true,
+      "accessible": false,
+      "collision_geometry": "oriented_box_envelope",
+      "material_class": "metal",
+      "mass_kg": null,
+      "center_of_mass_m": null,
+      "container_id": "screw_carrier",
+      "fastener": {
+        "nominal": "M3",
+        "length_m": 0.02,
+        "joint_id": "top_right",
+        "hole_id": "screw_TR_1_hole",
+        "installed": false,
+        "insertion_m": 0.0,
+        "head_type": null
+      }
+    },
+    {
+      "id": "screw_TR_2",
+      "name": "screw TR 2",
+      "kind": "screw",
+      "geometry": {
+        "primitive": "box",
+        "size_m": [
+          0.006,
+          0.006,
+          0.02
+        ]
+      },
+      "geometry_sha256": "6ac4673c9817cc865501a9e7b506b0f35307f5da1e29d2da9d80336ff13c20c2",
+      "size_m": [
+        0.006,
+        0.006,
+        0.02
+      ],
+      "position_m": [
+        0.31,
+        0.057999999999999996,
+        0.10215880000000001
+      ],
+      "orientation_xyzw": [
+        0.0,
+        -0.7071067811865475,
+        0.0,
+        0.7071067811865476
+      ],
+      "color": [
+        0.65,
+        0.68,
+        0.72
+      ],
+      "present": true,
+      "attached_to": null,
+      "supported": true,
+      "accessible": false,
+      "collision_geometry": "oriented_box_envelope",
+      "material_class": "metal",
+      "mass_kg": null,
+      "center_of_mass_m": null,
+      "container_id": "screw_carrier",
+      "fastener": {
+        "nominal": "M3",
+        "length_m": 0.02,
+        "joint_id": "top_right",
+        "hole_id": "screw_TR_2_hole",
+        "installed": false,
+        "insertion_m": 0.0,
+        "head_type": null
+      }
+    },
+    {
+      "id": "screw_BB_1",
+      "name": "screw BB 1",
+      "kind": "screw",
+      "geometry": {
+        "primitive": "box",
+        "size_m": [
+          0.006,
+          0.006,
+          0.02
+        ]
+      },
+      "geometry_sha256": "6ac4673c9817cc865501a9e7b506b0f35307f5da1e29d2da9d80336ff13c20c2",
+      "size_m": [
+        0.006,
+        0.006,
+        0.02
+      ],
+      "position_m": [
+        0.19,
+        0.07600000000000001,
+        0.10215880000000001
+      ],
+      "orientation_xyzw": [
+        0.0,
+        -0.7071067811865475,
+        0.0,
+        0.7071067811865476
+      ],
+      "color": [
+        0.65,
+        0.68,
+        0.72
+      ],
+      "present": true,
+      "attached_to": null,
+      "supported": true,
+      "accessible": false,
+      "collision_geometry": "oriented_box_envelope",
+      "material_class": "metal",
+      "mass_kg": null,
+      "center_of_mass_m": null,
+      "container_id": "screw_carrier",
+      "fastener": {
+        "nominal": "M3",
+        "length_m": 0.02,
+        "joint_id": "back_bottom",
+        "hole_id": "screw_BB_1_hole",
+        "installed": false,
+        "insertion_m": 0.0,
+        "head_type": null
+      }
+    },
+    {
+      "id": "screw_BL_1",
+      "name": "screw BL 1",
+      "kind": "screw",
+      "geometry": {
+        "primitive": "box",
+        "size_m": [
+          0.006,
+          0.006,
+          0.02
+        ]
+      },
+      "geometry_sha256": "6ac4673c9817cc865501a9e7b506b0f35307f5da1e29d2da9d80336ff13c20c2",
+      "size_m": [
+        0.006,
+        0.006,
+        0.02
+      ],
+      "position_m": [
+        0.23,
+        0.07600000000000001,
+        0.10215880000000001
+      ],
+      "orientation_xyzw": [
+        0.0,
+        -0.7071067811865475,
+        0.0,
+        0.7071067811865476
+      ],
+      "color": [
+        0.65,
+        0.68,
+        0.72
+      ],
+      "present": true,
+      "attached_to": null,
+      "supported": true,
+      "accessible": false,
+      "collision_geometry": "oriented_box_envelope",
+      "material_class": "metal",
+      "mass_kg": null,
+      "center_of_mass_m": null,
+      "container_id": "screw_carrier",
+      "fastener": {
+        "nominal": "M3",
+        "length_m": 0.02,
+        "joint_id": "back_left",
+        "hole_id": "screw_BL_1_hole",
+        "installed": false,
+        "insertion_m": 0.0,
+        "head_type": null
+      }
+    },
+    {
+      "id": "screw_BR_1",
+      "name": "screw BR 1",
+      "kind": "screw",
+      "geometry": {
+        "primitive": "box",
+        "size_m": [
+          0.006,
+          0.006,
+          0.02
+        ]
+      },
+      "geometry_sha256": "6ac4673c9817cc865501a9e7b506b0f35307f5da1e29d2da9d80336ff13c20c2",
+      "size_m": [
+        0.006,
+        0.006,
+        0.02
+      ],
+      "position_m": [
+        0.27,
+        0.07600000000000001,
+        0.10215880000000001
+      ],
+      "orientation_xyzw": [
+        0.0,
+        -0.7071067811865475,
+        0.0,
+        0.7071067811865476
+      ],
+      "color": [
+        0.65,
+        0.68,
+        0.72
+      ],
+      "present": true,
+      "attached_to": null,
+      "supported": true,
+      "accessible": false,
+      "collision_geometry": "oriented_box_envelope",
+      "material_class": "metal",
+      "mass_kg": null,
+      "center_of_mass_m": null,
+      "container_id": "screw_carrier",
+      "fastener": {
+        "nominal": "M3",
+        "length_m": 0.02,
+        "joint_id": "back_right",
+        "hole_id": "screw_BR_1_hole",
+        "installed": false,
+        "insertion_m": 0.0,
+        "head_type": null
+      }
+    },
+    {
+      "id": "screw_BT_1",
+      "name": "screw BT 1",
+      "kind": "screw",
+      "geometry": {
+        "primitive": "box",
+        "size_m": [
+          0.006,
+          0.006,
+          0.02
+        ]
+      },
+      "geometry_sha256": "6ac4673c9817cc865501a9e7b506b0f35307f5da1e29d2da9d80336ff13c20c2",
+      "size_m": [
+        0.006,
+        0.006,
+        0.02
+      ],
+      "position_m": [
+        0.31,
+        0.07600000000000001,
+        0.10215880000000001
+      ],
+      "orientation_xyzw": [
+        0.0,
+        -0.7071067811865475,
+        0.0,
+        0.7071067811865476
+      ],
+      "color": [
+        0.65,
+        0.68,
+        0.72
+      ],
+      "present": true,
+      "attached_to": null,
+      "supported": true,
+      "accessible": false,
+      "collision_geometry": "oriented_box_envelope",
+      "material_class": "metal",
+      "mass_kg": null,
+      "center_of_mass_m": null,
+      "container_id": "screw_carrier",
+      "fastener": {
+        "nominal": "M3",
+        "length_m": 0.02,
+        "joint_id": "back_top",
+        "hole_id": "screw_BT_1_hole",
+        "installed": false,
+        "insertion_m": 0.0,
+        "head_type": null
+      }
+    },
+    {
+      "id": "box_bottom",
+      "name": "box bottom",
+      "kind": "packaging",
+      "geometry": {
+        "primitive": "box",
+        "size_m": [
+          0.31115000000000004,
+          0.31115000000000004,
+          0.003175
+        ]
+      },
+      "geometry_sha256": "14d9967a63129d9e6e3aa3dfffa720324c4ad19eddfece99337c31b253710d1e",
+      "size_m": [
+        0.31115000000000004,
+        0.31115000000000004,
+        0.003175
+      ],
+      "position_m": [
+        0.24,
+        0,
+        0.0084125
+      ],
+      "orientation_xyzw": [
+        0,
+        0,
+        0,
+        1
+      ],
+      "color": [
+        0.63,
+        0.43,
+        0.25
+      ],
+      "present": true,
+      "attached_to": null,
+      "supported": true,
+      "accessible": true,
+      "collision_geometry": "oriented_box_envelope",
+      "material_class": "corrugated_cardboard",
+      "mass_kg": null,
+      "center_of_mass_m": null
+    },
+    {
+      "id": "box_left",
+      "name": "box left",
+      "kind": "packaging",
+      "geometry": {
+        "primitive": "box",
+        "size_m": [
+          0.003175,
+          0.31115000000000004,
+          0.1016
+        ]
+      },
+      "geometry_sha256": "c3e6c93cc0035c916200d84e868c1ceb08cac3ef778636d71850a064ea9580c6",
+      "size_m": [
+        0.003175,
+        0.31115000000000004,
+        0.1016
+      ],
+      "position_m": [
+        0.08601249999999998,
+        0,
+        0.0608
+      ],
+      "orientation_xyzw": [
+        0,
+        0,
+        0,
+        1
+      ],
+      "color": [
+        0.63,
+        0.43,
+        0.25
+      ],
+      "present": true,
+      "attached_to": null,
+      "supported": true,
+      "accessible": true,
+      "collision_geometry": "oriented_box_envelope",
+      "material_class": "corrugated_cardboard",
+      "mass_kg": null,
+      "center_of_mass_m": null
+    },
+    {
+      "id": "box_right",
+      "name": "box right",
+      "kind": "packaging",
+      "geometry": {
+        "primitive": "box",
+        "size_m": [
+          0.003175,
+          0.31115000000000004,
+          0.1016
+        ]
+      },
+      "geometry_sha256": "c3e6c93cc0035c916200d84e868c1ceb08cac3ef778636d71850a064ea9580c6",
+      "size_m": [
+        0.003175,
+        0.31115000000000004,
+        0.1016
+      ],
+      "position_m": [
+        0.3939875,
+        0,
+        0.0608
+      ],
+      "orientation_xyzw": [
+        0,
+        0,
+        0,
+        1
+      ],
+      "color": [
+        0.63,
+        0.43,
+        0.25
+      ],
+      "present": true,
+      "attached_to": null,
+      "supported": true,
+      "accessible": true,
+      "collision_geometry": "oriented_box_envelope",
+      "material_class": "corrugated_cardboard",
+      "mass_kg": null,
+      "center_of_mass_m": null
+    },
+    {
+      "id": "box_front",
+      "name": "box front",
+      "kind": "packaging",
+      "geometry": {
+        "primitive": "box",
+        "size_m": [
+          0.3048,
+          0.003175,
+          0.1016
+        ]
+      },
+      "geometry_sha256": "4832ab839822bcfa975717895ec75a272a0a398507eedca24e32648451762697",
+      "size_m": [
+        0.3048,
+        0.003175,
+        0.1016
+      ],
+      "position_m": [
+        0.24,
+        -0.1539875,
+        0.0608
+      ],
+      "orientation_xyzw": [
+        0,
+        0,
+        0,
+        1
+      ],
+      "color": [
+        0.63,
+        0.43,
+        0.25
+      ],
+      "present": true,
+      "attached_to": null,
+      "supported": true,
+      "accessible": true,
+      "collision_geometry": "oriented_box_envelope",
+      "material_class": "corrugated_cardboard",
+      "mass_kg": null,
+      "center_of_mass_m": null
+    },
+    {
+      "id": "box_back",
+      "name": "box back",
+      "kind": "packaging",
+      "geometry": {
+        "primitive": "box",
+        "size_m": [
+          0.3048,
+          0.003175,
+          0.1016
+        ]
+      },
+      "geometry_sha256": "4832ab839822bcfa975717895ec75a272a0a398507eedca24e32648451762697",
+      "size_m": [
+        0.3048,
+        0.003175,
+        0.1016
+      ],
+      "position_m": [
+        0.24,
+        0.1539875,
+        0.0608
+      ],
+      "orientation_xyzw": [
+        0,
+        0,
+        0,
+        1
+      ],
+      "color": [
+        0.63,
+        0.43,
+        0.25
+      ],
+      "present": true,
+      "attached_to": null,
+      "supported": true,
+      "accessible": true,
+      "collision_geometry": "oriented_box_envelope",
+      "material_class": "corrugated_cardboard",
+      "mass_kg": null,
+      "center_of_mass_m": null
+    },
+    {
+      "id": "box_lid",
+      "name": "box lid",
+      "kind": "packaging",
+      "geometry": {
+        "primitive": "box",
+        "size_m": [
+          0.31115000000000004,
+          0.31115000000000004,
+          0.003175
+        ]
+      },
+      "geometry_sha256": "14d9967a63129d9e6e3aa3dfffa720324c4ad19eddfece99337c31b253710d1e",
+      "size_m": [
+        0.31115000000000004,
+        0.31115000000000004,
+        0.003175
+      ],
+      "position_m": [
+        0.24,
+        0,
+        0.1131875
+      ],
+      "orientation_xyzw": [
+        0,
+        0,
+        0,
+        1
+      ],
+      "color": [
+        0.63,
+        0.43,
+        0.25
+      ],
+      "present": true,
+      "attached_to": null,
+      "supported": true,
+      "accessible": true,
+      "collision_geometry": "oriented_box_envelope",
+      "material_class": "corrugated_cardboard",
+      "mass_kg": null,
+      "center_of_mass_m": null
+    },
+    {
+      "id": "holding_fixture",
+      "name": "holding fixture",
+      "kind": "fixture",
+      "geometry": {
+        "primitive": "box",
+        "size_m": [
+          0.12,
+          0.08,
+          0.012
+        ]
+      },
+      "geometry_sha256": "b4193dafcd00852f0eaadb8c578346a0b77205a262bced3f1186c58aee72a986",
+      "size_m": [
+        0.12,
+        0.08,
+        0.012
+      ],
+      "position_m": [
+        -0.19,
+        -0.15,
+        0.006
+      ],
+      "orientation_xyzw": [
+        0,
+        0,
+        0,
+        1
+      ],
+      "color": [
+        0.3,
+        0.4,
+        0.45
+      ],
+      "present": true,
+      "attached_to": null,
+      "supported": true,
+      "accessible": true,
+      "collision_geometry": "oriented_box_envelope",
+      "material_class": "unspecified",
+      "mass_kg": null,
+      "center_of_mass_m": null
+    },
+    {
+      "id": "screwdriver",
+      "name": "screwdriver",
+      "kind": "tool",
+      "geometry": {
+        "primitive": "box",
+        "size_m": [
+          0.025,
+          0.025,
+          0.09
+        ]
+      },
+      "geometry_sha256": "574b57f1630069072dcbb019e06812cd0448e7c2d0e674653590ab1366bc987f",
+      "size_m": [
+        0.025,
+        0.025,
+        0.09
+      ],
+      "position_m": [
+        -0.19,
+        0.12,
+        0.045
+      ],
+      "orientation_xyzw": [
+        0,
+        0,
+        0,
+        1
+      ],
+      "color": [
+        0.3,
+        0.3,
+        0.35
+      ],
+      "present": true,
+      "attached_to": null,
+      "supported": true,
+      "accessible": true,
+      "collision_geometry": "oriented_box_envelope",
+      "material_class": "unspecified",
+      "mass_kg": null,
+      "center_of_mass_m": null
+    }
+  ],
+  "target_assembly": {
+    "bottom_panel": {
+      "position_m": [
+        0.19999999999999996,
+        -0.29999999999999993,
+        0.035
+      ],
+      "orientation_xyzw": [
+        0.0,
+        0.0,
+        0.0,
+        1.0
+      ]
+    },
+    "left_panel": {
+      "position_m": [
+        0.07399999999999995,
+        -0.29999999999999993,
+        0.151
+      ],
+      "orientation_xyzw": [
+        0.0,
+        0.7071067811865475,
+        0.0,
+        0.7071067811865476
+      ]
+    },
+    "right_panel": {
+      "position_m": [
+        0.32599999999999985,
+        -0.29999999999999993,
+        0.151
+      ],
+      "orientation_xyzw": [
+        0.0,
+        0.7071067811865475,
+        0.0,
+        0.7071067811865476
+      ]
+    },
+    "top_panel": {
+      "position_m": [
+        0.19999999999999996,
+        -0.29999999999999993,
+        0.267
+      ],
+      "orientation_xyzw": [
+        0.0,
+        0.0,
+        0.0,
+        1.0
+      ]
+    },
+    "back_panel": {
+      "position_m": [
+        0.19999999999999996,
+        -0.20399999999999996,
+        0.151
+      ],
+      "orientation_xyzw": [
+        0.7071067811865475,
+        0.0,
+        0.0,
+        0.7071067811865476
+      ]
+    }
+  },
+  "connections": [
+    {
+      "id": "left_bottom",
+      "component_ids": [
+        "left_panel",
+        "bottom_panel"
+      ],
+      "screw_ids": [
+        "screw_LB_1",
+        "screw_LB_2"
+      ],
+      "features": [
+        {
+          "hole_id": "screw_LB_1_hole",
+          "screw_id": "screw_LB_1",
+          "position_m": [
+            0.06799999999999995,
+            -0.35,
+            0.035
+          ],
+          "outward_axis": [
+            -1,
+            0,
+            0
+          ]
+        },
+        {
+          "hole_id": "screw_LB_2_hole",
+          "screw_id": "screw_LB_2",
+          "position_m": [
+            0.06799999999999995,
+            -0.24999999999999994,
+            0.035
+          ],
+          "outward_axis": [
+            -1,
+            0,
+            0
+          ]
+        }
+      ],
+      "verified": false
+    },
+    {
+      "id": "right_bottom",
+      "component_ids": [
+        "right_panel",
+        "bottom_panel"
+      ],
+      "screw_ids": [
+        "screw_RB_1",
+        "screw_RB_2"
+      ],
+      "features": [
+        {
+          "hole_id": "screw_RB_1_hole",
+          "screw_id": "screw_RB_1",
+          "position_m": [
+            0.3320000000000001,
+            -0.35,
+            0.035
+          ],
+          "outward_axis": [
+            1,
+            0,
+            0
+          ]
+        },
+        {
+          "hole_id": "screw_RB_2_hole",
+          "screw_id": "screw_RB_2",
+          "position_m": [
+            0.3320000000000001,
+            -0.24999999999999994,
+            0.035
+          ],
+          "outward_axis": [
+            1,
+            0,
+            0
+          ]
+        }
+      ],
+      "verified": false
+    },
+    {
+      "id": "top_left",
+      "component_ids": [
+        "top_panel",
+        "left_panel"
+      ],
+      "screw_ids": [
+        "screw_TL_1",
+        "screw_TL_2"
+      ],
+      "features": [
+        {
+          "hole_id": "screw_TL_1_hole",
+          "screw_id": "screw_TL_1",
+          "position_m": [
+            0.07399999999999995,
+            -0.35,
+            0.274
+          ],
+          "outward_axis": [
+            0,
+            0,
+            1
+          ]
+        },
+        {
+          "hole_id": "screw_TL_2_hole",
+          "screw_id": "screw_TL_2",
+          "position_m": [
+            0.07399999999999995,
+            -0.24999999999999994,
+            0.274
+          ],
+          "outward_axis": [
+            0,
+            0,
+            1
+          ]
+        }
+      ],
+      "verified": false
+    },
+    {
+      "id": "top_right",
+      "component_ids": [
+        "top_panel",
+        "right_panel"
+      ],
+      "screw_ids": [
+        "screw_TR_1",
+        "screw_TR_2"
+      ],
+      "features": [
+        {
+          "hole_id": "screw_TR_1_hole",
+          "screw_id": "screw_TR_1",
+          "position_m": [
+            0.32599999999999985,
+            -0.35,
+            0.274
+          ],
+          "outward_axis": [
+            0,
+            0,
+            1
+          ]
+        },
+        {
+          "hole_id": "screw_TR_2_hole",
+          "screw_id": "screw_TR_2",
+          "position_m": [
+            0.32599999999999985,
+            -0.24999999999999994,
+            0.274
+          ],
+          "outward_axis": [
+            0,
+            0,
+            1
+          ]
+        }
+      ],
+      "verified": false
+    },
+    {
+      "id": "back_bottom",
+      "component_ids": [
+        "back_panel",
+        "bottom_panel"
+      ],
+      "screw_ids": [
+        "screw_BB_1"
+      ],
+      "features": [
+        {
+          "hole_id": "screw_BB_1_hole",
+          "screw_id": "screw_BB_1",
+          "position_m": [
+            0.19999999999999996,
+            -0.19699999999999995,
+            0.035
+          ],
+          "outward_axis": [
+            0,
+            1,
+            0
+          ]
+        }
+      ],
+      "verified": false
+    },
+    {
+      "id": "back_left",
+      "component_ids": [
+        "back_panel",
+        "left_panel"
+      ],
+      "screw_ids": [
+        "screw_BL_1"
+      ],
+      "features": [
+        {
+          "hole_id": "screw_BL_1_hole",
+          "screw_id": "screw_BL_1",
+          "position_m": [
+            0.07399999999999995,
+            -0.19699999999999995,
+            0.151
+          ],
+          "outward_axis": [
+            0,
+            1,
+            0
+          ]
+        }
+      ],
+      "verified": false
+    },
+    {
+      "id": "back_right",
+      "component_ids": [
+        "back_panel",
+        "right_panel"
+      ],
+      "screw_ids": [
+        "screw_BR_1"
+      ],
+      "features": [
+        {
+          "hole_id": "screw_BR_1_hole",
+          "screw_id": "screw_BR_1",
+          "position_m": [
+            0.32599999999999985,
+            -0.19699999999999995,
+            0.151
+          ],
+          "outward_axis": [
+            0,
+            1,
+            0
+          ]
+        }
+      ],
+      "verified": false
+    },
+    {
+      "id": "back_top",
+      "component_ids": [
+        "back_panel",
+        "top_panel"
+      ],
+      "screw_ids": [
+        "screw_BT_1"
+      ],
+      "features": [
+        {
+          "hole_id": "screw_BT_1_hole",
+          "screw_id": "screw_BT_1",
+          "position_m": [
+            0.19999999999999996,
+            -0.19699999999999995,
+            0.267
+          ],
+          "outward_axis": [
+            0,
+            1,
+            0
+          ]
+        }
+      ],
+      "verified": false
+    }
+  ],
+  "package": {
+    "id": "box",
+    "closure": "sealed",
+    "inner_dimensions_m": [
+      0.3048,
+      0.3048,
+      0.1016
+    ],
+    "wall_m": 0.003175,
+    "access_order": [
+      "paper_seal",
+      "box_lid",
+      "screw_carrier",
+      "bottom_panel",
+      "separator_1",
+      "left_panel",
+      "separator_2",
+      "right_panel",
+      "separator_3",
+      "top_panel",
+      "separator_4",
+      "back_panel"
+    ]
+  },
+  "adaptation": "Preserved source dimensions. Package translated Y by -0.27 m; target assembly translated (-0.76,-0.57,0) m. Gantry replaced by existing SO-101 binding; assembly feasibility unknown.",
+  "approach_targets": [
+    "box_lid"
+  ],
+  "inventory": [
+    "bottom_panel",
+    "left_panel",
+    "right_panel",
+    "top_panel",
+    "back_panel",
+    "screw_LB_1",
+    "screw_LB_2",
+    "screw_RB_1",
+    "screw_RB_2",
+    "screw_TL_1",
+    "screw_TL_2",
+    "screw_TR_1",
+    "screw_TR_2",
+    "screw_BB_1",
+    "screw_BL_1",
+    "screw_BR_1",
+    "screw_BT_1"
+  ]
+}

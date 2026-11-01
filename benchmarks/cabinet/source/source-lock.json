@@ -1,0 +1,9 @@
+{
+  "origin": "packaged-cabinet-v0.3.zip, metadata revision 0.3.1; owner-provided synthetic reference",
+  "archive_sha256": "f46a511244fce5c50125f7e943208fd2fa4def3eb9f7de59e755d193568286f3",
+  "files": {
+    "geometry.json": "129a768df8c9fa30f11b495b89d10aaedc4b795c14b24475a7046681538cdc83",
+    "initial-state.json": "38fe21d39e4abc2d6f8899ccbb976223515c5b30bedd23731153d1f0ac71a780",
+    "task-contract.json": "5e921b81eb8bfa0bdb952d9b32b62e4a6d2937b3b76cf2c484621a36cbbd0b17"
+  }
+}

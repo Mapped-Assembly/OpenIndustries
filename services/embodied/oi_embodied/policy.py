@@ -41,7 +41,7 @@ class Policy:
     def decide(self, text: str, selected: str | None, manifest: Json) -> Json:
         """Make one bounded proposal per request; model latency never holds the runtime lock."""
         if self.mode == 'manual':
-            match = re.fullmatch(r'(approach|inspect)\s+([a-z-]+)', text.strip().lower())
+            match = re.fullmatch(r'(approach|inspect)\s+([a-z0-9_-]+)', text.strip().lower())
             if text.strip().lower() == 'home':
                 return {'skill': 'home', 'target_id': None}
             if match:

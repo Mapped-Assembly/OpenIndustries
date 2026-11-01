@@ -1,0 +1,668 @@
+{
+  "objects": {
+    "bottom_panel": {
+      "kind": "panel",
+      "size_m": [
+        0.24,
+        0.18,
+        0.012
+      ],
+      "color": "#45bac0",
+      "target_position_m": [
+        0.96,
+        0.27,
+        0.035
+      ],
+      "target_orientation_xyzw": [
+        0.0,
+        0.0,
+        0.0,
+        1.0
+      ],
+      "grasp_offset_m": [
+        0,
+        0,
+        0.008
+      ],
+      "grasp_boss_size_m": [
+        0.018,
+        0.012,
+        0.004
+      ],
+      "stage_position_m": [
+        0.15,
+        0.79,
+        0.09999999999999999
+      ],
+      "stage_orientation_xyzw": [
+        0.7071067811865475,
+        0.0,
+        0.0,
+        0.7071067811865476
+      ],
+      "manufacturing": {
+        "process": "3D printing",
+        "material": null,
+        "print_profile": null,
+        "shell_thickness_m": null,
+        "infill_fraction": null,
+        "mass_kg": null,
+        "center_of_mass_m": null,
+        "mass_source": "unknown; obtain from a declared print estimate or physical measurement"
+      }
+    },
+    "left_panel": {
+      "kind": "panel",
+      "size_m": [
+        0.22,
+        0.18,
+        0.012
+      ],
+      "color": "#e4b45c",
+      "target_position_m": [
+        0.834,
+        0.27,
+        0.151
+      ],
+      "target_orientation_xyzw": [
+        0.0,
+        0.7071067811865475,
+        0.0,
+        0.7071067811865476
+      ],
+      "grasp_offset_m": [
+        0,
+        0,
+        0.008
+      ],
+      "grasp_boss_size_m": [
+        0.018,
+        0.012,
+        0.004
+      ],
+      "stage_position_m": [
+        0.41000000000000003,
+        0.79,
+        0.09999999999999999
+      ],
+      "stage_orientation_xyzw": [
+        0.7071067811865475,
+        0.0,
+        0.0,
+        0.7071067811865476
+      ],
+      "manufacturing": {
+        "process": "3D printing",
+        "material": null,
+        "print_profile": null,
+        "shell_thickness_m": null,
+        "infill_fraction": null,
+        "mass_kg": null,
+        "center_of_mass_m": null,
+        "mass_source": "unknown; obtain from a declared print estimate or physical measurement"
+      }
+    },
+    "right_panel": {
+      "kind": "panel",
+      "size_m": [
+        0.22,
+        0.18,
+        0.012
+      ],
+      "color": "#cc8c58",
+      "target_position_m": [
+        1.0859999999999999,
+        0.27,
+        0.151
+      ],
+      "target_orientation_xyzw": [
+        0.0,
+        0.7071067811865475,
+        0.0,
+        0.7071067811865476
+      ],
+      "grasp_offset_m": [
+        0,
+        0,
+        0.008
+      ],
+      "grasp_boss_size_m": [
+        0.018,
+        0.012,
+        0.004
+      ],
+      "stage_position_m": [
+        0.67,
+        0.79,
+        0.09999999999999999
+      ],
+      "stage_orientation_xyzw": [
+        0.7071067811865475,
+        0.0,
+        0.0,
+        0.7071067811865476
+      ],
+      "manufacturing": {
+        "process": "3D printing",
+        "material": null,
+        "print_profile": null,
+        "shell_thickness_m": null,
+        "infill_fraction": null,
+        "mass_kg": null,
+        "center_of_mass_m": null,
+        "mass_source": "unknown; obtain from a declared print estimate or physical measurement"
+      }
+    },
+    "top_panel": {
+      "kind": "panel",
+      "size_m": [
+        0.264,
+        0.18,
+        0.012
+      ],
+      "color": "#789ed1",
+      "target_position_m": [
+        0.96,
+        0.27,
+        0.267
+      ],
+      "target_orientation_xyzw": [
+        0.0,
+        0.0,
+        0.0,
+        1.0
+      ],
+      "grasp_offset_m": [
+        0,
+        0,
+        0.008
+      ],
+      "grasp_boss_size_m": [
+        0.018,
+        0.012,
+        0.004
+      ],
+      "stage_position_m": [
+        0.93,
+        0.79,
+        0.09999999999999999
+      ],
+      "stage_orientation_xyzw": [
+        0.7071067811865475,
+        0.0,
+        0.0,
+        0.7071067811865476
+      ],
+      "manufacturing": {
+        "process": "3D printing",
+        "material": null,
+        "print_profile": null,
+        "shell_thickness_m": null,
+        "infill_fraction": null,
+        "mass_kg": null,
+        "center_of_mass_m": null,
+        "mass_source": "unknown; obtain from a declared print estimate or physical measurement"
+      }
+    },
+    "back_panel": {
+      "kind": "panel",
+      "size_m": [
+        0.264,
+        0.244,
+        0.012
+      ],
+      "color": "#b48cb6",
+      "target_position_m": [
+        0.96,
+        0.366,
+        0.151
+      ],
+      "target_orientation_xyzw": [
+        0.7071067811865475,
+        0.0,
+        0.0,
+        0.7071067811865476
+      ],
+      "grasp_offset_m": [
+        0,
+        0,
+        0.008
+      ],
+      "grasp_boss_size_m": [
+        0.018,
+        0.012,
+        0.004
+      ],
+      "stage_position_m": [
+        1.19,
+        0.79,
+        0.132
+      ],
+      "stage_orientation_xyzw": [
+        0.7071067811865475,
+        0.0,
+        0.0,
+        0.7071067811865476
+      ],
+      "manufacturing": {
+        "process": "3D printing",
+        "material": null,
+        "print_profile": null,
+        "shell_thickness_m": null,
+        "infill_fraction": null,
+        "mass_kg": null,
+        "center_of_mass_m": null,
+        "mass_source": "unknown; obtain from a declared print estimate or physical measurement"
+      }
+    },
+    "separator_1": {
+      "kind": "separator",
+      "size_m": [
+        0.276,
+        0.252,
+        0.0005588
+      ],
+      "color": "#b89a70",
+      "grasp_offset_m": [
+        0.12,
+        0,
+        0.002
+      ],
+      "folded_rail_height_m": 0.0064412
+    },
+    "separator_2": {
+      "kind": "separator",
+      "size_m": [
+        0.276,
+        0.252,
+        0.0005588
+      ],
+      "color": "#b89a70",
+      "grasp_offset_m": [
+        0.12,
+        0,
+        0.002
+      ],
+      "folded_rail_height_m": 0.0064412
+    },
+    "separator_3": {
+      "kind": "separator",
+      "size_m": [
+        0.276,
+        0.252,
+        0.0005588
+      ],
+      "color": "#b89a70",
+      "grasp_offset_m": [
+        0.12,
+        0,
+        0.002
+      ],
+      "folded_rail_height_m": 0.0064412
+    },
+    "separator_4": {
+      "kind": "separator",
+      "size_m": [
+        0.276,
+        0.252,
+        0.0005588
+      ],
+      "color": "#b89a70",
+      "grasp_offset_m": [
+        0.12,
+        0,
+        0.002
+      ],
+      "folded_rail_height_m": 0.0064412
+    },
+    "screw_carrier": {
+      "kind": "carrier",
+      "size_m": [
+        0.19,
+        0.065,
+        0.0012
+      ],
+      "occupied_envelope_m": [
+        0.19,
+        0.065,
+        0.01
+      ],
+      "color": "#e3d5b6",
+      "grasp_offset_m": [
+        0.085,
+        0.025,
+        0.0026
+      ],
+      "grasp_boss_size_m": [
+        0.018,
+        0.008,
+        0.004
+      ],
+      "reserved_envelope_center_offset_m": [
+        0,
+        0,
+        0.0044
+      ]
+    },
+    "paper_seal": {
+      "kind": "seal",
+      "size_m": [
+        0.035,
+        0.06,
+        0.0002
+      ],
+      "color": "#edd47f",
+      "grasp_offset_m": [
+        0,
+        0,
+        0.002
+      ]
+    }
+  },
+  "screws": {
+    "screw_LB_1": {
+      "joint": "left_bottom",
+      "owner": "left_panel",
+      "target_head_m": [
+        0.828,
+        0.22,
+        0.035
+      ],
+      "outward_axis": [
+        -1,
+        0,
+        0
+      ],
+      "carrier_local_head_m": [
+        -0.06,
+        -0.02,
+        0.003
+      ],
+      "illustrative_length_m": 0.02,
+      "material_class": "metal",
+      "alloy": null
+    },
+    "screw_LB_2": {
+      "joint": "left_bottom",
+      "owner": "left_panel",
+      "target_head_m": [
+        0.828,
+        0.32,
+        0.035
+      ],
+      "outward_axis": [
+        -1,
+        0,
+        0
+      ],
+      "carrier_local_head_m": [
+        -0.019999999999999997,
+        -0.02,
+        0.003
+      ],
+      "illustrative_length_m": 0.02,
+      "material_class": "metal",
+      "alloy": null
+    },
+    "screw_RB_1": {
+      "joint": "right_bottom",
+      "owner": "right_panel",
+      "target_head_m": [
+        1.092,
+        0.22,
+        0.035
+      ],
+      "outward_axis": [
+        1,
+        0,
+        0
+      ],
+      "carrier_local_head_m": [
+        0.020000000000000004,
+        -0.02,
+        0.003
+      ],
+      "illustrative_length_m": 0.02,
+      "material_class": "metal",
+      "alloy": null
+    },
+    "screw_RB_2": {
+      "joint": "right_bottom",
+      "owner": "right_panel",
+      "target_head_m": [
+        1.092,
+        0.32,
+        0.035
+      ],
+      "outward_axis": [
+        1,
+        0,
+        0
+      ],
+      "carrier_local_head_m": [
+        0.06,
+        -0.02,
+        0.003
+      ],
+      "illustrative_length_m": 0.02,
+      "material_class": "metal",
+      "alloy": null
+    },
+    "screw_TL_1": {
+      "joint": "top_left",
+      "owner": "top_panel",
+      "target_head_m": [
+        0.834,
+        0.22,
+        0.274
+      ],
+      "outward_axis": [
+        0,
+        0,
+        1
+      ],
+      "carrier_local_head_m": [
+        -0.06,
+        -0.0020000000000000018,
+        0.003
+      ],
+      "illustrative_length_m": 0.02,
+      "material_class": "metal",
+      "alloy": null
+    },
+    "screw_TL_2": {
+      "joint": "top_left",
+      "owner": "top_panel",
+      "target_head_m": [
+        0.834,
+        0.32,
+        0.274
+      ],
+      "outward_axis": [
+        0,
+        0,
+        1
+      ],
+      "carrier_local_head_m": [
+        -0.019999999999999997,
+        -0.0020000000000000018,
+        0.003
+      ],
+      "illustrative_length_m": 0.02,
+      "material_class": "metal",
+      "alloy": null
+    },
+    "screw_TR_1": {
+      "joint": "top_right",
+      "owner": "top_panel",
+      "target_head_m": [
+        1.0859999999999999,
+        0.22,
+        0.274
+      ],
+      "outward_axis": [
+        0,
+        0,
+        1
+      ],
+      "carrier_local_head_m": [
+        0.020000000000000004,
+        -0.0020000000000000018,
+        0.003
+      ],
+      "illustrative_length_m": 0.02,
+      "material_class": "metal",
+      "alloy": null
+    },
+    "screw_TR_2": {
+      "joint": "top_right",
+      "owner": "top_panel",
+      "target_head_m": [
+        1.0859999999999999,
+        0.32,
+        0.274
+      ],
+      "outward_axis": [
+        0,
+        0,
+        1
+      ],
+      "carrier_local_head_m": [
+        0.06,
+        -0.0020000000000000018,
+        0.003
+      ],
+      "illustrative_length_m": 0.02,
+      "material_class": "metal",
+      "alloy": null
+    },
+    "screw_BB_1": {
+      "joint": "back_bottom",
+      "owner": "back_panel",
+      "target_head_m": [
+        0.96,
+        0.373,
+        0.035
+      ],
+      "outward_axis": [
+        0,
+        1,
+        0
+      ],
+      "carrier_local_head_m": [
+        -0.06,
+        0.015999999999999997,
+        0.003
+      ],
+      "illustrative_length_m": 0.02,
+      "material_class": "metal",
+      "alloy": null
+    },
+    "screw_BL_1": {
+      "joint": "back_left",
+      "owner": "back_panel",
+      "target_head_m": [
+        0.834,
+        0.373,
+        0.151
+      ],
+      "outward_axis": [
+        0,
+        1,
+        0
+      ],
+      "carrier_local_head_m": [
+        -0.019999999999999997,
+        0.015999999999999997,
+        0.003
+      ],
+      "illustrative_length_m": 0.02,
+      "material_class": "metal",
+      "alloy": null
+    },
+    "screw_BR_1": {
+      "joint": "back_right",
+      "owner": "back_panel",
+      "target_head_m": [
+        1.0859999999999999,
+        0.373,
+        0.151
+      ],
+      "outward_axis": [
+        0,
+        1,
+        0
+      ],
+      "carrier_local_head_m": [
+        0.020000000000000004,
+        0.015999999999999997,
+        0.003
+      ],
+      "illustrative_length_m": 0.02,
+      "material_class": "metal",
+      "alloy": null
+    },
+    "screw_BT_1": {
+      "joint": "back_top",
+      "owner": "back_panel",
+      "target_head_m": [
+        0.96,
+        0.373,
+        0.267
+      ],
+      "outward_axis": [
+        0,
+        1,
+        0
+      ],
+      "carrier_local_head_m": [
+        0.06,
+        0.015999999999999997,
+        0.003
+      ],
+      "illustrative_length_m": 0.02,
+      "material_class": "metal",
+      "alloy": null
+    }
+  },
+  "box": {
+    "inner_dimensions_m": [
+      0.3048,
+      0.3048,
+      0.1016
+    ],
+    "wall_m": 0.003175,
+    "position_m": [
+      0.24,
+      0.27,
+      0.01
+    ],
+    "sku": "B212124",
+    "geometry": "schematic hinged mailer; supplier dieline not modeled"
+  },
+  "machine": {
+    "model": "illustrative XYZ carriage + three-axis wrist + tool changer",
+    "tool_ids": [
+      "gripper",
+      "retaining_driver"
+    ],
+    "actuator_count": 9,
+    "measured_limits": null,
+    "workspace_assumption_m": [
+      1.4,
+      1.0,
+      0.65
+    ],
+    "controller": null,
+    "rated_payload_kg": null,
+    "tool_mass_kg": null,
+    "wrist_moment_limit_Nm": null,
+    "grip_force_limit_N": null
+  },
+  "evidence_kind": "synthetic_design",
+  "panel_boss": "18x12x4mm added printed feature; grip strength untested",
+  "screw_length": "M3x20 is an illustrative candidate; actual screw specification unresolved",
+  "carrier_pickup": "Heads face -X; left-to-right pickup clears earlier slots before later head approaches",
+  "metadata_revision": "0.3.1",
+  "panel_geometry_interpretation": "Panel solids describe external envelopes; they do not specify a solid-filled print or establish mass."
+}
