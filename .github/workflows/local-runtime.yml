@@ -16,6 +16,22 @@ jobs:
           node-version: 22
           cache: npm
       - run: npm ci
+      - name: Use official HTTPS Ubuntu mirrors for browser dependencies
+        shell: bash
+        run: |
+          mirror_list=/etc/apt/apt-mirrors.txt
+          # The regional mirror stalled this native systemd job before tests ran.
+          # Verify the hosted-runner layout before removing only that mirror.
+          if [[ ! -f "$mirror_list" || -L "$mirror_list" ]] ||
+             ! cmp -s "$mirror_list" <(printf '%s\t%s\n' \
+               'http://azure.archive.ubuntu.com/ubuntu/' 'priority:1' \
+               'https://archive.ubuntu.com/ubuntu/' 'priority:2' \
+               'https://security.ubuntu.com/ubuntu/' 'priority:3'); then
+            echo '::notice::Unrecognized Ubuntu APT mirror layout; keeping runner configuration and continuing dependency installation.'
+          else
+            sudo sed -i '1d' "$mirror_list"
+            cat "$mirror_list"
+          fi
       - run: npx playwright install --with-deps chromium
       - run: npm run test:local-runtime
         env:

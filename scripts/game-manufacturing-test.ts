@@ -49,8 +49,11 @@ try {
 			db.tick();
 		};
 	const collect = async (kind: string, recipe: string) => {
-		const robot = read().field.robots[0].id,
-			target = read().world.deposits.find(
+		// A read performs a real transaction/history validation. Reuse its projection
+		// only until the next action or clock change; never cache across mutations.
+		const initial = read(),
+			robot = initial.field.robots[0].id,
+			target = initial.world.deposits.find(
 				(d: any) => d.kind === kind && d.home_slot === 1,
 			).id;
 		act("recharge_robot", { robot_id: robot });
@@ -82,14 +85,15 @@ try {
 			recipe_id: recipe,
 		});
 		tick(30000);
-		const job = read().jobs.at(-1).id,
-			usable = read().batches.find(
+		const processed = read(),
+			job = processed.jobs.at(-1).id,
+			usable = processed.batches.find(
 				(v: any) =>
 					v.source_job_id === job &&
 					["usable", "conductor", "insulation"].includes(v.output_role),
 			);
 		assert(usable);
-		for (const output of read().batches.filter(
+		for (const output of processed.batches.filter(
 			(v: any) => v.source_job_id === job && v.output_role !== "residue",
 		)) {
 			act("inspect_batch", { batch_id: output.id });
@@ -159,17 +163,19 @@ try {
 				...args,
 			});
 		assert.equal(preview.result.status, "eligible", JSON.stringify(preview));
-		act("enqueue_manufacturing", args);
-		return read().manufacturing.jobs.at(-1);
+		// The schema-checked command result already identifies the enqueued job.
+		// Completion is still read independently from persistence after advancing time.
+		return act("enqueue_manufacturing", args).snapshot.manufacturing.jobs.at(-1);
 	};
 	const make = (recipe: string) => {
 		const job = enqueue(recipe);
 		tick(20000);
+		const completed = read();
 		assert.equal(
-			read().manufacturing.jobs.find((j: any) => j.id === job.id).state,
+			completed.manufacturing.jobs.find((j: any) => j.id === job.id).state,
 			"completed",
 		);
-		return read().manufacturing.products.find(
+		return completed.manufacturing.products.find(
 			(p: any) => p.source_job_id === job.id,
 		);
 	};
@@ -267,9 +273,10 @@ try {
 		const turret = make("sentry-turret");
 		const ownUnit = () =>
 			read().units.units.find((u: any) => u.id === turret.id);
-		assert.equal(ownUnit().state, "stowed");
-		assert.equal(ownUnit().enabled, false);
-		assert.equal(ownUnit().ammunition_count, 0);
+		const stowed = ownUnit();
+		assert.equal(stowed.state, "stowed");
+		assert.equal(stowed.enabled, false);
+		assert.equal(stowed.ammunition_count, 0);
 		make("steel-slug");
 		const ammo = read().manufacturing.products.find(
 			(p: any) => p.kind === "steel-slug",
@@ -324,10 +331,11 @@ try {
 			{ code: "NOT_AVAILABLE" },
 		);
 		act("set_unit_enabled", { unit_id: turret.id, enabled: true });
-		assert.equal(ownUnit().operational_ready, true);
-		assert.equal(ownUnit().can_fire, false);
-		assert(ownUnit().blocked_reasons.includes("combat-not-started"));
-		assert.equal(ownUnit().targets[0].in_range, false);
+		const ready = ownUnit();
+		assert.equal(ready.operational_ready, true);
+		assert.equal(ready.can_fire, false);
+		assert(ready.blocked_reasons.includes("combat-not-started"));
+		assert.equal(ready.targets[0].in_range, false);
 		assert.throws(() => act("salvage_unit", { unit_id: turret.id }), {
 			code: "NOT_READY",
 		});
@@ -387,17 +395,21 @@ try {
 			db.close();
 			db = new GameDatabase(path, { clock: () => now });
 			assert.deepEqual(call("command", unload), receipt);
-			assert.equal(ownUnit().state, "salvaged");
+			const salvaged = read();
 			assert.equal(
-				read().manufacturing.products.find((p: any) => p.id === ammo.id).state,
+				salvaged.units.units.find((u: any) => u.id === turret.id).state,
+				"salvaged",
+			);
+			assert.equal(
+				salvaged.manufacturing.products.find((p: any) => p.id === ammo.id).state,
 				"available",
 			);
 			assert.equal(
-				read().manufacturing.products.find((p: any) => p.id === patch.id).state,
+				salvaged.manufacturing.products.find((p: any) => p.id === patch.id).state,
 				"available",
 			);
 			assert(
-				read().science.components.some(
+				salvaged.science.components.some(
 					(c: any) => c.kind === "camera" && !c.tested,
 				),
 			);
