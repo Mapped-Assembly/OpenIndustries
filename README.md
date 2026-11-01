@@ -35,7 +35,7 @@ You can import, edit, animate, and export locally without signing in. Optional c
 | Export a visual review | Render GIFs of a room, a floor section, or a selected asset, with companion JSON recording spatial and animation context. |
 | Reuse equipment | Save geometry and previews in a device asset library and add them to another layout. |
 | Save and reopen | Export portable scene JSON, restore local drafts, or save named cloud scenes with revision history, comparison, and restore. |
-| Work with agents locally | Use optional Form/MCP workflows to author equipment, create or revise saved scenes from an external agent, and return animation feedback to Form. |
+| Work with agents locally | Use optional Form/MCP workflows to author equipment, create or [atomically mutate saved scene objects](docs/scene-mutations.md) from an external agent, and return animation feedback to Form. |
 
 ## How Form and OpenIndustries work together
 

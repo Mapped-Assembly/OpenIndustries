@@ -1,10 +1,11 @@
+import type { MutationReceipt } from './scene-mutations.ts';
 import type { SupabaseClient } from '@supabase/supabase-js';
 import { CloudStorage, type CloudVersion } from '../src/lib/cloud-storage.ts';
 import type { Asset } from '../src/lib/scene.ts';
 import type { SceneManifest } from '../src/lib/workspace.ts';
 import { SceneToolError } from './mcp-scene-contract.mjs';
 
-export type SceneDocument = SceneManifest & { authoring: { via: string; agent: string; parent_revision: number | null; request_id: string; request_digest: string } };
+export type SceneDocument = SceneManifest & { authoring: { via: string; agent: string; parent_revision: number | null; request_id: string; request_digest: string; mutation?: MutationReceipt } };
 export type SavedScene = { id: string; name: string; revision: number; last_write_id: string; document: SceneDocument };
 export type AssetSummary = { id: string; asset: { name: string; asset_key: string; source_kind: string } };
 /** Storage boundary shared by authenticated cloud and single-user local scene tools. */

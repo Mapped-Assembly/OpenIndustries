@@ -82,7 +82,8 @@ try {
   await expect(page.locator('.viewport canvas')).toBeVisible();
   const image0 = await page.locator('.viewport').screenshot();
   const editor = await page.locator('#workspace-panel').elementHandle();
-  await update(scene => scene.instances.push({ ...scene.instances[0], id: 'environment-monitor-01', name: 'Environment monitor', position: [0, 2, 0], visible: true }));
+  await call('mutate_scene', { version: 1, request_id: randomUUID(), agent: 'independent-agent', scene_id: id, base_revision: 1,
+    operations: [{ op: 'add_instance', instance: { ...initial.scene.instances[0], id: 'environment-monitor-01', name: 'Environment monitor', position: [0, 2, 0], visible: true } }] });
   await expect(page.getByTestId('local-loaded-revision')).toHaveText('2', { timeout: 15000 });
   await expect(page.locator('.asset')).toHaveCount(10);
   assert(await editor!.evaluate(element => element.isConnected), 'App/editor must not remount');
