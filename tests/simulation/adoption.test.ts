@@ -40,6 +40,26 @@ const command = (id: string, revision: number, action = 'start', payload = {}) =
   payload,
 });
 
+/** Refresh only confirmed stale revisions; transport errors and other denials must fail. */
+async function submitLiveCommand(
+  origin: string,
+  token: string,
+  initial: ReturnType<typeof command>,
+): Promise<{ request: ReturnType<typeof command>; result: Awaited<ReturnType<typeof post>> }> {
+  let request = initial;
+  for (let attempt = 0; attempt < 20; attempt++) {
+    const result = await post(origin, '/simulation/command', token, request);
+    if (result.status === 200) return { request, result };
+    assert.equal(result.status, 409, JSON.stringify(result));
+    assert.equal(result.body.error?.code, 'CONFLICT', JSON.stringify(result));
+    await new Promise((resolve) => setTimeout(resolve, 50));
+    const read = await post(origin, '/simulation/read', token, { instance_id: initial.instance_id });
+    assert.equal(read.status, 200, JSON.stringify(read));
+    request = { ...initial, command_id: randomUUID(), expected_revision: read.body.snapshot.revision };
+  }
+  throw Error(`Revision conflicts persisted for ${initial.action}`);
+}
+
 test('production work-cell HTTP has one owner, finite contention/waits, exact retries and authorized MCP history', async () => {
   const dir = await mkdtemp(join(tmpdir(), 'oi-adopt-http-'));
   let clock = 1000;
@@ -428,10 +448,8 @@ test('neutral CLI worker continues a job across process kill/restart without ano
         command_id: 'creation',
       }),
       id = created.body.snapshot.instance_id;
-    const startCommand = command(id, 1);
-    assert.equal(
-      (await post(service.origin, '/simulation/command', token, startCommand)).status,
-      200,
+    const { request: startCommand } = await submitLiveCommand(
+      service.origin, token, command(id, created.body.snapshot.revision),
     );
     const exit = once(service.child, 'exit');
     service.child.kill('SIGKILL');
@@ -452,16 +470,17 @@ test('neutral CLI worker continues a job across process kill/restart without ano
     };
     const waiting = await until((snapshot) => snapshot.jobs[0].state === 'waiting-for-resource');
     assert.equal(waiting.inventory.spent_energy_mj, 2000);
-    assert.equal(
-      (
-        await post(
-          service.origin,
-          '/simulation/command',
-          token,
-          command(id, waiting.revision, 'deliver-energy'),
-        )
-      ).status,
-      200,
+    // Force the read/write race deterministically: even a resource-waiting job
+    // receives new worker checkpoints. The stale command must be refreshed.
+    const delivery = command(id, waiting.revision, 'deliver-energy');
+    await until((snapshot) => snapshot.revision > waiting.revision);
+    const delivered = await submitLiveCommand(service.origin, token, delivery);
+    assert.notEqual(delivered.request.command_id, delivery.command_id);
+    assert(delivered.request.expected_revision > delivery.expected_revision);
+    // Replay the accepted bytes unchanged; a retry must not deliver energy twice.
+    assert.deepEqual(
+      await post(service.origin, '/simulation/command', token, delivered.request),
+      delivered.result,
     );
     const completed = await until((snapshot) => snapshot.results.length === 1);
     assert.equal(completed.inventory.spent_energy_mj, 3000);
