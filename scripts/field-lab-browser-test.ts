@@ -1,22 +1,54 @@
 import assert from 'node:assert/strict';
-import { readFileSync, mkdtempSync, rmSync, writeFileSync } from 'node:fs';
+import { readFileSync, mkdtempSync, mkdirSync, rmSync, writeFileSync } from 'node:fs';
+import { once } from 'node:events';
 import { spawn } from 'node:child_process';
 import { tmpdir } from 'node:os';
 import { join } from 'node:path';
 import { chromium, expect } from '@playwright/test';
 import { createServer } from 'vite';
 
-const server=await createServer({server:{host:'127.0.0.1',port:4194,strictPort:true}});
-await server.listen();
 const stationDir=mkdtempSync(join(tmpdir(),'oi-lab-browser-'));
+// The live station adds a Vite plugin, so it has a different optimizer hash.
+// Sharing node_modules/.vite lets either server replace the other's dependencies.
+const server=await createServer({cacheDir:join(stationDir,'import-vite-cache'),server:{host:'127.0.0.1',port:4194,strictPort:true}});
+await server.listen();
 const station=spawn(process.execPath,['--import','tsx','scripts/field-lab-viewer.ts'],{env:{...process.env,FIELD_LAB_VIEWER_PORT:'4195',FIELD_LAB_VIEWER_STATE_DIR:stationDir},stdio:['ignore','pipe','pipe']});
-const stationReady=new Promise<void>((resolve,reject)=>{const timer=setTimeout(()=>reject(Error('Station startup timeout')),60000);station.stdout.on('data',d=>{if(String(d).includes('live simulated scene')){clearTimeout(timer);resolve();}});station.on('exit',code=>{clearTimeout(timer);reject(Error('Station exited '+code));});});
-const browser=await chromium.launch({headless:true,...(process.env.ASTRA_CHROME_PATH?{executablePath:process.env.ASTRA_CHROME_PATH}:{}),args:['--no-sandbox','--disable-dev-shm-usage','--use-gl=angle','--use-angle=swiftshader','--enable-unsafe-swiftshader']});
+let stationOutput='';
+/** Retain a bounded startup tail and drain both child output pipes. */
+function recordStationOutput(data: Buffer): void { stationOutput=(stationOutput+String(data)).slice(-8000); }
+station.stdout.on('data',recordStationOutput);station.stderr.on('data',recordStationOutput);
+const stationReady=new Promise<void>((resolve,reject)=>{const timer=setTimeout(()=>reject(Error('Station startup timeout')),60000);station.stdout.on('data',d=>{if(String(d).includes('live simulated scene')){clearTimeout(timer);resolve();}});station.on('error',error=>{clearTimeout(timer);reject(error);});station.on('exit',code=>{clearTimeout(timer);reject(Error('Station exited '+code));});});
+// The independent viewer checks run before awaiting this promise. Observe early
+// rejection without suppressing the later await or producing an unhandled rejection.
+void stationReady.catch(()=>{});
+let browser: Awaited<ReturnType<typeof chromium.launch>> | undefined;
 try {
+  browser=await chromium.launch({headless:true,...(process.env.ASTRA_CHROME_PATH?{executablePath:process.env.ASTRA_CHROME_PATH}:{}),args:['--no-sandbox','--disable-dev-shm-usage','--use-gl=angle','--use-angle=swiftshader','--enable-unsafe-swiftshader']});
   const page=await browser.newPage({viewport:{width:1440,height:1000}}),errors:string[]=[];
+  const startupEvents:string[]=[];
+  /** Keep failure diagnostics bounded without changing any browser assertions. */
+  function recordStartupEvent(message: string): void {
+    startupEvents.push(message.slice(0,1500));
+    if(startupEvents.length>30)startupEvents.shift();
+  }
   page.on('pageerror',e=>errors.push(String(e)));
-  await page.goto('http://127.0.0.1:4194/benchmarks/field-lab/runtime.html');
-  await page.waitForFunction(()=> (window as any).ready);
+  page.on('console',message=>{if(message.type()==='error')recordStartupEvent(`console: ${message.text()}`);});
+  page.on('requestfailed',request=>recordStartupEvent(`request: ${request.url()} ${request.failure()?.errorText}`));
+  page.on('response',response=>{if(response.status()>=400)recordStartupEvent(`HTTP ${response.status()}: ${response.url()}`);});
+  try {
+    await page.goto('http://127.0.0.1:4194/benchmarks/field-lab/runtime.html');
+    await page.waitForFunction(()=> (window as any).ready);
+  } catch(error) {
+    const diagnostics={error:String(error),url:page.url(),cacheDir:server.config.cacheDir,
+      pageErrors:errors.slice(-20).map(message=>message.slice(0,1500)),events:startupEvents,stationOutput};
+    console.error('FIELD-LAB viewer startup failed:',JSON.stringify(diagnostics,null,2));
+    try {
+      mkdirSync('deliverables/field-lab',{recursive:true});
+      writeFileSync('deliverables/field-lab/runtime-startup-error.json',JSON.stringify(diagnostics,null,2));
+      await page.screenshot({path:'deliverables/field-lab/runtime-startup-error.png',timeout:2000});
+    } catch(diagnosticError) { console.error('Could not save all startup diagnostics:',String(diagnosticError)); }
+    throw error;
+  }
   await page.locator('#import').setInputFiles('deliverables/field-lab/runtime-recording.json');
   await page.waitForFunction(()=> (window as any).labState?.job?.state==='failed');
   assert.match(await page.locator('#finding').innerText(),/OpenCAD unchecked/);
@@ -70,7 +102,11 @@ try {
   writeFileSync('deliverables/field-lab/runtime-browser-checks.json',JSON.stringify({status:'passed',errors,checks:['import','paused pose','selection reason','export/reimport','captioned screenshot','reconnect projection','live SQLite bridge','no-viewer progression','live pause','cross-origin refusal'],scope:'Recorded fixtures and a fresh real local station; no physical equipment.'},null,2));
   console.log('PASS browser event scene, portable cursor/pose, live reconnect, independent execution and pause');
 } finally {
-  await browser.close();await server.close();
-  if(station.exitCode===null){station.kill('SIGTERM');await new Promise<void>(resolve=>station.once('exit',()=>resolve()));}
-  rmSync(stationDir,{recursive:true,force:true});
+  try { await browser?.close(); } finally {
+    try { await server.close(); } finally {
+      try {
+        if(station.pid!==undefined&&station.exitCode===null&&station.signalCode===null){const exited=once(station,'exit');station.kill('SIGTERM');await exited;}
+      } finally { rmSync(stationDir,{recursive:true,force:true}); }
+    }
+  }
 }
