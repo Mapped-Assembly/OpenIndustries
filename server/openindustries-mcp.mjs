@@ -2,6 +2,7 @@
 import { oiEnv } from './oi-environment.mjs';
 import { existsSync, readFileSync, readdirSync, mkdirSync, writeFileSync } from 'node:fs';
 import { dirname, relative, resolve } from 'node:path';
+import { fileURLToPath } from 'node:url';
 import { callRoomTool, roomTools } from './mcp-rooms.mjs';
 import { sceneTools } from './mcp-scene-contract.mjs';
 import { gameTools } from './mcp-game-contract.mjs';
@@ -99,11 +100,11 @@ async function callTool(name, args = {}) {
 
 function response(id, result) { return { jsonrpc: '2.0', id, result }; }
 function errorResponse(id, message) { return { jsonrpc: '2.0', id, error: { code: -32000, message } }; }
-async function handle(request) {
+async function handle(request, toolNamespace) {
   if (!Object.hasOwn(request, 'id')) return null;
   if (request.method === 'initialize') return response(request.id, { protocolVersion: '2025-06-18', serverInfo: { name: 'openindustries', version: '0.1.0' }, capabilities: { tools: {} } });
   if (request.method === 'ping') return response(request.id, {});
-  if (request.method === 'tools/list') return response(request.id, { tools: tools.map(tool => ({ ...tool, name: tool.name.replace(/^astra\./, 'openindustries.') })) });
+  if (request.method === 'tools/list') return response(request.id, { tools: tools.map(tool => ({ ...tool, name: tool.name.replace(/^astra\./, toolNamespace + '.') })) });
   if (request.method === 'tools/call') {
     // Resolve public names before dispatch, image formatting and typed error handling.
     // Keep internal names stable: durable runtime receipts contain these identifiers.
@@ -154,30 +155,36 @@ async function handle(request) {
   return errorResponse(request.id, `Unsupported MCP method: ${request.method}`);
 }
 
-// Bound memory before parsing and serialize account refreshes and writes. Local
-// project handoffs keep their existing 10 MiB limit; scene arguments cap at 1 MiB.
-const LINE_LIMIT = 11 * 1024 * 1024;
-let buffer = '', dropping = false, pending = 0, queue = Promise.resolve();
-const send = value => process.stdout.write(JSON.stringify(value) + '\n');
-function line(value) {
-  let request;
-  try { request = JSON.parse(value); if (!request || typeof request !== 'object' || Array.isArray(request)) throw new Error(); }
-  catch { send(errorResponse(null, 'Invalid JSON-RPC request.')); return; }
-  if (pending >= 8) { if (Object.hasOwn(request, 'id')) send(errorResponse(request.id, 'Server busy. Retry after outstanding requests finish.')); return; }
-  pending++;
-  queue = queue.then(() => handle(request)).then(result => { if (result) send(result); }, () => send(errorResponse(request.id ?? null, 'MCP request failed.'))).finally(() => { pending--; });
-}
-process.stdin.setEncoding('utf8');
-process.stdin.on('data', chunk => {
-  for (const [i, part] of chunk.split('\n').entries()) {
-    if (i) {
-      if (!dropping && buffer.trim()) line(buffer);
-      buffer = ''; dropping = false;
-    }
-    if (dropping) continue;
-    if (Buffer.byteLength(buffer) + Buffer.byteLength(part) > LINE_LIMIT) {
-      buffer = ''; dropping = true; send(errorResponse(null, 'MCP request exceeds 11 MiB.'));
-    } else buffer += part;
+/** Start either public entry point without changing internal receipt identities. */
+export function startMcpServer({ legacyToolNames = false } = {}) {
+  const toolNamespace = legacyToolNames ? 'astra' : 'openindustries';
+  // Bound memory before parsing and serialize account refreshes and writes. Local
+  // project handoffs keep their existing 10 MiB limit; scene arguments cap at 1 MiB.
+  const LINE_LIMIT = 11 * 1024 * 1024;
+  let buffer = '', dropping = false, pending = 0, queue = Promise.resolve();
+  const send = value => process.stdout.write(JSON.stringify(value) + '\n');
+  function line(value) {
+    let request;
+    try { request = JSON.parse(value); if (!request || typeof request !== 'object' || Array.isArray(request)) throw new Error(); }
+    catch { send(errorResponse(null, 'Invalid JSON-RPC request.')); return; }
+    if (pending >= 8) { if (Object.hasOwn(request, 'id')) send(errorResponse(request.id, 'Server busy. Retry after outstanding requests finish.')); return; }
+    pending++;
+    queue = queue.then(() => handle(request, toolNamespace)).then(result => { if (result) send(result); }, () => send(errorResponse(request.id ?? null, 'MCP request failed.'))).finally(() => { pending--; });
   }
-});
-process.stdin.on('end', () => { if (!dropping && buffer.trim()) line(buffer); });
+  process.stdin.setEncoding('utf8');
+  process.stdin.on('data', chunk => {
+    for (const [i, part] of chunk.split('\n').entries()) {
+      if (i) {
+        if (!dropping && buffer.trim()) line(buffer);
+        buffer = ''; dropping = false;
+      }
+      if (dropping) continue;
+      if (Buffer.byteLength(buffer) + Buffer.byteLength(part) > LINE_LIMIT) {
+        buffer = ''; dropping = true; send(errorResponse(null, 'MCP request exceeds 11 MiB.'));
+      } else buffer += part;
+    }
+  });
+  process.stdin.on('end', () => { if (!dropping && buffer.trim()) line(buffer); });
+}
+
+if (process.argv[1] && resolve(process.argv[1]) === fileURLToPath(import.meta.url)) startMcpServer();

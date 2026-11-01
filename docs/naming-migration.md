@@ -6,13 +6,15 @@ in OpenCode is independent of these MCP server and tool names.
 | Surface | Canonical name | Compatibility |
 | --- | --- | --- |
 | MCP server identity / configuration label | `openindustries` | Existing client labels may remain unchanged |
-| MCP entry point | `server/openindustries-mcp.mjs` | `server/astra-mcp.mjs` forwards to the same implementation |
-| Discovered tools | `openindustries.*` | Existing `astra.*` calls dispatch to the same operations |
+| MCP entry point | `server/openindustries-mcp.mjs` | `server/astra-mcp.mjs` uses the same implementation with legacy discovery |
+| Discovered tools | `openindustries.*` | The legacy entry point advertises `astra.*` for existing clients |
 | CLI | `openindustries` / `cli/openindustries.mjs` | `astra` / `cli/astra.mjs` remain aliases |
 | Configuration | `OI_ROOT`, `OI_SCENE_BACKEND`, other `OI_*` equivalents | Corresponding `ASTRA_*` names remain fallback inputs |
 
-Only canonical tool names appear in `tools/list`; aliases do not double the model's
-tool list. Both names preserve the same schemas, authorization checks, error codes,
+The new entry point advertises only canonical tool names in `tools/list`; the old
+entry point preserves legacy names for clients that filter discovery by prefix.
+Both accept calls under either namespace without doubling the model's tool list.
+Both names preserve the same schemas, authorization checks, error codes,
 image results, request IDs and persisted revision checks. An explicitly supplied
 `OI_*` setting wins over its `ASTRA_*` counterpart, even when empty or `false`.
 

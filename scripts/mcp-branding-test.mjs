@@ -60,12 +60,15 @@ test('new and legacy MCP entry points share saved scenes, receipts and revision 
     const update = { version: 1, scene_id: sceneId, base_revision: 1, request_id: randomUUID(), agent: 'branding-test',
       scene: { ...read.structuredContent.scene, name: 'OpenIndustries renamed scene' } };
     const legacyEnv = { ASTRA_ROOT: directory, ASTRA_SCENE_BACKEND: 'local', ASTRA_SCENE_DATA_DIR: directory, ASTRA_SCENE_TOOLS_ENABLED: 'true' };
-    const [reopened, updated, retry, conflict, pinned] = rpcBatch('server/astra-mcp.mjs', legacyEnv, [
+    const [legacyListed, reopened, updated, retry, conflict, pinned] = rpcBatch('server/astra-mcp.mjs', legacyEnv, [
+      { method: 'tools/list' },
       call('astra.read_scene', { version: 1, scene_id: sceneId }),
       call('openindustries.update_scene', update), call('astra.update_scene', update),
       call('openindustries.update_scene', { ...update, request_id: randomUUID() }),
       call('openindustries.read_scene', { version: 1, scene_id: sceneId, revision_id: 1 }),
     ]);
+    assert.deepEqual(legacyListed.tools, listed.tools.map(tool => ({ ...tool,
+      name: tool.name.replace(/^openindustries\./, 'astra.') })));
     assert.deepEqual(reopened, read);
     assert.equal(updated.structuredContent.revision_id, 2);
     assert.deepEqual(retry, updated);

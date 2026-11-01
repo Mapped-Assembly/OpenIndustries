@@ -1,3 +1,4 @@
 #!/usr/bin/env node
-// Compatibility entry point; use server/openindustries-mcp.mjs for new integrations.
-import './openindustries-mcp.mjs';
+// Preserve discovery for existing clients; new integrations use openindustries-mcp.mjs.
+import { startMcpServer } from './openindustries-mcp.mjs';
+startMcpServer({ legacyToolNames: true });

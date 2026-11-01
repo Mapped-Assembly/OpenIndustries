@@ -156,6 +156,11 @@ the pinned robot model and keeps the agent/controller on your computer. Manual t
 mode works without a model; a configurable local model endpoint enables language
 proposals. Contact-based pick/place and live-model evidence remain under #54.
 
+[CABINET-01 fixtures](docs/cabinet-fixtures.md) load a two-panel joint or the full
+packaged printed kit into that same workbench. They add machine/load preflight,
+component and actuator state traces, and read-only replay. Unpacking and fastening
+remain separate implementation milestones.
+
 ## Persistent local runtime
 
 Run the [local FIELD-LAB service](docs/persistent-runtime.md) on your own Linux computer.

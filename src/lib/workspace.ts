@@ -104,7 +104,7 @@ export function readManifest(value: unknown): SceneManifest {
   for (const asset of m.assets) {
     if (!validString(asset.id) || assetIds.has(asset.id) || !validString(asset.name) || !validVector(asset.dimensions) || asset.dimensions.some(n => n < 0)
         || !asset.source || !['form','step','generated'].includes(asset.source.kind) || !validString(asset.source.filename) || !validString(asset.source.digest)
-        || (asset.source.kind === 'generated' && !['form-industries', 'opencad-robot'].includes(asset.source.generator))
+        || (asset.source.kind === 'generated' && !['form-industries', 'opencad-robot', 'oi-fixture'].includes(asset.source.generator))
         || (asset.projectRevision !== undefined && !validString(asset.projectRevision))) throw new Error('Invalid or duplicate scene asset reference.');
     assetIds.add(asset.id);
   }

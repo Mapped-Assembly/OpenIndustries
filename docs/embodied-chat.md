@@ -5,6 +5,11 @@ pinned SO-101 meshes, two selectable tabletop blocks, a chat panel, direct Stop,
 Resume, status, saved conversation and evidence export. Run poses come from the
 Python authority; animation tracks are empty and the browser never advances jobs.
 
+The same launcher also accepts `--cabinet-fixture joint` or `--cabinet-fixture packaged`.
+See [CABINET-01 fixture integration](cabinet-fixtures.md) for separate state directories,
+machine/load preflight, actuator snapshots and read-only replay. This adds inspection
+and bounded approach fixtures, not cabinet manipulation or fastening.
+
 This delivers the first bounded motion path for #54. It does **not** complete the
 epic: contact-based pick/place, camera perception and a separately recorded live-model
 run remain outstanding. There is no farming route or scripted attachment here.

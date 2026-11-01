@@ -1,0 +1,394 @@
+{
+  "schema_version": 1,
+  "frame": "base_link",
+  "units": {
+    "length": "m",
+    "angle": "rad",
+    "mass": "kg"
+  },
+  "quaternion_order": "xyzw",
+  "handedness": "right",
+  "up_axis": "Z",
+  "source_sha256": "a559cb0d5a95c378452cccc8d98f14e3fb8eec9a6590c418c63ef7ab43d62ed7",
+  "model_sha256": "3dba648571df41892eeea0ac919093dd6cd66dc362203e5898f4613974ad7d15",
+  "machine_id": "so101-follower-new-calibration",
+  "agent_id": "cabinet-agent",
+  "controller_id": "so101-kinematic-v1",
+  "room_m": [
+    1.2,
+    1.2,
+    1.0
+  ],
+  "limits": {
+    "payload_kg": null,
+    "tool_mass_kg": null,
+    "wrist_moment_Nm": null,
+    "grip_force_N": null
+  },
+  "tools": {
+    "gripper": {
+      "mounted": true,
+      "interface": "pinned SO-101 jaws; gripper coordinate is radians, not aperture",
+      "calibration": null
+    },
+    "screwdriver": {
+      "mounted": false,
+      "adapter": null,
+      "spindle_actuator": null,
+      "mass_kg": null
+    }
+  },
+  "tolerances": {
+    "position_m": 0.003,
+    "angle_rad": 0.035
+  },
+  "limitations": [
+    "Authored box envelopes; no printable mating holes or resolved thread geometry.",
+    "Only inspect/approach/home are executable. No contact, unpacking or fastening.",
+    "TCP envelope checks are not full robot collision checking.",
+    "Unknown print/load/tool ratings block manipulation. Full-kit assembly reach is unverified."
+  ],
+  "id": "cabinet-joint-v1",
+  "name": "Two-panel joint / SO-101 coupon",
+  "objects": [
+    {
+      "id": "base_panel",
+      "name": "base panel",
+      "kind": "panel",
+      "geometry": {
+        "primitive": "box",
+        "size_m": [
+          0.08,
+          0.05,
+          0.006
+        ]
+      },
+      "geometry_sha256": "1c1c06c8ba499d87f6dfba73e5b2ef2f1ce24f268d9a2abf339fac4cb4cdf61a",
+      "size_m": [
+        0.08,
+        0.05,
+        0.006
+      ],
+      "position_m": [
+        0.17,
+        -0.06,
+        0.009
+      ],
+      "orientation_xyzw": [
+        0,
+        0,
+        0,
+        1
+      ],
+      "color": [
+        0.27,
+        0.73,
+        0.75
+      ],
+      "present": true,
+      "attached_to": null,
+      "supported": true,
+      "accessible": true,
+      "collision_geometry": "oriented_box_envelope",
+      "material_class": "3d_printed_polymer_unspecified",
+      "mass_kg": null,
+      "center_of_mass_m": null,
+      "manufacturing": {
+        "process": "3D printing",
+        "material": null,
+        "print_profile": null,
+        "shell_thickness_m": null,
+        "infill_fraction": null,
+        "mass_kg": null,
+        "center_of_mass_m": null,
+        "mass_source": "unknown; obtain from a declared print estimate or physical measurement"
+      },
+      "grasp_feature": {
+        "offset_m": [
+          0,
+          0,
+          0.005
+        ],
+        "boss_size_m": [
+          0.018,
+          0.012,
+          0.004
+        ],
+        "strength_validated": false
+      }
+    },
+    {
+      "id": "upright_panel",
+      "name": "upright panel",
+      "kind": "panel",
+      "geometry": {
+        "primitive": "box",
+        "size_m": [
+          0.06,
+          0.05,
+          0.006
+        ]
+      },
+      "geometry_sha256": "69be80654ed0626b9d5017c3b797a1f95385e7a328586f44530fa129aafbd928",
+      "size_m": [
+        0.06,
+        0.05,
+        0.006
+      ],
+      "position_m": [
+        0.18,
+        0.065,
+        0.009
+      ],
+      "orientation_xyzw": [
+        0,
+        0,
+        0,
+        1
+      ],
+      "color": [
+        0.9,
+        0.7,
+        0.36
+      ],
+      "present": true,
+      "attached_to": null,
+      "supported": true,
+      "accessible": true,
+      "collision_geometry": "oriented_box_envelope",
+      "material_class": "3d_printed_polymer_unspecified",
+      "mass_kg": null,
+      "center_of_mass_m": null,
+      "manufacturing": {
+        "process": "3D printing",
+        "material": null,
+        "print_profile": null,
+        "shell_thickness_m": null,
+        "infill_fraction": null,
+        "mass_kg": null,
+        "center_of_mass_m": null,
+        "mass_source": "unknown; obtain from a declared print estimate or physical measurement"
+      },
+      "grasp_feature": {
+        "offset_m": [
+          0,
+          0,
+          0.005
+        ],
+        "boss_size_m": [
+          0.018,
+          0.012,
+          0.004
+        ],
+        "strength_validated": false
+      }
+    },
+    {
+      "id": "screw_1",
+      "name": "screw 1",
+      "kind": "screw",
+      "geometry": {
+        "primitive": "box",
+        "size_m": [
+          0.006,
+          0.006,
+          0.02
+        ]
+      },
+      "geometry_sha256": "6ac4673c9817cc865501a9e7b506b0f35307f5da1e29d2da9d80336ff13c20c2",
+      "size_m": [
+        0.006,
+        0.006,
+        0.02
+      ],
+      "position_m": [
+        0.26,
+        0.06,
+        0.01
+      ],
+      "orientation_xyzw": [
+        0,
+        0,
+        0,
+        1
+      ],
+      "color": [
+        0.65,
+        0.68,
+        0.72
+      ],
+      "present": true,
+      "attached_to": null,
+      "supported": true,
+      "accessible": true,
+      "collision_geometry": "oriented_box_envelope",
+      "material_class": "metal",
+      "mass_kg": null,
+      "center_of_mass_m": null,
+      "fastener": {
+        "nominal": "M3",
+        "length_m": 0.02,
+        "joint_id": "corner",
+        "hole_id": "corner_hole",
+        "installed": false,
+        "insertion_m": 0.0,
+        "head_type": null
+      }
+    },
+    {
+      "id": "holding_fixture",
+      "name": "holding fixture",
+      "kind": "fixture",
+      "geometry": {
+        "primitive": "box",
+        "size_m": [
+          0.11,
+          0.08,
+          0.006
+        ]
+      },
+      "geometry_sha256": "74ff200046019c017a9506cbd3169ef32cb17db98e2dc1c4a1de3926a7e21913",
+      "size_m": [
+        0.11,
+        0.08,
+        0.006
+      ],
+      "position_m": [
+        0.17,
+        -0.06,
+        0.003
+      ],
+      "orientation_xyzw": [
+        0,
+        0,
+        0,
+        1
+      ],
+      "color": [
+        0.3,
+        0.4,
+        0.45
+      ],
+      "present": true,
+      "attached_to": null,
+      "supported": true,
+      "accessible": true,
+      "collision_geometry": "oriented_box_envelope",
+      "material_class": "unspecified",
+      "mass_kg": null,
+      "center_of_mass_m": null
+    },
+    {
+      "id": "screwdriver",
+      "name": "screwdriver",
+      "kind": "tool",
+      "geometry": {
+        "primitive": "box",
+        "size_m": [
+          0.025,
+          0.025,
+          0.09
+        ]
+      },
+      "geometry_sha256": "574b57f1630069072dcbb019e06812cd0448e7c2d0e674653590ab1366bc987f",
+      "size_m": [
+        0.025,
+        0.025,
+        0.09
+      ],
+      "position_m": [
+        -0.15,
+        -0.15,
+        0.045
+      ],
+      "orientation_xyzw": [
+        0,
+        0,
+        0,
+        1
+      ],
+      "color": [
+        0.3,
+        0.3,
+        0.35
+      ],
+      "present": true,
+      "attached_to": null,
+      "supported": true,
+      "accessible": true,
+      "collision_geometry": "oriented_box_envelope",
+      "material_class": "unspecified",
+      "mass_kg": null,
+      "center_of_mass_m": null
+    }
+  ],
+  "target_assembly": {
+    "base_panel": {
+      "position_m": [
+        0.17,
+        -0.06,
+        0.009
+      ],
+      "orientation_xyzw": [
+        0,
+        0,
+        0,
+        1
+      ]
+    },
+    "upright_panel": {
+      "position_m": [
+        0.127,
+        -0.06,
+        0.042
+      ],
+      "orientation_xyzw": [
+        0,
+        0.7071067811865475,
+        0,
+        0.7071067811865476
+      ]
+    }
+  },
+  "connections": [
+    {
+      "id": "corner",
+      "component_ids": [
+        "base_panel",
+        "upright_panel"
+      ],
+      "screw_ids": [
+        "screw_1"
+      ],
+      "features": [
+        {
+          "hole_id": "corner_hole",
+          "screw_id": "screw_1",
+          "position_m": [
+            0.124,
+            -0.06,
+            0.009
+          ],
+          "outward_axis": [
+            -1,
+            0,
+            0
+          ]
+        }
+      ],
+      "verified": false
+    }
+  ],
+  "package": null,
+  "approach_targets": [
+    "base_panel",
+    "upright_panel",
+    "screw_1"
+  ],
+  "adaptation": "Separate 80x50x6 mm base and 60x50x6 mm upright coupon. Not a resized full cabinet or a completed joint; screw/tool manually staged, support unvalidated.",
+  "inventory": [
+    "base_panel",
+    "upright_panel",
+    "screw_1"
+  ]
+}

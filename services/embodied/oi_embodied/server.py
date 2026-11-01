@@ -120,6 +120,10 @@ class Handler(BaseHTTPRequestHandler):
                 return self.send(200, self.server.runtime.snapshot())
             if path == '/api/embodied/model':
                 return self.send(200, self.server.manifest)
+            if path == '/api/embodied/trace':
+                if self.server.runtime.cabinet is None:
+                    return self.send(404, {'error':'CABINET_FIXTURE_REQUIRED'})
+                return self.send(200, self.server.runtime.trace())
             return self.send(404, {'error': 'NOT_FOUND'})
         file = self.server.files.get(path)
         if file is None:
@@ -166,6 +170,7 @@ def main() -> None:
     parser.add_argument('--source', type=Path, required=True, help='Pinned SO-ARM100 checkout')
     parser.add_argument('--state-dir', type=Path, default=Path.home() / '.local/share/open-industries/embodied')
     parser.add_argument('--port', type=int, default=4197)
+    parser.add_argument('--cabinet-fixture', choices=['joint','packaged'], help='Pinned CABINET-01 scene; use a separate --state-dir per fixture')
     args = parser.parse_args()
     root = Path(__file__).resolve().parents[3]
     fixture, web = root / 'benchmarks/embodied', root / 'dist'
@@ -178,7 +183,7 @@ def main() -> None:
         parser.error('Saved station database missing. Restore the complete state directory; refusing to replace the run.')
     # Validate before opening state so missing assets cannot partially initialize a station.
     assets(args.source, fixture)
-    runtime = Runtime(args.state_dir, fixture)
+    runtime = Runtime(args.state_dir, fixture, cabinet_path=root / 'benchmarks/cabinet' / (args.cabinet_fixture+'.json') if args.cabinet_fixture else None)
     if not token_file.exists():
         temporary = args.state_dir / 'client-token.tmp'
         with temporary.open('w') as output:
