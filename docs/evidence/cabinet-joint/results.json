@@ -1,0 +1,327 @@
+{
+  "schema_version": 1,
+  "capability": "supported-joint-v1",
+  "domain": "sim",
+  "results": [
+    {
+      "fixture": "cabinet-fastening-a-v1",
+      "fixture_sha256": "3bbadae4e8ee789c4dcb919232fc07ec58655c7daede23ed66f158147a65bb4e",
+      "source_revision": "dfa36c6d14d263661faf535a4498c0094f557b75",
+      "model_sha256": "3dba648571df41892eeea0ac919093dd6cd66dc362203e5898f4613974ad7d15",
+      "run_id": "27f09a3a-f836-4d02-8c46-499cf00c3358",
+      "status": "succeeded",
+      "initial_state_id": "27f09a3a-f836-4d02-8c46-499cf00c3358:0",
+      "final_state_id": "27f09a3a-f836-4d02-8c46-499cf00c3358:102",
+      "state_count": 103,
+      "trace_complete": true,
+      "trace": "fastening-a-trace.json.gz",
+      "trace_sha256": "3b3766389c34fc69335c12291890b273daab0bd720bba6ab9c4b7998cd32377e",
+      "checks": {
+        "inventory": {
+          "status": "pass"
+        },
+        "screw_identity": {
+          "status": "pass"
+        },
+        "base_panel_pose": {
+          "status": "pass",
+          "position_error_m": 0.0,
+          "angle_error_rad": 0.0
+        },
+        "upright_panel_pose": {
+          "status": "pass",
+          "position_error_m": 0.0,
+          "angle_error_rad": 0.0
+        },
+        "required_support": {
+          "status": "pass"
+        },
+        "declared_loads": {
+          "status": "pass",
+          "provenance": "simulation assumptions"
+        },
+        "tool_binding": {
+          "status": "pass"
+        },
+        "tool_access": {
+          "status": "pass"
+        },
+        "insertion_state": {
+          "status": "pass"
+        },
+        "connection_progress": {
+          "status": "pass"
+        },
+        "screw_hole_pose": {
+          "status": "pass",
+          "position_error_m": 0.0
+        },
+        "tool_pose_binding": {
+          "status": "pass"
+        },
+        "tool_alignment": {
+          "status": "pass",
+          "position_error_m": 1.0861073982494851e-11,
+          "axis_error_rad": 2.1073424255447017e-08
+        },
+        "insertion_depth": {
+          "status": "pass",
+          "actual_m": 0.006,
+          "required_m": 0.006
+        },
+        "connection": {
+          "status": "pass"
+        }
+      },
+      "domain": "sim",
+      "physical_evidence": null,
+      "video": null,
+      "resources": {
+        "screws_installed": 1,
+        "active_simulation_s": 6.144134871999995,
+        "energy_J": null,
+        "torque_Nm": null
+      },
+      "operation_receipts": [
+        {
+          "command_id": "53f87a46-ffcb-5f9e-acbb-56f374364b48",
+          "operation_id": "3d0ad9b0-861d-5c74-9426-c68a8eec6e86",
+          "accepted_revision": 4,
+          "completed_revision": 4
+        },
+        {
+          "command_id": "8a3df2b0-ef0b-5181-9077-57a111e56ca4",
+          "operation_id": "fc4ba239-703d-5938-8a04-1c1465bad39f",
+          "accepted_revision": 5,
+          "completed_revision": 37
+        },
+        {
+          "command_id": "23b1e135-b197-5269-8503-ace45486a38f",
+          "operation_id": "8927a99c-ca14-5a69-bcd3-14282cfadcaa",
+          "accepted_revision": 38,
+          "completed_revision": 101
+        },
+        {
+          "command_id": "afd97283-4098-52ad-9c48-f97d82404ac9",
+          "operation_id": "b0cfcfab-5ab3-56f7-be73-d4af56944795",
+          "accepted_revision": 102,
+          "completed_revision": 102
+        }
+      ]
+    },
+    {
+      "fixture": "cabinet-fastening-b-v1",
+      "fixture_sha256": "89287477d4dd261f1f3f4923be5691b7ae36f47c0337f85dc4ef2edf677d855a",
+      "source_revision": "dfa36c6d14d263661faf535a4498c0094f557b75",
+      "model_sha256": "3dba648571df41892eeea0ac919093dd6cd66dc362203e5898f4613974ad7d15",
+      "run_id": "34f87d71-cb1e-4be1-ab5f-de10a4098624",
+      "status": "succeeded",
+      "initial_state_id": "34f87d71-cb1e-4be1-ab5f-de10a4098624:0",
+      "final_state_id": "34f87d71-cb1e-4be1-ab5f-de10a4098624:103",
+      "state_count": 104,
+      "trace_complete": true,
+      "trace": "fastening-b-trace.json.gz",
+      "trace_sha256": "844b1f024bc6933a08fe14f3b5d0af4a6ee43c184939dcbf515e6ef944efc24f",
+      "checks": {
+        "inventory": {
+          "status": "pass"
+        },
+        "screw_identity": {
+          "status": "pass"
+        },
+        "base_panel_pose": {
+          "status": "pass",
+          "position_error_m": 0.0,
+          "angle_error_rad": 0.0
+        },
+        "upright_panel_pose": {
+          "status": "pass",
+          "position_error_m": 0.0,
+          "angle_error_rad": 0.0
+        },
+        "required_support": {
+          "status": "pass"
+        },
+        "declared_loads": {
+          "status": "pass",
+          "provenance": "simulation assumptions"
+        },
+        "tool_binding": {
+          "status": "pass"
+        },
+        "tool_access": {
+          "status": "pass"
+        },
+        "insertion_state": {
+          "status": "pass"
+        },
+        "connection_progress": {
+          "status": "pass"
+        },
+        "screw_hole_pose": {
+          "status": "pass",
+          "position_error_m": 0.0
+        },
+        "tool_pose_binding": {
+          "status": "pass"
+        },
+        "tool_alignment": {
+          "status": "pass",
+          "position_error_m": 9.66380514986533e-12,
+          "axis_error_rad": 2.580956827951785e-08
+        },
+        "insertion_depth": {
+          "status": "pass",
+          "actual_m": 0.006,
+          "required_m": 0.006
+        },
+        "connection": {
+          "status": "pass"
+        }
+      },
+      "domain": "sim",
+      "physical_evidence": null,
+      "video": null,
+      "resources": {
+        "screws_installed": 1,
+        "active_simulation_s": 6.1479338070003,
+        "energy_J": null,
+        "torque_Nm": null
+      },
+      "operation_receipts": [
+        {
+          "command_id": "5499f9bb-88f6-5b33-9c5e-0be8f9027a38",
+          "operation_id": "ad7fe5d3-3ec0-53a0-a8d0-aa7ee065b232",
+          "accepted_revision": 4,
+          "completed_revision": 4
+        },
+        {
+          "command_id": "c2fd3f06-30b5-552a-b796-1352028c0378",
+          "operation_id": "a0a32cfe-7d2f-5396-bf1c-49d27b7c8f6a",
+          "accepted_revision": 5,
+          "completed_revision": 37
+        },
+        {
+          "command_id": "7f39ccf1-f4d8-5b55-b8fe-e3d59aee2b60",
+          "operation_id": "c52afe4b-7b7d-5af0-be80-b7d61e9a87f4",
+          "accepted_revision": 38,
+          "completed_revision": 102
+        },
+        {
+          "command_id": "e994d465-e49d-54cb-8e27-140ea050e02d",
+          "operation_id": "2c3af9e2-5e7f-5eb1-8793-11a4cff5e4ee",
+          "accepted_revision": 103,
+          "completed_revision": 103
+        }
+      ]
+    },
+    {
+      "fixture": "cabinet-fastening-c-v1",
+      "fixture_sha256": "9b3da33de6eeef8a8e41f7538533d800a6124cd4f3e147fca776bf9214dd1340",
+      "source_revision": "dfa36c6d14d263661faf535a4498c0094f557b75",
+      "model_sha256": "3dba648571df41892eeea0ac919093dd6cd66dc362203e5898f4613974ad7d15",
+      "run_id": "34d029e0-64fe-4ec2-8cb8-3bb554844aa7",
+      "status": "succeeded",
+      "initial_state_id": "34d029e0-64fe-4ec2-8cb8-3bb554844aa7:0",
+      "final_state_id": "34d029e0-64fe-4ec2-8cb8-3bb554844aa7:102",
+      "state_count": 103,
+      "trace_complete": true,
+      "trace": "fastening-c-trace.json.gz",
+      "trace_sha256": "b6ffc54a9a75d1c4bc9d11f8e137a048515e37c25b13b060e2edc2fb94978b9c",
+      "checks": {
+        "inventory": {
+          "status": "pass"
+        },
+        "screw_identity": {
+          "status": "pass"
+        },
+        "base_panel_pose": {
+          "status": "pass",
+          "position_error_m": 0.0,
+          "angle_error_rad": 0.0
+        },
+        "upright_panel_pose": {
+          "status": "pass",
+          "position_error_m": 0.0,
+          "angle_error_rad": 0.0
+        },
+        "required_support": {
+          "status": "pass"
+        },
+        "declared_loads": {
+          "status": "pass",
+          "provenance": "simulation assumptions"
+        },
+        "tool_binding": {
+          "status": "pass"
+        },
+        "tool_access": {
+          "status": "pass"
+        },
+        "insertion_state": {
+          "status": "pass"
+        },
+        "connection_progress": {
+          "status": "pass"
+        },
+        "screw_hole_pose": {
+          "status": "pass",
+          "position_error_m": 0.0
+        },
+        "tool_pose_binding": {
+          "status": "pass"
+        },
+        "tool_alignment": {
+          "status": "pass",
+          "position_error_m": 1.0478571967695066e-11,
+          "axis_error_rad": 1.4901161193847656e-08
+        },
+        "insertion_depth": {
+          "status": "pass",
+          "actual_m": 0.006,
+          "required_m": 0.006
+        },
+        "connection": {
+          "status": "pass"
+        }
+      },
+      "domain": "sim",
+      "physical_evidence": null,
+      "video": null,
+      "resources": {
+        "screws_installed": 1,
+        "active_simulation_s": 6.1438002189988765,
+        "energy_J": null,
+        "torque_Nm": null
+      },
+      "operation_receipts": [
+        {
+          "command_id": "02bd1961-1d9d-55c4-a98c-d410dd2cbf8f",
+          "operation_id": "f9963885-080e-53bb-a4a9-9437a42281e2",
+          "accepted_revision": 4,
+          "completed_revision": 4
+        },
+        {
+          "command_id": "c30553e0-7f9c-54d9-91f2-954fedf54f11",
+          "operation_id": "5ded2a39-2be3-5d45-9927-bddb2838a5a0",
+          "accepted_revision": 5,
+          "completed_revision": 37
+        },
+        {
+          "command_id": "a9a318f1-ab10-5b59-b0be-5ee44c8ad441",
+          "operation_id": "465cf25c-b84c-54dd-8964-512928782874",
+          "accepted_revision": 38,
+          "completed_revision": 101
+        },
+        {
+          "command_id": "6335e74d-478d-551b-a8c0-b5a495b9a0eb",
+          "operation_id": "9256610e-c62c-523b-b973-a5b6011efe3e",
+          "accepted_revision": 102,
+          "completed_revision": 102
+        }
+      ]
+    }
+  ],
+  "physical_validation": false,
+  "human_video_recording": null
+}
