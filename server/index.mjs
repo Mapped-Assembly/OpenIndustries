@@ -1,4 +1,5 @@
 import express from 'express';
+import { localSceneRoutes } from './local-scene-routes.mjs';
 import { randomUUID } from 'node:crypto';
 import { fileURLToPath } from 'node:url';
 import { resolve } from 'node:path';
@@ -21,6 +22,7 @@ app.use('/api', (req, res, next) => {
   res.set('Cache-Control', 'no-store');
   next();
 });
+app.use('/api/local-scenes', localSceneRoutes(root));
 app.use(express.json({ limit: '64kb' }));
 app.get('/api/health', async (_req, res) => res.json(await formHealth(root)));
 app.post('/api/form/feedback', async (req, res) => {

@@ -30,7 +30,7 @@ node --import tsx cli/local-scenes.ts import-asset asset.json
 
 The command prints the immutable local asset reference to use in scene requests. It validates/sanitizes geometry and deduplicates repeated imports. File paths are only accepted by this trusted CLI, never through MCP scene arguments.
 
-Local `head_url` / `revision_url` values are `oi-local://scene/<uuid>` identifiers, **not browser links**. Reopen a scene or revision with `openindustries.read_scene`. To view it in the existing workbench, export a portable scene (omit the final revision number for the head):
+Local `head_url` / `revision_url` values are `oi-local://scene/<uuid>` identifiers, **not browser links**. Reopen a scene or revision with `openindustries.read_scene`. To follow live revisions, start `npm run dev` with the same store settings and open `http://127.0.0.1:5173/?localSceneId=<uuid>` (add `&revision=1` to pin a revision). The workbench also has a **Local scene store** open form. See [live synchronization, commits and conflict recovery](local-scene-sync.md). For a portable offline copy, export a scene (omit the final revision number for the head):
 
 ```bash
 node --import tsx cli/local-scenes.ts export SCENE_UUID garden.scene.json 1
@@ -131,7 +131,7 @@ Failed tools set `isError: true` and return `{"error":{"code":"…","message":"�
 | `ASSET_UPLOAD_FAILED` / `SAVE_FAILED` / `TIMEOUT` | Read the scene to determine whether the save committed. Retry the identical request when appropriate. Pending uploads are reusable and visible in Cloud files. |
 | `PAYLOAD_TOO_LARGE` / `UNSUPPORTED_DATA` | Reduce scene/asset complexity to the discovered schema limits. |
 
-An identical retry while its write is still the scene head returns that same revision. After another edit, the stale base returns a conflict. Uploads may finish before a competing scene edit wins; unused versions remain visible for explicit cleanup. Local room drafts are never replaced by MCP writes.
+An identical retry while its write is still the scene head returns that same revision. After another edit, the stale base returns a conflict. Uploads may finish before a competing scene edit wins; unused versions remain visible for explicit cleanup. Browser-local room drafts are never replaced by MCP writes. An explicitly bound [local persistent session](local-scene-sync.md) follows committed revisions only while its draft is clean.
 
 Limits: 1 MiB tool arguments, scene metadata, and tool results; 25 MiB per geometry file and 50 MiB referenced geometry per request; 1,000 instances/tracks and 10,000 total keyframes; room dimensions 1–100 m; animation duration 0.5–120 seconds. Network requests share a 60-second abort deadline. The stdio transport caps lines at 11 MiB (preserving legacy file handoffs) and queues at most eight requests. Calls run sequentially; every call reloads and verifies the CLI session so account changes apply to subsequent operations. Timeout errors never imply that a server-side write was rolled back.
 

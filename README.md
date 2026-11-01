@@ -79,7 +79,7 @@ import command and scene example.
 | Automatic local draft | The current browser/device | Returning to work after a refresh. This is separate from a cloud save. |
 | Device asset library | The current browser/device | Reusing equipment and its GIF previews across layouts. |
 | Portable scene JSON | A file you export | Reopening or transferring a scene with its geometry and animation, without cloud services. |
-| Local persistent scenes (MCP) | SQLite metadata/revisions and local geometry files | Set `OI_SCENE_BACKEND=local` and `OI_SCENE_TOOLS_ENABLED=true`; [setup and portable export](docs/mcp-scenes.md#local-persistence-without-supabase). No cloud credentials needed. |
+| Local persistent scenes (MCP) | SQLite metadata/revisions and local geometry files | Set `OI_SCENE_BACKEND=local` and `OI_SCENE_TOOLS_ENABLED=true`; [setup](docs/mcp-scenes.md#local-persistence-without-supabase) and [live browser synchronization](docs/local-scene-sync.md) with explicit commits and conflict protection. No cloud credentials needed. |
 | Cloud scene | Your signed-in Supabase account | Saving named scenes across devices. Enable **Include cloud geometry** when saving if the other device needs the models. |
 | Cloud files | Optional private Supabase Storage | Explicitly uploading geometry bundles, GIF previews, and supported source attachments. |
 
