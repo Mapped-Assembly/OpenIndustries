@@ -18,6 +18,7 @@ import numpy as np
 
 from .model import RobotModel
 from .policy import Policy
+from .cabinet import check_tcp_path, dataset_state, load_fixture, preflight
 
 Json = dict[str, Any]
 ACTIVE = ('planning', 'running', 'paused')
@@ -37,8 +38,10 @@ def require(condition: bool, code: str) -> None:
 class Runtime:
     """Own the only writable robot state; model and browser only submit validated intents."""
 
-    def __init__(self, directory: Path, fixture: Path, policy: Policy | None = None) -> None:
+    def __init__(self, directory: Path, fixture: Path, policy: Policy | None = None, cabinet_path: Path | None = None) -> None:
         """Load one persistent station, rejecting incompatible pins and pausing on restart."""
+        self.model = RobotModel(fixture)
+        self.cabinet = load_fixture(cabinet_path, self.model) if cabinet_path else None
         directory.mkdir(parents=True, exist_ok=True, mode=0o700)
         self.lease = (directory / 'station.lock').open('a+b')
         try:
@@ -47,7 +50,6 @@ class Runtime:
             self.lease.close()
             raise ValueError('STATION_ALREADY_RUNNING') from None
         self.lock = threading.RLock()
-        self.model = RobotModel(fixture)
         self.policy = policy or Policy()
         root = fixture.resolve().parents[1]
         try:
@@ -69,6 +71,7 @@ class Runtime:
         self.db.executescript('''PRAGMA journal_mode=WAL; PRAGMA synchronous=FULL;
             CREATE TABLE IF NOT EXISTS station(id INTEGER PRIMARY KEY CHECK(id=1), body TEXT NOT NULL);
             CREATE TABLE IF NOT EXISTS receipts(id TEXT PRIMARY KEY, request TEXT NOT NULL, result TEXT NOT NULL);
+            CREATE TABLE IF NOT EXISTS cabinet_frames(revision INTEGER PRIMARY KEY, body TEXT NOT NULL);
             PRAGMA application_id=1330200904; PRAGMA user_version=1;''')
         row = self.db.execute('SELECT body FROM station WHERE id=1').fetchone()
         self.state: Json = json.loads(row[0]) if row else {
@@ -79,6 +82,16 @@ class Runtime:
                         {'id': 'blue-block', 'name': 'blue block', 'position_m': [.17, .05, .015], 'size_m': [.03, .03, .03]}],
             'destination': {'id': 'marked-area', 'position_m': [.24, 0, .002], 'size_m': [.08, .08, .004]},
         }
+        if row:
+            if self.state.get('cabinet_sha256') != (self.cabinet['sha256'] if self.cabinet else None):
+                self.db.close()
+                self.lease.close()
+                raise ValueError('CABINET_FIXTURE_PIN_MISMATCH: use its original fixture or a separate state directory')
+            if self.cabinet:
+                self.state['revision'] += 1  # Record recovery without rewriting S_i.
+        elif self.cabinet:
+            self.state.update({'scene_id':self.cabinet['id'], 'cabinet_sha256':self.cabinet['sha256'],
+                               'objects':deepcopy(self.cabinet['objects']), 'preflight':None})
         require(self.state.get('controller_version') == 'so101-kinematic-v1', 'CONTROLLER_VERSION_MISMATCH')
         require(self.state['model_sha256'] == self.model.sha, 'MODEL_PIN_MISMATCH')
         if self.state['task'] and self.state['task']['stage'] in ACTIVE:
@@ -92,6 +105,12 @@ class Runtime:
     def persist(self) -> None:
         """Write the current checkpoint inside the caller's SQLite transaction."""
         try:
+            if self.cabinet:
+                self.state['at_ms'] = int(time.time()*1000)
+                projection = self.projection()
+                self.db.execute('INSERT OR REPLACE INTO cabinet_frames VALUES(?,?)', (self.state['revision'], canonical(projection)))
+                # Keep S_i plus the most recent 511 revisions; export declares any gap.
+                self.db.execute('DELETE FROM cabinet_frames WHERE revision != 0 AND revision NOT IN (SELECT revision FROM cabinet_frames ORDER BY revision DESC LIMIT 511)')
             self.db.execute('INSERT OR REPLACE INTO station VALUES(1,?)', (canonical(self.state),))
             self.db.commit()
         except Exception:
@@ -112,10 +131,30 @@ class Runtime:
     def snapshot(self) -> Json:
         """Project the single local run without secrets or mutable references."""
         with self.lock:
-            return {**deepcopy(self.state), 'robot': self.model.projection(self.state['q']),
-                    'source_revision': self.code_revision, 'policy_mode': self.policy.mode, 'skills': ['approach', 'inspect', 'home'],
-                    'healthy': self.failure is None, 'cadence_ms': 50,
-                    'observation_basis': 'privileged_simulated_state; no camera/contact/physical evidence'}
+            return {**self.projection(), **({'cabinet':deepcopy(self.cabinet)} if self.cabinet else {})}
+
+    def projection(self) -> Json:
+        """Produce the same authoritative display state for live view and recorded replay."""
+        result = {**deepcopy(self.state), 'robot': self.model.projection(self.state['q']),
+                  'source_revision': self.code_revision, 'policy_mode': self.policy.mode, 'skills': ['approach', 'inspect', 'home'],
+                  'healthy': self.failure is None, 'cadence_ms': 50,
+                  'observation_basis': 'privileged_simulated_state; no camera/contact/physical evidence'}
+        if self.cabinet:
+            result['dataset_state'] = dataset_state(self.state, self.cabinet, self.model)
+        return result
+
+    def trace(self) -> Json:
+        """Export recorded states without dispatching commands; explicitly report retention gaps."""
+        with self.lock:
+            require(self.cabinet is not None, 'CABINET_FIXTURE_REQUIRED')
+            states = [json.loads(row[0]) for row in self.db.execute('SELECT body FROM cabinet_frames ORDER BY revision')]
+            revisions = [state['revision'] for state in states]
+            receipts = [json.loads(row[0]) for row in self.db.execute('SELECT result FROM receipts ORDER BY rowid')]
+            return {'schema_version':1, 'run_id':self.state['run_id'], 'fixture':deepcopy(self.cabinet),
+                    'source_revision':self.code_revision, 'model_sha256':self.model.sha, 'machine_contract':deepcopy(self.model.contract),
+                    'initial_state_id':states[0]['dataset_state']['state_id'], 'final_state_id':states[-1]['dataset_state']['state_id'],
+                    'complete':revisions==list(range(revisions[-1]+1)), 'retention':'S_i and latest 511 revisions; gaps are explicit',
+                    'states':states, 'receipts':receipts, 'replay_dispatches_commands':False, 'assembly_status':'not_executed'}
 
     def request(self, body: Json) -> Json:
         """Commit user intent and its immutable receipt once; accepted is not completed."""
@@ -159,7 +198,14 @@ class Runtime:
         if action == 'chat' and text.lower() in ('stop', 'pause', 'resume', 'status', 'what are you doing?'):
             action = {'pause': 'stop', 'what are you doing?': 'status'}.get(text.lower(), text.lower())
         task = self.state['task']
+        if action == 'preflight':
+            require(self.cabinet is not None, 'CABINET_FIXTURE_REQUIRED')
+            require(not task or task['stage'] not in ACTIVE, 'TASK_ACTIVE')
+            result = preflight(self.cabinet, self.state['objects'], json.loads(text), self.model, self.state['q'])
+            self.state['preflight'] = result
+            return result
         if action == 'edit_object':
+            require(self.cabinet is None, 'PINNED_CABINET_FIXTURE: create a new version for edits')
             require(self.state['mode'] == 'edit' and (not task or task['stage'] not in ACTIVE), 'EDIT_MODE_REQUIRED')
             position = json.loads(text)
             require(isinstance(position, list) and len(position) == 3 and all(type(v) in (float, int) and np.isfinite(v) for v in position), 'INVALID_POSITION')
@@ -241,6 +287,10 @@ class Runtime:
             if skill == 'clarify' or skill in ('approach', 'inspect') and not targets:
                 raise ValueError('CLARIFICATION_REQUIRED: select red-block or blue-block, then submit the request again.')
             require(skill != 'unsupported', 'UNSUPPORTED: pick/place, grasp/contact and physical control are not implemented in this milestone.')
+            if self.cabinet:
+                check = preflight(self.cabinet, snapshot['objects'], {'verb':skill, 'component_ids':[target] if target else [],
+                                  'frame':self.cabinet['frame'], 'units':self.cabinet['units']}, self.model, snapshot['q'])
+                require(check['status']=='ready', '; '.join(check['reasons']))
             goal = self.model.home.tolist() if skill == 'home' else self.model.approach(snapshot['q'], targets[0]['position_m']) if skill == 'approach' else None
             with self.lock:
                 current = self.state['task']
@@ -251,10 +301,13 @@ class Runtime:
                 current.update({'skill': skill, 'target_id': target, 'before_observation': self.observe(current)['id']})
                 if goal is not None:
                     require(len(goal) == len(self.model.names) and np.all(np.isfinite(goal)) and np.all(np.array(goal) >= self.model.lower) and np.all(np.array(goal) <= self.model.upper), 'JOINT_LIMIT')
+                    if self.cabinet:
+                        check_tcp_path(snapshot['objects'], self.model, self.state['q'], goal)
                     for fraction in np.linspace(0, 1, 64):
                         point = self.model.tcp(np.array(self.state['q']) + fraction * (np.array(goal) - np.array(self.state['q'])))
                         require(point[2] >= .035, 'BLOCKED_TCP_TABLE')
-                        require(all(np.linalg.norm(point - np.array(o['position_m'])) > .035 for o in snapshot['objects']), 'BLOCKED_TCP_OBJECT')
+                        if not self.cabinet:
+                            require(all(np.linalg.norm(point - np.array(o['position_m'])) > .035 for o in snapshot['objects']), 'BLOCKED_TCP_OBJECT')
                 if goal is None:
                     current['stage'] = 'completed'
                     self.message('assistant', f'Inspected {target} using simulated state. No motion or camera validation performed.', current['id'])
@@ -319,6 +372,8 @@ class Runtime:
             if self.state['task'] and self.state['task']['stage'] in ACTIVE:
                 self.state['task']['stage'] = 'paused'
                 self.state['task']['generation'] += 1
+                if self.cabinet:
+                    self.state['revision'] += 1
                 self.persist()
             self.db.close()
             self.lease.close()

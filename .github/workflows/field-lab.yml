@@ -66,6 +66,8 @@ jobs:
           npm run build
           SO101_SOURCE_ROOT="$PWD/so101-source" PYTHONPATH=services/embodied python -m unittest discover -s services/embodied/tests -v
           SO101_SOURCE_ROOT="$PWD/so101-source" npm run test:embodied-browser
+          npm run test:cabinet-scene
+          SO101_SOURCE_ROOT="$PWD/so101-source" npm run test:cabinet-browser
       - name: Replay and render FIELD-LAB-01
         run: node benchmarks/field-lab/run.mjs deliverables/field-lab --render
       - uses: actions/upload-artifact@v4
@@ -75,6 +77,7 @@ jobs:
           path: |
             deliverables/field-lab
             deliverables/embodied
+            deliverables/cabinet
           if-no-files-found: warn
 
   motion-handoff:

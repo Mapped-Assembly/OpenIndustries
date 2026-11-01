@@ -1,0 +1,466 @@
+{
+  "state_id": "PKG-S0000",
+  "revision": 0,
+  "time_s": 0.0,
+  "phase": "PACKAGED KIT",
+  "operation_id": null,
+  "instruction": "S_i: sealed stock box; five flat panels and twelve retained screws.",
+  "M": {
+    "base_pose": {
+      "position_m": [
+        0,
+        0,
+        0
+      ],
+      "orientation_xyzw": [
+        0.0,
+        0.0,
+        0.0,
+        1.0
+      ]
+    },
+    "tool_id": "gripper",
+    "tcp_position_m": [
+      1.25,
+      0.12,
+      0.49
+    ],
+    "orientation_xyzw": [
+      0.0,
+      0.0,
+      0.0,
+      1.0
+    ],
+    "wrist_position_m": [
+      1.25,
+      0.12,
+      0.535
+    ],
+    "link_positions_m": {
+      "x_slide": [
+        1.25,
+        0,
+        0.65
+      ],
+      "y_slide": [
+        1.25,
+        0.12,
+        0.65
+      ],
+      "vertical_slide": [
+        1.25,
+        0.12,
+        0.535
+      ]
+    },
+    "actuators": {
+      "x_m": 1.25,
+      "y_m": 0.12,
+      "z_travel_m": 0.11499999999999999,
+      "wrist_roll_rad": 0.0,
+      "wrist_pitch_rad": -0.0,
+      "wrist_yaw_rad": 0.0,
+      "gripper_aperture_m": 0.04,
+      "spindle_rad": 0.0,
+      "coupler_latched": 1.0
+    },
+    "planned_command_targets": null,
+    "actual_command_targets": null,
+    "measured_telemetry": null,
+    "source": "illustrative_kinematics"
+  },
+  "objects": {
+    "back_panel": {
+      "position_m": [
+        0.24,
+        0.27,
+        0.0165588
+      ],
+      "orientation_xyzw": [
+        0.0,
+        0.0,
+        0.0,
+        1.0
+      ],
+      "supported": true,
+      "location": "box",
+      "attached_to": null
+    },
+    "separator_4": {
+      "position_m": [
+        0.24,
+        0.27,
+        0.0292794
+      ],
+      "orientation_xyzw": [
+        0.0,
+        0.0,
+        0.0,
+        1.0
+      ],
+      "supported": true,
+      "location": "box",
+      "attached_to": null
+    },
+    "top_panel": {
+      "position_m": [
+        0.24,
+        0.27,
+        0.0355588
+      ],
+      "orientation_xyzw": [
+        0.0,
+        0.0,
+        0.0,
+        1.0
+      ],
+      "supported": true,
+      "location": "box",
+      "attached_to": null
+    },
+    "separator_3": {
+      "position_m": [
+        0.24,
+        0.27,
+        0.0482794
+      ],
+      "orientation_xyzw": [
+        0.0,
+        0.0,
+        0.0,
+        1.0
+      ],
+      "supported": true,
+      "location": "box",
+      "attached_to": null
+    },
+    "right_panel": {
+      "position_m": [
+        0.24,
+        0.27,
+        0.0545588
+      ],
+      "orientation_xyzw": [
+        0.0,
+        0.0,
+        0.0,
+        1.0
+      ],
+      "supported": true,
+      "location": "box",
+      "attached_to": null
+    },
+    "separator_2": {
+      "position_m": [
+        0.24,
+        0.27,
+        0.06727939999999999
+      ],
+      "orientation_xyzw": [
+        0.0,
+        0.0,
+        0.0,
+        1.0
+      ],
+      "supported": true,
+      "location": "box",
+      "attached_to": null
+    },
+    "left_panel": {
+      "position_m": [
+        0.24,
+        0.27,
+        0.0735588
+      ],
+      "orientation_xyzw": [
+        0.0,
+        0.0,
+        0.0,
+        1.0
+      ],
+      "supported": true,
+      "location": "box",
+      "attached_to": null
+    },
+    "separator_1": {
+      "position_m": [
+        0.24,
+        0.27,
+        0.0862794
+      ],
+      "orientation_xyzw": [
+        0.0,
+        0.0,
+        0.0,
+        1.0
+      ],
+      "supported": true,
+      "location": "box",
+      "attached_to": null
+    },
+    "bottom_panel": {
+      "position_m": [
+        0.24,
+        0.27,
+        0.0925588
+      ],
+      "orientation_xyzw": [
+        0.0,
+        0.0,
+        0.0,
+        1.0
+      ],
+      "supported": true,
+      "location": "box",
+      "attached_to": null
+    },
+    "screw_carrier": {
+      "position_m": [
+        0.24,
+        0.33,
+        0.0991588
+      ],
+      "orientation_xyzw": [
+        0.0,
+        0.0,
+        0.0,
+        1.0
+      ],
+      "supported": true,
+      "location": "box",
+      "attached_to": null
+    },
+    "paper_seal": {
+      "position_m": [
+        0.24,
+        0.12500000000000003,
+        0.114975
+      ],
+      "orientation_xyzw": [
+        0.0,
+        0.0,
+        0.0,
+        1.0
+      ],
+      "supported": true,
+      "location": "lid",
+      "attached_to": null
+    }
+  },
+  "screws": {
+    "screw_LB_1": {
+      "location": "carrier",
+      "position_m": [
+        0.18,
+        0.31,
+        0.10215880000000001
+      ],
+      "orientation_xyzw": [
+        0.0,
+        -0.7071067811865475,
+        0.0,
+        0.7071067811865476
+      ],
+      "installed": false,
+      "attached_to": null,
+      "insertion_m": 0.0
+    },
+    "screw_LB_2": {
+      "location": "carrier",
+      "position_m": [
+        0.22,
+        0.31,
+        0.10215880000000001
+      ],
+      "orientation_xyzw": [
+        0.0,
+        -0.7071067811865475,
+        0.0,
+        0.7071067811865476
+      ],
+      "installed": false,
+      "attached_to": null,
+      "insertion_m": 0.0
+    },
+    "screw_RB_1": {
+      "location": "carrier",
+      "position_m": [
+        0.26,
+        0.31,
+        0.10215880000000001
+      ],
+      "orientation_xyzw": [
+        0.0,
+        -0.7071067811865475,
+        0.0,
+        0.7071067811865476
+      ],
+      "installed": false,
+      "attached_to": null,
+      "insertion_m": 0.0
+    },
+    "screw_RB_2": {
+      "location": "carrier",
+      "position_m": [
+        0.3,
+        0.31,
+        0.10215880000000001
+      ],
+      "orientation_xyzw": [
+        0.0,
+        -0.7071067811865475,
+        0.0,
+        0.7071067811865476
+      ],
+      "installed": false,
+      "attached_to": null,
+      "insertion_m": 0.0
+    },
+    "screw_TL_1": {
+      "location": "carrier",
+      "position_m": [
+        0.18,
+        0.328,
+        0.10215880000000001
+      ],
+      "orientation_xyzw": [
+        0.0,
+        -0.7071067811865475,
+        0.0,
+        0.7071067811865476
+      ],
+      "installed": false,
+      "attached_to": null,
+      "insertion_m": 0.0
+    },
+    "screw_TL_2": {
+      "location": "carrier",
+      "position_m": [
+        0.22,
+        0.328,
+        0.10215880000000001
+      ],
+      "orientation_xyzw": [
+        0.0,
+        -0.7071067811865475,
+        0.0,
+        0.7071067811865476
+      ],
+      "installed": false,
+      "attached_to": null,
+      "insertion_m": 0.0
+    },
+    "screw_TR_1": {
+      "location": "carrier",
+      "position_m": [
+        0.26,
+        0.328,
+        0.10215880000000001
+      ],
+      "orientation_xyzw": [
+        0.0,
+        -0.7071067811865475,
+        0.0,
+        0.7071067811865476
+      ],
+      "installed": false,
+      "attached_to": null,
+      "insertion_m": 0.0
+    },
+    "screw_TR_2": {
+      "location": "carrier",
+      "position_m": [
+        0.3,
+        0.328,
+        0.10215880000000001
+      ],
+      "orientation_xyzw": [
+        0.0,
+        -0.7071067811865475,
+        0.0,
+        0.7071067811865476
+      ],
+      "installed": false,
+      "attached_to": null,
+      "insertion_m": 0.0
+    },
+    "screw_BB_1": {
+      "location": "carrier",
+      "position_m": [
+        0.18,
+        0.34600000000000003,
+        0.10215880000000001
+      ],
+      "orientation_xyzw": [
+        0.0,
+        -0.7071067811865475,
+        0.0,
+        0.7071067811865476
+      ],
+      "installed": false,
+      "attached_to": null,
+      "insertion_m": 0.0
+    },
+    "screw_BL_1": {
+      "location": "carrier",
+      "position_m": [
+        0.22,
+        0.34600000000000003,
+        0.10215880000000001
+      ],
+      "orientation_xyzw": [
+        0.0,
+        -0.7071067811865475,
+        0.0,
+        0.7071067811865476
+      ],
+      "installed": false,
+      "attached_to": null,
+      "insertion_m": 0.0
+    },
+    "screw_BR_1": {
+      "location": "carrier",
+      "position_m": [
+        0.26,
+        0.34600000000000003,
+        0.10215880000000001
+      ],
+      "orientation_xyzw": [
+        0.0,
+        -0.7071067811865475,
+        0.0,
+        0.7071067811865476
+      ],
+      "installed": false,
+      "attached_to": null,
+      "insertion_m": 0.0
+    },
+    "screw_BT_1": {
+      "location": "carrier",
+      "position_m": [
+        0.3,
+        0.34600000000000003,
+        0.10215880000000001
+      ],
+      "orientation_xyzw": [
+        0.0,
+        -0.7071067811865475,
+        0.0,
+        0.7071067811865476
+      ],
+      "installed": false,
+      "attached_to": null,
+      "insertion_m": 0.0
+    }
+  },
+  "attached_object": null,
+  "attached_screw": null,
+  "lid_angle_rad": 0.0,
+  "lid_held_open": false,
+  "seal_removed": false,
+  "box_restrained": true,
+  "inventory_checked": false,
+  "target_ids": [],
+  "evidence_kind": "synthetic_display_state",
+  "actual_execution_status": "not_executed"
+}

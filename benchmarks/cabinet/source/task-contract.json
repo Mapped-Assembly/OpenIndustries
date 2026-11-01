@@ -1,0 +1,212 @@
+{
+  "schema_version": "0.3.1",
+  "task_id": "CAB-PKG-003",
+  "public_signature": "assemble_cabinet(S, CabinetComponents, A, M) -> AssemblyResult",
+  "task": "Unpack a closed, restrained cabinet kit and assemble its five-panel shell with twelve screws.",
+  "scope": "Miniature tabletop cabinet shell assembled from five 3D-printed panels with metal screws; cardboard/paperboard packaging; no doors or shelves.",
+  "evidence_kind": "design_specification_and_synthetic_display_trace",
+  "actual_execution_status": "not_executed",
+  "expected_status": "succeeded only if every required check passes in an authoritative execution",
+  "S": {
+    "frame": "world",
+    "units": "metres_radians_seconds",
+    "objects": [
+      "closed_mailer",
+      "paper_closure",
+      "panel_separators",
+      "spacer_rails",
+      "screw_carrier",
+      "cabinet_components"
+    ],
+    "reusable_fixtures": [
+      "box_restraint",
+      "lid_retainer",
+      "component_staging_rack",
+      "screw_carrier_rack",
+      "assembly_supports",
+      "tool_dock",
+      "packaging_collection_area"
+    ],
+    "initial_requirement": "The closed box is already placed and restrained in a known nest. Autonomous receiving or box localization is outside this initial fixture.",
+    "terminal_requirement": "Five assembled panels, all twelve required fasteners verified, no held component or screw, robot stopped at a defined rest pose, packaging accounted for in its collection area."
+  },
+  "CabinetComponents": {
+    "panels": [
+      "bottom_panel",
+      "left_panel",
+      "right_panel",
+      "top_panel",
+      "back_panel"
+    ],
+    "fastener_count": 12,
+    "thread_nominal": "M3",
+    "real_fastener_length_m": null,
+    "display_fastener_length_m": 0.02,
+    "panel_revision": "v0.3 adds printed grasp features to the v0.2 primitive panel envelopes; final manufacturing CAD remains to be produced",
+    "joint_count": 8,
+    "real_material_properties": null,
+    "final_torque_nm": null,
+    "manufacturing": {
+      "process": "3D printing",
+      "material": null,
+      "print_profile": null,
+      "shell_thickness_m": null,
+      "infill_fraction": null,
+      "mass_kg": null,
+      "center_of_mass_m": null,
+      "mass_source": "unknown; obtain from a declared print estimate or physical measurement"
+    },
+    "fastener_material_class": "metal",
+    "geometry_interpretation": "Panel solids describe external envelopes; they do not specify a solid-filled print or establish mass."
+  },
+  "A": {
+    "policy": "deterministic synthetic display sequencer",
+    "real_policy_binding": null,
+    "observations": "No measured perception; animation state is authored.",
+    "execution_requirement": "Observe IDs and outcomes after each operation; do not treat narration or animation as evidence."
+  },
+  "M": {
+    "model": "generic XYZ carriage with orientable wrist, gripper and retaining screwdriver",
+    "not_an_SO101_model": true,
+    "physical_adapter": null,
+    "required_capabilities": [
+      "observe",
+      "grasp_pull_tab",
+      "peel_or_tear_closure",
+      "untuck_lid",
+      "open_hinged_lid",
+      "lift_separator",
+      "grasp_panel_feature",
+      "reorient_panel",
+      "place_in_support",
+      "change_tool",
+      "retain_and_pick_screw",
+      "fasten",
+      "verify",
+      "stop"
+    ],
+    "required_feedback": [
+      "object_identity",
+      "grasp_retention",
+      "support_contact",
+      "tool_locked",
+      "screw_present",
+      "screw_seated",
+      "force_or_current_limits"
+    ],
+    "actuator_targets": "Stored separately from synthetic positions in generated dataset, with unknown measured telemetry null.",
+    "real_limits_and_calibration": null,
+    "rated_payload_kg": null,
+    "tool_mass_kg": null,
+    "wrist_moment_limit_Nm": null,
+    "grip_force_limit_N": null
+  },
+  "stage_contracts": [
+    {
+      "stage": "unpack",
+      "requires": [
+        "box restrained",
+        "opening feature accessible",
+        "workspace ready",
+        "required capability binding available"
+      ],
+      "produces": [
+        "all five panels staged and supported",
+        "twelve identified screws retained in carrier",
+        "packaging separated",
+        "nothing held by robot"
+      ]
+    },
+    {
+      "stage": "assemble",
+      "requires": [
+        "unpack postconditions verified",
+        "fixture available for each unsupported panel",
+        "screwdriver retaining tool available"
+      ],
+      "produces": [
+        "five target panel poses",
+        "eight required joints",
+        "twelve verified fasteners",
+        "no component held"
+      ]
+    }
+  ],
+  "required_execution_checks": [
+    {
+      "id": "inventory",
+      "expected": "5 panels and 12 unique screws accounted for",
+      "actual": "unknown"
+    },
+    {
+      "id": "opening",
+      "expected": "seal removed and all lid tuck tabs released without package contents damage",
+      "actual": "unknown"
+    },
+    {
+      "id": "grasp",
+      "expected": "all lifts retain loads within machine capability",
+      "actual": "unknown"
+    },
+    {
+      "id": "support",
+      "expected": "support verified before release and while fastening",
+      "actual": "unknown"
+    },
+    {
+      "id": "connections",
+      "expected": "all eight joints and twelve specified fasteners verified independently",
+      "actual": "unknown"
+    },
+    {
+      "id": "clearance",
+      "expected": "reachable paths and tool access without collisions",
+      "actual": "unknown"
+    },
+    {
+      "id": "packaging",
+      "expected": "all packaging collected and work zone clear",
+      "actual": "unknown"
+    },
+    {
+      "id": "payload",
+      "expected": "Before each authoritative lift, verify part/tool carried mass, centre of mass, wrist moment and grasp requirements against the selected machine/tool limits.",
+      "actual": "unknown",
+      "unknown_or_exceeded_limit": "blocked"
+    }
+  ],
+  "failure_policy": {
+    "missing_component": "blocked; do not proceed to assembly",
+    "seal_or_lid_jam": "stop; inspect and retry only within verified force and retry limits",
+    "double_pick_or_slip": "stop; place retained load in supported recovery location if safe and re-observe",
+    "screw_pick_failure": "retry only after verifying empty tool and carrier state; never invent a successful pickup",
+    "unsupported_panel": "do not release or attempt tool change",
+    "unknown_final_check": "cannot return succeeded",
+    "unknown_or_exceeded_payload": "Block authoritative lifting until load and applicable machine/tool limits are verified. 3D printing alone does not establish a manageable load."
+  },
+  "execution_sets": {
+    "sim": {
+      "feasibility": "unknown",
+      "recorded_execution_refs": []
+    },
+    "real": {
+      "feasibility": "unknown",
+      "recorded_execution_refs": []
+    }
+  },
+  "transfer_to_runtime": {
+    "controller_commands_produced": false,
+    "next_fixture": "Physically characterize closure opening and one panel pickup, then validate a supported two-panel one-screw joint through the same contract before full assembly.",
+    "not_established": [
+      "stock box exact tuck geometry",
+      "seal opening force",
+      "panel grip strength",
+      "shipping protection",
+      "robot load capacity",
+      "contact/collision feasibility",
+      "thread engagement",
+      "measured task success",
+      "economic viability"
+    ]
+  }
+}
