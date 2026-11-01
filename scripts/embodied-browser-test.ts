@@ -1,3 +1,4 @@
+import { oiEnv } from '../server/oi-environment.mjs';
 import assert from 'node:assert/strict';
 import { spawn } from 'node:child_process';
 import { once } from 'node:events';
@@ -21,7 +22,7 @@ try {
   assert.equal((await fetch(origin+'/api/embodied/run')).status,401);
   assert.equal((await fetch(origin+'/api/embodied/run',{headers:{Origin:'https://example.com'}})).status,403);
   assert.equal((await fetch(origin+'/api/embodied/request',{method:'POST',headers:{'Content-Type':'application/json'},body:'{}'})).status,403);
-  browser=await chromium.launch({headless:true,...(process.env.ASTRA_CHROME_PATH?{executablePath:process.env.ASTRA_CHROME_PATH}:{}),args:['--no-sandbox','--disable-dev-shm-usage','--use-gl=angle','--use-angle=swiftshader','--enable-unsafe-swiftshader']});
+  browser=await chromium.launch({headless:true,...(oiEnv('CHROME_PATH')?{executablePath:oiEnv('CHROME_PATH')}:{}),args:['--no-sandbox','--disable-dev-shm-usage','--use-gl=angle','--use-angle=swiftshader','--enable-unsafe-swiftshader']});
   mkdirSync('deliverables/embodied',{recursive:true});
   const context=await browser.newContext({viewport:{width:1440,height:1000},recordVideo:{dir:'deliverables/embodied',size:{width:1440,height:1000}}});
   const page=await context.newPage(),pageErrors:string[]=[];

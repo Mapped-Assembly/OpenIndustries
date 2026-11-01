@@ -1,3 +1,4 @@
+import { oiEnv } from './oi-environment.mjs';
 import { createServer } from 'node:http';
 import type { AddressInfo } from 'node:net';
 import { resolve } from 'node:path';
@@ -202,12 +203,12 @@ export async function startSimulationService({
 }
 
 if (process.argv[1] && import.meta.url === pathToFileURL(resolve(process.argv[1])).href) {
-  const port = Number(process.env.ASTRA_SIMULATION_PORT ?? 8791);
+  const port = Number(oiEnv('SIMULATION_PORT') ?? 8791);
   if (!Number.isInteger(port) || port < 0 || port > 65535) throw Error('INVALID_SIMULATION_PORT');
   const service = await startSimulationService({
-    database: resolve(process.env.ASTRA_SIMULATION_DB ?? '.astra/simulation/work-cell.sqlite'),
+    database: resolve(oiEnv('SIMULATION_DB') ?? '.astra/simulation/work-cell.sqlite'),
     port,
-    allowSignup: process.env.ASTRA_SIMULATION_ALLOW_SIGNUP === 'true',
+    allowSignup: oiEnv('SIMULATION_ALLOW_SIGNUP') === 'true',
   });
   console.log(`OpenIndustries simulation service: ${service.origin}`);
   for (const signal of ['SIGINT', 'SIGTERM'])

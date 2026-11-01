@@ -20,7 +20,7 @@ MCP traces, before/after images, launcher restart and complete-state restore res
 flowchart LR
     A[Existing agent host / deterministic verifier] -->|SSH key authentication, stdio MCP| S
     subgraph EC2[One t3.small EC2 host, us-east-1]
-      S[systemd transient MCP unit] --> M[demo_cli mcp / astra-mcp]
+      S[systemd transient MCP unit] --> M[demo_cli mcp / openindustries-mcp]
       M --> P[Python inspection policy subprocess]
       P --> M2[Existing nested MCP tools]
       M2 -->|loopback + service token| V[OpenCV 5 vision API]

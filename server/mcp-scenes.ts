@@ -1,3 +1,4 @@
+import { oiEnv } from './oi-environment.mjs';
 import { readFile } from 'node:fs/promises';
 import { createHash } from 'node:crypto';
 import type { SupabaseClient } from '@supabase/supabase-js';
@@ -22,8 +23,8 @@ const limits = { totalGeometry: 50 * 1024 * 1024, manifest: 1024 * 1024 };
 const fail = (code: string, message: string, details = {}) => { throw new SceneToolError(code, message, details); };
 const active = (ctx: SceneContext) => { if (ctx.signal.aborted) fail('TIMEOUT', 'Scene operation timed out. Read the scene before retrying the identical request_id.'); };
 export function workbenchOrigin(value = 'http://127.0.0.1:5173') {
-  let url: URL; try { url = new URL(value); } catch { return fail('CONFIGURATION', 'ASTRA_WORKBENCH_ORIGIN must be an HTTP(S) origin.'); }
-  if (!['http:', 'https:'].includes(url.protocol) || url.username || url.password || url.search || url.hash || url.pathname !== '/') return fail('CONFIGURATION', 'ASTRA_WORKBENCH_ORIGIN must contain only an HTTP(S) origin, without credentials or a path.');
+  let url: URL; try { url = new URL(value); } catch { return fail('CONFIGURATION', 'OI_WORKBENCH_ORIGIN must be an HTTP(S) origin.'); }
+  if (!['http:', 'https:'].includes(url.protocol) || url.username || url.password || url.search || url.hash || url.pathname !== '/') return fail('CONFIGURATION', 'OI_WORKBENCH_ORIGIN must contain only an HTTP(S) origin, without credentials or a path.');
   if (url.protocol === 'http:' && !['127.0.0.1', 'localhost', '[::1]'].includes(url.hostname)) return fail('CONFIGURATION', 'Use HTTPS for non-loopback workbench origins.');
   return url.origin;
 }
@@ -80,7 +81,7 @@ export async function executeSceneTool(name: string, raw: unknown, ctx: SceneCon
     if (geometryBytes > limits.totalGeometry) return fail('PAYLOAD_TOO_LARGE', 'Referenced geometry exceeds 50 MiB.');
     let asset: Asset;
     try { asset = parseCloudBundle(text).asset; }
-    catch { return fail('INVALID_ASSET', 'Asset geometry is not a valid renderable Mergence bundle.'); }
+    catch { return fail('INVALID_ASSET', 'Asset geometry is not a valid renderable OpenIndustries bundle.'); }
     if (version && (asset.id !== version.asset?.asset_key || asset.source.kind !== version.asset?.source_kind)) return fail('INVALID_ASSET', 'Geometry does not match its immutable asset identity.');
     const value = { asset, version: version?.id }; loaded.set(key, value); return value;
   }
@@ -158,20 +159,20 @@ export async function executeSceneTool(name: string, raw: unknown, ctx: SceneCon
 export async function callSceneTool(root: string, name: string, args: unknown) {
   validateSceneRequest(name, args);
   loadEnv(root);
-  if (process.env.ASTRA_SCENE_TOOLS_ENABLED !== 'true') return fail('DISABLED', 'Set ASTRA_SCENE_TOOLS_ENABLED=true explicitly and configure a local or Supabase scene backend. Local file tools remain available.');
-  const origin = workbenchOrigin(process.env.ASTRA_WORKBENCH_ORIGIN);
+  if (oiEnv('SCENE_TOOLS_ENABLED') !== 'true') return fail('DISABLED', 'Set OI_SCENE_TOOLS_ENABLED=true explicitly and configure a local or Supabase scene backend. Local file tools remain available.');
+  const origin = workbenchOrigin(oiEnv('WORKBENCH_ORIGIN'));
   const signal = AbortSignal.timeout(60000);
-  const backendName = process.env.ASTRA_SCENE_BACKEND ?? 'supabase';
-  if (!['supabase', 'local'].includes(backendName)) return fail('CONFIGURATION', 'ASTRA_SCENE_BACKEND must be supabase or local.');
+  const backendName = oiEnv('SCENE_BACKEND') ?? 'supabase';
+  if (!['supabase', 'local'].includes(backendName)) return fail('CONFIGURATION', 'OI_SCENE_BACKEND must be supabase or local.');
   if (backendName === 'local') {
     const { LocalSceneBackend } = await import('./local-scene-backend.ts');
-    const backend = new LocalSceneBackend(resolve(root, process.env.ASTRA_SCENE_DATA_DIR || '.astra/scenes'));
+    const backend = new LocalSceneBackend(resolve(root, oiEnv('SCENE_DATA_DIR') || '.astra/scenes'));
     try { return validateSceneResult(name, await executeSceneTool(name, args, { backend, origin, signal })); }
     finally { backend.close(); }
   }
   let auth: Awaited<ReturnType<typeof sessionClient>>;
   try { auth = await sessionClient({ root, signal }); }
-  catch { if (signal.aborted) return fail('TIMEOUT', 'Account verification timed out. Retry after checking the connection.'); return fail('AUTH_REQUIRED', 'A verified user session and public Supabase configuration are required. Run astra auth login; never supply credentials in tool arguments.'); }
+  catch { if (signal.aborted) return fail('TIMEOUT', 'Account verification timed out. Retry after checking the connection.'); return fail('AUTH_REQUIRED', 'A verified user session and public Supabase configuration are required. Run openindustries auth login; never supply credentials in tool arguments.'); }
   try { return validateSceneResult(name, await executeSceneTool(name, args, { client: auth.supabase, owner: auth.owner, origin, signal })); }
   catch (error) { if (error instanceof SceneToolError) throw error; if (signal.aborted) return fail('TIMEOUT', 'Operation timed out. Read the scene before retrying the identical request_id.'); return fail('OPERATION_FAILED', 'Scene operation failed. Check local configuration and asset availability; no provider call was made.'); }
 }

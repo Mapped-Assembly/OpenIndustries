@@ -34,7 +34,7 @@ These are real 1440 × 1000 browser screenshots from the authored `codex` fixtur
 
 ## Verification commands
 
-All passed with Chromium 153 selected through `ASTRA_CHROME_PATH`:
+All passed with Chromium 153 selected through `OI_CHROME_PATH`:
 
 ```sh
 npm run build

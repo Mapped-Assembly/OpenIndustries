@@ -1,3 +1,4 @@
+import { oiEnv } from '../server/oi-environment.mjs';
 import assert from 'node:assert/strict';
 import { randomUUID } from 'node:crypto';
 import { mkdir, mkdtemp, readFile } from 'node:fs/promises';
@@ -38,7 +39,7 @@ const json = (route: Route, value: unknown, status = 200) => route.fulfill({ sta
 const deferred = () => { let resolve!: () => void; const promise = new Promise<void>(r => { resolve = r; }); return { promise, resolve }; };
 try {
   await web.listen();
-  browser = await chromium.launch({ headless: true, ...(process.env.ASTRA_CHROME_PATH ? { executablePath: process.env.ASTRA_CHROME_PATH } : {}) });
+  browser = await chromium.launch({ headless: true, ...(oiEnv('CHROME_PATH') ? { executablePath: oiEnv('CHROME_PATH') } : {}) });
   const context = await browser.newContext({ viewport: { width: 1440, height: 1000 } });
   await context.addInitScript(({ key, session }) => {
     if (!localStorage.getItem('fixture-initialized')) { localStorage.setItem(key, JSON.stringify(session)); localStorage.setItem('fixture-initialized', 'true'); }

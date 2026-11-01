@@ -1,3 +1,4 @@
+import { oiEnv } from '../../server/oi-environment.mjs';
 import { createServer } from 'vite';
 import { chromium, expect } from '@playwright/test';
 import { copyFile, cp, mkdir, readFile, writeFile } from 'node:fs/promises';
@@ -38,7 +39,7 @@ const writeCapability = async (entries) => {
 };
 
 async function launchBrowser() {
-  const configured = process.env.ASTRA_CHROME_PATH?.trim();
+  const configured = oiEnv('CHROME_PATH')?.trim();
   if (configured && !existsSync(configured)) throw new Error(`ASTRA_CHROME_PATH does not exist: ${configured}`);
   return chromium.launch({
     ...(configured ? { executablePath: configured } : {}),

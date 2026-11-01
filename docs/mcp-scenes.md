@@ -1,20 +1,24 @@
 # Author scenes from an external agent
 
-Mergence's local stdio MCP server lets an external agent discover assets, create a scene, read it, and save an edit as a new revision. The workbench runs locally; saved scenes and geometry use either the local SQLite/filesystem backend or your configured Supabase backend. No in-app chat, provider SDK, or live LLM is required.
+OpenIndustries's local stdio MCP server lets an external agent discover assets, create a scene, read it, and save an edit as a new revision. The workbench runs locally; saved scenes and geometry use either the local SQLite/filesystem backend or your configured Supabase backend. No in-app chat, provider SDK, or live LLM is required.
 
 For a clean-checkout walkthrough, copyable Codex/OpenCode setup, cross-client replay, and pinned-revision checks, see [cross-agent workflows](mcp-agent-workflows.md).
 
 ## Local persistence without Supabase
 
+The canonical server is `server/openindustries-mcp.mjs`, with `openindustries.*`
+tools and `OI_*` settings. Existing names remain compatible; see the
+[naming migration guide](naming-migration.md) for aliases and retained data formats.
+
 Use Node 22.16+ and the existing stdio MCP server. In the repository `.env` (or your MCP client environment), set:
 
 ```dotenv
-ASTRA_SCENE_TOOLS_ENABLED=true
-ASTRA_SCENE_BACKEND=local
-ASTRA_SCENE_DATA_DIR=.astra/scenes
+OI_SCENE_TOOLS_ENABLED=true
+OI_SCENE_BACKEND=local
+OI_SCENE_DATA_DIR=.astra/scenes
 ```
 
-Run `npm ci`, then `node server/astra-mcp.mjs`. No Supabase credentials, network service, or CLI login is needed. Relative data directories resolve against `ASTRA_ROOT` (the checkout by default). All five scene tools use this backend: list/inspect assets, create, read, and update. Examples are copied to immutable local geometry on first use. Subsequent reads return `{"kind":"local","version_id":"<uuid>"}` references; cloud references are rejected in local mode and vice versa.
+Run `npm ci`, then `node server/openindustries-mcp.mjs`. No Supabase credentials, network service, or CLI login is needed. Relative data directories resolve against `OI_ROOT` (the checkout by default). All five scene tools use this backend: list/inspect assets, create, read, and update. Examples are copied to immutable local geometry on first use. Subsequent reads return `{"kind":"local","version_id":"<uuid>"}` references; cloud references are rejected in local mode and vice versa.
 
 Scene heads, immutable revisions, authoring provenance and asset metadata live in `scenes.sqlite`; sanitized geometry lives under `assets/`, named by SHA-256. Every load checks size and checksum. Updates use transactional revision checks, so simultaneous edits cannot silently overwrite each other. Keep the entire data directory when moving or backing up a project; stop writers first or use SQLite's backup facilities. This is a single-user store protected by filesystem permissions, not a multi-user authentication service. Do not expose it through a public transport.
 
@@ -26,15 +30,15 @@ node --import tsx cli/local-scenes.ts import-asset asset.json
 
 The command prints the immutable local asset reference to use in scene requests. It validates/sanitizes geometry and deduplicates repeated imports. File paths are only accepted by this trusted CLI, never through MCP scene arguments.
 
-Local `head_url` / `revision_url` values are `oi-local://scene/<uuid>` identifiers, **not browser links**. Reopen a scene or revision with `astra.read_scene`. To view it in the existing workbench, export a portable scene (omit the final revision number for the head):
+Local `head_url` / `revision_url` values are `oi-local://scene/<uuid>` identifiers, **not browser links**. Reopen a scene or revision with `openindustries.read_scene`. To view it in the existing workbench, export a portable scene (omit the final revision number for the head):
 
 ```bash
 node --import tsx cli/local-scenes.ts export SCENE_UUID garden.scene.json 1
 ```
 
-Open the exported file through the workbench's existing scene-file import. Export includes verified geometry, animation and authoring provenance; it refuses to overwrite an existing output file. The portable format retains its legacy `cloudVersionId` field for immutable version binding, but bundled geometry makes the file self-contained and requires no cloud lookup. This change does not add a browser SQLite adapter or change browser cloud saves. Set the same `ASTRA_SCENE_DATA_DIR` for CLI and MCP when using a custom `ASTRA_ROOT`.
+Open the exported file through the workbench's existing scene-file import. Export includes verified geometry, animation and authoring provenance; it refuses to overwrite an existing output file. The portable format retains its legacy `cloudVersionId` field for immutable version binding, but bundled geometry makes the file self-contained and requires no cloud lookup. This change does not add a browser SQLite adapter or change browser cloud saves. Set the same `OI_SCENE_DATA_DIR` for CLI and MCP when using a custom `OI_ROOT`.
 
-Unset `ASTRA_SCENE_BACKEND` or set it to `supabase` to retain the authenticated cloud workflow below. Unknown backend values fail explicitly. `npm run test:local-scenes` covers restart/reload, revision history, geometry/provenance, concurrent updates and corruption detection.
+Unset `OI_SCENE_BACKEND` or set it to `supabase` to retain the authenticated cloud workflow below. Unknown backend values fail explicitly. `npm run test:local-scenes` covers restart/reload, revision history, geometry/provenance, concurrent updates and corruption detection.
 
 ## Setup
 
@@ -44,30 +48,30 @@ Unset `ASTRA_SCENE_BACKEND` or set it to `supabase` to retain the authenticated 
    ```dotenv
    VITE_SUPABASE_URL=https://your-project.supabase.co
    VITE_SUPABASE_PUBLISHABLE_KEY=your-public-key
-   ASTRA_SCENE_TOOLS_ENABLED=true
-   ASTRA_WORKBENCH_ORIGIN=http://127.0.0.1:5173
+   OI_SCENE_TOOLS_ENABLED=true
+   OI_WORKBENCH_ORIGIN=http://127.0.0.1:5173
    ```
 
-3. Run `node cli/astra.mjs auth login`. This uses the existing GitHub/Supabase CLI sign-in; configure its callback as described in the [CLI guide](development.md#astra-cli). Credentials stay in the CLI session file, outside tool arguments and scene documents. `ASTRA_CLI_CONFIG` can select a separate session file.
-4. Start the local workbench with `npm run dev`, and sign in there with the same account to open private URLs. `VITE_CLOUD_STORAGE_ENABLED=true` additionally enables the workbench's upload UI; MCP uploads are enabled separately by `ASTRA_SCENE_TOOLS_ENABLED`.
+3. Run `node cli/openindustries.mjs auth login`. This uses the existing GitHub/Supabase CLI sign-in; configure its callback as described in the [CLI guide](development.md#openindustries-cli). Credentials stay in the CLI session file, outside tool arguments and scene documents. `OI_CLI_CONFIG` can select a separate session file.
+4. Start the local workbench with `npm run dev`, and sign in there with the same account to open private URLs. `VITE_CLOUD_STORAGE_ENABLED=true` additionally enables the workbench's upload UI; MCP uploads are enabled separately by `OI_SCENE_TOOLS_ENABLED`.
 5. Configure an MCP host that supports local stdio. For hosts using `mcpServers`, the configuration is:
 
    ```json
    {
      "mcpServers": {
-       "astra": {
+       "openindustries": {
          "command": "node",
-         "args": ["/absolute/path/OpenIndustries/server/astra-mcp.mjs"],
+         "args": ["/absolute/path/OpenIndustries/server/openindustries-mcp.mjs"],
          "env": {
-           "ASTRA_ROOT": "/absolute/path/OpenIndustries",
-           "ASTRA_SCENE_TOOLS_ENABLED": "true"
+           "OI_ROOT": "/absolute/path/OpenIndustries",
+           "OI_SCENE_TOOLS_ENABLED": "true"
          }
        }
      }
    }
    ```
 
-Use your checkout's absolute path (on Windows, forward slashes such as `C:/projects/OpenIndustries` work). Restart the MCP server after configuration changes. Hosts limited to remote MCP need a separate trusted transport adapter; this repository supplies only local stdio. Connect any compatible agent through that host; Mergence does not contact an LLM.
+Use your checkout's absolute path (on Windows, forward slashes such as `C:/projects/OpenIndustries` work). Restart the MCP server after configuration changes. Hosts limited to remote MCP need a separate trusted transport adapter; this repository supplies only local stdio. Connect any compatible agent through that host; OpenIndustries does not contact an LLM.
 
 ## Tools and schemas
 
@@ -75,17 +79,17 @@ Use your checkout's absolute path (on Windows, forward slashes such as `C:/proje
 
 | Tool | Input and result |
 | --- | --- |
-| `astra.list_scene_assets` | List ready immutable versions owned by the CLI account, plus three bundled cleanroom examples. Pass `next_offset` as `offset` for another page. |
-| `astra.inspect_scene_asset` | Pass an `asset` reference to inspect dimensions, provenance, warnings, and valid part IDs for animation. Raw Form IR and provider configuration are omitted. |
-| `astra.create_scene` | Pass `request_id`, `agent`, and a complete `scene`. The caller-generated UUID `request_id` becomes the stable scene ID. |
-| `astra.read_scene` | Pass `scene_id` and optionally `revision_id`. Returns a typed scene with immutable cloud asset references, ready to edit. |
-| `astra.update_scene` | Pass `scene_id`, explicit `base_revision`, a new UUID `request_id`, `agent`, and the complete replacement `scene`. |
+| `openindustries.list_scene_assets` | List ready immutable versions owned by the CLI account, plus three bundled cleanroom examples. Pass `next_offset` as `offset` for another page. |
+| `openindustries.inspect_scene_asset` | Pass an `asset` reference to inspect dimensions, provenance, warnings, and valid part IDs for animation. Raw Form IR and provider configuration are omitted. |
+| `openindustries.create_scene` | Pass `request_id`, `agent`, and a complete `scene`. The caller-generated UUID `request_id` becomes the stable scene ID. |
+| `openindustries.read_scene` | Pass `scene_id` and optionally `revision_id`. Returns a typed scene with immutable cloud asset references, ready to edit. |
+| `openindustries.update_scene` | Pass `scene_id`, explicit `base_revision`, a new UUID `request_id`, `agent`, and the complete replacement `scene`. |
 
 For the Supabase backend, asset references are either `{"kind":"cloud","version_id":"<uuid>"}` or `{"kind":"example","id":"cleanroom-architecture"}`. The other example IDs are `cleanroom-robot` and `cleanroom-desk`. To use your own Form or STEP model, import it in the workbench, upload a cloud copy, then discover/inspect its version. Tools do not accept file paths, arbitrary download URLs, credentials, or raw geometry.
 
 Positions and dimensions use meters in a Y-up world. Room fields are `width` (X), `depth` (Z), and `height` (Y). Rotations are Euler XYZ degrees, matching the workbench. Instance poses are absolute; component keyframes are local to their instance. `visible` is required. Omit `animation` for a static scene (three-second timeline, no tracks); otherwise provide `duration`, `loop`, and `tracks`. Each track targets `instance_id` and optionally `part_id`, with keys containing `time`, `position`, and `rotation`. Whole-instance keys may also include boolean `visible`; it changes at the key time and holds until the next explicit visibility key, falling back to base instance visibility before the first one. Omitted values retain that held value. Component keys support transforms only. Read/update calls preserve visibility keys. Mission routes use these same animation tracks.
 
-For example, call `astra.create_scene` with a fresh UUID:
+For example, call `openindustries.create_scene` with a fresh UUID:
 
 ```json
 {
@@ -107,7 +111,7 @@ For example, call `astra.create_scene` with a fresh UUID:
 }
 ```
 
-The result includes `version`, `scene_id`, numeric `revision_id`, `head_url`, `revision_url`, and `access: "owner"`. URLs resolve against `ASTRA_WORKBENCH_ORIGIN`, which defaults to `http://127.0.0.1:5173`; they do not publish a site or create a public share. Open `revision_url` in the signed-in local workbench to reproduce the exact saved snapshot. Read, edit the returned `scene`, and call `astra.update_scene` using the returned `revision_id` as `base_revision`.
+The result includes `version`, `scene_id`, numeric `revision_id`, `head_url`, `revision_url`, and `access: "owner"`. URLs resolve against `OI_WORKBENCH_ORIGIN`, which defaults to `http://127.0.0.1:5173`; they do not publish a site or create a public share. Open `revision_url` in the signed-in local workbench to reproduce the exact saved snapshot. Read, edit the returned `scene`, and call `openindustries.update_scene` using the returned `revision_id` as `base_revision`.
 
 ## Persistence, recovery, and limits
 
@@ -131,7 +135,7 @@ An identical retry while its write is still the scene head returns that same rev
 
 Limits: 1 MiB tool arguments, scene metadata, and tool results; 25 MiB per geometry file and 50 MiB referenced geometry per request; 1,000 instances/tracks and 10,000 total keyframes; room dimensions 1–100 m; animation duration 0.5–120 seconds. Network requests share a 60-second abort deadline. The stdio transport caps lines at 11 MiB (preserving legacy file handoffs) and queues at most eight requests. Calls run sequentially; every call reloads and verifies the CLI session so account changes apply to subsequent operations. Timeout errors never imply that a server-side write was rolled back.
 
-The local `astra.create_room`, `astra.read_room`, and file-feedback tools remain available without cloud configuration, CLI login, or scene-tool opt-in. Browser file import also works independently.
+The local `openindustries.create_room`, `openindustries.read_room`, and file-feedback tools remain available without cloud configuration, CLI login, or scene-tool opt-in. Browser file import also works independently.
 
 ## Deterministic cleanroom verification
 
@@ -144,4 +148,4 @@ npx playwright install chromium
 npm run test:mcp-scenes-browser
 ```
 
-The integration suite launches the real stdio server and Supabase client against a local HTTP facade backed by the actual migrations in PGlite/PostgreSQL. It tests generated/STEP/Form geometry, create/read/update, immutable revisions, schema validation, stale conflicts, interrupted-upload retries, missing sessions, account switching, and sanitized responses. The browser variant also opens an MCP-returned revision URL in a fresh signed-in browser and verifies the six cleanroom instances and robot animation. `ASTRA_CHROME_PATH` can select an installed Chromium executable. These tests use fixture authentication and local Storage emulation; they make no live Supabase or LLM calls.
+The integration suite launches the real stdio server and Supabase client against a local HTTP facade backed by the actual migrations in PGlite/PostgreSQL. It tests generated/STEP/Form geometry, create/read/update, immutable revisions, schema validation, stale conflicts, interrupted-upload retries, missing sessions, account switching, and sanitized responses. The browser variant also opens an MCP-returned revision URL in a fresh signed-in browser and verifies the six cleanroom instances and robot animation. `OI_CHROME_PATH` can select an installed Chromium executable. These tests use fixture authentication and local Storage emulation; they make no live Supabase or LLM calls.

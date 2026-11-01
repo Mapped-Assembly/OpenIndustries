@@ -339,12 +339,12 @@ class HttpTests(VisionFixture):
 
     @unittest.skipUnless(os.environ.get("OI_VISION_MCP_TESTS") == "1", "Enable actual Node MCP integration with OI_VISION_MCP_TESTS=1")
     def test_actual_mcp_capture_analyze_read_and_isolation(self) -> None:
-        """Use JSON-RPC over the real astra process to drive Python OpenCV and image evidence."""
+        """Drive OpenCV through canonical MCP tools and verify legacy calls return the same evidence."""
         if not shutil.which("node"):
             self.fail("Node is required for requested MCP integration")
         env = {**os.environ, "OI_VISION_ENABLED": "true", "OI_VISION_TOKEN": self.token_a,
-               "OI_VISION_SERVICE_URL": self.base, "ASTRA_ROOT": str(ROOT)}
-        process = subprocess.Popen(["node", "server/astra-mcp.mjs"], cwd=ROOT, env=env,
+               "OI_VISION_SERVICE_URL": self.base, "OI_ROOT": str(ROOT)}
+        process = subprocess.Popen(["node", "server/openindustries-mcp.mjs"], cwd=ROOT, env=env,
                                    stdin=subprocess.PIPE, stdout=subprocess.PIPE, stderr=subprocess.PIPE, text=True)
         messages: queue.Queue[str] = queue.Queue()
 
@@ -369,19 +369,23 @@ class HttpTests(VisionFixture):
             self.assertEqual(result["id"], counter)
             return result["result"]
 
-        def call(name: str, args: dict[str, Any]) -> dict[str, Any]:
-            """Call a discovered tool through its actual machine-agent transport."""
-            return rpc("tools/call", {"name": "astra.vision_" + name, "arguments": args})
+        def call(name: str, args: dict[str, Any], namespace: str = "openindustries") -> dict[str, Any]:
+            """Call a discovered tool or compatibility alias through the actual transport."""
+            return rpc("tools/call", {"name": namespace + ".vision_" + name, "arguments": args})
 
         try:
             rpc("initialize", {})
             listed = rpc("tools/list", {})
-            self.assertIn("astra.vision_capture", [tool["name"] for tool in listed["tools"]])
+            tool_names = [tool["name"] for tool in listed["tools"]]
+            self.assertIn("openindustries.vision_capture", tool_names)
+            self.assertNotIn("astra.vision_capture", tool_names)
             self.assertFalse(call("describe", {})["structuredContent"]["controls_hardware"])
             cameras = call("list_cameras", {})["structuredContent"]["cameras"]
             self.assertEqual(len(cameras), 1)
             captured = call("capture", {"camera_id": "overhead", "request_id": "mcp-capture"})
             self.assertNotIn("isError", captured)
+            self.assertEqual(call("capture", {"camera_id": "overhead", "request_id": "mcp-capture"},
+                                  namespace="astra"), captured)
             frame = captured["structuredContent"]["frame"]
             result = call("analyze", {"frame_id": frame["frame_id"], "profile_id": "yellow",
                                        "request_id": "mcp-analyze", "max_age_ms": 60000})
@@ -391,11 +395,14 @@ class HttpTests(VisionFixture):
             preview = call("read_frame", {"frame_id": frame["frame_id"]})
             self.assertEqual(preview["content"][1]["type"], "image")
             self.assertNotIn("data", preview["structuredContent"]["preview"])
+            self.assertEqual(call("read_frame", {"frame_id": frame["frame_id"]}, namespace="astra"), preview)
             self.assertEqual(call("read_observation", {"observation_id": observation["observation_id"]})["structuredContent"]["observation"], observation)
             self.assertEqual(call("list_observations", {"camera_id": "overhead", "limit": 10})["structuredContent"]["observations"], [observation])
             denied = call("capture", {"camera_id": "private-camera", "request_id": "denied"})
             self.assertTrue(denied["isError"])
             self.assertEqual(denied["structuredContent"]["error"]["code"], "NOT_FOUND")
+            self.assertEqual(call("capture", {"camera_id": "private-camera", "request_id": "denied"},
+                                  namespace="astra"), denied)
             malformed = call("capture", {"camera_id": "overhead", "request_id": "r", "url": "http://untrusted"})
             self.assertEqual(malformed["structuredContent"]["error"]["code"], "INVALID_REQUEST")
         finally:

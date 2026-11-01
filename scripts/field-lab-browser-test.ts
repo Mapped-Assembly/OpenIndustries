@@ -1,3 +1,4 @@
+import { oiEnv } from '../server/oi-environment.mjs';
 import assert from 'node:assert/strict';
 import { readFileSync, mkdtempSync, mkdirSync, rmSync, writeFileSync } from 'node:fs';
 import { once } from 'node:events';
@@ -23,7 +24,7 @@ const stationReady=new Promise<void>((resolve,reject)=>{const timer=setTimeout((
 void stationReady.catch(()=>{});
 let browser: Awaited<ReturnType<typeof chromium.launch>> | undefined;
 try {
-  browser=await chromium.launch({headless:true,...(process.env.ASTRA_CHROME_PATH?{executablePath:process.env.ASTRA_CHROME_PATH}:{}),args:['--no-sandbox','--disable-dev-shm-usage','--use-gl=angle','--use-angle=swiftshader','--enable-unsafe-swiftshader']});
+  browser=await chromium.launch({headless:true,...(oiEnv('CHROME_PATH')?{executablePath:oiEnv('CHROME_PATH')}:{}),args:['--no-sandbox','--disable-dev-shm-usage','--use-gl=angle','--use-angle=swiftshader','--enable-unsafe-swiftshader']});
   const page=await browser.newPage({viewport:{width:1440,height:1000}}),errors:string[]=[];
   const startupEvents:string[]=[];
   /** Keep failure diagnostics bounded without changing any browser assertions. */

@@ -165,6 +165,8 @@ export class GameDatabase extends VersionedGameDomain {
     });
   }
   dispatch(token, name, raw) {
+    // Public aliases share the original durable command identity and replay receipts.
+    if (typeof name === 'string') name = name.replace(/^openindustries\./, 'astra.');
     if ([2,3,4].includes(raw?.version)) return this.legacyReceipt(token,name,raw);
     const args = validateGameRequest(name, raw);
     if (name === 'astra.game_describe') gameFail('INVALID_REQUEST');

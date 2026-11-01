@@ -4,7 +4,7 @@ Implements [tower-defense #16](https://github.com/isayahc/tower-defense/issues/1
 
 ## Bills of materials
 
-Read `astra.game_manufacturing_catalog` for the exact reviewed quantities and rates. `astra.game_manufacturing_preview` accepts owned `batch_ids`, `product_ids` and `component_ids` plus a catalog `recipe_id`. It returns eligibility, missing requirements, next actions and server-owned time/power. Preview never reserves work. `enqueue_manufacturing` rechecks everything in the command transaction and reserves those exact inputs.
+Read `openindustries.game_manufacturing_catalog` for the exact reviewed quantities and rates. `openindustries.game_manufacturing_preview` accepts owned `batch_ids`, `product_ids` and `component_ids` plus a catalog `recipe_id`. It returns eligibility, missing requirements, next actions and server-owned time/power. Preview never reserves work. `enqueue_manufacturing` rechecks everything in the command transaction and reserves those exact inputs.
 
 | Output | Required station | Declared inputs |
 | --- | --- | --- |

@@ -1,6 +1,7 @@
+import { oiEnv } from '../server/oi-environment.mjs';
 import {chromium,expect} from '@playwright/test';
 const browser=await chromium.launch({channel:'chrome',headless:true});const page=await browser.newPage();
-const base=process.env.ASTRA_BASE_URL||'http://127.0.0.1:8787';const errors=[];page.on('pageerror',e=>errors.push(e.message));
+const base=oiEnv('BASE_URL')||'http://127.0.0.1:8787';const errors=[];page.on('pageerror',e=>errors.push(e.message));
 try{
   await page.goto(base);
   await page.locator('input[aria-label="Import files"]').setInputFiles({name:'position.json',mimeType:'application/json',buffer:Buffer.from(JSON.stringify({hardware_ir_version:'0.2',overview:{title:'Position fixture'},mechanical:{render_dimensions:{x_mm:1000,y_mm:500,z_mm:700}}}))});

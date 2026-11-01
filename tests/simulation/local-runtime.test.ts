@@ -76,7 +76,7 @@ test('installed station persists across disconnected clients, kill, compatible r
     assert.equal(recovered.instance_id,before.instance_id);
     assert.equal(recovered.jobs[0].progress_ms,paused.snapshot.jobs[0].progress_ms);
     process.env.OI_LOCAL_CLIENT_FILE=join(state,'client.json');
-    const transport = spawn(process.execPath,['server/astra-mcp.mjs'],{env:process.env,stdio:['pipe','pipe','pipe']});
+    const transport = spawn(process.execPath,['server/openindustries-mcp.mjs'],{env:process.env,stdio:['pipe','pipe','pipe']});
     let reply=''; transport.stdout.on('data',chunk=>reply+=chunk);
     const transportEnded=once(transport,'exit');
     transport.stdin.end(JSON.stringify({jsonrpc:'2.0',id:1,method:'tools/call',params:{name:'astra.local_lab_read',arguments:{}}})+'\n');

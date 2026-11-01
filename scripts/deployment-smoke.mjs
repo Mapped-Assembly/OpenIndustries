@@ -1,3 +1,4 @@
+import { oiEnv } from '../server/oi-environment.mjs';
 import { chromium, expect } from '@playwright/test';
 import { mkdir } from 'node:fs/promises';
 
@@ -5,7 +6,7 @@ const browser = await chromium.launch({ channel: 'chrome', headless: true });
 const page = await browser.newPage({ viewport: { width: 1440, height: 900 } });
 const errors = []; page.on('pageerror', error => errors.push(error.message));
 try {
-  const response = await page.goto(process.env.ASTRA_BASE_URL || 'https://astra-industries.vercel.app');
+  const response = await page.goto(oiEnv('BASE_URL') || 'https://astra-industries.vercel.app');
   expect(response.status()).toBe(200);
   await expect(page.locator('canvas')).toBeVisible();
   await expect(page.getByRole('button', { name: 'Sign in with GitHub' })).toBeEnabled();

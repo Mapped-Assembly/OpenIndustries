@@ -1,3 +1,4 @@
+import { oiEnv } from '../server/oi-environment.mjs';
 import assert from 'node:assert/strict';
 import { mkdtemp, mkdir, readFile } from 'node:fs/promises';
 import { tmpdir } from 'node:os';
@@ -23,7 +24,7 @@ async function downloaded(page: Page, action: () => Promise<unknown>, name: stri
 }
 try {
   await web.listen();
-  browser = await chromium.launch({ headless: true, ...(process.env.ASTRA_CHROME_PATH ? { executablePath: process.env.ASTRA_CHROME_PATH } : {}) });
+  browser = await chromium.launch({ headless: true, ...(oiEnv('CHROME_PATH') ? { executablePath: oiEnv('CHROME_PATH') } : {}) });
   const context = await browser.newContext({ viewport: { width: 1440, height: 1000 } });
   const errors: string[] = [], external: string[] = [];
   await context.route('**/*', route => {

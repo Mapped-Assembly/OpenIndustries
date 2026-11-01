@@ -79,7 +79,7 @@ import command and scene example.
 | Automatic local draft | The current browser/device | Returning to work after a refresh. This is separate from a cloud save. |
 | Device asset library | The current browser/device | Reusing equipment and its GIF previews across layouts. |
 | Portable scene JSON | A file you export | Reopening or transferring a scene with its geometry and animation, without cloud services. |
-| Local persistent scenes (MCP) | SQLite metadata/revisions and local geometry files | Set `ASTRA_SCENE_BACKEND=local` and `ASTRA_SCENE_TOOLS_ENABLED=true`; [setup and portable export](docs/mcp-scenes.md#local-persistence-without-supabase). No cloud credentials needed. |
+| Local persistent scenes (MCP) | SQLite metadata/revisions and local geometry files | Set `OI_SCENE_BACKEND=local` and `OI_SCENE_TOOLS_ENABLED=true`; [setup and portable export](docs/mcp-scenes.md#local-persistence-without-supabase). No cloud credentials needed. |
 | Cloud scene | Your signed-in Supabase account | Saving named scenes across devices. Enable **Include cloud geometry** when saving if the other device needs the models. |
 | Cloud files | Optional private Supabase Storage | Explicitly uploading geometry bundles, GIF previews, and supported source attachments. |
 
@@ -122,7 +122,7 @@ Copy [`.env.example`](.env.example) to `.env` when you need configuration. Resta
 | GitHub sign-in and cloud scenes | Configure Supabase Auth/Postgres and set `VITE_SUPABASE_URL` and `VITE_SUPABASE_PUBLISHABLE_KEY`. See [Auth/database setup](supabase/README.md). |
 | Private cloud geometry and GIFs | Apply the storage migrations and set `VITE_CLOUD_STORAGE_ENABLED=true`. See the [storage guide](docs/cloud-storage.md). |
 | Disable local generation | Set `VITE_FORM_GENERATION_ENABLED=false` for browser-only deployments. The generation panel explains local setup; import/export stays available. |
-| Local agents and CLI | See [OpenCode/MCP setup](docs/development.md#optional-form-mcp-demo), [scene authoring through MCP](docs/mcp-scenes.md), and the [OpenIndustries CLI](docs/development.md#astra-cli). |
+| Local agents and CLI | See [OpenCode/MCP setup](docs/development.md#optional-form-mcp-demo), [scene authoring through MCP](docs/mcp-scenes.md), and the [OpenIndustries CLI](docs/development.md#openindustries-cli). |
 
 Only public Supabase browser configuration belongs in `VITE_` variables. Provider credentials and Supabase service-role keys must stay out of the browser bundle.
 
@@ -130,7 +130,7 @@ Only public Supabase browser configuration belongs in `VITE_` variables. Provide
 
 The optional [Python OpenCV 5 service](docs/vision-service.md) captures configured file
 or HTTP camera snapshots, retains image evidence and immutable observations, and exposes
-machine-scoped `astra.vision_*` MCP tools. Agents can inspect images, measure image
+machine-scoped `openindustries.vision_*` MCP tools. Agents can inspect images, measure image
 quality, and detect configured color regions. It supplies perception evidence; task-specific
 recognition and robot control remain consuming-application responsibilities.
 
@@ -180,7 +180,7 @@ The computer must remain awake; startup after sleep follows modeled catch-up sem
 | GIF export | `gifenc`, rendered in the browser | [`src/lib/gif.ts`](src/lib/gif.ts) |
 | Cloud accounts and persistence | Supabase Auth, Postgres, optional private Storage | [`supabase/`](supabase/), [`src/lib/scene-repository.ts`](src/lib/scene-repository.ts) |
 | Local Form bridge and agent tools | Node.js/Express, Python Forma Core (see `requirements-form.txt`), MCP | [`server/`](server/), [`opencode.json`](opencode.json) |
-| Room transfer CLI | Node.js | [`cli/astra.mjs`](cli/astra.mjs) |
+| Room transfer CLI | Node.js | [`cli/openindustries.mjs`](cli/openindustries.mjs) |
 | Verification and examples | Model tests, browser smoke tests, bundled scenes | [`scripts/`](scripts/), [`public/examples/cleanroom/`](public/examples/cleanroom/) |
 
 ## Current scope and limitations
@@ -224,6 +224,8 @@ The repository publishes two distributions from a GitHub Release:
 The `Publish packages` workflow validates both builds before publishing. Add a current npm automation token as the repository `NPM_TOKEN` secret, and configure a PyPI trusted publisher for the `pypi` environment, before creating the first release. Package versions are taken from `package.json` and `pyproject.toml`; update both together, then publish a GitHub Release for that version.
 
 ## Documentation
+
+- [OpenIndustries naming migration](docs/naming-migration.md) — current MCP/CLI names, local OpenCode setup, and compatibility with existing installations.
 
 - [Workspace guide](docs/workspace.md) — editing, animation, persistence, missing-geometry recovery, and the inspector.
 - [Geospatial interchange](tools/geospatial/README.md) — static OI scenes to 3D Tiles 1.1, CesiumJS and an independent Three.js viewer, with geographic placement and provenance checks.

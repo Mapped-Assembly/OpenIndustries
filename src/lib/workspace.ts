@@ -99,7 +99,7 @@ const validString = (v: unknown): v is string => typeof v === 'string' && v.leng
 export function readManifest(value: unknown): SceneManifest {
   const m = scrubCloudData(value) as SceneManifest;
   if (!m || m.format !== 'astra.scene' || m.version !== 1 || m.units !== 'm' || m.upAxis !== 'Y' || !validVector(m.room) || !m.room.every(n => n >= 1 && n <= 100)
-      || !Array.isArray(m.assets) || m.assets.length > 1000 || !Array.isArray(m.instances) || m.instances.length > 1000) throw new Error('Unsupported or invalid Mergence scene manifest.');
+      || !Array.isArray(m.assets) || m.assets.length > 1000 || !Array.isArray(m.instances) || m.instances.length > 1000) throw new Error('Unsupported or invalid OpenIndustries scene manifest.');
   const assetIds = new Set<string>();
   for (const asset of m.assets) {
     if (!validString(asset.id) || assetIds.has(asset.id) || !validString(asset.name) || !validVector(asset.dimensions) || asset.dimensions.some(n => n < 0)

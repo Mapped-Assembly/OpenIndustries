@@ -8,7 +8,7 @@ const url=process.env.SUPABASE_TEST_URL||'https://mrhxfmtofvrgfaikllfw.supabase.
 const key=process.env.SUPABASE_TEST_PUBLIC_KEY!;const adminKey=process.env.SUPABASE_TEST_ADMIN_KEY!;
 if(!key||!adminKey)throw new Error('Provide test-only Supabase keys.');
 const admin=createClient(url,adminKey,{auth:{persistSession:false,autoRefreshToken:false}});const prefix=`astra-crud-${randomUUID()}`;const users=[];
-async function user(){const email=`${prefix}-${users.length}@example.invalid`,password=`Mergence-${randomUUID()}!`;const created=await admin.auth.admin.createUser({email,password,email_confirm:true});if(created.error)throw created.error;const client=createClient(url,key,{auth:{persistSession:false,autoRefreshToken:false}});const signed=await client.auth.signInWithPassword({email,password});if(signed.error)throw signed.error;const result={id:created.data.user!.id,client,session:signed.data.session!};users.push(result);return result;}
+async function user(){const email=`${prefix}-${users.length}@example.invalid`,password=`OpenIndustries-${randomUUID()}!`;const created=await admin.auth.admin.createUser({email,password,email_confirm:true});if(created.error)throw created.error;const client=createClient(url,key,{auth:{persistSession:false,autoRefreshToken:false}});const signed=await client.auth.signInWithPassword({email,password});if(signed.error)throw signed.error;const result={id:created.data.user!.id,client,session:signed.data.session!};users.push(result);return result;}
 try{
  const a=await user(),b=await user();const repo=new SceneRepository(a.client,a.id,false);let workspace=appendAssets(emptyWorkspace(),[]);const id=randomUUID();
  const saved=await repo.save(workspace,'Primary room',id,0,false,()=>{});assert.equal(saved.scene.revision,1);

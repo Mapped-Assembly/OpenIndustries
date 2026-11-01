@@ -19,6 +19,7 @@
   },
   "type": "module",
   "bin": {
+    "openindustries": "cli/openindustries.mjs",
     "astra": "cli/astra.mjs"
   },
   "scripts": {
@@ -43,7 +44,7 @@
     "test:scene": "tsx scripts/scene-manifest-test.ts",
     "test:draft-recovery": "node scripts/draft-recovery-smoke.mjs",
     "test:room-drafts": "node scripts/room-draft-smoke.mjs",
-    "test:mcp": "node --import tsx scripts/mcp-rooms-test.ts",
+    "test:mcp": "node --import tsx scripts/mcp-rooms-test.ts && node --test scripts/mcp-branding-test.mjs",
     "test:scene-crud": "tsx scripts/scene-crud-smoke.ts",
     "test:gif": "node scripts/gif-smoke.mjs",
     "test:auth": "node scripts/auth-smoke.mjs",
@@ -86,6 +87,7 @@
     "test:local-runtime": "npm run build:local-runtime && node --import tsx --test tests/simulation/local-runtime.test.ts",
     "embodied:serve": "python3 scripts/embodied_runtime.py",
     "test:embodied-browser": "node --import tsx scripts/embodied-browser-test.ts",
+    "test:mcp-branding": "node --test scripts/mcp-branding-test.mjs",
     "test:cabinet-browser": "node --import tsx scripts/cabinet-browser-test.ts",
     "test:cabinet-scene": "node --import tsx scripts/cabinet-scene-test.ts"
   },

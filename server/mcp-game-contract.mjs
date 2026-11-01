@@ -128,7 +128,7 @@ export const gameTools = [
     inputSchema: object({ version, cursor }), outputSchema: object({ version, matches: array(object({ match_id: uuid, status, slot: { enum: [1, 2] }, created_at_ms: integer(Number.MAX_SAFE_INTEGER) }), 20), next_cursor: cursor }) },
   { name: 'astra.game_describe', description: 'Discover city-dump runtime v5 scope and authority requirements. This static contract does not assert deployment readiness or full-game support.',
     inputSchema: object({ version }), outputSchema: object(Object.fromEntries(Object.entries(gameContract).map(([key, value]) => [key, { const: value }]))) },
-  { name: 'astra.game_create_match', description: 'Create a waiting two-player city-dump match. Requires ASTRA_GAME_TOOLS_ENABLED=true, an OpenIndustries game session and the independent SQLite runtime service. Returns a one-use invite code for deliberate sharing.',
+  { name: 'astra.game_create_match', description: 'Create a waiting two-player city-dump match. Requires OI_GAME_TOOLS_ENABLED=true, an OpenIndustries game session and the independent SQLite runtime service. Returns a one-use invite code for deliberate sharing.',
     inputSchema: object({ version, command_id: uuid }), outputSchema: object({ ...snapshotResult, command_id: uuid, invite_code: uuid }) },
   { name: 'astra.game_join_match', description: 'Consume the host’s invite code as the second distinct authenticated participant. No caller-supplied player identity. An identical command retry returns the original receipt.',
     inputSchema: object({ version, command_id: uuid, match_id: uuid, invite_code: uuid }), outputSchema: object({ ...snapshotResult, command_id: uuid }) },
@@ -144,7 +144,7 @@ export class GameToolError extends Error {
 export const gameErrors = {
   AUTH_REQUIRED: 'Sign in to the OpenIndustries game service with your own account.',
   INVALID_REQUEST: 'Arguments do not match the published game contract.',
-  DISABLED: 'Set ASTRA_GAME_TOOLS_ENABLED=true after starting the SQLite game service.',
+  DISABLED: 'Set OI_GAME_TOOLS_ENABLED=true after starting the SQLite game service.',
   NOT_AVAILABLE: 'Match, invitation or object is unavailable to this account.',
   CONFLICT: 'Match revision changed. Read a fresh snapshot, reconcile, then use a new command_id.',
   COMMAND_ID_REUSED: 'This command_id already names another payload. Use a new ID for a different command.',

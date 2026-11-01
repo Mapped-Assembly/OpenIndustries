@@ -32,7 +32,7 @@ class McpClient:
         self.counter = 0
         self.messages: queue.Queue[bytes | None] = queue.Queue(maxsize=8)
         self.process = subprocess.Popen(
-            command or ["node", str(root / "server/astra-mcp.mjs")], cwd=root,
+            command or ["node", str(root / "server/openindustries-mcp.mjs")], cwd=root,
             env=({key: value for key, value in os.environ.items() if not key.startswith(("OI_", "ASTRA_"))}
                  if command else {**os.environ, "ASTRA_ROOT": str(root),
                  "OI_AGENT_ENABLED": os.environ.get("OI_AGENT_ENABLED", "false") if allow_agent_tools else "false"}),

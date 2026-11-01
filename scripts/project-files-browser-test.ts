@@ -1,3 +1,4 @@
+import { oiEnv } from '../server/oi-environment.mjs';
 import assert from 'node:assert/strict';
 import { readFile, mkdir, mkdtemp, rm } from 'node:fs/promises';
 import { join } from 'node:path';
@@ -26,7 +27,7 @@ try {
     api.stderr!.resume();
   });
   await web.listen();
-  browser = await chromium.launch({ headless: true, args: ['--use-angle=swiftshader', '--enable-unsafe-swiftshader'], ...(process.env.ASTRA_CHROME_PATH ? { executablePath: process.env.ASTRA_CHROME_PATH } : {}) });
+  browser = await chromium.launch({ headless: true, args: ['--use-angle=swiftshader', '--enable-unsafe-swiftshader'], ...(oiEnv('CHROME_PATH') ? { executablePath: oiEnv('CHROME_PATH') } : {}) });
   const context = await browser.newContext({ viewport: { width: 1440, height: 1000 } });
   await context.route('https://fonts.googleapis.com/**', route => route.fulfill({ body: '', contentType: 'text/css' }));
   const page = await context.newPage();

@@ -153,7 +153,7 @@ SO101_SOURCE_ROOT="$PWD/../SO-ARM100" PYTHON=.venv-embodied/bin/python npm run t
 ```
 
 Install Playwright Chromium/ffmpeg first (`npx playwright install chromium ffmpeg`),
-or use `ASTRA_CHROME_PATH` for an existing Chromium. Browser checks produce a PNG,
+or use `OI_CHROME_PATH` for an existing Chromium. Browser checks produce a PNG,
 WebM demonstration and correlated JSON trace in `deliverables/embodied/`.
 
 [Recorded execution evidence](evidence/embodied-chat/README.md) distinguishes manual

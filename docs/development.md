@@ -57,15 +57,15 @@ For typed scene creation and revision updates with private local-workbench URLs,
 Ask your connected agent: **“Create a room called Maker lab, 9 meters wide, 7 meters deep, and 3.2 meters high.”** The agent can call:
 
 ```json
-{"name":"astra.create_room","arguments":{"name":"Maker lab","width":9,"depth":7,"height":3.2}}
+{"name":"openindustries.create_room","arguments":{"name":"Maker lab","width":9,"depth":7,"height":3.2}}
 ```
 
 This creates an empty, portable `astra.scene` v1 document under `.astra/rooms/<id>.json` and returns its ID, path, and document. Each dimension must be 1–100 meters; the room vector uses **width, depth, height**. Each call creates a new room, even when names match, without overwriting an existing room.
 
-- `astra.list_rooms` lists rooms created by this MCP checkout.
-- `astra.read_room` takes an `id` and returns the saved scene document.
+- `openindustries.list_rooms` lists rooms created by this MCP checkout.
+- `openindustries.read_room` takes an `id` and returns the saved scene document.
 
-Open the returned JSON through **Drop files or browse** in the workbench, then import equipment and arrange the room. Creating a room does not replace the active browser workspace. These are local files; to save across devices, sign in and save from the workbench, or use `astra rooms import <path> --name "Maker lab"` after CLI login. The MCP server runs with the local user's filesystem access and does not expose a remote, shared-user endpoint. `astra.write_space_brief` remains available for the preset layout planner.
+Open the returned JSON through **Drop files or browse** in the workbench, then import equipment and arrange the room. Creating a room does not replace the active browser workspace. These are local files; to save across devices, sign in and save from the workbench, or use `openindustries rooms import <path> --name "Maker lab"` after CLI login. The MCP server runs with the local user's filesystem access and does not expose a remote, shared-user endpoint. `openindustries.write_space_brief` remains available for the preset layout planner.
 
 Run `npm run test:mcp` to verify the MCP protocol, room persistence, and workbench manifest compatibility.
 
@@ -84,17 +84,17 @@ Install the local CLI from this checkout:
 ```powershell
 npm install
 npm link
-astra auth login
+openindustries auth login
 ```
 
-`astra auth login` opens GitHub and stores the Supabase session in the user's OpenIndustries CLI config. Add `http://127.0.0.1:54331/callback` to the Supabase Auth redirect allowlist for the deployed Supabase project, or set `ASTRA_CLI_REDIRECT_URL` to an allowlisted callback. The CLI uses the same OpenIndustries account as the browser.
+`openindustries auth login` opens GitHub and stores the Supabase session in the user's OpenIndustries CLI config. Add `http://127.0.0.1:54331/callback` to the Supabase Auth redirect allowlist for the deployed Supabase project, or set `OI_CLI_REDIRECT_URL` to an allowlisted callback. The CLI uses the same OpenIndustries account as the browser.
 
 ```powershell
-astra rooms list
-astra rooms validate .\astra-scene.json
-astra rooms import .\astra-scene.json --name "Lab demo"
-astra rooms export <room-id> .\astra-scene.json
-astra auth logout
+openindustries rooms list
+openindustries rooms validate .\openindustries-scene.json
+openindustries rooms import .\openindustries-scene.json --name "Lab demo"
+openindustries rooms export <room-id> .\openindustries-scene.json
+openindustries auth logout
 ```
 
 The browser workbench remains the local room editor and can import/export portable scene JSON without signing in. To view a local room, choose **Drop files or browse** and open its `.astra/rooms/<id>.json` scene. The CLI transfers those manifests to and from cloud; binary geometry is not uploaded by the CLI and can be attached from OpenIndustries when cloud storage is enabled.
@@ -162,4 +162,4 @@ The deployment serves rendering, imports, GIF exports, local asset library, and 
 
 The Supabase production Site URL and redirect allowlist include `https://astra-industries.vercel.app`; GitHub's OAuth callback remains `https://mrhxfmtofvrgfaikllfw.supabase.co/auth/v1/callback`. Preview deployment origins must be explicitly allowed before using OAuth on them.
 
-Deploy the current checkout with `vercel deploy --prod --yes --scope isayahcs-projects`. Validate public rendering/imports/GIFs with `node scripts/deployment-smoke.mjs`. Set `ASTRA_BASE_URL=https://astra-industries.vercel.app` when running `node scripts/auth-live-smoke.mjs` to check the production GitHub redirect without signing in.
+Deploy the current checkout with `vercel deploy --prod --yes --scope isayahcs-projects`. Validate public rendering/imports/GIFs with `node scripts/deployment-smoke.mjs`. Set `OI_BASE_URL=https://astra-industries.vercel.app` when running `node scripts/auth-live-smoke.mjs` to check the production GitHub redirect without signing in.

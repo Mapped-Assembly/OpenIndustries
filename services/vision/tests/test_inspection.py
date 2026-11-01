@@ -86,7 +86,10 @@ class InspectionIntegrationTests(unittest.TestCase):
     def test_public_mcp_tools_branch_on_pixels_and_move_robot(self) -> None:
         """Missing marker requests review; visible marker causes actual runtime movement and reinspection."""
         tools = self.client.rpc("tools/list", {})["tools"]
-        self.assertIn("astra.agent_inspect_robot", [tool["name"] for tool in tools])
+        tool_names = [tool["name"] for tool in tools]
+        for tool in ("agent_inspect_robot", "agent_read_inspection"):
+            self.assertIn("openindustries." + tool, tool_names)
+            self.assertNotIn("astra." + tool, tool_names)
         before_position = self.demo.snapshot()["field"]["robots"][0]["position"]
         self.demo.marker_visible = False
         missing = DEMO["finish_run"](self.client, self.binding.binding_id, str(uuid4()))
@@ -106,9 +109,11 @@ class InspectionIntegrationTests(unittest.TestCase):
         self.assertNotEqual(before_position, snapshot["field"]["robots"][0]["position"])
         self.assertEqual(len(snapshot["field"]["jobs"]), 1)
         self.assertEqual(snapshot["field"]["jobs"][0]["state"], "completed")
-        for tool in ("astra.agent_read_inspection", "astra.agent_inspect_robot"):
-            replay = self.client.call(tool, {"binding_id": self.binding.binding_id, "run_id": run_id})["inspection"]
-            self.assertEqual(replay, done)
+        for namespace in ("openindustries", "astra"):
+            for tool in ("agent_read_inspection", "agent_inspect_robot"):
+                replay = self.client.call(namespace + "." + tool,
+                    {"binding_id": self.binding.binding_id, "run_id": run_id})["inspection"]
+                self.assertEqual(replay, done)
         self.assertEqual(len(self.demo.snapshot()["field"]["jobs"]), 1)
         serialized = json.dumps(done)
         for private in (self.demo.game_token, self.demo.vision_token, str(self.directory)):

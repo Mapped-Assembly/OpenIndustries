@@ -1,3 +1,4 @@
+import { oiEnv } from '../server/oi-environment.mjs';
 import assert from 'node:assert/strict';
 import { randomUUID } from 'node:crypto';
 import { mkdtemp, readFile, writeFile, rm, mkdir } from 'node:fs/promises';
@@ -120,7 +121,7 @@ try {
     const { chromium, expect } = await import('@playwright/test');
     const evidence = process.env.MCP_WORKFLOW_EVIDENCE_DIR ?? 'test-results';
     await mkdir(evidence, { recursive: true });
-    browser = await chromium.launch({ headless: true, ...(process.env.ASTRA_CHROME_PATH ? { executablePath: process.env.ASTRA_CHROME_PATH } : {}) });
+    browser = await chromium.launch({ headless: true, ...(oiEnv('CHROME_PATH') ? { executablePath: oiEnv('CHROME_PATH') } : {}) });
     for (const run of runs) {
       const context = await browser.newContext({ viewport: { width: 1440, height: 1000 } });
       await context.addInitScript(({ session, origin, key }: any) => { if (location.origin === origin) localStorage.setItem(key, JSON.stringify(session)); }, { session, origin, key: `sb-${new URL(service.origin).hostname.split('.')[0]}-auth-token` });

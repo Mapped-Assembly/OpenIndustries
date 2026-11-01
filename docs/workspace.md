@@ -70,6 +70,6 @@ GIF studio's authored-animation export records the evaluated frame poses. **Send
 
 ## CLI room transfer
 
-The `astra` CLI uses the same Supabase Auth account as the browser. `astra auth login` uses GitHub OAuth through a local callback, `astra rooms list` lists owned cloud rooms, `astra rooms export` downloads a portable manifest, `astra rooms import` saves a local manifest as a new cloud room, and `astra rooms validate` checks a local file without network access. CLI cloud transfer deliberately excludes binary geometry; geometry upload remains an authenticated OpenIndustries browser operation through the existing storage policy.
+The `astra` CLI uses the same Supabase Auth account as the browser. `openindustries auth login` uses GitHub OAuth through a local callback, `openindustries rooms list` lists owned cloud rooms, `openindustries rooms export` downloads a portable manifest, `openindustries rooms import` saves a local manifest as a new cloud room, and `openindustries rooms validate` checks a local file without network access. CLI cloud transfer deliberately excludes binary geometry; geometry upload remains an authenticated OpenIndustries browser operation through the existing storage policy.
 
-`ASTRA_BASE_URL` can point the live workspace test to the deployed app. Use a dedicated test project for new deployments and never place test admin credentials in Vite environment variables.
+`OI_BASE_URL` can point the live workspace test to the deployed app. Use a dedicated test project for new deployments and never place test admin credentials in Vite environment variables.

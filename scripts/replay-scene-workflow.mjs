@@ -27,7 +27,7 @@ try {
     const profile = await loadWorkflow(values.client);
     const requestId = values['request-id'] ?? (values['print-request'] ? profile.create.request_id : randomUUID());
     if (values['print-request']) {
-      console.log(JSON.stringify({ jsonrpc: '2.0', id: 1, method: 'tools/call', params: { name: 'astra.create_scene', arguments: { ...profile.createRequest, request_id: requestId } } }, null, 2));
+      console.log(JSON.stringify({ jsonrpc: '2.0', id: 1, method: 'tools/call', params: { name: 'openindustries.create_scene', arguments: { ...profile.createRequest, request_id: requestId } } }, null, 2));
     } else {
       // Print only IDs needed for recovery, never session files or raw provider data.
       console.error(`Request ID: ${requestId}${values.create ? `; scene ID: ${requestId}` : `; scene ID: ${values.update}; base revision: ${base}`}`);

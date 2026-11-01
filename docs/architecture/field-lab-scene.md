@@ -111,7 +111,7 @@ compaction, immutable retries, restart, private access, stale-source detection, 
 export/reimport equivalence. They write replay fixtures under `deliverables/field-lab`.
 Browser tests consume those fixtures, verify selection/pose/cursor and screenshots, then
 exercise a fresh live station with viewer disconnection, reconnect, pause and origin checks.
-Set `ASTRA_CHROME_PATH` to an installed Chromium executable if necessary. No cloud account
+Set `OI_CHROME_PATH` to an installed Chromium executable if necessary. No cloud account
 or model provider is needed. CI also regenerates the handoff against pinned OpenCAD.
 
 For background execution across terminal closure and Linux host startup, use the

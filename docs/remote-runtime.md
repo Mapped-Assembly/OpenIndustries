@@ -70,7 +70,7 @@ inspect logs and use `systemctl reset-failed oi-runtime` after fixing configurat
 ## Provision an account, then enable HTTPS
 
 Leave the Caddy site disabled until initial provisioning is complete. The API listens on
-loopback only. Temporarily set `ASTRA_SIMULATION_ALLOW_SIGNUP=true` in the root-owned env
+loopback only. Temporarily set `OI_SIMULATION_ALLOW_SIGNUP=true` in the root-owned env
 file, restart `oi-runtime`, and run the following **on the server**, or through an SSH
 session. It reads the password without echoing and does not print the session token:
 
@@ -120,13 +120,13 @@ through its application backend. Browser-to-runtime authentication/proxy UI is n
 For the existing MCP work-cell adapter, configure its **server-side** environment:
 
 ```text
-ASTRA_SIMULATION_TOOLS_ENABLED=true
-ASTRA_SIMULATION_SERVICE_URL=https://runtime.example.com
-ASTRA_SIMULATION_SESSION=<token returned by server-side login>
+OI_SIMULATION_TOOLS_ENABLED=true
+OI_SIMULATION_SERVICE_URL=https://runtime.example.com
+OI_SIMULATION_SESSION=<token returned by server-side login>
 ```
 
-Use `astra.simulation_create_work_cell`, `astra.simulation_read`,
-`astra.simulation_command` and `astra.simulation_history`. The adapter's session must be
+Use `openindustries.simulation_create_work_cell`, `openindustries.simulation_read`,
+`openindustries.simulation_command` and `openindustries.simulation_history`. The adapter's session must be
 renewed on expiry. See [shared runtime adoption](architecture/shared-runtime-adoption.md)
 for full HTTP request shapes and finite limits (three instances/account, eight retained
 jobs/instance, 256 normal receipts). This fixture is intentionally finite, not an unlimited
@@ -176,8 +176,8 @@ sudo -u oi-runtime mkdir -m 0700 /var/lib/open-industries/restore-check
 sudo -u oi-runtime python3 /opt/open-industries/current/scripts/runtime_backup.py \
   "$OI_BACKUP" /var/lib/open-industries/restore-check/work-cell.sqlite
 cd /opt/open-industries/current
-sudo -u oi-runtime env ASTRA_SIMULATION_DB=/var/lib/open-industries/restore-check/work-cell.sqlite \
-  ASTRA_SIMULATION_PORT=18791 ASTRA_SIMULATION_ALLOW_SIGNUP=false \
+sudo -u oi-runtime env OI_SIMULATION_DB=/var/lib/open-industries/restore-check/work-cell.sqlite \
+  OI_SIMULATION_PORT=18791 OI_SIMULATION_ALLOW_SIGNUP=false \
   /usr/bin/env node --import tsx server/simulation-service.ts
 ```
 
@@ -202,8 +202,8 @@ closed. Never run old and new services against the same database during an upgra
 
 The supplied unit proves work-cell deployment. FIELD-LAB can use a separate copy of the
 unit with `ExecStart` pointing to `server/field-lab-service.ts`, its own env file, and
-`ASTRA_FIELD_LAB_DB`, `ASTRA_FIELD_LAB_PORT` (8792) and
-`ASTRA_FIELD_LAB_ALLOW_SIGNUP=false`. Give it a separate health unit/timer and HTTPS hostname
+`OI_FIELD_LAB_DB`, `OI_FIELD_LAB_PORT` (8792) and
+`OI_FIELD_LAB_ALLOW_SIGNUP=false`. Give it a separate health unit/timer and HTTPS hostname
 pointing to its port. Its schema 101 database must never be shared with work-cell schema 100.
 The game has its own `server/game-service.mjs` entry point and configuration documented in
 [mcp-game-runtime.md](mcp-game-runtime.md); do not assume its transport/schema is interchangeable.

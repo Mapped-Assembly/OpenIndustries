@@ -1,6 +1,6 @@
 # Form Handoff Contract
 
-Mergence accepts compiled Form project artifacts produced by the Form SDK, OpenCode, or Codex. Authoring and compilation remain outside Mergence; Mergence imports the accepted artifact for spatial review and layout.
+OpenIndustries accepts compiled Form project artifacts produced by the Form SDK, OpenCode, or Codex. Authoring and compilation remain outside OpenIndustries; OpenIndustries imports the accepted artifact for spatial review and layout.
 
 ## Supported Artifact
 
@@ -68,7 +68,7 @@ Deterministic checks: `npm run test:portable-scenes` covers nested wrappers, ret
 
 ## CAD Resolution
 
-Mergence resolves CAD only from files explicitly selected with the project JSON. A CAD reference may be a path, filename, or nested CAD source object. Use **Import project folder** to retain the selected folder's relative paths, or select the JSON and STEP files together with the ordinary file picker.
+OpenIndustries resolves CAD only from files explicitly selected with the project JSON. A CAD reference may be a path, filename, or nested CAD source object. Use **Import project folder** to retain the selected folder's relative paths, or select the JSON and STEP files together with the ordinary file picker.
 
 For folder imports, references are relative to the JSON file's directory: `Root/form-project.json` plus `cad/part.step` resolves to `Root/cad/part.step`, even when `Root/other/part.step` is also selected. Nested project directories and multiple project manifests each use their own base directory. Separators, redundant `.` segments and repeated separators are normalized; filename matching remains case-sensitive. An exact path wins over basename matches. A missing folder-relative file never binds to a different directory just because its basename matches. Separately selected files without directory information retain unique-basename fallback; ambiguous matches are rejected. Other selected STEP files remain independent scene assets.
 
@@ -78,7 +78,7 @@ Remote URLs, URI schemes, absolute server/drive/UNC paths and references contain
 
 `npm run test:cad` covers directory roots, nested projects, duplicate names, declaration identity and malformed/mismatched hashes. `npm run test:form-workflows-browser` exercises the actual folder picker and CAD worker, same-named files in separate directories, missing CAD, integrity/ambiguity errors, preservation of the existing scene and recovery through scene reopen.
 
-Form mechanical placement coordinates are millimeters with Z-up. Mergence normalizes imported geometry to meters with Y-up and keeps the normalization offset in the scene asset metadata.
+Form mechanical placement coordinates are millimeters with Z-up. OpenIndustries normalizes imported geometry to meters with Y-up and keeps the normalization offset in the scene asset metadata.
 
 ## Agent Workflows
 
@@ -88,8 +88,8 @@ The SDK, OpenCode, and Codex workflows converge on the same compiled artifact:
 SDK or agent authors Hardware IR
   -> form.compile_project
   -> form-project.json with compiled project_ir
-  -> Mergence imports JSON and selected CAD artifacts
-  -> Mergence reviews and arranges the project spatially
+  -> OpenIndustries imports JSON and selected CAD artifacts
+  -> OpenIndustries reviews and arranges the project spatially
 ```
 
 OpenCode and Codex should use the `form-hardware` skill and set the authoring agent explicitly when compiling:
@@ -102,15 +102,15 @@ python .agents/skills/form-hardware/scripts/form.py compile \
   --update-project
 ```
 
-Use `--authoring-agent codex` for Codex-authored projects. The resulting manifest, not the pre-compiled draft, is the file to import into Mergence.
+Use `--authoring-agent codex` for Codex-authored projects. The resulting manifest, not the pre-compiled draft, is the file to import into OpenIndustries.
 
 ## Ownership Boundary
 
-Form owns the authored Hardware IR, electrical validation, component identity, and compiled project revision. Mergence owns room placement, camera context, visibility, and spatial review state. Mergence spatial edits are not electrically revalidated by Form unless a later explicit handoff workflow is used. Authored animation reviews are handed back as a scrubbed `astra.animation-feedback` package; OpenCode applies accepted mechanical changes through Form's `form.opencode.update_project` tool before Mergence reimports the revised artifact.
+Form owns the authored Hardware IR, electrical validation, component identity, and compiled project revision. OpenIndustries owns room placement, camera context, visibility, and spatial review state. OpenIndustries spatial edits are not electrically revalidated by Form unless a later explicit handoff workflow is used. Authored animation reviews are handed back as a scrubbed `astra.animation-feedback` package; OpenCode applies accepted mechanical changes through Form's `form.opencode.update_project` tool before OpenIndustries reimports the revised artifact.
 
 ## Compatibility
 
-Unsupported versions and malformed variants must fail with an actionable message. Mergence must retain local file import when Form MCP is unavailable. Direct MCP integration is optional and must remain server-side; credentials must never enter the browser bundle or saved scene files.
+Unsupported versions and malformed variants must fail with an actionable message. OpenIndustries must retain local file import when Form MCP is unavailable. Direct MCP integration is optional and must remain server-side; credentials must never enter the browser bundle or saved scene files.
 
 
 ### Typed import validation

@@ -9,9 +9,9 @@ This is a two-player recovery session in a finite 96 × 56 municipal dump. The s
 Use Node **22.18 or newer** (Node's built-in `node:sqlite`) and install with `npm ci`. In a local `.env` file set:
 
 ```dotenv
-ASTRA_GAME_PORT=8790
-ASTRA_GAME_DB=.astra/game/runtime.sqlite
-ASTRA_GAME_ALLOW_SIGNUP=true
+OI_GAME_PORT=8790
+OI_GAME_DB=.astra/game/runtime.sqlite
+OI_GAME_ALLOW_SIGNUP=true
 ```
 
 Start the independently supervised service:
@@ -25,12 +25,12 @@ It binds **127.0.0.1** only. Keep it running alongside the tower-defense backend
 The tower-defense backend performs sign-up/sign-in, keeps the returned game token server-side, and launches one MCP process per browser session with:
 
 ```dotenv
-ASTRA_GAME_TOOLS_ENABLED=true
-ASTRA_GAME_SERVICE_URL=http://127.0.0.1:8790
-# ASTRA_GAME_SESSION is supplied securely by the backend, never in tool arguments.
+OI_GAME_TOOLS_ENABLED=true
+OI_GAME_SERVICE_URL=http://127.0.0.1:8790
+# OI_GAME_SESSION is supplied securely by the backend, never in tool arguments.
 ```
 
-Disable `ASTRA_GAME_ALLOW_SIGNUP` after provisioning accounts if registration should be closed. Accounts use a normalized 3–40 character username and a 12–256 character password. Passwords use per-account salted scrypt; only SHA-256 digests of random 256-bit session tokens are stored. Sessions expire after eight hours and logout revokes them immediately. Password reset/account recovery is not implemented in this foundation.
+Disable `OI_GAME_ALLOW_SIGNUP` after provisioning accounts if registration should be closed. Accounts use a normalized 3–40 character username and a 12–256 character password. Passwords use per-account salted scrypt; only SHA-256 digests of random 256-bit session tokens are stored. Sessions expire after eight hours and logout revokes them immediately. Password reset/account recovery is not implemented in this foundation.
 
 ## Authority and transport
 
@@ -40,16 +40,16 @@ The stdio MCP server exposes ten versioned tools with complete input/output JSON
 
 | Tool | Arguments in addition to `version: 5` | Result |
 | --- | --- | --- |
-| `astra.game_manufacturing_catalog` | `match_id` | Exact reviewed bills of materials, queue/storage limits and rates |
-| `astra.game_manufacturing_preview` | `match_id`, `recipe_id`, `batch_ids`, `product_ids`, `component_ids` | Owned-only eligibility without reservation |
-| `astra.game_science_catalog` | `match_id` | Validated catalog pinned to this participant match |
-| `astra.game_evaluate` | `match_id`, `target_id`, `query`, `design_id`, `temperature_c` | Private preview using owned evidence and installed machines |
-| `astra.game_list_matches` | `cursor` (null for first page) | Up to 20 owned memberships and `next_cursor`, ordered by match ID |
-| `astra.game_describe` | None | Static contract; does not certify deployment health |
-| `astra.game_create_match` | `command_id` | Waiting snapshot and a one-use, one-hour invite |
-| `astra.game_join_match` | `command_id`, `match_id`, `invite_code` | Second participant's private snapshot |
-| `astra.game_read_match` | `match_id` | Full authorized snapshot for polling/reconnect |
-| `astra.game_command` | `command_id`, `match_id`, `expected_revision`, `action` and its target IDs | Durable receipt and snapshot |
+| `openindustries.game_manufacturing_catalog` | `match_id` | Exact reviewed bills of materials, queue/storage limits and rates |
+| `openindustries.game_manufacturing_preview` | `match_id`, `recipe_id`, `batch_ids`, `product_ids`, `component_ids` | Owned-only eligibility without reservation |
+| `openindustries.game_science_catalog` | `match_id` | Validated catalog pinned to this participant match |
+| `openindustries.game_evaluate` | `match_id`, `target_id`, `query`, `design_id`, `temperature_c` | Private preview using owned evidence and installed machines |
+| `openindustries.game_list_matches` | `cursor` (null for first page) | Up to 20 owned memberships and `next_cursor`, ordered by match ID |
+| `openindustries.game_describe` | None | Static contract; does not certify deployment health |
+| `openindustries.game_create_match` | `command_id` | Waiting snapshot and a one-use, one-hour invite |
+| `openindustries.game_join_match` | `command_id`, `match_id`, `invite_code` | Second participant's private snapshot |
+| `openindustries.game_read_match` | `match_id` | Full authorized snapshot for polling/reconnect |
+| `openindustries.game_command` | `command_id`, `match_id`, `expected_revision`, `action` and its target IDs | Durable receipt and snapshot |
 
 Actions: `enqueue_manufacturing`, `salvage_starter_asset`, `set_production_machine`, `destroy_manufactured_product`, `survey_robot`, `collect_robot`, `return_robot`, `recharge_robot`, `interrupt_robot`, `retreat_robot`, `inspect_batch`, `inspect_component`, `start_material_process`, `inspect_deposit`, `collect_deposit`, `start_processing`, `pause_job`, `resume_job`, `cancel_job`, `dismantle_machine`, `abandon_match`, `rotate_invite`, `finish_recovery`. Their target fields are defined by `tools/list`; unknown fields are rejected. A full snapshot replaces local state. Never merge another player's private data or infer opponent inventory from shared revision changes.
 
@@ -85,7 +85,7 @@ Revisions protect discrete commands and job/lifecycle transitions. Fractional cl
 
 The canonical `@openindustries/material-science` package lives in `packages/material-science`. Its checked-in JavaScript/declarations are rebuilt and checked for drift in CI. The downstream UI vendors that exact build for tests/demo; runtime decisions always execute inside this SQLite service. The pure engine was moved from tower-defense's earlier calculation core, with evidence, result, component and substitution validation added.
 
-Matches pin `materials-v2`, `balance-v2` and `bench-v1`; mismatched versions fail rather than silently adopting new rules. `astra.game_evaluate` accepts owned IDs and a catalog design only, with query `use`, `process`, `substitution` or `component`. It cannot receive batch composition, custom recipes, machine capabilities, property values, grades or identity. An eligible preview is not a reservation; startup rechecks real state atomically.
+Matches pin `materials-v2`, `balance-v2` and `bench-v1`; mismatched versions fail rather than silently adopting new rules. `openindustries.game_evaluate` accepts owned IDs and a catalog design only, with query `use`, `process`, `substitution` or `component`. It cannot receive batch composition, custom recipes, machine capabilities, property values, grades or identity. An eligible preview is not a reservation; startup rechecks real state atomically.
 
 A bench inspection costs 300 J over 3 seconds at 100 W, sharing the existing power ledger and single live-job limit. Owner-scoped observations store target/revision, server timestamp, bench position and bounded fixture evidence. Copper-wire and supported recovered-stock fixture values are labeled synthetic game measurements. Metal values cover only 20 °C; HDPE has an explicit bounded service-temperature interval. Unsupported grades remain unknown. Starter-component tests reference existing stock allocations and certify only the named game-maintenance fixture. They never credit bulk material.
 

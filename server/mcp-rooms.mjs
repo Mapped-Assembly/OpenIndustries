@@ -5,7 +5,7 @@ import { join } from 'node:path';
 const dimension = { type: 'number', minimum: 1, maximum: 100 };
 const maxRoomFileBytes = 25 * 1024 * 1024;
 export const roomTools = [
-  { name: 'astra.create_room', description: 'Create an empty room as a local Mergence scene JSON, ready to import into the workbench and arrange equipment. Dimensions are meters. Does not modify the open browser room or save to cloud.', inputSchema: { type: 'object', additionalProperties: false, properties: { name: { type: 'string', minLength: 1, maxLength: 120 }, width: dimension, depth: dimension, height: dimension }, required: ['name', 'width', 'depth', 'height'] } },
+  { name: 'astra.create_room', description: 'Create an empty room as a local OpenIndustries scene JSON, ready to import into the workbench and arrange equipment. Dimensions are meters. Does not modify the open browser room or save to cloud.', inputSchema: { type: 'object', additionalProperties: false, properties: { name: { type: 'string', minLength: 1, maxLength: 120 }, width: dimension, depth: dimension, height: dimension }, required: ['name', 'width', 'depth', 'height'] } },
   { name: 'astra.list_rooms', description: 'List rooms created through this local MCP checkout.', inputSchema: { type: 'object', properties: {}, additionalProperties: false } },
   { name: 'astra.read_room', description: 'Read a room created through this local MCP checkout, including its portable scene document.', inputSchema: { type: 'object', properties: { id: { type: 'string', description: 'Room ID returned by create_room or list_rooms.' } }, required: ['id'], additionalProperties: false } },
 ];
