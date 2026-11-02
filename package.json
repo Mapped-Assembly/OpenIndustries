@@ -99,7 +99,9 @@
     "test:local-scene-sync": "node --import tsx scripts/local-scene-sync-test.ts",
     "test:scene-conflicts": "node --import tsx scripts/scene-conflicts-test.ts",
     "test:scene-mutations": "node --import tsx scripts/scene-mutations-test.ts",
-    "test:plan": "node --import tsx scripts/plan-projection-test.ts"
+    "test:plan": "node --import tsx scripts/plan-projection-test.ts",
+    "test:space-ir": "node --import tsx scripts/space-ir-test.ts",
+    "typecheck:space-ir": "tsc --noEmit -p packages/space-ir/tsconfig.json"
   },
   "dependencies": {
     "@supabase/supabase-js": "^2.116.0",
