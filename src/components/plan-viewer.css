@@ -8,3 +8,9 @@
 .oi-plan-legend{position:absolute;bottom:12px;left:16px;right:16px;pointer-events:none;color:#ebf3e8;background:#14201bed;padding:7px 11px;border:1px solid #465d4d;border-radius:6px;font-size:11px;line-height:1.55;max-width:fit-content}
 .oi-plan-legend span{display:block;color:#c8d5c6}
 @media(max-width:650px){.oi-plan-tools{top:152px;left:8px;right:8px;gap:3px}.oi-plan-tools button{font-size:10px;min-height:27px;padding:5px 6px}.oi-plan-legend{left:6px;right:6px;bottom:6px;font-size:9px}}
+
+.oi-view-mode{position:absolute;z-index:3;left:24px;top:102px;display:flex;gap:3px;background:#17241edb;padding:3px;border:1px solid #506755;border-radius:7px}
+.oi-view-mode button{min-height:34px;font-size:11px;padding:6px 11px;background:transparent;border:0}
+.oi-view-mode button[aria-pressed=true]{background:#a7cb79;color:#152019;font-weight:700}
+.oi-view-mode button:focus-visible{outline:2px solid #c8ef82}
+@media(max-width:650px){.oi-view-mode{top:100px;left:8px}.oi-plan-tools{top:147px}}
