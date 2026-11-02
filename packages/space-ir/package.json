@@ -1,0 +1,13 @@
+{
+  "name": "@openindustries/space-ir",
+  "version": "0.1.0",
+  "private": true,
+  "type": "module",
+  "description": "Independent spatial topology and evidence contract",
+  "exports": {
+    ".": "./src/index.ts"
+  },
+  "scripts": {
+    "typecheck": "tsc --noEmit -p tsconfig.json"
+  }
+}
