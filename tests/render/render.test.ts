@@ -13,7 +13,7 @@ import { startService } from '../../server/render/service.ts';
 import { envelope, normalize, LIMITS, hash } from '../../server/render/contract.ts';
 import { RenderStore } from '../../server/render/store.ts';
 import { LocalSceneBackend } from '../../server/local-scene-backend.ts';
-import { executeSceneTool } from '../../server/mcp-scenes.ts';
+import { hydrateManifest, makeManifest, readManifest } from '../../src/lib/workspace.ts';
 import { oneRoom } from '../../benchmarks/render/build-scene.ts';
 
 const wait=async<T>(read:()=>Promise<T>,done:(value:T)=>boolean,timeout=120_000):Promise<T>=>{
@@ -123,24 +123,128 @@ test('store enforces exclusive ownership, queue/retention budgets and crash reco
   }finally{store.close();rmSync(directory,{recursive:true,force:true});}
 });
 
-test('pinned local saved scene resolves immutable geometry, rejecting unpinned references',{timeout:30_000},async()=>{
-  const directory=mkdtempSync(join(tmpdir(),'oi-render-saved-')),sceneDirectory=join(directory,'scenes'),backend=new LocalSceneBackend(sceneDirectory);
-  const sceneId=randomUUID();
-  try{
-    const fixture=JSON.parse(readFileSync('scripts/fixtures/cleanroom-scene-request.json','utf8'));fixture.request_id=sceneId;
-    await executeSceneTool('astra.create_scene',fixture,{backend,origin:'http://127.0.0.1:5173',signal:new AbortController().signal});
-  }finally{backend.close();}
-  const service=await startService({directory:join(directory,'render'),sceneDirectory,port:0});
-  try{
-    const api=client(service),id=randomUUID();
-    const response=await api('/v1/render/jobs','POST',{request_id:id,saved_scene:{scene_id:sceneId,revision:1},options:{size:320,duration:2,fps:10}});
-    assert.equal(response.status,202,await response.text());assert.equal(service.store.input(id).source.kind,'local_revision');assert(service.store.input(id).scene.bundledVersions!.length>0);
-    assert.equal((await api('/v1/render/jobs','POST',{request_id:randomUUID(),saved_scene:{scene_id:sceneId}})).status,400);
-    assert.equal((await api('/v1/render/jobs','POST',{request_id:randomUUID(),saved_scene:{scene_id:sceneId,revision:999}})).status,404);
-    service.worker.cancel(id);
-  }finally{await service.close();rmSync(directory,{recursive:true,force:true});}
+test('saved-scene head/pinned HTTP+MCP renders preserve asset provenance, GIF parity, and restart history',{timeout:180_000},async()=>{
+  const directory=mkdtempSync(join(tmpdir(),'oi-render-saved-')),sceneDirectory=join(directory,'scenes'),sceneId=randomUUID();
+  const backend=new LocalSceneBackend(sceneDirectory);
+  let service:Awaited<ReturnType<typeof startService>>|undefined;
+  let connection:ReturnType<typeof mcp>|undefined;
+  try {
+    const room=hydrateManifest(readManifest(oneRoom()),[]);
+    assert.equal(room.items.length,1,'Fixture contains one renderable instance');
+    const item=room.items[0],versionId=await backend.persistAsset(item.asset);
+    room.items[0]={...item,cloudVersionId:versionId};
+    const document=(parent_revision:number|null,request_id:string)=>({...makeManifest(room),authoring:{
+      via:'mcp' as const,agent:'render-test',parent_revision,request_id,request_digest:hash(request_id)
+    }});
+    const createdId=randomUUID();
+    await backend.save(sceneId,'Before',document(null,createdId),0,createdId);
+    service=await startService({directory:join(directory,'render'),sceneDirectory,port:0});
+    const api=client(service);
+    connection=mcp(service.clientFile,directory);
+    const options={size:320,duration:2,fps:10,camera:{azimuthDegrees:40,elevationDegrees:35,distanceScale:1.4,fovDegrees:45}};
+    const headId=randomUUID();
+    // MCP head request is pinned before enqueueing; it sends only the saved scene ID.
+    const head=await connection.call('render_submit',{request_id:headId,saved_scene:{scene_id:sceneId},options});
+    assert(!head.isError,JSON.stringify(head));
+    assert.equal(head.structuredContent.source.kind,'saved_scene');
+    assert.equal(head.structuredContent.source.revision,1);
+    assert.equal(head.structuredContent.source.assets[0].version_id,versionId);
+    assert.match(head.structuredContent.source.assets[0].sha256,/^[a-f0-9]{64}$/);
+    // Commit S1 after the submission; the queued S0 job must never see the new head.
+    room.items[0]={...room.items[0],position:[room.items[0].position[0]+1,0,0]};
+    const nextId=randomUUID();
+    await backend.save(sceneId,'After',document(1,nextId),1,nextId);
+    const headRetry=await api('/v1/render/jobs','POST',{request_id:headId,saved_scene:{scene_id:sceneId},options});
+    assert.equal(headRetry.status,202,await headRetry.text());
+    assert.equal((await headRetry.json()).source.revision,1);
+    const different=await api('/v1/render/jobs','POST',{request_id:headId,saved_scene:{scene_id:sceneId,revision:2},options});
+    assert.equal(different.status,409);
+    assert.equal((await different.json()).error.code,'REQUEST_ID_REUSED');
+    const firstId=randomUUID(),secondId=randomUUID();
+    const pinned=await connection.call('render_submit',{request_id:firstId,saved_scene:{scene_id:sceneId,revision:1},options});
+    assert(!pinned.isError,JSON.stringify(pinned));
+    assert.equal(pinned.structuredContent.source.revision,1);
+    const second=await api('/v1/render/jobs','POST',{request_id:secondId,saved_scene:{scene_id:sceneId,revision:2},options});
+    assert.equal(second.status,202,await second.text());
+    assert.equal((await second.json()).source.revision,2);
+    const collect=async(id:string)=>{
+      const path='/v1/render/jobs/'+id;
+      const job=await wait(async()=>(await api(path)).json(),terminal);
+      assert.equal(job.status,'completed',JSON.stringify(job));
+      const gif=Buffer.from(await (await api(path+'/media')).arrayBuffer());
+      decoded(gif,320,20,10);
+      return {job,gif,meta:await (await api(path+'/metadata')).json()};
+    };
+    const before=await collect(firstId),after=await collect(secondId),headResult=await collect(headId);
+    assert(before.gif.equals(headResult.gif),'Head submission must match its pinned revision');
+    assert(!before.gif.equals(after.gif),'S0 and S1 output GIFs must reflect different placements');
+    assert.deepEqual(before.meta.options,after.meta.options);
+    assert.equal(before.meta.renderer_build_sha256,after.meta.renderer_build_sha256);
+    assert.equal(before.meta.source.kind,'saved_scene');
+    assert.equal(before.meta.source.scene_id,sceneId);
+    assert.equal(before.meta.source.revision,1);
+    assert.equal(after.meta.source.revision,2);
+    for(const result of [before,after]){
+      assert.equal(result.meta.source.assets.length,1);
+      assert.equal(result.meta.source.assets[0].version_id,versionId);
+      assert.equal(result.meta.source.assets[0].asset_id,item.asset.id);
+      assert.equal(result.meta.source.assets[0].source_digest,item.asset.source.digest);
+      assert.match(result.meta.source.assets[0].fingerprint,/^[a-f0-9]{64}$/);
+      assert.equal(result.meta.source.assets[0].sha256,result.meta.source.assets[0].fingerprint);
+    }
+    // Portable rendering remains compatible and produces the same frames from identical content.
+    const original=await backend.exportScene(sceneId,1),portableId=randomUUID();
+    const port=await api('/v1/render/jobs','POST',{request_id:portableId,scene:original,options});
+    assert.equal(port.status,202,await port.text());
+    const portable=await collect(portableId);
+    assert.equal(portable.meta.source.kind,'portable');
+    assert(portable.gif.equals(before.gif),'Saved revision and portable export must render identical pixels');
+    await service.close();service=await startService({directory:join(directory,'render'),sceneDirectory,port:0});
+    const resumed=client(service);
+    assert.equal((await (await resumed('/v1/render/jobs/'+secondId)).json()).status,'completed');
+    assert(Buffer.from(await (await resumed('/v1/render/jobs/'+secondId+'/media')).arrayBuffer()).equals(after.gif));
+    assert.equal((await (await resumed('/v1/render/jobs/'+secondId+'/metadata')).json()).source.revision,2);
+  }finally{
+    connection?.child.kill();
+    await service?.close();
+    backend.close();rmSync(directory,{recursive:true,force:true});
+  }
 });
 
+test('saved-scene input validation, absent revisions and missing immutable asset files',{timeout:30_000},async()=>{
+  const directory=mkdtempSync(join(tmpdir(),'oi-render-missing-')),sceneDirectory=join(directory,'scenes'),sceneId=randomUUID();
+  let service:Awaited<ReturnType<typeof startService>>|undefined;
+  const backend=new LocalSceneBackend(sceneDirectory);
+  try {
+    const room=hydrateManifest(readManifest(oneRoom()),[]);
+    const versionId=await backend.persistAsset(room.items[0].asset);
+    room.items[0].cloudVersionId=versionId;
+    const writeId=randomUUID();
+    await backend.save(sceneId,'Missing file',{...makeManifest(room),authoring:{via:'mcp',agent:'test',parent_revision:null,request_id:writeId,request_digest:hash(writeId)}},0,writeId);
+    service=await startService({directory:join(directory,'render'),sceneDirectory,port:0});
+    const api=client(service);
+    const send=(saved_scene:unknown,request_id=randomUUID())=>api('/v1/render/jobs','POST',{request_id,saved_scene,options:{size:320,duration:2,fps:10}});
+    for(const invalid of [null,{}, {scene_id:'wrong'},{scene_id:sceneId,revision:0},{scene_id:sceneId,revision:-1},{scene_id:sceneId,revision:'head'},{scene_id:sceneId,revision:1,unexpected:true}]){
+      const response=await send(invalid);assert.equal(response.status,400);
+    }
+    assert.equal((await send({scene_id:randomUUID()})).status,404);
+    const absent=await send({scene_id:sceneId,revision:999});
+    assert.equal(absent.status,404);assert.equal((await absent.json()).error.code,'SCENE_REVISION_NOT_FOUND');
+    const original=await backend.asset(versionId);
+    const digest=original!.files.find(file=>file.name==='asset.json')!.sha256;
+    const file=join(sceneDirectory,'assets',digest+'.json');
+    rmSync(file);
+    const missing=await send({scene_id:sceneId,revision:1});
+    assert.equal(missing.status,422);
+    assert.equal((await missing.json()).error.code,'ASSET_UNAVAILABLE');
+    await service.close();service=undefined;
+    const noStore=await startService({directory:join(directory,'render'),sceneDirectory:join(directory,'absent'),port:0});
+    try{
+      const unavailable=await client(noStore)('/v1/render/jobs','POST',{request_id:randomUUID(),saved_scene:{scene_id:sceneId}});
+      assert.equal(unavailable.status,503);assert.equal((await unavailable.json()).error.code,'SCENE_STORE_UNAVAILABLE');
+    }finally{await noStore.close();}
+  }finally{await service?.close();backend.close();rmSync(directory,{recursive:true,force:true});}
+});
 
 test('abrupt service process death marks in-flight work interrupted without publishing or replaying',{timeout:30_000},async()=>{
   const directory=mkdtempSync(join(tmpdir(),'oi-render-crash-'));
