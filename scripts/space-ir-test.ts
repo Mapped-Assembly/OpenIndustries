@@ -2,7 +2,7 @@ import assert from 'node:assert/strict';
 import { readFileSync } from 'node:fs';
 import {
   SPACE_IR_PROVIDER, accessibleRegions, canonicalSpaceJSON, parseSpaceIR,
-  polygonValid, resolveMetricPoint, validateSpaceIR, type SpaceIR,
+  polygonValid, resolveMetricPoint, validateSpaceIR, type SpaceIR, type Point2,
 } from '../packages/space-ir/src/index';
 import { compileSpaceIR, SpaceCompilationError } from '../src/lib/space-ir-compiler';
 import { hydrateManifest, makeManifest, readManifest } from '../src/lib/workspace';
@@ -56,7 +56,7 @@ for (const region of pixel.regions) {
 }
 for (const boundary of pixel.boundaries) {
   boundary.frame_id = 'image';
-  boundary.path = boundary.path?.map(p => [p[0] * 100, p[1] * 100]) as [number[], number[]] as [typeof boundary.path[0], typeof boundary.path[1]] ?? null;
+  boundary.path = boundary.path ? [boundary.path[0].map(v => v * 100) as Point2, boundary.path[1].map(v => v * 100) as Point2] : null;
 }
 assert.equal(validateSpaceIR(pixel).valid, true);
 assert(validateSpaceIR(pixel).findings.some(f => f.code === 'UNSCALED'));
