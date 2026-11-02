@@ -5,7 +5,8 @@ import { existsSync } from 'node:fs';
 import { join, resolve } from 'node:path';
 import { homedir } from 'node:os';
 import { fileURLToPath } from 'node:url';
-import { envelope, LIMITS, normalize, RenderError, uuid } from './contract.ts';
+import { envelope, LIMITS, normalize, RenderError, requestSHA256, uuid, type RenderAssetBinding, type RenderRequest, type ResolvedSavedSource } from './contract.ts';
+import { readManifest } from '../../src/lib/workspace.ts';
 import { atomicJSON, RenderStore } from './store.ts';
 import { RenderWorker } from './worker.ts';
 import { LocalSceneBackend } from '../local-scene-backend.ts';
@@ -20,6 +21,46 @@ async function body(req:IncomingMessage):Promise<unknown> {
   try{return JSON.parse(Buffer.concat(chunks).toString());}catch{throw new RenderError('INVALID_JSON','Malformed JSON.');}
 }
 function json(res:ServerResponse,status:number,value:unknown):void {res.writeHead(status,{'content-type':'application/json','cache-control':'no-store','x-content-type-options':'nosniff'});res.end(JSON.stringify(value));}
+/** Resolve a persistent revision and its integrity-checked immutable assets before enqueueing. */
+async function resolveSavedScene(directory:string, request:RenderRequest):Promise<{scene:unknown;source:ResolvedSavedSource}> {
+  const source=request.saved_scene!;
+  if(!existsSync(join(directory,'scenes.sqlite')))throw new RenderError('SCENE_STORE_UNAVAILABLE','Configured local scene store does not exist.',503);
+  let backend:LocalSceneBackend;
+  try{backend=new LocalSceneBackend(directory);}catch{throw new RenderError('SCENE_STORE_UNAVAILABLE','Could not open configured local scene store.',503);}
+  try {
+    const head=await backend.head(source.scene_id);
+    if(!head)throw new RenderError('SCENE_NOT_FOUND','Saved scene ID was not found.',404);
+    let revision=head.revision;
+    if(source.revision!==undefined) {
+      try{revision=(await backend.read(source.scene_id,source.revision)).revision;}
+      catch{throw new RenderError('SCENE_REVISION_NOT_FOUND','Requested immutable scene revision was not found.',404);}
+    }
+    // Pin head immediately: a concurrent writer may advance the head while assets load.
+    let scene:Awaited<ReturnType<LocalSceneBackend['exportScene']>>;
+    try{scene=await backend.exportScene(source.scene_id,revision);}
+    catch{throw new RenderError('ASSET_UNAVAILABLE','Saved revision geometry or its immutable asset versions cannot be loaded.',422);}
+    const manifest=readManifest(scene);
+    const digest=new Map(manifest.assets.map(asset=>[asset.id,asset.source.digest]));
+    const assets:RenderAssetBinding[]=[];
+    const versions=new Set<string>();
+    for(const item of manifest.instances) {
+      if(!item.cloudVersionId)throw new RenderError('ASSET_UNAVAILABLE','Saved scene has an unversioned instance.',422);
+      if(versions.has(item.cloudVersionId))continue;
+      versions.add(item.cloudVersionId);
+      const version=await backend.asset(item.cloudVersionId);
+      const file=version?.files.find(file=>file.name==='asset.json');
+      if(!version||!file||version.asset?.asset_key!==item.assetId||!/^[a-f0-9]{64}$/.test(version.fingerprint)||!/^[a-f0-9]{64}$/.test(file.sha256))
+        throw new RenderError('ASSET_UNAVAILABLE','Saved asset version metadata is missing or inconsistent.',422);
+      try{await backend.geometry(version);}catch{throw new RenderError('ASSET_UNAVAILABLE','Saved asset version file is missing or failed integrity verification.',422);}
+      assets.push({asset_id:item.assetId,version_id:version.id,fingerprint:version.fingerprint,sha256:file.sha256,source_digest:digest.get(item.assetId)??''});
+    }
+    assets.sort((a,b)=>a.version_id.localeCompare(b.version_id));
+    return {scene,source:{kind:'saved_scene',scene_id:source.scene_id,revision,assets}};
+  }catch(error){
+    if(error instanceof RenderError)throw error;
+    throw new RenderError('SCENE_STORE_UNAVAILABLE','Saved scene store could not be read.',503);
+  }finally{backend.close();}
+}
 /** Start a loopback-only single-user authority; return an explicit shutdown handle for supervisors/tests. */
 export async function startService(options:ServiceOptions) {
   const root=resolve(fileURLToPath(new URL('../../',import.meta.url)));
@@ -39,14 +80,16 @@ export async function startService(options:ServiceOptions) {
       if(req.headers.origin&&req.headers.origin!==origin)throw new RenderError('ORIGIN_REFUSED','Cross-origin requests are refused.',403);
       if(closing)throw new RenderError('SHUTTING_DOWN','Renderer is shutting down.',503);
       if(req.url==='/v1/render/jobs'&&req.method==='POST'){
-        const request=envelope(await body(req));let scene=request.scene;
+        const request=envelope(await body(req));
+        // A network retry of a head render must return its original pinned revision.
+        const receipt=store.receipt(request.request_id,requestSHA256(request));
+        if(receipt){json(res,202,receipt);return;}
+        let scene=request.scene;let savedSource:ResolvedSavedSource|undefined;
         if(request.saved_scene){
           if(!options.sceneDirectory)throw new RenderError('SAVED_SCENES_DISABLED','Configure OI_RENDER_SCENE_DIR, or submit a portable scene.');
-          if(!existsSync(join(options.sceneDirectory,'scenes.sqlite')))throw new RenderError('SCENE_UNAVAILABLE','Configured scene store does not exist.',404);
-          const backend=new LocalSceneBackend(options.sceneDirectory);
-          try{scene=await backend.exportScene(request.saved_scene.scene_id,request.saved_scene.revision);}catch(error){throw new RenderError('SCENE_UNAVAILABLE',error instanceof Error?error.message:'Saved scene could not be resolved.',404);}finally{backend.close();}
+          ({scene,source:savedSource}=await resolveSavedScene(options.sceneDirectory,request));
         }
-        const job=store.submit(normalize(request,scene));json(res,202,job);setImmediate(()=>worker.pump());return;
+        const job=store.submit(normalize(request,scene,savedSource));json(res,202,job);setImmediate(()=>worker.pump());return;
       }
       if(req.url==='/v1/render/jobs'&&req.method==='GET')return json(res,200,{jobs:store.list()});
       const match=/^\/v1\/render\/jobs\/([^/]+)(?:\/(cancel|media|metadata))?$/.exec(req.url??'');

@@ -8,7 +8,7 @@ import { LIMITS, RenderError, type RenderInput } from './contract.ts';
 
 export type JobStatus='queued'|'running'|'completed'|'cancelled'|'failed'|'interrupted';
 export type RenderJob={id:string;status:JobStatus;progress:number;created_at:string;updated_at:string;
-  scene_sha256:string;source:RenderInput['source'];options:RenderInput['options'];error:null|{code:string;message:string};
+  scene_sha256:string;request_sha256?:string;source:RenderInput['source'];options:RenderInput['options'];error:null|{code:string;message:string};
   output:null|{gif:string;metadata:string;sha256:string;metadata_sha256:string;bytes:number};renderer_version:'oi-gif-v1'};
 export const active=(job:RenderJob):boolean=>job.status==='queued'||job.status==='running';
 /** Replace a complete file atomically; private staging files never become downloads. */
@@ -55,6 +55,16 @@ export class RenderStore {
     return JSON.parse(String(row.body));
   }
   list():RenderJob[]{return this.db.prepare('SELECT body FROM jobs ORDER BY rowid').all().map(r=>JSON.parse(String(r.body)));}
+  /** Return the original pinned outcome for an identical retry, even after the head advances. */
+  receipt(id:string,request_sha256:string):RenderJob|null {
+    const row=this.db.prepare('SELECT body FROM jobs WHERE id=?').get(id);
+    if(!row)return null;
+    const job=JSON.parse(String(row.body)) as RenderJob;
+    // Older jobs did not retain an envelope digest: re-normalize those to verify identity.
+    if(!job.request_sha256)return null;
+    if(job.request_sha256!==request_sha256)throw new RenderError('REQUEST_ID_REUSED','request_id already names different render content.',409);
+    return job;
+  }
   /** Persist resolved geometry before acknowledging; identical requests return the same job. */
   submit(input:RenderInput):RenderJob {
     const old=this.db.prepare('SELECT fingerprint,body FROM jobs WHERE id=?').get(input.request_id);
@@ -62,7 +72,7 @@ export class RenderStore {
     this.prune();const jobs=this.list();
     if(jobs.filter(active).length>=LIMITS.queue)throw new RenderError('QUEUE_FULL','At most eight pending/running renders are allowed.',429);
     if(jobs.length>=LIMITS.jobs)throw new RenderError('RETENTION_FULL','Delete terminal jobs or wait for seven-day expiry.',429);
-    const job:RenderJob={id:input.request_id,status:'queued',progress:0,created_at:new Date().toISOString(),updated_at:new Date().toISOString(),scene_sha256:input.scene_sha256,source:input.source,options:input.options,error:null,output:null,renderer_version:'oi-gif-v1'};
+    const job:RenderJob={id:input.request_id,status:'queued',progress:0,created_at:new Date().toISOString(),updated_at:new Date().toISOString(),scene_sha256:input.scene_sha256,request_sha256:input.request_sha256,source:input.source,options:input.options,error:null,output:null,renderer_version:'oi-gif-v1'};
     const dir=this.path(job.id);mkdirSync(dir,{recursive:true,mode:0o700});atomicJSON(join(dir,'input.json'),input);
     this.db.prepare('INSERT INTO jobs VALUES(?,?,?)').run(job.id,input.fingerprint,JSON.stringify(job));return job;
   }

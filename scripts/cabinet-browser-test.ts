@@ -55,13 +55,19 @@ try {
       assert.deepEqual(live.objects,first.objects);
       await page.reload();
       await expect(page.getByRole('status')).toContainText('completed');
-      await page.getByRole('button',{name:'Inspect recorded states'}).click();
-      await expect(page.getByRole('status')).toHaveText('REPLAY · read only');
       const beforeReplay=posts.length;
+      // Trace transfer can outlast a DOM assertion on CI, especially while meshes reload.
+      const [traceResponse]=await Promise.all([
+        page.waitForResponse(response=>response.url()===origin+'/api/embodied/trace'&&response.request().method()==='GET',{timeout:30000}),
+        page.getByRole('button',{name:'Inspect recorded states'}).click(),
+      ]);
+      assert.equal(traceResponse.status(),200,'Replay trace request must succeed');
+      const trace=await traceResponse.json();
+      assert(trace.states.length>0,'Replay requires recorded states');
+      await expect(page.getByRole('status')).toHaveText('REPLAY · read only',{timeout:15000});
       await expect(page.getByTestId('state-id')).toHaveText(`${first.run_id}:0`);
       await expect(page.getByRole('button',{name:'Send',exact:true})).toBeDisabled();
       await expect(page.getByRole('button',{name:'Stop',exact:true})).toBeDisabled();
-      const trace=await page.evaluate(async()=> (await fetch('/api/embodied/trace')).json());
       assert(trace.complete);assert(trace.states.length>5);
       await page.getByLabel('Recorded state',{exact:true}).fill(String(trace.states.length-1));
       await expect(page.getByTestId('state-id')).toHaveText(live.dataset_state!.state_id);

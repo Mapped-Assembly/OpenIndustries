@@ -5,10 +5,16 @@ import { defaultGifCamera, regionBounds, type GifOptions } from '../../src/lib/g
 
 export const LIMITS = { inputBytes:8*1024*1024, instances:64, vertices:200_000, indices:600_000,
   parts:512, frames:60, outputBytes:64*1024*1024, queue:8, jobs:128, deadlineMs:120_000, retentionMs:7*86400_000 } as const;
-export type SavedSource = { scene_id:string; revision:number };
+/** A caller may pin a revision or request the current head at submission time. */
+export type SavedSource = { scene_id:string; revision?:number };
+/** Immutable local geometry bindings captured before enqueueing the render. */
+export type RenderAssetBinding = { asset_id:string; version_id:string; fingerprint:string; sha256:string; source_digest:string };
+export type ResolvedSavedSource = {kind:'saved_scene';scene_id:string;revision:number;assets:RenderAssetBinding[]};
 export type RenderRequest = { request_id:string; scene?:unknown; saved_scene?:SavedSource; options?:Partial<GifOptions> };
-export type RenderInput = { request_id:string; scene:SceneManifest; scene_sha256:string; options:GifOptions;
-  source: {kind:'portable'} | ({kind:'local_revision'} & SavedSource); fingerprint:string };
+export type RenderInput = { request_id:string; request_sha256:string;scene:SceneManifest; scene_sha256:string; options:GifOptions;
+  source: {kind:'portable'} | ResolvedSavedSource; fingerprint:string };
+/** Retries compare the original request, not a mutable head resolved later. */
+export const requestSHA256 = (request:RenderRequest):string => hash(canonicalJSON(request));
 export class RenderError extends Error {
   constructor(readonly code:string, message:string, readonly status=400) { super(message);this.name='RenderError'; }
 }
@@ -18,12 +24,17 @@ export const uuid = (value:unknown):value is string => typeof value==='string'&&
 export function envelope(raw:unknown):RenderRequest {
   const value=raw as RenderRequest;
   if(!value||typeof value!=='object'||Array.isArray(value)||!uuid(value.request_id)||Object.keys(value).some(k=>!['request_id','scene','saved_scene','options'].includes(k))||('scene' in value)===('saved_scene' in value))throw new RenderError('INVALID_REQUEST','Provide request_id and exactly one portable scene or pinned saved_scene.');
-  if(value.saved_scene&&(!uuid(value.saved_scene.scene_id)||!Number.isSafeInteger(value.saved_scene.revision)||value.saved_scene.revision<1||Object.keys(value.saved_scene).some(k=>!['scene_id','revision'].includes(k))))throw new RenderError('INVALID_REVISION','Saved scenes require a UUID scene_id and explicit positive revision.');
+  if('saved_scene' in value && (
+    !value.saved_scene || typeof value.saved_scene!=='object' || Array.isArray(value.saved_scene) ||
+    !uuid(value.saved_scene.scene_id) ||
+    (value.saved_scene.revision!==undefined && (!Number.isSafeInteger(value.saved_scene.revision)||value.saved_scene.revision<1)) ||
+    Object.keys(value.saved_scene).some(k=>!['scene_id','revision'].includes(k))
+  ))throw new RenderError('INVALID_REVISION','Saved scenes require a UUID scene_id and optional positive revision.');
   if(Buffer.byteLength(JSON.stringify(value))>LIMITS.inputBytes)throw new RenderError('PAYLOAD_TOO_LARGE','Render request exceeds 8 MiB.',413);
   return value;
 }
 /** Normalize complete immutable geometry; missing placeholders may never masquerade as renders. */
-export function normalize(request:RenderRequest, scene:unknown):RenderInput {
+export function normalize(request:RenderRequest, scene:unknown, resolved?:ResolvedSavedSource):RenderInput {
   try {
     const manifest=readManifest(scene);
     if(manifest.instances.length>LIMITS.instances)throw new RenderError('GEOMETRY_LIMIT','At most 64 instances are supported.');
@@ -51,8 +62,9 @@ export function normalize(request:RenderRequest, scene:unknown):RenderInput {
     if(!workspace.items.length&&options.scope!=='room')throw new RenderError('EMPTY_SCOPE','Empty scenes support room environment rendering only.');
     const portable=makeManifest(workspace,true),serialized=canonicalJSON(portable);
     if(Buffer.byteLength(serialized)>LIMITS.inputBytes)throw new RenderError('PAYLOAD_TOO_LARGE','Expanded portable scene exceeds 8 MiB.',413);
-    const source:RenderInput['source']=request.saved_scene?{kind:'local_revision',...request.saved_scene}:{kind:'portable'};
-    return {request_id:request.request_id,scene:portable,scene_sha256:hash(serialized),options,source,
+    if(request.saved_scene && (!resolved||resolved.kind!=='saved_scene'||resolved.scene_id!==request.saved_scene.scene_id||!Number.isSafeInteger(resolved.revision)||resolved.revision<1||(request.saved_scene.revision!==undefined&&resolved.revision!==request.saved_scene.revision)))throw new RenderError('SAVED_SCENE_UNRESOLVED','Saved scene must be resolved and pinned before normalization.',500);
+    const source:RenderInput['source']=resolved??{kind:'portable'};
+    return {request_id:request.request_id,request_sha256:requestSHA256(request),scene:portable,scene_sha256:hash(serialized),options,source,
       fingerprint:hash(canonicalJSON({scene:portable,options,source}))};
   }catch(error){if(error instanceof RenderError)throw error;throw new RenderError('INVALID_SCENE',error instanceof Error?error.message:'Invalid scene.');}
 }
