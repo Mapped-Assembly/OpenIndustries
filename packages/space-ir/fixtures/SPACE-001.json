@@ -1,0 +1,266 @@
+{
+  "schema_id": "mapped-assembly.space-ir",
+  "schema_version": "0.1.0",
+  "id": "SPACE-001",
+  "revision": "1",
+  "site": {
+    "frame_id": "world",
+    "width_m": 8,
+    "depth_m": 6,
+    "height_m": 3
+  },
+  "frames": [
+    {
+      "id": "world",
+      "units": "m",
+      "axes": "XZ"
+    }
+  ],
+  "regions": [
+    {
+      "id": "room-a",
+      "kind": "room",
+      "label": "Kitchen",
+      "frame_id": "world",
+      "polygon": [
+        [
+          -3.9,
+          -2.9
+        ],
+        [
+          0,
+          -2.9
+        ],
+        [
+          0,
+          2.9
+        ],
+        [
+          -3.9,
+          2.9
+        ]
+      ],
+      "evidence_ids": [
+        "source-plan"
+      ]
+    },
+    {
+      "id": "room-b",
+      "kind": "room",
+      "label": "Storage",
+      "frame_id": "world",
+      "polygon": [
+        [
+          0,
+          -2.9
+        ],
+        [
+          3.9,
+          -2.9
+        ],
+        [
+          3.9,
+          2.9
+        ],
+        [
+          0,
+          2.9
+        ]
+      ],
+      "evidence_ids": [
+        "source-plan"
+      ]
+    }
+  ],
+  "boundaries": [
+    {
+      "id": "west",
+      "kind": "wall",
+      "region_ids": [
+        "room-a"
+      ],
+      "frame_id": "world",
+      "path": [
+        [
+          -3.9,
+          -2.9
+        ],
+        [
+          -3.9,
+          2.9
+        ]
+      ],
+      "thickness_m": 0.12,
+      "height_m": 3
+    },
+    {
+      "id": "east",
+      "kind": "wall",
+      "region_ids": [
+        "room-b"
+      ],
+      "frame_id": "world",
+      "path": [
+        [
+          3.9,
+          -2.9
+        ],
+        [
+          3.9,
+          2.9
+        ]
+      ],
+      "thickness_m": 0.12,
+      "height_m": 3
+    },
+    {
+      "id": "north-a",
+      "kind": "wall",
+      "region_ids": [
+        "room-a"
+      ],
+      "frame_id": "world",
+      "path": [
+        [
+          -3.9,
+          -2.9
+        ],
+        [
+          0,
+          -2.9
+        ]
+      ],
+      "thickness_m": 0.12,
+      "height_m": 3
+    },
+    {
+      "id": "north-b",
+      "kind": "wall",
+      "region_ids": [
+        "room-b"
+      ],
+      "frame_id": "world",
+      "path": [
+        [
+          0,
+          -2.9
+        ],
+        [
+          3.9,
+          -2.9
+        ]
+      ],
+      "thickness_m": 0.12,
+      "height_m": 3
+    },
+    {
+      "id": "south-a",
+      "kind": "wall",
+      "region_ids": [
+        "room-a"
+      ],
+      "frame_id": "world",
+      "path": [
+        [
+          -3.9,
+          2.9
+        ],
+        [
+          0,
+          2.9
+        ]
+      ],
+      "thickness_m": 0.12,
+      "height_m": 3
+    },
+    {
+      "id": "south-b",
+      "kind": "wall",
+      "region_ids": [
+        "room-b"
+      ],
+      "frame_id": "world",
+      "path": [
+        [
+          0,
+          2.9
+        ],
+        [
+          3.9,
+          2.9
+        ]
+      ],
+      "thickness_m": 0.12,
+      "height_m": 3
+    },
+    {
+      "id": "shared",
+      "kind": "wall",
+      "region_ids": [
+        "room-a",
+        "room-b"
+      ],
+      "frame_id": "world",
+      "path": [
+        [
+          0,
+          -2.9
+        ],
+        [
+          0,
+          2.9
+        ]
+      ],
+      "thickness_m": 0.12,
+      "height_m": 3,
+      "evidence_ids": [
+        "source-plan"
+      ]
+    }
+  ],
+  "portals": [
+    {
+      "id": "door-a-b",
+      "kind": "door",
+      "boundary_id": "shared",
+      "connects": [
+        "room-a",
+        "room-b"
+      ],
+      "span": [
+        0.42,
+        0.58
+      ],
+      "traversable": true,
+      "evidence_ids": [
+        "source-plan"
+      ]
+    }
+  ],
+  "relations": [
+    {
+      "id": "adjacent-a-b",
+      "kind": "adjacent",
+      "from": "room-a",
+      "to": "room-b"
+    },
+    {
+      "id": "connected-a-b",
+      "kind": "connected",
+      "from": "room-a",
+      "to": "room-b",
+      "via_portal_id": "door-a-b"
+    }
+  ],
+  "occupancies": [],
+  "constraints": [],
+  "evidence": [
+    {
+      "id": "source-plan",
+      "source_id": "synthetic:SPACE-001",
+      "digest_sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+      "status": "confirmed"
+    }
+  ],
+  "unresolved": []
+}
