@@ -1,3 +1,4 @@
+import { conflictDetails } from './scene-conflicts.ts';
 import { DatabaseSync } from 'node:sqlite';
 import { createHash, randomUUID } from 'node:crypto';
 import { mkdirSync, readFileSync, writeFileSync, statSync } from 'node:fs';
@@ -32,6 +33,14 @@ export class LocalSceneBackend implements SceneBackend {
   }
   /** Release handles after each CLI/MCP operation so subsequent processes can reopen the store. */
   close(): void { this.db.close(); }
+  /** Receipts survive later revisions and process restarts. Request IDs are store-wide. */
+  async receipt(id: string, writeId: string): Promise<SavedScene | null> {
+    const row = this.db.prepare('SELECT snapshot FROM revisions WHERE write_id=?').get(writeId);
+    if (!row) return null;
+    const saved: SavedScene = JSON.parse(String(row.snapshot));
+    if (saved.id !== id) throw new SceneToolError('REQUEST_ID_REUSED', 'This request ID already names a different scene.');
+    return saved;
+  }
   async head(id: string): Promise<SavedScene | null> {
     const row = this.db.prepare('SELECT snapshot FROM revisions JOIN scenes ON scenes.id=revisions.scene_id AND scenes.revision=revisions.revision WHERE scenes.id=?').get(id);
     return row ? JSON.parse(String(row.snapshot)) : null;
@@ -43,18 +52,25 @@ export class LocalSceneBackend implements SceneBackend {
   }
   /** Commit the head, immutable snapshot and retry receipt in one transaction. */
   async save(id: string, name: string, document: SceneDocument, base: number, writeId: string): Promise<SavedScene> {
+    if (!Number.isSafeInteger(base) || base < 0 || base > 2147483646) throw new SceneToolError('INVALID_REQUEST', 'An explicit valid base revision is required.');
     this.db.exec('BEGIN IMMEDIATE');
     try {
       const receipt = this.db.prepare('SELECT snapshot FROM revisions WHERE write_id=?').get(writeId);
       if (receipt) {
         const saved: SavedScene = JSON.parse(String(receipt.snapshot));
-        if (saved.id !== id || saved.document.authoring.request_digest !== document.authoring.request_digest)
+        if (saved.id !== id || saved.document.authoring.request_digest !== document.authoring.request_digest || saved.document.authoring.parent_revision !== (base || null) || saved.name !== name || canonicalJSON(saved.document) !== canonicalJSON(document))
           throw new SceneToolError('REQUEST_ID_REUSED', 'This request ID already names a different write.');
         this.db.exec('COMMIT'); return saved;
       }
       const head = this.db.prepare('SELECT revision FROM scenes WHERE id=?').get(id);
-      if ((!head && base !== 0) || (head && head.revision !== base))
-        throw new SceneToolError(head ? 'CONFLICT' : 'SCENE_UNAVAILABLE', 'Read the current scene before retrying.', head ? { current_revision: head.revision } : {});
+      if (!head && base !== 0) unavailable();
+      if (head && head.revision !== base) {
+        const snapshot = this.db.prepare('SELECT snapshot FROM revisions WHERE scene_id=? AND revision=?');
+        const current: SavedScene = JSON.parse(String(snapshot.get(id, head.revision)!.snapshot));
+        const prior = snapshot.get(id, base);
+        throw new SceneToolError('CONFLICT', 'Scene has changed. Read the current revision, review changed fields, and reapply your edit with a new request_id.',
+          conflictDetails(id, base, current, prior ? JSON.parse(String(prior.snapshot)) : null));
+      }
       for (const instance of document.instances) {
         if (!instance.cloudVersionId || !this.db.prepare('SELECT id FROM assets WHERE id=?').get(instance.cloudVersionId))
           throw new SceneToolError('MISSING_ASSETS', 'A referenced local asset version is missing.');

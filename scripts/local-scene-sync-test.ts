@@ -174,7 +174,10 @@ try {
 
   const commit = { request_id: randomUUID(), base_revision: 7, document: (await exported(page)) };
   const stale = await fetch(`${apiURL}/api/local-scenes/${id}/commit`, { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify(commit) });
-  assert.equal(stale.status, 409); assert.equal((await stale.json()).current_revision, 8);
+  assert.equal(stale.status, 409); const conflict = await stale.json();
+  assert.equal(conflict.code, 'CONFLICT'); assert.equal(conflict.scene_id, id);
+  assert.equal(conflict.expected_revision, 7); assert.equal(conflict.actual_revision, 8); assert.equal(conflict.current_revision, 8);
+  assert.equal(conflict.applied, false); assert.equal(conflict.base_available, true); assert(Array.isArray(conflict.changed_instances));
   assert.equal(await statusWithHeaders(`/api/local-scenes/${id}/head`, { Origin: 'https://evil.invalid' }), 403);
   assert.equal(await statusWithHeaders(`/api/local-scenes/${id}/head`, { Host: 'evil.invalid' }), 403);
   assert.equal(await statusWithHeaders(`/api/local-scenes/${id}/head`, { 'Sec-Fetch-Site': 'cross-site' }), 403);

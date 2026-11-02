@@ -14,6 +14,7 @@ export async function sceneTestService() {
   const orders: Record<string, string[]> = {
     prepare_asset_upload: ['p_asset_key', 'p_name', 'p_source_kind', 'p_metadata', 'p_files'],
     finish_asset_upload: ['p_id'],
+    get_scene_write_receipt: ['p_id', 'p_write_id'],
     save_workspace_scene: ['p_id', 'p_name', 'p_document', 'p_expected_revision', 'p_write_id'],
     get_workspace_scene: ['p_id', 'p_revision', 'p_share_token'],
     list_scene_revisions: ['p_id', 'p_before_revision', 'p_limit'],

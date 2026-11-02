@@ -111,7 +111,10 @@ export class LocalSceneSession {
       signal: AbortSignal.timeout(10000), ...(body ? { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify(body) } : {}),
     });
     const result = await response.json();
-    if (!response.ok) throw Object.assign(new Error(result.error ?? 'Local service unavailable.'), { code: result.code, head: result.current_revision });
+    if (!response.ok) {
+      const changes = result.code === 'CONFLICT' ? result.changed_instances?.slice(0, 5).map((item: { instance_id: string; fields: string[] }) => `${item.instance_id}: ${item.fields.join(', ')}`).join('; ') : '';
+      throw Object.assign(new Error(`${result.error ?? 'Local service unavailable.'}${changes ? ` Changed objects: ${changes}. Your draft is retained.` : ''}`), { code: result.code, head: result.current_revision });
+    }
     return result;
   }
   private install(snapshot: Snapshot): void {

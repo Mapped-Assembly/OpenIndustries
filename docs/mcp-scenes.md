@@ -151,3 +151,5 @@ npm run test:mcp-scenes-browser
 ```
 
 The integration suite launches the real stdio server and Supabase client against a local HTTP facade backed by the actual migrations in PGlite/PostgreSQL. It tests generated/STEP/Form geometry, create/read/update, immutable revisions, schema validation, stale conflicts, interrupted-upload retries, missing sessions, account switching, and sanitized responses. The browser variant also opens an MCP-returned revision URL in a fresh signed-in browser and verifies the six cleanroom instances and robot animation. `OI_CHROME_PATH` can select an installed Chromium executable. These tests use fixture authentication and local Storage emulation; they make no live Supabase or LLM calls.
+
+See [concurrent edits and recovery](scene-conflicts.md) for structured conflicts, safe refresh-and-retry, durable request identity and backend transaction boundaries.

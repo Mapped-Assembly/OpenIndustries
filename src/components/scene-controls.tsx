@@ -22,6 +22,7 @@ export function SceneControls({workspace,owner,roomId,current,replace,busy,setBu
   const[upload,setUpload]=useState(cloudStorageEnabled);
   const operation=useRef(0);const active=useRef(true);const lock=useRef(false);
   const latest=useRef({workspace,current,owner,roomId,name,flushDraft,getScope});latest.current={workspace,current,owner,roomId,name,flushDraft,getScope};
+  const saveAttempt=useRef<{scope:string;state:typeof latest.current;writeId:string;upload:boolean}|null>(null);
   const cancelled=useRef(0);const saveIdentity=useRef<{scope:string;id:string}|null>(null);
   const operationScope=useRef('');const namedRoom=useRef('');const dialog=useRef<HTMLDialogElement>(null);const returnFocus=useRef<HTMLElement|null>(null);
   useEffect(()=>{if(namedRoom.current!==roomId){setName(current?.name??'Untitled room');namedRoom.current=roomId;}setShareURL('');},[roomId,current?.name]);
@@ -87,16 +88,23 @@ export function SceneControls({workspace,owner,roomId,current,replace,busy,setBu
     }
     if(!latest.current.name.trim()){setError('Name the room before saving.');return false;}
     let succeeded=false;
+    // Preserve ambiguous saves across both retry buttons and Save-and-continue.
+    const scope=latest.current.getScope();
+    if(saveAttempt.current?.scope!==scope)saveAttempt.current={scope,state:latest.current,writeId:crypto.randomUUID(),upload:upload&&cloudStorageEnabled};
+    const attempt=saveAttempt.current, {state,writeId}=attempt;
     await run(async(repo,token)=>{
-      const state=latest.current;
       const scope=state.getScope();
       if(saveIdentity.current?.scope!==scope)saveIdentity.current={scope,id:/^[a-f0-9-]{36}$/i.test(state.roomId)?state.roomId:crypto.randomUUID()};
-      const result=await repo.save(state.workspace,state.name,state.current?.id??saveIdentity.current.id,state.current?.revision??0,upload&&cloudStorageEnabled,text=>{if(valid(token))setMessage(text);});
+      let result;
+      try{result=await repo.save(state.workspace,state.name,state.current?.id??saveIdentity.current.id,state.current?.revision??0,attempt.upload,text=>{if(valid(token))setMessage(text);},writeId);}
+      catch(error){if(error instanceof SceneConflictError&&saveAttempt.current===attempt)saveAttempt.current=null;throw error;}
+      if(saveAttempt.current===attempt)saveAttempt.current=null;
       if(!valid(token))return;
       // Listing is independent of a successful save; a list failure must never retry the write.
       setScenes(rows=>[result.scene,...rows.filter(row=>row.id!==result.scene.id)]);
-      setMessage('Scene saved to Postgres.');namedRoom.current=result.scene.id;setName(result.scene.name);succeeded=true;
-      replace({...result,roomId:result.scene.id});
+      const later=latest.current, edited=later.workspace!==state.workspace||later.name!==state.name;
+      setMessage(edited?'Earlier save confirmed; newer edits remain unsaved.':'Scene saved to Postgres.');namedRoom.current=result.scene.id;setName(edited?later.name:result.scene.name);succeeded=!edited;
+      replace({...result,workspace:edited?later.workspace:result.workspace,roomId:result.scene.id});
     });
     return succeeded;
   }

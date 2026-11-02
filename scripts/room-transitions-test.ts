@@ -148,6 +148,29 @@ try {
   await open('Room B'); await expect(width).toHaveValue('12');
   console.log('PASS save/open failures, conflict, retry, cancelled stale open, missing geometry');
 
+  // An unknown save outcome keeps its request ID, even if newer local edits are made before retry.
+  const beforeLost = (await repo.open(second.scene.id, [], () => {})).scene.revision;
+  let lostWriteId = '';
+  await width.fill('14');
+  await page.route(saveURL, async route => {
+    lostWriteId = route.request().postDataJSON().p_write_id;
+    await route.fetch(); await route.abort('connectionreset');
+  });
+  await manager.getByRole('button', { name: 'Save cloud scene', exact: true }).click();
+  await expect(manager.getByRole('button', { name: 'Retry last cloud action', exact: true })).toBeEnabled();
+  assert.equal((await repo.open(second.scene.id, [], () => {})).scene.revision, beforeLost + 1);
+  await width.fill('15'); await page.unroute(saveURL);
+  await page.route(saveURL, route => { assert.equal(route.request().postDataJSON().p_write_id, lostWriteId); return route.continue(); });
+  await manager.getByRole('button', { name: 'Retry last cloud action', exact: true }).click();
+  await expect(manager.getByLabel('Scene save status')).toContainText('newer edits remain unsaved');
+  await expect(width).toHaveValue('15');
+  assert.equal((await repo.open(second.scene.id, [], () => {})).scene.revision, beforeLost + 1);
+  await page.unroute(saveURL);
+  await width.fill('12'); await manager.getByRole('button', { name: 'Save cloud scene', exact: true }).click();
+  await expect(manager.getByLabel('Scene save status')).toContainText('saved to Postgres');
+  assert.equal((await repo.open(second.scene.id, [], () => {})).scene.revision, beforeLost + 2);
+  console.log('PASS cloud lost-response receipt retry and preservation of newer dirty edits');
+
   // Cloud duplication retains independent instance IDs and shared geometry after deletion.
   await manager.getByRole('button', { name: 'Duplicate scene Room B', exact: true }).click();
   await expect(manager.getByLabel('Scene name')).toHaveValue('Room B copy');

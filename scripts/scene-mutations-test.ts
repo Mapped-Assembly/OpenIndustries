@@ -141,7 +141,10 @@ async function suite(kind: 'local' | 'cloud'): Promise<void> {
       // Node 22 can emit SQLite warnings after the CLI's structured error.
       const records = failure.stderr.split(/\r?\n/).map(line => line.trim()).filter(line => line.startsWith('{'));
       assert.equal(records.length, 1, failure.stderr);
-      assert.equal(JSON.parse(records[0]).error.code, 'CONFLICT'); return true;
+      const conflict = JSON.parse(records[0]).error;
+      assert.equal(conflict.code, 'CONFLICT'); assert.equal(conflict.scene_id, id);
+      assert.equal(conflict.expected_revision, 2); assert.equal(conflict.actual_revision, 4); assert.equal(conflict.applied, false);
+      return true;
     });
     // One successful batch = one revision; later operations observe earlier operations in that batch.
     const batch = await ok('mutate_scene', request(4, [add, { op: 'update_instance', instance_id: 'environment-monitor-01', patch: { visible: false }, preconditions: { name: 'Environment monitor' } }]));

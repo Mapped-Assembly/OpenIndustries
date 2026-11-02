@@ -9,14 +9,17 @@ export type RevisionChange = { section: string; target: string; field: string; b
 export type RevisionComparison = { from_revision: number; to_revision: number; changes: RevisionChange[]; total_changes: number };
 
 export class SceneConflictError extends Error {
-  constructor(readonly currentRevision: number) {
+  constructor(readonly currentRevision: number, readonly details: { scene_id?: string; expected_revision?: number; changed_instances?: { instance_id: string; fields: string[] }[] } = {}) {
     super(`Scene changed on another device. Current revision: ${currentRevision}. Refresh history, compare your changes, and retry from the current revision.`);
     this.name = 'SceneConflictError';
+    if (details.expected_revision !== undefined) this.message += ` Your base: ${details.expected_revision}.`;
+    const changes = details.changed_instances?.slice(0, 5).map(item => `${item.instance_id}: ${item.fields.join(', ')}`);
+    if (changes?.length) this.message += ` Changed objects: ${changes.join('; ')}. Your draft is retained.`;
   }
 }
 export function sceneRPCError(error: { message: string; code?: string; details?: string }) {
   if (error.code === '40001') {
-    try { const detail = JSON.parse(error.details ?? '{}'); if (Number.isInteger(detail.current_revision)) return new SceneConflictError(detail.current_revision); } catch { /* Use the safe existing message below. */ }
+    try { const detail = JSON.parse(error.details ?? '{}'); if (Number.isInteger(detail.current_revision)) return new SceneConflictError(detail.current_revision, detail); } catch { /* Use the safe existing message below. */ }
   }
   return new Error(error.message);
 }
