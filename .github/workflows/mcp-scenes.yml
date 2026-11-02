@@ -29,9 +29,25 @@ jobs:
       - run: npm run test:plan
       - run: npm run typecheck:space-ir
       - run: npm run test:space-ir
+      - run: node --import tsx scripts/space-ir-demo.ts
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: space-ir-portable-scene
+          path: deliverables/space-ir/SPACE-001.oi.json
+          if-no-files-found: ignore
       - run: npm run test:animation
       - run: npm run test:scene-links
       - run: npx playwright install --with-deps chromium
+      - run: node --import tsx scripts/space-ir-browser-test.ts
+        env:
+          OI_SPACE_IR_EVIDENCE_DIR: ${{ runner.temp }}/oi-space-ir-browser
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: space-ir-browser-evidence
+          path: ${{ runner.temp }}/oi-space-ir-browser
+          if-no-files-found: ignore
       - run: node --import tsx scripts/plan-browser-test.ts
         env:
           OI_PLAN_EVIDENCE_DIR: ${{ runner.temp }}/oi-plan-evidence
