@@ -136,8 +136,12 @@ async function suite(kind: 'local' | 'cloud'): Promise<void> {
     const noOps = await mcp.call('mutate_scene', request(4, [])); assert.equal(noOps.structuredContent.error.code, 'INVALID_REQUEST');
     await writeFile(requestPath, JSON.stringify(request(2, [add])));
     await assert.rejects(() => cli(process.execPath, ['cli/openindustries.mjs', 'scenes', 'mutate', requestPath], { env }), error => {
-      const stderr = (error as { stderr: string }).stderr.trim().split('\n').at(-1)!;
-      assert.equal(JSON.parse(stderr).error.code, 'CONFLICT'); return true;
+      const failure = error as { code: number; stdout: string; stderr: string };
+      assert.equal(failure.code, 1); assert.equal(failure.stdout, '');
+      // Node 22 can emit SQLite warnings after the CLI's structured error.
+      const records = failure.stderr.split(/\r?\n/).map(line => line.trim()).filter(line => line.startsWith('{'));
+      assert.equal(records.length, 1, failure.stderr);
+      assert.equal(JSON.parse(records[0]).error.code, 'CONFLICT'); return true;
     });
     // One successful batch = one revision; later operations observe earlier operations in that batch.
     const batch = await ok('mutate_scene', request(4, [add, { op: 'update_instance', instance_id: 'environment-monitor-01', patch: { visible: false }, preconditions: { name: 'Environment monitor' } }]));
