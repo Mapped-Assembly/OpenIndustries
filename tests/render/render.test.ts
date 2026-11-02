@@ -155,7 +155,7 @@ test('saved-scene head/pinned HTTP+MCP renders preserve asset provenance, GIF pa
     const nextId=randomUUID();
     await backend.save(sceneId,'After',document(1,nextId),1,nextId);
     const headRetry=await api('/v1/render/jobs','POST',{request_id:headId,saved_scene:{scene_id:sceneId},options});
-    assert.equal(headRetry.status,202,await headRetry.text());
+    assert.equal(headRetry.status,202,await headRetry.clone().text());
     assert.equal((await headRetry.json()).source.revision,1);
     const different=await api('/v1/render/jobs','POST',{request_id:headId,saved_scene:{scene_id:sceneId,revision:2},options});
     assert.equal(different.status,409);
@@ -165,7 +165,7 @@ test('saved-scene head/pinned HTTP+MCP renders preserve asset provenance, GIF pa
     assert(!pinned.isError,JSON.stringify(pinned));
     assert.equal(pinned.structuredContent.source.revision,1);
     const second=await api('/v1/render/jobs','POST',{request_id:secondId,saved_scene:{scene_id:sceneId,revision:2},options});
-    assert.equal(second.status,202,await second.text());
+    assert.equal(second.status,202,await second.clone().text());
     assert.equal((await second.json()).source.revision,2);
     const collect=async(id:string)=>{
       const path='/v1/render/jobs/'+id;

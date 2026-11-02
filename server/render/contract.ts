@@ -24,7 +24,12 @@ export const uuid = (value:unknown):value is string => typeof value==='string'&&
 export function envelope(raw:unknown):RenderRequest {
   const value=raw as RenderRequest;
   if(!value||typeof value!=='object'||Array.isArray(value)||!uuid(value.request_id)||Object.keys(value).some(k=>!['request_id','scene','saved_scene','options'].includes(k))||('scene' in value)===('saved_scene' in value))throw new RenderError('INVALID_REQUEST','Provide request_id and exactly one portable scene or pinned saved_scene.');
-  if('saved_scene' in value && (!value.saved_scene || typeof value.saved_scene!=='object' || Array.isArray(value.saved_scene) || !uuid(value.saved_scene.scene_id) || (value.saved_scene.revision!==undefined && (!Number.isSafeInteger(value.saved_scene.revision)||value.saved_scene.revision<1)) || Object.keys(value.saved_scene).some(k=>!['scene_id','revision'].includes(k))))throw new RenderError('INVALID_REVISION','Saved scenes require a UUID scene_id and optional positive revision.'];
+  if('saved_scene' in value && (
+    !value.saved_scene || typeof value.saved_scene!=='object' || Array.isArray(value.saved_scene) ||
+    !uuid(value.saved_scene.scene_id) ||
+    (value.saved_scene.revision!==undefined && (!Number.isSafeInteger(value.saved_scene.revision)||value.saved_scene.revision<1)) ||
+    Object.keys(value.saved_scene).some(k=>!['scene_id','revision'].includes(k))
+  ))throw new RenderError('INVALID_REVISION','Saved scenes require a UUID scene_id and optional positive revision.');
   if(Buffer.byteLength(JSON.stringify(value))>LIMITS.inputBytes)throw new RenderError('PAYLOAD_TOO_LARGE','Render request exceeds 8 MiB.',413);
   return value;
 }
