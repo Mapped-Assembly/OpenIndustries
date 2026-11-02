@@ -47,7 +47,7 @@ export type SpaceIR = {
   /** Scene room bounds are a metric planning envelope, never inferred from image pixels. */
   site: { frame_id: string; width_m: number; depth_m: number; height_m: number } | null;
   frames: Frame[]; regions: Region[]; boundaries: Boundary[]; portals: Portal[];
-  relations: SpatialRelation[]; occupancies: Occupancy[]; constraints: SpatialConstraint[];
+  spatial_relations: SpatialRelation[]; occupancies: Occupancy[]; constraints: SpatialConstraint[];
   evidence: SourceEvidence[]; unresolved: string[];
 };
 export type Finding = { code: string; path: string; message: string; severity: 'error' | 'unresolved' };
@@ -123,7 +123,7 @@ export function validateSpaceIR(value: unknown): Validation {
   if (value.schema_id !== SPACE_IR_SCHEMA || value.schema_version !== SPACE_IR_VERSION)
     report('SCHEMA', '$', 'Unsupported SpaceIR schema or version.');
   if (!nonempty(value.id) || !nonempty(value.revision)) report('IDENTITY', '$', 'Stable id and revision are required.');
-  const arrays = ['frames', 'regions', 'boundaries', 'portals', 'relations', 'occupancies', 'constraints', 'evidence', 'unresolved'] as const;
+  const arrays = ['frames', 'regions', 'boundaries', 'portals', 'spatial_relations', 'occupancies', 'constraints', 'evidence', 'unresolved'] as const;
   for (const key of arrays) if (!Array.isArray(value[key]) || (value[key] as unknown[]).length > 10000)
     report('COLLECTION', key, 'Collection required and limited to 10000 entries.');
   if (findings.some(f => f.code === 'COLLECTION')) return { valid: false, findings };
@@ -224,8 +224,8 @@ export function validateSpaceIR(value: unknown): Validation {
     else for (const id of portal.connects) requireRef('regions', id, path + '.connects');
     if (typeof portal.id === 'string') portals.set(portal.id, portal as Portal);
   }
-  for (const [i, relation] of doc.relations.entries()) {
-    const path = 'relations[' + i + ']';
+  for (const [i, relation] of doc.spatial_relations.entries()) {
+    const path = 'spatial_relations[' + i + ']';
     if (!record(relation)) { report('RELATION', path, 'Invalid relation.'); continue; }
     if (!['contains','adjacent','connected','overlaps'].includes(relation.kind)) report('RELATION_KIND', path, 'Unknown relation kind.');
     requireRef('regions', relation.from, path + '.from');
@@ -236,7 +236,7 @@ export function validateSpaceIR(value: unknown): Validation {
       const p = portals.get(relation.via_portal_id as string);
       if (p && (!p.traversable || !p.connects.includes(relation.from) || !p.connects.includes(relation.to)))
         report('NOT_TRAVERSABLE', path, 'Connection requires a traversable portal between both regions.');
-    } else if (relation.via_portal_id !== undefined) report('RELATION_PORTAL', path, 'Only connected relations use via_portal_id.');
+    } else if (relation.via_portal_id !== undefined) report('RELATION_PORTAL', path, 'Only connected spatial_relations use via_portal_id.');
   }
   for (const [i, occupancy] of doc.occupancies.entries()) {
     const path = 'occupancies[' + i + ']';
@@ -265,7 +265,7 @@ export function validateSpaceIR(value: unknown): Validation {
       (ev.locator.polygon !== undefined && !polygonValid(ev.locator.polygon))))
       report('EVIDENCE_LOCATOR', 'evidence[' + i + ']', 'Invalid source locator.');
   }
-  for (const key of ['regions','boundaries','portals','relations','occupancies','constraints'] as const)
+  for (const key of ['regions','boundaries','portals','spatial_relations','occupancies','constraints'] as const)
     for (const [i, item] of doc[key].entries()) if (record(item) && item.evidence_ids !== undefined) {
       if (!Array.isArray(item.evidence_ids)) report('EVIDENCE_REF', key + '[' + i + ']', 'Evidence IDs must be an array.');
       else for (const id of item.evidence_ids) requireRef('evidence', id, key + '[' + i + '].evidence_ids');
