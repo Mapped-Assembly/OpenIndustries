@@ -36,6 +36,8 @@ fail(s => { s.portals[0].boundary_id = 'nonexistent'; }, 'DANGLING_REFERENCE');
 fail(s => { s.regions[0].parent_id = 'room-b'; s.regions[1].parent_id = 'room-a'; }, 'PARENT_CYCLE');
 fail(s => { s.regions[0].polygon = [[-3,-3], [0,0], [-3,0], [0,-3]]; }, 'POLYGON');
 fail(s => { s.frames[0].units = 'px'; }, 'FRAME');
+fail(s => { s.frames[0].to_world = [1,0,0,1,3,0]; }, 'FRAME');
+fail(s => { s.site!.width_m = .5; }, 'SITE');
 fail(s => { s.boundaries[0].frame_id = 'no-frame'; }, 'DANGLING_REFERENCE');
 fail(s => { s.portals[0].span = [-0.5, .3]; }, 'PORTAL_SPAN');
 fail(s => { s.portals[0].kind = 'window'; }, 'PORTAL_SEMANTICS');
