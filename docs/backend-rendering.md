@@ -1,7 +1,7 @@
 # Backend scene rendering through API and MCP
 
 The local render service accepts a portable `astra.scene` document with bundled
-geometry, or an explicit revision in a configured local scene store. It produces
+geometry, or a scene ID with an optional pinned revision in a configured local scene store. It produces
 a GIF and review JSON without opening the workbench or keeping an OpenCode/MCP
 process alive. It uses the same scene validation, transforms, timeline evaluator,
 Three.js world and `renderGif` implementation as GIF studio.
@@ -78,8 +78,10 @@ Example MCP arguments (use a fresh lowercase UUID for each new render):
 ```
 
 Retry an uncertain submission with the **same request ID and identical inputs**.
-It returns the existing job, including terminal/interrupted state. Reusing an ID
-for different normalized content returns `REQUEST_ID_REUSED`. A cancelled,
+It returns the existing job, including terminal/interrupted state. For head-based
+saved-scene requests, the retry returns the originally pinned revision even if
+the head has advanced. Reusing an ID for different request content returns
+`REQUEST_ID_REUSED`. A cancelled,
 failed or interrupted job requires a new ID for a new attempt.
 
 ## HTTP API
@@ -122,17 +124,41 @@ curl --fail-with-body -H "Authorization: Bearer $RENDER_TOKEN" \
   "$RENDER_ORIGIN/v1/render/jobs/$RENDER_ID/metadata" -o room.review.json
 ```
 
-For a saved scene, configure the worker with `OI_RENDER_SCENE_DIR` pointing to
-an existing OI local scene store, and submit:
+For a saved scene, configure the **render service** with `OI_RENDER_SCENE_DIR`
+pointing to the same existing local scene store as the MCP scene tools
+(`OI_SCENE_BACKEND=local`; usually `OI_SCENE_DIR`). Restart the renderer after
+setting the environment variable. Submit either the latest head or a specific
+immutable revision through HTTP or `openindustries.render_submit`:
 
 ```json
-{"request_id":"a6c67ad0-9df1-48e8-899b-04c25051df45","saved_scene":{"scene_id":"875f10e2-662e-442c-ae8e-00f3bdb1817d","revision":1}}
+{"request_id":"a6c67ad0-9df1-48e8-899b-04c25051df45","saved_scene":{"scene_id":"875f10e2-662e-442c-ae8e-00f3bdb1817d"}}
 ```
 
-The worker resolves and copies that exact revision and hash-verified geometry
-**before acknowledging acceptance**. It never silently uses a later head.
-Cloud references must first be exported to a portable bundled scene; this initial
-worker does not inherit cloud credentials or fetch arbitrary remote assets.
+```json
+{"request_id":"c37ec881-8731-4cee-8eb0-fdd79e72d6a0","saved_scene":{"scene_id":"875f10e2-662e-442c-ae8e-00f3bdb1817d","revision":1}}
+```
+
+To review the November 1 greenhouse S0/S1 example, submit scene
+`4c6a439f-5d31-4f9e-a5c0-96c521e95f7e` twice with distinct request IDs,
+revision `1` and revision `2`, and identical camera/renderer options. This
+requires the corresponding original local scene store and immutable asset
+files; the repository does not contain that user's SQLite store.
+
+The service captures the current head as an **exact revision before queuing**,
+validates its immutable geometry through `LocalSceneBackend`, and persists a
+render input snapshot. New commits cannot change that in-flight render. Status
+and review metadata record `source.kind: "saved_scene"`, `scene_id`,
+resolved `revision`, and sorted asset bindings (`asset_id`, `version_id`,
+`fingerprint`, `sha256`, `source_digest`). Camera/options, render build hash,
+Chromium version, and media checksums are retained in the normal review JSON.
+
+Malformed revision input returns `INVALID_REVISION` (400); unknown scenes
+`SCENE_NOT_FOUND` (404); missing revisions `SCENE_REVISION_NOT_FOUND` (404);
+missing/corrupt versions `ASSET_UNAVAILABLE` (422); and unavailable stores
+`SCENE_STORE_UNAVAILABLE` (503). Without `OI_RENDER_SCENE_DIR` the request
+returns `SAVED_SCENES_DISABLED`. Existing portable JSON rendering is unchanged.
+Cloud references must first be exported to a portable bundled scene; this local
+renderer does not inherit cloud credentials or fetch arbitrary remote assets.
 
 ## Scope, camera, limits and timing
 
@@ -168,8 +194,8 @@ same selected world bounds as GIF studio and recorded in review metadata.
 GIF stores delays in centiseconds. At requested 15 fps, each frame lasts 70 ms,
 so the 60-frame preset lasts **4.2 seconds**. Metadata distinguishes requested
 options from decoded output dimensions, frame count, delay and actual duration.
-It also records the canonical normalized scene SHA-256, pinned revision when
-applicable, renderer build hash, Chromium version, camera, animation snapshots,
+It also records the canonical normalized scene SHA-256, pinned revision and
+asset-version/digest provenance when applicable, renderer build hash, Chromium version, camera, animation snapshots,
 output hash and byte count.
 
 ## Lifecycle and headless deployment
@@ -233,7 +259,7 @@ Integration coverage uses the actual stdio MCP server, HTTP service, child worke
 Chromium renderer and GIF decoder. It covers the one-room GIF, client disconnect,
 completed-output restart, empty rooms, timeline/sample output, missing/malformed
 geometry, bounded settings, queue ownership, cancel/retry, deadline, renderer
-failure, abrupt service death and pinned saved revisions. The existing Scene
+failure, abrupt service death, saved head/pinned revisions, S0/S1 decodable GIF differences, asset integrity and restart persistence. The existing Scene
 authoring CI job runs the renderer checks and uploads the generated GIF, portable
 scene and review JSON under `backend-render-evidence`; no separate runner job was
 added. Complete lab-run/video exports remain #15.
