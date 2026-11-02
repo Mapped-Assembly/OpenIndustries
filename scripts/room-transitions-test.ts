@@ -44,14 +44,18 @@ try {
   await context.addInitScript(({ key, session }) => {
     if (!localStorage.getItem('fixture-initialized')) { localStorage.setItem(key, JSON.stringify(session)); localStorage.setItem('fixture-initialized', 'true'); }
   }, { key: `sb-${new URL(service.origin).hostname.split('.')[0]}-auth-token`, session });
-  await context.route('**/default-room.json', route => json(route, makeManifest(emptyWorkspace(), true)));
   await context.route('https://fonts.googleapis.com/**', route => route.fulfill({ contentType: 'text/css', body: '' }));
   const page = await context.newPage();
+  const legacySceneRequests: string[] = [];
+  page.on('request', request => { if (new URL(request.url()).pathname === '/default-room.json') legacySceneRequests.push(request.url()); });
   page.on('pageerror', e => errors.push(e.message));
   page.on('console', m => { if (m.type() === 'error' && !m.text().includes('Failed to load resource')) errors.push(m.text()); });
   page.on('dialog', d => { assert.equal(d.type(), 'confirm'); void d.accept(); });
   await page.goto('http://127.0.0.1:4182');
   await expect(page).toHaveTitle('OpenIndustries — Spatial Workbench');
+  await expect(page.getByRole('status').filter({ hasText: 'New empty workspace ready' })).toBeVisible();
+  await expect(page.locator('.asset')).toHaveCount(0);
+  assert.deepEqual(legacySceneRequests, [], 'Fresh workspaces must not request the retired default-room scene');
   assert.equal(new URL(page.url()).pathname, '/');
   const manager = page.getByRole('region', { name: 'Scene persistence' });
   const prompt = page.getByRole('dialog', { name: 'Unsaved room changes' });

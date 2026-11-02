@@ -167,10 +167,10 @@ function App(){
         snapshot=await restoreAuthWorkspace();restored=snapshot?.workspace;
         if(snapshot&&!restored){restored=appendAssets(emptyWorkspace(),snapshot.assets);restored.room=snapshot.room as Vec3;restored.items=restored.items.map((item,i)=>({...item,position:snapshot?.positions?.[i]??item.position}));}
         draft=restored?null:await loadWorkspaceDraft(id);restored??=draft?.workspace;
-        if(!restored){const response=await fetch('/default-room.json');if(response.ok)restored=hydrateManifest(readManifest(await response.json()),[]);}
+        restored??=emptyWorkspace();
       }
       if(!active||epoch!==draftEpoch.current||session.current.owner!==id)return;draftOwner.current=id;previousOwner.current=id;
-      if(restored){replace(restored);setCurrentScene(cleanroomPreview?null:draft?.scene??null);setRoomId(draft?.roomId??(cleanroomPreview?'cleanroom-suite-doubled':'default-machine-room'));setSelected(cleanroomPreview?-1:snapshot?.selected??(restored.items.length?0:-1));if(cleanroomPreview){setTime(0);setPlaying(true);}setStatus(cleanroomPreview?'Playing cleanroom sampling route':snapshot?'Restored workspace after sign-in':draft?'Restored local draft':'Loaded default machine interface room');}
+      if(restored){replace(restored);setCurrentScene(cleanroomPreview?null:draft?.scene??null);setRoomId(draft?.roomId??(cleanroomPreview?'cleanroom-suite-doubled':crypto.randomUUID()));setSelected(cleanroomPreview?-1:snapshot?.selected??(restored.items.length?0:-1));if(cleanroomPreview){setTime(0);setPlaying(true);}setStatus(cleanroomPreview?'Playing cleanroom sampling route':snapshot?'Restored workspace after sign-in':draft?'Restored local draft':'New empty workspace ready');}
     })().catch(e=>{if(active){draftOwner.current=requestedScope==='guest'?null:requestedScope;setDraftRecovery({scope:requestedScope,message:e instanceof Error?e.message:'The saved workspace could not be opened.'});setError('Your saved local workspace is invalid. Recover it below or start a clean workspace.');}}).finally(()=>{clearTimeout(fallback);if(active){setDraftReady(true);setBusy(false);}});
     return()=>{active=false;clearTimeout(fallback);};
   },[]);

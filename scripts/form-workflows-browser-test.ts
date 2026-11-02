@@ -50,7 +50,8 @@ try {
       assert.equal(new URL(page.url()).pathname, '/');
       await expect(page.getByRole('button', { name: /Drop files or browse/ })).toBeEnabled();
       await page.getByRole('button', { name: 'New room', exact: true }).click();
-      await page.getByRole('dialog', { name: 'Unsaved room changes' }).getByRole('button', { name: 'Discard and continue' }).click();
+      await expect(page.locator('footer [role=status]')).toContainText('New room ready');
+      await expect(page.getByRole('dialog', { name: 'Unsaved room changes' })).toHaveCount(0);
       const initialCount = scenario.folder ? 2 : 1;
       const paths = [join(root, scenario.path), ...(scenario.cad ? [join(root, 'opencode/models/block.step')] : [])];
       const source = JSON.parse(await readFile(paths[0], 'utf8'));
