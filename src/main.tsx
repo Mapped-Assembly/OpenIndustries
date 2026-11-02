@@ -16,6 +16,7 @@ import { SPACE_BRIEFS, buildSpace, inferSpaceBrief, type SpaceBriefKey } from '.
 import { CaptureTools } from './components/capture-tools';
 import { AuthControls } from './components/auth-controls';
 import { WorkspaceViewer } from './components/workspace-viewer';
+import { PlanViewer } from './components/plan-viewer';
 import { EmbodiedWorkbench } from './components/embodied-workbench';
 import { Timeline } from './components/timeline';
 import { localBinding } from './lib/local-scene-session';
@@ -41,6 +42,7 @@ function App(){
   const latestWorkspace=useRef(workspace);latestWorkspace.current=workspace;
   const [selected,setSelected]=useState(-1);const[selectedPart,setSelectedPart]=useState(-1);const[focus,setFocus]=useState(0);
   const [time,setTime]=useState<number|null>(null);const[playing,setPlaying]=useState(false);
+  const [viewMode,setViewMode]=useState<'3d'|'plan'>('3d');
   const [currentScene,setCurrentScene]=useState<SavedScene|null>(null);
   const [roomId,setRoomId]=useState('local');
   const [status,setStatus]=useState('Ready to import');const[error,setError]=useState('');const[busyState,setBusy]=useState(true);
@@ -316,13 +318,19 @@ function App(){
     <main onDragOver={e=>e.preventDefault()} onDrop={e=>{e.preventDefault();void load(Array.from(e.dataTransfer.files));}}>
       <div ref={workspaceSlot} style={{display:'contents'}}/>{createPortal(side,workspaceHost)}
       <div ref={stage} className={`stage${expanded?' stage-expanded':''}`}>
-        <div className="stage-label"><span className="dot"/> PERSPECTIVE VIEW <span>1:1 / METERS</span></div>
+        <div className="stage-label"><span className="dot"/> {viewMode==='plan'?'2D PLAN / X-Z':'PERSPECTIVE VIEW'} <span>METERS</span></div>
+        <div className="oi-view-mode" role="group" aria-label="Viewport mode"><button aria-pressed={viewMode==='3d'} onClick={()=>setViewMode('3d')}>3D</button><button aria-pressed={viewMode==='plan'} onClick={()=>setViewMode('plan')}>2D Plan</button></div>
         {isFullscreen&&<button className="workspace-toggle" aria-controls="workspace-panel" aria-expanded={workspaceVisible} onClick={()=>setWorkspaceVisible(v=>!v)}>{workspaceVisible?'Hide workspace':'Show workspace'}</button>}
         <button className="fullscreen-toggle" aria-label={isFullscreen?'Exit fullscreen':'Enter fullscreen'} aria-pressed={isFullscreen} onClick={()=>void toggleFullscreen()}>{isFullscreen?'↙ Exit fullscreen':'⛶ Fullscreen'}</button>
         <button className="capture-launch" aria-expanded={captureOpen} onClick={()=>setCaptureOpen(v=>!v)}>GIF studio</button>
-        <WorkspaceViewer workspace={workspace} selected={selected} selectedPart={selectedPart} time={time} focus={focus} region={captureRegion} onSelect={(i,j)=>{setSelected(i);setSelectedPart(j);}}/>
+        {viewMode==='plan'?
+          <PlanViewer workspace={workspace} selected={selected} time={time} readOnly={busy||cloudLinkMode||localScene?.revision!==undefined}
+            onSelect={i=>{setSelected(i);setSelectedPart(-1);}}
+            onMove={(i,x,z)=>{if(busy||cloudLinkMode||localScene?.revision!==undefined)return;const current=latestWorkspace.current;const item=current.items[i];if(!item)return;setPlaying(false);setTime(null);change({...current,items:current.items.map((v,j)=>j===i?{...v,position:[x,v.position[1],z] as Vec3}:v)});}}
+            onRotate={(i,amount)=>{if(busy||cloudLinkMode||localScene?.revision!==undefined)return;const current=latestWorkspace.current;if(!current.items[i])return;setPlaying(false);setTime(null);change({...current,items:current.items.map((v,j)=>j===i?{...v,rotation:[v.rotation[0],v.rotation[1]+amount,v.rotation[2]] as Vec3}:v)});}}/>:
+          <WorkspaceViewer workspace={workspace} selected={selected} selectedPart={selectedPart} time={time} focus={focus} region={captureRegion} onSelect={(i,j)=>{setSelected(i);setSelectedPart(j);}}/>}
         <CaptureTools key={`${owner}:${roomId}:${roomOperation.current}`} open={captureOpen} assets={assets} room={workspace.room} selected={selected} close={()=>setCaptureOpen(false)} onRegion={setCaptureRegion} addAsset={addAsset} workspace={workspace} time={time} roomOperation={roomOperation.current} onFeedback={sendAnimationFeedback}/>
-        <div className="hint">{time!==null?`ANIMATION ${time.toFixed(2)}s · `:''}Drag to orbit · Right-drag to pan · Scroll to zoom</div>
+        {viewMode==='3d'&&<div className="hint">{time!==null?`ANIMATION ${time.toFixed(2)}s · `:''}Drag to orbit · Right-drag to pan · Scroll to zoom</div>}
       </div>
       <aside className="inspector"><div className="eyebrow">INSPECTOR</div><ProjectInspector item={workspace.items[selected]} selectedPart={selectedPart} selectPart={index=>{setSelectedPart(index);setFocus(n=>n+1);}}/></aside>
     </main><footer><span role="status">{busy?'◌ ':'● '}{status}</span><span>FORM POWERED · LOCAL + CLOUD</span></footer>
