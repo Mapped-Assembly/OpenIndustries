@@ -22,7 +22,7 @@ assert.equal(canonicalSpaceJSON(reordered), canonicalSpaceJSON(fixture));
 const windowOnly = copy(fixture);
 windowOnly.portals[0].kind = 'window';
 windowOnly.portals[0].traversable = false;
-windowOnly.relations = windowOnly.relations.filter(r => r.kind !== 'connected');
+windowOnly.spatial_relations = windowOnly.spatial_relations.filter(r => r.kind !== 'connected');
 assert.equal(validateSpaceIR(windowOnly).valid, true);
 assert.deepEqual(accessibleRegions(windowOnly, 'room-a'), ['room-a']);
 
@@ -39,7 +39,7 @@ fail(s => { s.frames[0].units = 'px'; }, 'FRAME');
 fail(s => { s.boundaries[0].frame_id = 'no-frame'; }, 'DANGLING_REFERENCE');
 fail(s => { s.portals[0].span = [-0.5, .3]; }, 'PORTAL_SPAN');
 fail(s => { s.portals[0].kind = 'window'; }, 'PORTAL_SEMANTICS');
-fail(s => { s.relations[1].via_portal_id = 'no-portal'; }, 'DANGLING_REFERENCE');
+fail(s => { s.spatial_relations[1].via_portal_id = 'no-portal'; }, 'DANGLING_REFERENCE');
 fail(s => { s.evidence[0].digest_sha256 = 'f00'; }, 'EVIDENCE');
 fail(s => { s.regions[0].evidence_ids = ['missing']; }, 'DANGLING_REFERENCE');
 fail(s => { s.frames.push({ id:'image', units:'px', axes:'image_xy', to_world:[1,2,2,4,0,0] }); }, 'TRANSFORM');
