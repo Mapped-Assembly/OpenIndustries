@@ -27,6 +27,8 @@ jobs:
       - run: npm run test:cad
       - run: node --import tsx scripts/workspace-test.ts
       - run: npm run test:plan
+      - run: npm run typecheck:space-ir
+      - run: npm run test:space-ir
       - run: npm run test:animation
       - run: npm run test:scene-links
       - run: npx playwright install --with-deps chromium
