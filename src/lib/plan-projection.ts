@@ -120,7 +120,6 @@ export function projectWorkspacePlan(workspace: Workspace, time: number | null =
     if (hull.length < 3) {
       const x = pose.position[0], z = pose.position[2], r = 0.025;
       hull.push([x - r, z - r], [x + r, z - r], [x + r, z + r], [x - r, z + r]);
-      approximate = true;
     }
     footprints.push({
       instanceId: item.id, instanceIndex: index, name: item.name,
