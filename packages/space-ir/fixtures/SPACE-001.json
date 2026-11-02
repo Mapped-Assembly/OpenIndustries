@@ -237,7 +237,18 @@
       ]
     }
   ],
-  "relations": [
+  "occupancies": [],
+  "constraints": [],
+  "evidence": [
+    {
+      "id": "source-plan",
+      "source_id": "synthetic:SPACE-001",
+      "digest_sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+      "status": "confirmed"
+    }
+  ],
+  "unresolved": [],
+  "spatial_relations": [
     {
       "id": "adjacent-a-b",
       "kind": "adjacent",
@@ -251,16 +262,5 @@
       "to": "room-b",
       "via_portal_id": "door-a-b"
     }
-  ],
-  "occupancies": [],
-  "constraints": [],
-  "evidence": [
-    {
-      "id": "source-plan",
-      "source_id": "synthetic:SPACE-001",
-      "digest_sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
-      "status": "confirmed"
-    }
-  ],
-  "unresolved": []
+  ]
 }
