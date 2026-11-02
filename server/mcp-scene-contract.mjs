@@ -23,7 +23,23 @@ const written = object({ version: { const: 1 }, scene_id: uuid, revision_id: { t
 const summaryFields = { asset: assetReference, asset_id: id, name: label, source_kind: { enum: ['form', 'step', 'generated'] } };
 const summary = object(summaryFields);
 const detail = object({ ...summaryFields, dimensions: vector, parts: array(object({ id, name: { type: 'string' }, representation: { type: 'string' } }), 10000), warnings: array({ type: 'string' }, 1000), provenance: object({ filename: { type: 'string' }, digest: { type: 'string' }, project_id: { type: 'string' }, project_revision: { type: 'string' }, generator: { type: 'string' } }, ['filename', 'digest']) });
+// Object mutations bind already-persisted immutable versions; geometry import is a separate operation.
+const immutableAsset = { oneOf: assetReference.oneOf.slice(0, 2) };
+const patchFields = { name: label, asset: immutableAsset, position: vector, rotation: vector, visible: { type: 'boolean' } };
+const patch = { ...object(patchFields, []), minProperties: 1 };
+export const mutationOperations = [
+  object({ op: { const: 'add_instance' }, instance: object({ ...instance.properties, asset: immutableAsset }) }),
+  object({ op: { const: 'update_instance' }, instance_id: id, patch, preconditions: patch }, ['op', 'instance_id', 'patch']),
+  object({ op: { const: 'remove_instance' }, instance_id: id, preconditions: patch }, ['op', 'instance_id']),
+];
+const mutationChange = object({ operation_index: { type: 'integer', minimum: 0 }, op: { enum: ['add_instance', 'update_instance', 'remove_instance'] }, instance_id: id,
+  status: { const: 'applied' }, fields: array({ enum: Object.keys(patchFields) }, 5) });
+const mutationSummary = object({ added: { type: 'integer', minimum: 0 }, updated: { type: 'integer', minimum: 0 }, removed: { type: 'integer', minimum: 0 } });
+const mutationProvenance = object({ agent: common.agent, parent_revision: { type: 'integer', minimum: 1 }, request_id: uuid, request_digest: { type: 'string', pattern: '^[a-f0-9]{64}$' } });
 export const sceneTools = [
+  { name: 'astra.mutate_scene', description: 'Atomically add, update or remove scene instances using stable IDs and a required base_revision. Only named patch fields change; room and animation are preserved. Bind existing immutable local/cloud asset versions (import geometry separately). Operations run in order; failure identifies an operation and commits no revision. Identical retries reuse their receipt.',
+    inputSchema: object({ version: common.version, request_id: uuid, agent: common.agent, scene_id: uuid, base_revision: { type: 'integer', minimum: 1, maximum: 2147483646 }, operations: { ...array({ oneOf: mutationOperations }, 100), minItems: 1 } }),
+    outputSchema: object({ ...written.properties, changes: array(mutationChange, 100), summary: mutationSummary, provenance: mutationProvenance }) },
   { name: 'astra.list_scene_assets', description: 'List ready assets in the configured local or authenticated cloud backend and bundled cleanroom examples. Requires explicit OI_SCENE_TOOLS_ENABLED=true setup. Use inspect_scene_asset for dimensions and animation part IDs.', inputSchema: object({ version: { const: 1 }, offset: { type: 'integer', minimum: 0, maximum: 100000 } }, ['version']), outputSchema: object({ version: { const: 1 }, assets: array(summary, 28), next_offset: { type: ['integer', 'null'] } }) },
   { name: 'astra.inspect_scene_asset', description: 'Inspect a selected immutable local/cloud version or bundled example; returns geometry identity and valid component targets, never raw provider data.', inputSchema: object({ version: { const: 1 }, asset: assetReference }), outputSchema: object({ version: { const: 1 }, asset: detail }) },
   { name: 'astra.create_scene', description: 'Validate and persist a complete scene in the configured backend. request_id is a caller-generated UUID and also the new scene ID; reuse it only for an identical retry. Returns private cloud URLs or oi-local identifiers for the head and immutable revision.', inputSchema: object(common), outputSchema: written },
@@ -31,12 +47,21 @@ export const sceneTools = [
   { name: 'astra.read_scene', description: 'Read an owned scene head or immutable revision as an editable typed scene request. Does not modify the local workbench or return credentials/raw project data.', inputSchema: object({ version: { const: 1 }, scene_id: uuid, revision_id: { type: 'integer', minimum: 1, maximum: 2147483647 } }, ['version', 'scene_id']), outputSchema: object({ ...written.properties, scene: sceneDraft, agent: { type: ['string', 'null'] } }) },
 ];
 const ajv = new Ajv({ strict: false, allErrors: false });
+const operationValidators = new Map(mutationOperations.map(schema => [schema.properties.op.const, ajv.compile(schema)]));
 const validators = new Map(sceneTools.map(tool => [tool.name, ajv.compile(tool.inputSchema)]));
 export class SceneToolError extends Error {
   constructor(code, message, details = {}) { super(message); this.name = 'SceneToolError'; this.code = code; this.details = details; }
 }
 export function validateSceneRequest(name, args) {
   if (Buffer.byteLength(JSON.stringify(args) ?? '', 'utf8') > SCENE_REQUEST_LIMIT) throw new SceneToolError('PAYLOAD_TOO_LARGE', 'Scene tool arguments exceed 1 MiB. Reference assets; do not embed geometry.');
+  if (name === 'astra.mutate_scene' && Array.isArray(args?.operations) && args.operations.length <= 100) {
+    for (const [index, operation] of args.operations.entries()) {
+      const check = operationValidators.get(operation?.op);
+      if (!check?.(operation)) throw new SceneToolError('INVALID_REQUEST', 'Invalid mutation operation. Check the discovered input schema.', {
+        applied: false, operation_errors: [{ operation_index: index, code: 'INVALID_REQUEST', message: 'Invalid operation fields, asset reference or transform.' }],
+      });
+    }
+  }
   const validate = validators.get(name);
   if (!validate || !validate(args)) {
     const e = validate?.errors?.[0];

@@ -1,3 +1,4 @@
+import { mutateScene, mutationResult, type MutationRequest } from './scene-mutations.ts';
 import { oiEnv } from './oi-environment.mjs';
 import { readFile } from 'node:fs/promises';
 import { createHash } from 'node:crypto';
@@ -113,9 +114,18 @@ export async function executeSceneTool(name: string, raw: unknown, ctx: SceneCon
   active(ctx);
   if (head?.last_write_id === args.request_id) {
     if (head.document?.authoring?.request_digest !== fingerprint) return fail('REQUEST_ID_REUSED', 'This request_id already names another payload. Use a new request_id for a new edit.');
-    return savedResult(head);
+    return name === 'astra.mutate_scene' ? mutationResult(head, savedResult) : savedResult(head);
+  }
+  if (name === 'astra.mutate_scene' && head && head.revision > base) {
+    // The receipt belongs to exactly base+1, even when later writers have advanced head.
+    const receipt = await backend.read(sceneId, base + 1);
+    if (receipt.document.authoring?.request_id === args.request_id) {
+      if (receipt.document.authoring.request_digest !== fingerprint) return fail('REQUEST_ID_REUSED', 'Request ID belongs to different content.');
+      return mutationResult(receipt, savedResult);
+    }
   }
   if ((!creating && !head) || (head && head.revision !== base)) return fail(head ? 'CONFLICT' : 'SCENE_UNAVAILABLE', head ? 'Scene has changed. Read the current revision, reconcile the edit, and retry with a new request_id.' : 'Scene not found or unavailable to this account.', head ? { current_revision: head.revision } : {});
+  if (name === 'astra.mutate_scene') return mutateScene(raw as MutationRequest, head!, backend, load, fingerprint, () => active(ctx), savedResult);
   const draft = { ...args.scene, animation: args.scene.animation ?? { duration: 3, loop: false, tracks: [] } };
   const workspace: Workspace = { room: [draft.room.width, draft.room.depth, draft.room.height], items: [], animation: animation(draft) };
   const identities = new Map<string, string>();

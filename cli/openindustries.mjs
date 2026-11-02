@@ -1,7 +1,7 @@
 #!/usr/bin/env node
 import { oiEnv } from '../server/oi-environment.mjs';
 import { createServer } from 'node:http';
-import { readFileSync, mkdirSync, writeFileSync } from 'node:fs';
+import { readFileSync, mkdirSync, writeFileSync, statSync } from 'node:fs';
 import { platform } from 'node:os';
 import { dirname, resolve } from 'node:path';
 import { randomUUID } from 'node:crypto';
@@ -84,12 +84,21 @@ async function importRoom(path, name) {
   console.log(`Imported room ${Array.isArray(data) ? data[0]?.id : data?.id || 'successfully'}. Binary geometry was not uploaded; enable cloud storage and save it from OpenIndustries for cross-device geometry.`);
 }
 function localValidate(path) { const document = validateRoom(readJson(path)); console.log(`Valid OpenIndustries room: ${document.instances.length} instances, ${document.animation.tracks.length} animation tracks.`); }
+/** Submit the same versioned mutation contract as MCP, without accepting geometry paths in that contract. */
+async function mutateSceneFile(path) {
+  if (statSync(path).size > 1024 * 1024) throw new Error('Mutation request exceeds 1 MiB.');
+  const { tsImport } = await import('tsx/esm/api');
+  const { callSceneTool } = await tsImport('../server/mcp-scenes.ts', import.meta.url);
+  const result = await callSceneTool(resolve(oiEnv('ROOT') || process.cwd()), 'astra.mutate_scene', JSON.parse(readFileSync(path, 'utf8')));
+  console.log(JSON.stringify(result));
+}
 function help() {
-  console.log(`OpenIndustries CLI\n\nAuthentication:\n  openindustries auth login                         Sign in with GitHub\n  openindustries auth logout                        Remove the local CLI session\n\nRooms:\n  openindustries rooms list                         List cloud rooms\n  openindustries rooms export <id> <file>           Export a cloud room manifest\n  openindustries rooms import <file> [--name NAME]  Import a local manifest to cloud\n  openindustries rooms validate <file>              Validate a local OpenIndustries room file\n\nLocal room files are exported/imported by OpenIndustries's browser workbench. Use the CLI to validate them or transfer them to/from cloud storage.`);
+  console.log(`OpenIndustries CLI\n\nAuthentication:\n  openindustries auth login                         Sign in with GitHub\n  openindustries auth logout                        Remove the local CLI session\n\nRooms:\n  openindustries rooms list                         List cloud rooms\n  openindustries rooms export <id> <file>           Export a cloud room manifest\n  openindustries rooms import <file> [--name NAME]  Import a local manifest to cloud\n  openindustries rooms validate <file>              Validate a local OpenIndustries room file\n\nPersistent scenes:\n  openindustries scenes mutate <request.json>       Atomically mutate scene instances (local or cloud)\n\nLocal room files are exported/imported by OpenIndustries's browser workbench. Use the CLI to validate them or transfer them to/from cloud storage.`);
 }
 async function main() {
   const [group, command, ...args] = process.argv.slice(2);
   if (!group || group === '--help' || group === '-h') return help();
+  if (group === 'scenes' && command === 'mutate') return mutateSceneFile(requiredArg(args[0], 'mutation request JSON'));
   if (group === 'auth' && command === 'login') return login();
   if (group === 'auth' && command === 'logout') { try { writeFileSync(configPath, '', 'utf8'); } catch {} console.log('OpenIndustries CLI session removed.'); return; }
   if (group === 'rooms' && command === 'list') return listRooms();
@@ -98,4 +107,4 @@ async function main() {
   if (group === 'rooms' && command === 'validate') return localValidate(requiredArg(args[0], 'room file'));
   throw new Error('Unknown OpenIndustries CLI command. Run "openindustries --help".');
 }
-main().catch(error => { console.error(`openindustries: ${error.message}`); process.exitCode = 1; });
+main().catch(error => { console.error(process.argv[2] === 'scenes' ? JSON.stringify({ error: { code: error.code || 'INVALID_REQUEST', message: error.message, ...error.details } }) : `openindustries: ${error.message}`); process.exitCode = 1; });

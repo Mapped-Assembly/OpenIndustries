@@ -18,7 +18,7 @@ OI_SCENE_BACKEND=local
 OI_SCENE_DATA_DIR=.astra/scenes
 ```
 
-Run `npm ci`, then `node server/openindustries-mcp.mjs`. No Supabase credentials, network service, or CLI login is needed. Relative data directories resolve against `OI_ROOT` (the checkout by default). All five scene tools use this backend: list/inspect assets, create, read, and update. Examples are copied to immutable local geometry on first use. Subsequent reads return `{"kind":"local","version_id":"<uuid>"}` references; cloud references are rejected in local mode and vice versa.
+Run `npm ci`, then `node server/openindustries-mcp.mjs`. No Supabase credentials, network service, or CLI login is needed. Relative data directories resolve against `OI_ROOT` (the checkout by default). All six scene tools use this backend: list/inspect assets, create, read, update, and mutate. Examples are copied to immutable local geometry on first use. Subsequent reads return `{"kind":"local","version_id":"<uuid>"}` references; cloud references are rejected in local mode and vice versa.
 
 Scene heads, immutable revisions, authoring provenance and asset metadata live in `scenes.sqlite`; sanitized geometry lives under `assets/`, named by SHA-256. Every load checks size and checksum. Updates use transactional revision checks, so simultaneous edits cannot silently overwrite each other. Keep the entire data directory when moving or backing up a project; stop writers first or use SQLite's backup facilities. This is a single-user store protected by filesystem permissions, not a multi-user authentication service. Do not expose it through a public transport.
 
@@ -39,6 +39,8 @@ node --import tsx cli/local-scenes.ts export SCENE_UUID garden.scene.json 1
 Open the exported file through the workbench's existing scene-file import. Export includes verified geometry, animation and authoring provenance; it refuses to overwrite an existing output file. The portable format retains its legacy `cloudVersionId` field for immutable version binding, but bundled geometry makes the file self-contained and requires no cloud lookup. This change does not add a browser SQLite adapter or change browser cloud saves. Set the same `OI_SCENE_DATA_DIR` for CLI and MCP when using a custom `OI_ROOT`.
 
 Unset `OI_SCENE_BACKEND` or set it to `supabase` to retain the authenticated cloud workflow below. Unknown backend values fail explicitly. `npm run test:local-scenes` covers restart/reload, revision history, geometry/provenance, concurrent updates and corruption detection.
+
+For atomic object edits without resending the full scene, use [`openindustries.mutate_scene`](scene-mutations.md). The same contract is available as `openindustries scenes mutate request.json`.
 
 ## Setup
 

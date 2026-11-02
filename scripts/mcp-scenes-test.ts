@@ -55,7 +55,7 @@ try {
   assert.equal((await mcp.rpc('initialize')).protocolVersion, '2025-06-18');
   const tools = (await mcp.rpc('tools/list')).tools; const ajv = new Ajv({ strict: false });
   for (const tool of tools.filter((tool: any) => tool.name.includes('scene'))) validators.set(tool.name.replace('openindustries.', ''), ajv.compile(tool.outputSchema));
-  assert.equal(validators.size, 5);
+  assert.equal(validators.size, 6);
   const disabled = connection({ ASTRA_SCENE_TOOLS_ENABLED: 'false' });
   await bad('list_scene_assets', { version: 1 }, 'DISABLED', disabled);
   assert(!(await disabled.call('create_room', { name: 'Offline', width: 6, depth: 5, height: 3 })).isError);
