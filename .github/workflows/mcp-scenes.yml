@@ -26,9 +26,19 @@ jobs:
       - run: npm run test:project-files
       - run: npm run test:cad
       - run: node --import tsx scripts/workspace-test.ts
+      - run: npm run test:plan
       - run: npm run test:animation
       - run: npm run test:scene-links
       - run: npx playwright install --with-deps chromium
+      - run: node --import tsx scripts/plan-browser-test.ts
+        env:
+          OI_PLAN_EVIDENCE_DIR: ${{ runner.temp }}/oi-plan-evidence
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: oi-plan-browser-evidence
+          path: ${{ runner.temp }}/oi-plan-evidence
+          if-no-files-found: ignore
       - run: npm run test:local-scene-sync
       - run: npm run test:render
         env:
