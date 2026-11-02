@@ -93,11 +93,10 @@ export function projectWorkspacePlan(workspace: Workspace, time: number | null =
     const instanceRotation = rotation(pose.rotation);
     const origin = new Vector3(...pose.position);
     const points: PlanPoint[] = [];
-    let approximate = false;
     const parts = item.missing ? [] : item.asset.parts;
     for (const part of parts) {
       const bounds = partBounds(part);
-      if (!bounds) { approximate = true; continue; }
+      if (!bounds) continue;
       const center = bounds.min.clone().add(bounds.max).multiplyScalar(0.5);
       const partPose = pose.parts[part.id];
       const partRotation = partPose ? rotation(partPose.rotation) : null;
@@ -110,7 +109,6 @@ export function projectWorkspacePlan(workspace: Workspace, time: number | null =
       }
     }
     if (points.length === 0) {
-      approximate = true;
       const [x, y, z] = item.asset.dimensions;
       for (const corner of corners(new Vector3(-x / 2, 0, -z / 2), new Vector3(x / 2, y, z / 2))) {
         corner.applyQuaternion(instanceRotation).add(origin);
@@ -128,7 +126,6 @@ export function projectWorkspacePlan(workspace: Workspace, time: number | null =
       instanceId: item.id, instanceIndex: index, name: item.name,
       points: hull, missing: !!item.missing || !parts.length, approximate: true,
     });
-    void approximate;
   }
   return {
     room: { width: workspace.room[0], depth: workspace.room[1], height: workspace.room[2] },
@@ -150,5 +147,5 @@ export function planContains(point: PlanPoint, polygon: readonly PlanPoint[]): b
 /** Explicit metric snap for editor moves, without changing Y or rotation. */
 export function snapPlan(value: number, step = 0.1): number {
   if (!Number.isFinite(value) || !Number.isFinite(step) || step <= 0) throw new Error('Invalid plan snap.');
-  return Math.round(value / step) * step;
+  return Number((Math.round(value / step) * step).toFixed(10));
 }
