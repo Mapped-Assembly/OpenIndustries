@@ -44,8 +44,11 @@ try {
   await expect(page.getByRole('button', { name: 'Import OI project', exact: true })).toBeEnabled();
   await expect(page.locator('canvas')).toBeVisible();
   await expect(page.locator('vite-error-overlay')).toHaveCount(0);
+  // An empty startup workspace has no unsaved scene to discard.
+  await expect(page.locator('.asset')).toHaveCount(0);
   await page.getByRole('button', { name: 'New room', exact: true }).click();
-  await page.getByRole('dialog', { name: 'Unsaved room changes' }).getByRole('button', { name: 'Discard and continue' }).click();
+  await expect(page.locator('footer [role=status]')).toContainText('New room ready');
+  await expect(page.getByRole('dialog', { name: 'Unsaved room changes' })).toHaveCount(0);
   await expect(page.locator('.asset')).toHaveCount(0);
   await page.getByRole('button', { name: 'Generate Forma project', exact: true }).click();
   await expect(page.getByRole('button', { name: 'Build and import' })).toBeEnabled();
@@ -95,7 +98,15 @@ try {
   await reopened.goto('http://127.0.0.1:4186');
   await expect(reopened.getByRole('button', { name: 'Import OI project', exact: true })).toBeEnabled();
   await reopened.getByLabel('Import OI project file', { exact: true }).setInputFiles(oi.path);
-  await reopened.getByRole('dialog', { name: 'Unsaved room changes' }).getByRole('button', { name: 'Discard and continue' }).click();
+  // Importing into a pristine workspace must not require a discard confirmation.
+  await expect(reopened.locator('.asset')).toHaveCount(2);
+  await expect(reopened.getByRole('dialog', { name: 'Unsaved room changes' })).toHaveCount(0);
+  // Importing over actual user content must still warn and preserve it on cancel.
+  await reopened.getByLabel('Import OI project file', { exact: true }).setInputFiles(oi.path);
+  const replacePrompt = reopened.getByRole('dialog', { name: 'Unsaved room changes' });
+  await expect(replacePrompt).toBeVisible();
+  await replacePrompt.getByRole('button', { name: 'Cancel', exact: true }).click();
+  await expect(replacePrompt).toHaveCount(0);
   await expect(reopened.locator('.asset')).toHaveCount(2);
   await expect(reopened.getByLabel('Width', { exact: true })).toHaveValue('9');
   await reopened.locator('.asset').first().click();
