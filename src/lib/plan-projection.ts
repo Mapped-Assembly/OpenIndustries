@@ -93,10 +93,12 @@ export function projectWorkspacePlan(workspace: Workspace, time: number | null =
     const instanceRotation = rotation(pose.rotation);
     const origin = new Vector3(...pose.position);
     const points: PlanPoint[] = [];
+    let projectedParts = 0;
     const parts = item.missing ? [] : item.asset.parts;
     for (const part of parts) {
       const bounds = partBounds(part);
       if (!bounds) continue;
+      projectedParts++;
       const center = bounds.min.clone().add(bounds.max).multiplyScalar(0.5);
       const partPose = pose.parts[part.id];
       const partRotation = partPose ? rotation(partPose.rotation) : null;
@@ -119,11 +121,11 @@ export function projectWorkspacePlan(workspace: Workspace, time: number | null =
     // Zero-area geometry is still selectable; do not falsely imply nonzero physical clearance.
     if (hull.length < 3) {
       const x = pose.position[0], z = pose.position[2], r = 0.025;
-      hull.push([x - r, z - r], [x + r, z - r], [x + r, z + r], [x - r, z + r]);
+      hull.splice(0, hull.length, [x - r, z - r], [x + r, z - r], [x + r, z + r], [x - r, z + r]);
     }
     footprints.push({
       instanceId: item.id, instanceIndex: index, name: item.name,
-      points: hull, missing: !!item.missing || !parts.length, approximate: true,
+      points: hull, missing: !!item.missing || projectedParts === 0, approximate: true,
     });
   }
   return {
