@@ -148,7 +148,7 @@ export function validateSpaceIR(value: unknown): Validation {
   for (const [i, frame] of doc.frames.entries()) {
     if (!record(frame)) { report('FRAME', 'frames[' + i + ']', 'Invalid frame.'); continue; }
     if (!['m', 'px'].includes(frame.units) || !['XZ', 'image_xy'].includes(frame.axes) ||
-      (frame.id === 'world' && (frame.units !== 'm' || frame.axes !== 'XZ')))
+      (frame.id === 'world' && (frame.units !== 'm' || frame.axes !== 'XZ' || frame.to_world !== undefined)))
       report('FRAME', 'frames[' + i + ']', 'Unit/axis mismatch.');
     if (frame.to_world !== undefined && !validAffine(frame.to_world))
       report('TRANSFORM', 'frames[' + i + ']', 'Transform must be finite and invertible.');
@@ -157,8 +157,8 @@ export function validateSpaceIR(value: unknown): Validation {
   if (doc.site !== null) {
     const site = doc.site;
     if (!record(site) || !positive(site.width_m) || !positive(site.depth_m) || !positive(site.height_m) ||
-      site.width_m > 100 || site.depth_m > 100 || site.height_m > 100) {
-      report('SITE', 'site', 'A supported metric site requires dimensions between 0 and 100 m.');
+      site.width_m < 1 || site.depth_m < 1 || site.height_m < 1 || site.width_m > 100 || site.depth_m > 100 || site.height_m > 100) {
+      report('SITE', 'site', 'A supported metric site requires dimensions between 1 and 100 m.');
     } else {
       requireRef('frames', site.frame_id, 'site.frame_id');
       const frame = frames.get(site.frame_id as string);
