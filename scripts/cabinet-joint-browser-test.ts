@@ -53,10 +53,16 @@ try {
   assert.equal(done.spindle_angle_rad,24*Math.PI);
   assert.notDeepEqual(runWorkspace(initial,{}),runWorkspace(done,{}),'viewer must reflect authoritative movement');
   await page.screenshot({path:`${evidence}/complete.png`,fullPage:true});
-  await page.getByRole('button',{name:'Inspect recorded states'}).click();
-  await expect(page.getByRole('status')).toHaveText('REPLAY · read only');
   const before=posts;
-  const trace=await page.evaluate(async()=> (await fetch('/api/embodied/trace')).json());
+  // Trace transfer can outlast a DOM assertion on CI, especially while meshes reload.
+  const [traceResponse]=await Promise.all([
+    page.waitForResponse(response=>response.url()===origin+'/api/embodied/trace'&&response.request().method()==='GET',{timeout:30000}),
+    page.getByRole('button',{name:'Inspect recorded states'}).click(),
+  ]);
+  assert.equal(traceResponse.status(),200,'Replay trace request must succeed');
+  const trace=await traceResponse.json();
+  assert(trace.states.length>0,'Replay requires recorded states');
+  await expect(page.getByRole('status')).toHaveText('REPLAY · read only',{timeout:15000});
   await page.getByLabel('Recorded state',{exact:true}).fill(String(trace.states.length-1));
   await expect(page.getByTestId('state-id')).toHaveText(done.dataset_state.state_id);
   assert.deepEqual(runWorkspace(done,{}),runWorkspace({...trace.states.at(-1),cabinet:trace.fixture},{}));
