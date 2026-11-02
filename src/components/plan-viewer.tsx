@@ -62,7 +62,7 @@ export function PlanViewer({ workspace, selected, time, readOnly, onSelect, onMo
     const point = new DOMPoint(event.clientX, event.clientY).matrixTransform(matrix.inverse());
     return [point.x, point.y];
   };
-  function start(event: PointerEvent<SVGSVGElement>, index: number | null) {
+  function start(event: PointerEvent<SVGElement>, index: number | null) {
     if (event.button !== 0) return;
     const point = screenPoint(event);
     if (!point) return;
