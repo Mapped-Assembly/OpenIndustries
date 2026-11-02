@@ -17,6 +17,7 @@ type Gesture = {
   index: number | null;
   start: PlanPoint;
   last: PlanPoint;
+  startClient: PlanPoint;
   original: View;
   moved: boolean;
 };
@@ -66,17 +67,18 @@ export function PlanViewer({ workspace, selected, time, readOnly, onSelect, onMo
     if (event.button !== 0) return;
     const point = screenPoint(event);
     if (!point) return;
-    pointer.current = { index, start: point, last: point, original: view, moved: false };
+    pointer.current = { index, start: point, last: point, startClient: [event.clientX, event.clientY], original: view, moved: false };
     event.currentTarget.setPointerCapture(event.pointerId);
   }
   function move(event: PointerEvent<SVGSVGElement>) {
     const gesture = pointer.current;
     if (!gesture) return;
     const point = screenPoint(event);
-    if (!point) return;
-    gesture.last = point;
-    const dx = point[0] - gesture.start[0], dz = point[1] - gesture.start[1];
-    if (Math.hypot(dx, dz) > view.span * 0.004) gesture.moved = true;
+    const startPoint = screenPoint({ clientX: gesture.startClient[0], clientY: gesture.startClient[1] });
+    if (!point || !startPoint) return;
+    const dx = point[0] - startPoint[0], dz = point[1] - startPoint[1];
+    gesture.last = [gesture.start[0] + dx, gesture.start[1] + dz];
+    if (Math.hypot(event.clientX - gesture.startClient[0], event.clientY - gesture.startClient[1]) > 4) gesture.moved = true;
     if (gesture.index !== null && !readOnly) {
       setPreview({ index: gesture.index, dx, dz });
     } else if (gesture.index === null) {
@@ -145,7 +147,10 @@ export function PlanViewer({ workspace, selected, time, readOnly, onSelect, onMo
         width={workspace.room[0]} height={workspace.room[1]} fill="#293a32" stroke="#a3bea7" strokeWidth={0.045}/>
       {grid && <rect x={-workspace.room[0] / 2} y={-workspace.room[1] / 2}
         width={workspace.room[0]} height={workspace.room[1]} fill={'url(#' + gridId + ')'}/>}
-      {projection.footprints.map(footprint => {
+      {[...projection.footprints].sort((a,b) => {
+        const area = (p: typeof a) => { const xs = p.points.map(q => q[0]), zs = p.points.map(q => q[1]); return (Math.max(...xs)-Math.min(...xs))*(Math.max(...zs)-Math.min(...zs)); };
+        return area(b) - area(a) || a.instanceIndex - b.instanceIndex;
+      }).map(footprint => {
         const isSelected = footprint.instanceIndex === selected;
         const shift = preview?.index === footprint.instanceIndex ? preview : null;
         const centerX = footprint.points.reduce((sum, p) => sum + p[0], 0) / footprint.points.length;
