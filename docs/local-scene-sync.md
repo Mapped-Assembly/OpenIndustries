@@ -58,3 +58,5 @@ npm run test:local-scene-sync
 ```
 
 `test:local-scene-sync` starts the real HTTP service, Vite, Chromium and a separate stdio MCP process against a temporary SQLite directory. It proves nine original objects become ten after adding `environment-monitor-01`, compares all original IDs/transforms/visibility/version bindings and complete geometry hashes, compares browser exports with persistent state, and checks a changed rendered frame. It also tests pinned views, dirty draft recovery, browser commits, offline edits, restart/fresh-session reopening, detach/reconnect, lost-response retries, in-flight edit races, stale writes and local access boundaries. The Scene authoring CI workflow runs it. `OI_CHROME_PATH` can select an existing Chromium executable.
+
+See [concurrent edits and recovery](scene-conflicts.md) for structured conflicts, safe refresh-and-retry, durable request identity and backend transaction boundaries.

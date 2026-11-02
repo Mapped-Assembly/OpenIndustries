@@ -28,7 +28,7 @@ export class SceneRepository {
     const { error } = await this.client.from('assets').delete().eq('owner_id', this.owner).eq('asset_key', assetKey);
     if (error) throw new Error(error.message);
   }
-  async save(workspace: Workspace, name: string, id: string, revision: number, uploadGeometry: boolean, progress:(text:string)=>void): Promise<{scene:SavedScene;workspace:Workspace}> {
+  async save(workspace: Workspace, name: string, id: string, revision: number, uploadGeometry: boolean, progress:(text:string)=>void, writeId: string = crypto.randomUUID()): Promise<{scene:SavedScene;workspace:Workspace}> {
     const copy:Workspace={...workspace,items:workspace.items.map(item=>({...item})),animation:structuredClone(workspace.animation)};
     await this.saveMetadata(copy.items.map(item=>item.asset));
     const storage=new CloudStorage(this.client,this.owner);
@@ -48,7 +48,7 @@ export class SceneRepository {
     }
     const document={...makeManifest(copy),authoring:{via:'workbench'}};readManifest(document);
     progress('Saving scene and asset references…');
-    const {data,error}=await this.client.rpc('save_workspace_scene',{p_id:id,p_name:name.trim(),p_document:document,p_expected_revision:revision,p_write_id:crypto.randomUUID()});
+    const {data,error}=await this.client.rpc('save_workspace_scene',{p_id:id,p_name:name.trim(),p_document:document,p_expected_revision:revision,p_write_id:writeId});
     if(error)throw sceneRPCError(error);
     const scene = (Array.isArray(data)?data[0]:data) as SavedScene;
     return{scene:{...scene,...sceneURLs(scene.id,scene.revision,this.baseURL)},workspace:copy};

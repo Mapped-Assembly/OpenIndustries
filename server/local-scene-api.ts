@@ -1,3 +1,4 @@
+import { sceneConflict } from './scene-conflicts.ts';
 import { createHash } from 'node:crypto';
 import { resolve } from 'node:path';
 import { LocalSceneBackend } from './local-scene-backend.ts';
@@ -25,10 +26,16 @@ export async function localSceneRequest(root: string, id: string, operation: str
     const input = body as { request_id: string; base_revision: number; document: unknown };
     if (!input || !uuid.test(input.request_id) || !Number.isSafeInteger(input.base_revision) || input.base_revision < 1)
       throw new SceneToolError('INVALID_REQUEST', 'A request UUID and positive base revision are required.');
-    const previous = await backend.read(id, input.base_revision);
+    const digest = createHash('sha256').update(canonicalJSON({ id, ...input })).digest('hex');
+    const previous = await backend.read(id);
+    const receipt = await backend.receipt(id, input.request_id);
+    if (receipt) {
+      if (receipt.document.authoring.request_digest !== digest) throw new SceneToolError('REQUEST_ID_REUSED', 'This request ID already names a different write.');
+      return { scene_id: id, revision: receipt.revision, name: receipt.name, document: await backend.exportScene(id, receipt.revision) };
+    }
+    if (previous.revision !== input.base_revision) throw await sceneConflict(backend, id, input.base_revision, previous);
     const workspace = hydrateManifest(readManifest(input.document), []);
     if (workspace.items.some(item => item.missing)) throw new SceneToolError('MISSING_ASSETS', 'Export or import complete geometry before committing.');
-    const digest = createHash('sha256').update(canonicalJSON({ id, ...input })).digest('hex');
     const versions = new Map<string, string>();
     const verified = new Map<object, string>();
     for (const item of workspace.items) {

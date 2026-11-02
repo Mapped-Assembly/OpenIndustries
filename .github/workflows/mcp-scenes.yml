@@ -20,6 +20,7 @@ jobs:
       - run: npm run test:mcp
       - run: npm run test:local-scenes
       - run: npm run test:scene-mutations
+      - run: npm run test:scene-conflicts
       - run: npm run test:form-import
       - run: npm run test:form-workflows
       - run: npm run test:project-files

@@ -97,6 +97,7 @@
     "test:render": "npm run build:render && node --import tsx --test tests/render/*.test.ts",
     "demo:render": "node --import tsx scripts/render-demo.ts",
     "test:local-scene-sync": "node --import tsx scripts/local-scene-sync-test.ts",
+    "test:scene-conflicts": "node --import tsx scripts/scene-conflicts-test.ts",
     "test:scene-mutations": "node --import tsx scripts/scene-mutations-test.ts"
   },
   "dependencies": {

@@ -11,6 +11,7 @@ export type AssetSummary = { id: string; asset: { name: string; asset_key: strin
 /** Storage boundary shared by authenticated cloud and single-user local scene tools. */
 export interface SceneBackend {
   readonly kind: 'cloud' | 'local';
+  receipt(id: string, writeId: string): Promise<SavedScene | null>;
   head(id: string): Promise<SavedScene | null>;
   read(id: string, revision?: number): Promise<SavedScene>;
   save(id: string, name: string, document: SceneDocument, base: number, writeId: string): Promise<SavedScene>;
@@ -25,6 +26,12 @@ export class SupabaseSceneBackend implements SceneBackend {
   readonly kind = 'cloud';
   private storage: CloudStorage;
   constructor(private client: SupabaseClient, private owner: string) { this.storage = new CloudStorage(client, owner); }
+  /** Resolve durable request identity without replaying writes or uploading geometry. */
+  async receipt(id: string, writeId: string): Promise<SavedScene | null> {
+    const { data, error } = await this.client.rpc('get_scene_write_receipt', { p_id: id, p_write_id: writeId });
+    if (error) throw new SceneToolError(error.code === 'OI001' ? 'REQUEST_ID_REUSED' : 'SCENE_UNAVAILABLE', 'Scene write receipt is unavailable or belongs to a different scene.');
+    return data;
+  }
   async head(id: string): Promise<SavedScene | null> {
     const { data, error } = await this.client.from('scenes').select('id,name,revision,last_write_id,document').eq('id', id).eq('owner_id', this.owner).maybeSingle();
     if (error) throw new SceneToolError('SCENE_UNAVAILABLE', 'Could not read this account’s scene.');
@@ -38,9 +45,10 @@ export class SupabaseSceneBackend implements SceneBackend {
   async save(id: string, name: string, document: SceneDocument, base: number, writeId: string): Promise<SavedScene> {
     const { data, error } = await this.client.rpc('save_workspace_scene', { p_id: id, p_name: name, p_document: document, p_expected_revision: base, p_write_id: writeId });
     if (error) {
-      if (/changed on another device/i.test(error.message)) {
-        const current = await this.head(id);
-        throw new SceneToolError('CONFLICT', 'Scene has changed. Read it before retrying.', current ? { current_revision: current.revision } : {});
+      if (error.code === 'OI001') throw new SceneToolError('REQUEST_ID_REUSED', 'This request ID already names a different write.');
+      if (error.code === '40001') {
+        const details = JSON.parse(error.details || '{}');
+        throw new SceneToolError('CONFLICT', 'Scene has changed. Refresh and reapply your edit with a new request_id.', details);
       }
       throw new SceneToolError('SAVE_FAILED', 'Scene save was rejected. Check ownership, asset readiness, and database setup.');
     }

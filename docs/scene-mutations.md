@@ -117,3 +117,5 @@ Limits: 1–100 operations, 1 MiB request/response and resulting scene metadata,
 ## Verification
 
 `npm run test:scene-mutations` exercises real MCP processes and the CLI against SQLite and the existing HTTP/PGlite cloud fixture with actual migrations and account isolation. It verifies nine original objects remain exact across add/move/remove, complete geometry hashes, immutable animation, process restart, ordered batches, field preconditions, rollback, invalid references/transforms/bounds, asset-version replacement, receipt replay, stale writes, concurrent writers and full-document update compatibility. Scene authoring CI runs this suite.
+
+See [concurrent edits and recovery](scene-conflicts.md) for structured conflicts, safe refresh-and-retry, durable request identity and backend transaction boundaries.
