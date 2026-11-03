@@ -28,7 +28,7 @@ try{
   }))};
   await page.getByLabel('Import files').setInputFiles([fixture]);
   await expect(page.locator('.asset')).toHaveCount(1,{timeout:20000});
-  await expect(page.getByRole('status')).toContainText('Imported 1 asset(s)',{timeout:20000});
+  await expect(page.locator('footer [role=status]')).toContainText('Imported 1 asset(s)',{timeout:20000});
   await page.getByRole('button',{name:'POV',exact:true}).click();
   await expect.poll(()=>page.locator('canvas').getAttribute('data-camera-mode')).toBe('pov');
   await page.getByRole('button',{name:'GIF studio',exact:true}).click();
