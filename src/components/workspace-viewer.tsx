@@ -5,6 +5,7 @@ import { applyWorldPoses, createWorld } from '../lib/world';
 import { evaluateWorkspace, type Workspace } from '../lib/workspace';
 import { regionBounds, type FloorRegion } from '../lib/gif';
 import { updateCameraDepth, updatePovCameraDepth } from '../lib/camera-depth';
+import './workspace-viewer.css';
 import {
   choosePovSpawn, clampPovPosition, lookPov, stepPov,
   type CameraSession, type Point3, type PovAction, type PovPose,
