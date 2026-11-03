@@ -249,6 +249,12 @@ export function WorkspaceViewer(props: Props) {
         }
       }
       switchMode(mode ?? 'orbit');
+      const requested = cameraMemory.current.requestedPov;
+      if (currentMode === 'pov' && requested) {
+        povPose = { ...requested.pose, position: clampPovPosition(requested.pose.position, workspace.room) };
+        cameraMemory.current.pov = povPose;
+        delete cameraMemory.current.requestedPov;
+      }
       const regionKey = JSON.stringify(region);
       if (regionKey !== lastRegion) {
         lastRegion = regionKey;
