@@ -68,6 +68,7 @@ export function EmbodiedWorkbench() {
   const workspace=displayed&&assets?runWorkspace(displayed,assets,reveal):null;
   const index=workspace?.items.findIndex(item=>item.id===selected)??-1;
   const active=run?.task&&['planning','running','paused'].includes(run.task.stage);
+  const cameraRevision=run?.scene_revision && run.scene_revision>0 ? run.scene_revision : null;
   return <div className="embodied-shell">
     <header><div><b>OpenIndustries / {run?.cabinet?.name??'SO-101 tabletop'}</b><p>Simulated kinematics · no grasp, contact or physical validation</p></div><a href="/">Return to scene editor</a></header>
     <nav aria-label="Run controls">
@@ -84,10 +85,10 @@ export function EmbodiedWorkbench() {
     <main><section className="embodied-view">{workspace?<WorkspaceViewer workspace={workspace} selected={index} selectedPart={-1} time={null} focus={focus}
           mode={cameraMode} mountedCamera={cameraRig}
           rigStale={cameraMode==='mounted' && (replay===null && (stale || !connected) ||
-            !!cameraRig && (cameraRig.sceneKey !== `run:${run?.run_id}` || cameraRig.sceneRevision !== run?.scene_revision))}
+            !!cameraRig && (cameraRig.sceneKey !== `run:${run?.run_id}` || cameraRig.sceneRevision !== cameraRevision))}
           focusSelection={false} overview={{position:[.65,.5,.7],target:[.12,.1,0]}} region={null} onSelect={i=>{const id=workspace.items[i]?.id;setSelected(run!.objects.some(o=>o.id===id)?id:null);setFocus(v=>v+1);}}/>:<p>Loading pinned model…</p>}
       {workspace && cameraMode==='mounted' && <AttachedCameraControls workspace={workspace} rig={cameraRig}
-        onRigChange={setCameraRig} sceneKey={`run:${run?.run_id}`} sceneRevision={run?.scene_revision??null}/>}
+        onRigChange={setCameraRig} sceneKey={`run:${run?.run_id}`} sceneRevision={cameraRevision}/>}
       </section>
     <aside><h1>Robot chat</h1><p>SO-101 follower · {run?.policy_mode==='model'?'Configured model':'Manual test mode — no natural-language model connected'}</p>
       <label>Selected object <select value={selected??''} onChange={e=>setSelected(e.target.value||null)}><option value="">None</option>{run?.objects.map(o=><option key={o.id} value={o.id}>{o.name}</option>)}</select></label>
