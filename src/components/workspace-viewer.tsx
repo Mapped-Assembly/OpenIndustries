@@ -191,6 +191,9 @@ export function WorkspaceViewer(props: Props) {
     };
     const stopMovement = (): void => { held.current.clear(); touchLook = null; };
     const onVisibility = (): void => { if (document.hidden) stopMovement(); };
+    const onPointerLockChange = (): void => {
+      if (document.pointerLockElement !== canvas) held.current.clear();
+    };
 
     canvas.addEventListener('pointerdown', onDown);
     canvas.addEventListener('pointermove', onMove);
@@ -201,6 +204,7 @@ export function WorkspaceViewer(props: Props) {
     window.addEventListener('keyup', onKeyUp);
     window.addEventListener('blur', stopMovement);
     document.addEventListener('visibilitychange', onVisibility);
+    document.addEventListener('pointerlockchange', onPointerLockChange);
 
     const resize = (): void => {
       camera.aspect = el.clientWidth / Math.max(1, el.clientHeight);
@@ -293,6 +297,7 @@ export function WorkspaceViewer(props: Props) {
       window.removeEventListener('keyup', onKeyUp);
       window.removeEventListener('blur', stopMovement);
       document.removeEventListener('visibilitychange', onVisibility);
+      document.removeEventListener('pointerlockchange', onPointerLockChange);
       controls.dispose();
       world.dispose();
       renderer.dispose();
@@ -308,7 +313,10 @@ export function WorkspaceViewer(props: Props) {
       held.current.add(action);
     }} onPointerUp={() => held.current.delete(action)}
       onPointerCancel={() => held.current.delete(action)}
-      onLostPointerCapture={() => held.current.delete(action)}>{symbol}</button>;
+      onLostPointerCapture={() => held.current.delete(action)}
+      onKeyDown={event => { if (event.key === 'Enter' || event.key === ' ') { event.preventDefault(); held.current.add(action); } }}
+      onKeyUp={() => held.current.delete(action)}
+      onBlur={() => held.current.delete(action)}>{symbol}</button>;
 
   return <div className={`viewport${props.mode === 'pov' ? ' oi-pov-viewport' : ''}`}
     ref={host} aria-label={props.mode === 'pov' ? 'First-person view of the room' : 'Interactive 3D room'}>
