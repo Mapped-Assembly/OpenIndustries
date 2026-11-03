@@ -1,7 +1,7 @@
 import * as THREE from 'three';
 import { applyWorldPoses, createWorld } from './world';
 import { evaluateWorkspace, type Workspace } from './workspace';
-import { captureSceneHash, povEvidence, type PovEvidence } from './gif';
+import { captureBytesHash, captureSceneHash, povEvidence, type PovEvidence } from './gif';
 import { assertPovSceneBudget, resolvePovCameraFrame, validatePovPreset, type PovCameraPreset } from './pov-capture';
 
 /** Still image and signed-by-source (not cryptographically signed) review metadata. */
@@ -36,13 +36,21 @@ export async function renderPovScreenshot(
     camera.quaternion.fromArray(frame.quaternion);
     renderer.render(world.scene, camera);
     if (signal.aborted) throw new DOMException('Capture cancelled.', 'AbortError');
-    const canvas = renderer.domElement;
+    const canvas = document.createElement('canvas');
+    canvas.width = size;canvas.height = size;
+    const context = canvas.getContext('2d');
+    if(!context) throw Error('This browser cannot label a POV screenshot.');
+    context.drawImage(renderer.domElement,0,0);
+    context.fillStyle='#101716';context.fillRect(0,size-29,size,29);
+    context.fillStyle='#dfe7df';context.font='11px sans-serif';
+    context.fillText('OpenIndustries | SYNTHETIC POV | NOT A REAL CAMERA',10,size-11);
     const blob = await new Promise<Blob>((resolve, reject) => canvas.toBlob(value => {
       if (value) resolve(value);
       else reject(Error('Browser failed to encode the POV PNG.'));
     }, 'image/png'));
     if (signal.aborted) throw new DOMException('Capture cancelled.', 'AbortError');
     const evidence = povEvidence(cameraPreset, sha);
+    evidence.mediaSha256=await captureBytesHash(blob);
     evidence.frames.push(frame);
     const metadata: PovScreenshotResult['metadata'] = {
       ...evidence, mediaType: 'image/png', width:size, height:size,
