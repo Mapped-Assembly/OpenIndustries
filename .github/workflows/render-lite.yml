@@ -23,6 +23,10 @@ jobs:
           npm run test:camera-depth
           npm run test:pov-capture
       - run: npx playwright install --with-deps chromium
+      - name: Build isolated backend render client
+        run: npm run build:render
+      - name: Isolated Lite GIF integration and 79-instance structured failure
+        run: node --import tsx --test tests/render/lite-profile.test.ts
       - name: Synthetic 79-instance kitchen visual and performance benchmark
         shell: bash
         run: |
@@ -45,6 +49,8 @@ jobs:
             test-results/lite-kitchen-metrics.json
             test-results/lite-kitchen-initial.png
             test-results/lite-kitchen-detailed.png
+            test-results/lite-backend.gif
+            test-results/lite-backend-metadata.json
           if-no-files-found: warn
       - name: Diagnostics
         if: failure()
