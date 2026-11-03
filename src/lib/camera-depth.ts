@@ -46,3 +46,19 @@ export function updateCameraDepth(camera: PerspectiveCamera, root: Object3D, tar
     camera.updateProjectionMatrix();
   }
 }
+
+/**
+ * Keep POV clipping independent of the orbit target, which is not meaningful
+ * inside a room. This is a visual depth budget, not a collision calculation.
+ * The far plane covers the room diagonal twice; the near plane admits close
+ * inspection while avoiding the near-zero values used by extreme CAD zoom.
+ */
+export function updatePovCameraDepth(camera: PerspectiveCamera, room: readonly number[]): void {
+  const diagonal = Math.hypot(room[0], room[1], room[2]);
+  const near = 0.02;
+  const far = Math.max(12, diagonal * 2);
+  if (camera.near === near && camera.far === far) return;
+  camera.near = near;
+  camera.far = far;
+  camera.updateProjectionMatrix();
+}
