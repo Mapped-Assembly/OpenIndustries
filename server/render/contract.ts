@@ -3,6 +3,7 @@ import { createHash } from 'node:crypto';
 import { canonicalJSON, hydrateManifest, makeManifest, readManifest, type SceneManifest } from '../../src/lib/workspace.ts';
 import { defaultGifCamera, regionBounds, type GifOptions } from '../../src/lib/gif-contract.ts';
 import { validatePovPreset } from '../../src/lib/pov-capture.ts';
+import { parseRenderProfile } from '../../src/lib/render-profile.ts';
 
 export const LIMITS = { inputBytes:8*1024*1024, instances:64, vertices:200_000, indices:600_000,
   parts:512, frames:60, outputBytes:64*1024*1024, queue:8, jobs:128, deadlineMs:120_000, retentionMs:7*86400_000 } as const;
@@ -38,15 +39,16 @@ export function envelope(raw:unknown):RenderRequest {
 export function normalize(request:RenderRequest, scene:unknown, resolved?:ResolvedSavedSource):RenderInput {
   try {
     const manifest=readManifest(scene);
-    if(manifest.instances.length>LIMITS.instances)throw new RenderError('GEOMETRY_LIMIT','At most 64 instances are supported.');
+    if(manifest.instances.length>LIMITS.instances)throw new RenderError('GEOMETRY_LIMIT',`Backend GIF budget allows ${LIMITS.instances} instances; received ${manifest.instances.length}. 3D Lite browser snapshots can include up to 128, but background GIFs require a smaller scene or a separately budgeted worker.`,422);
     const workspace=hydrateManifest(manifest,[]);
     if(workspace.items.some(i=>i.missing))throw new RenderError('MISSING_GEOMETRY','Bundle the exact geometry for every referenced instance.');
     let vertices=0,indices=0,parts=0;
     for(const item of workspace.items)for(const part of item.asset.parts){vertices+=part.vertices.length/3;indices+=part.indices.length;parts++;}
     if(vertices>LIMITS.vertices||indices>LIMITS.indices||parts>LIMITS.parts)throw new RenderError('GEOMETRY_LIMIT','Expanded instance geometry exceeds the render budget.');
     const raw=request.options??{};
-    if(!raw||typeof raw!=='object'||Array.isArray(raw)||Object.keys(raw).some(k=>!['scope','assetIndex','region','motion','size','duration','fps','rangeStart','rangeEnd','snapshotTime','camera','pov'].includes(k)))throw new RenderError('INVALID_OPTIONS','Unknown render option.');
+    if(!raw||typeof raw!=='object'||Array.isArray(raw)||Object.keys(raw).some(k=>!['scope','assetIndex','region','motion','size','duration','fps','rangeStart','rangeEnd','snapshotTime','camera','pov','profile'].includes(k)))throw new RenderError('INVALID_OPTIONS','Unknown render option.');
     const options:GifOptions={scope:'room',assetIndex:0,region:{x:0,z:0,width:workspace.room[0],depth:workspace.room[1]},motion:'turntable',size:640,duration:4,fps:15,...raw,allowEmptyRoom:true,camera:{...defaultGifCamera,...raw.camera}};
+    try{options.profile=parseRenderProfile(raw.profile??'detailed');}catch{throw new RenderError('INVALID_PROFILE','Render profile must be lite or detailed.');}
     if(!['room','section','asset'].includes(options.scope)||!['turntable','sample','animation','pov'].includes(options.motion)||![320,480,640].includes(options.size)||![2,3,4].includes(options.duration)||![10,15].includes(options.fps))throw new RenderError('INVALID_OPTIONS','Use GIF studio presets: 320/480/640 px, 2/3/4 seconds, 10/15 fps.');
     if(!Number.isSafeInteger(options.assetIndex)||options.assetIndex<0||options.scope==='asset'&&!workspace.items[options.assetIndex])throw new RenderError('INVALID_ASSET','Select an existing asset index.');
     if(options.motion==='sample'&&options.scope!=='asset')throw new RenderError('INVALID_OPTIONS','Sample motion requires asset scope.');

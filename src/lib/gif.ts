@@ -4,6 +4,7 @@ import type { Asset } from './scene';
 import { applyWorldPoses, createWorld } from './world';
 import { appendAssets, canonicalJSON, emptyWorkspace, evaluateWorkspace, makeManifest, type Workspace } from './workspace';
 import { updateCameraDepth } from './camera-depth';
+import { parseRenderProfile, type RenderProfile } from './render-profile';
 import { assertPovSceneBudget, resolvePovCameraFrame, validatePovPreset, type PovCameraFrame, type PovCameraPreset } from './pov-capture';
 import { defaultGifCamera, regionBounds, type FloorRegion, type GifOptions, type GifCamera } from './gif-contract';
 export { defaultGifCamera, regionBounds, type FloorRegion, type GifOptions, type GifCamera } from './gif-contract';
@@ -30,7 +31,7 @@ export function povEvidence(preset: PovCameraPreset, sceneSha256: string): PovEv
     preset: validatePovPreset(preset), sceneSha256, frames: [] };
 }
 export type GifMetadata = {
-  schemaVersion: 1; units: 'm'; upAxis: 'Y'; scope: GifOptions['scope']; motion: GifOptions['motion'];
+  schemaVersion: 1; units: 'm'; upAxis: 'Y'; scope: GifOptions['scope']; motion: GifOptions['motion']; renderProfile?: RenderProfile;
   width: number; height: number; frameCount: number; frameDelayMs: number; durationSeconds: number;
   room: number[]; region?: FloorRegion; camera?: GifCamera & { target: number[]; distance: number }; emptyRoom?: boolean;
   assets: { id: string; instanceId: string; name: string; source: Asset['source']; position: number[]; rotation: number[]; visible: boolean; warnings: string[] }[];
@@ -38,6 +39,7 @@ export type GifMetadata = {
   frames?: { time: number; instances: { id: string; position: number[]; rotation: number[]; visible: boolean; parts: Record<string, unknown> }[] }[];
 };
 export async function renderGif(assets: Asset[], room: number[], options: GifOptions, signal: AbortSignal, progress: (value:number)=>void, layout?: Pick<Workspace,'items'|'animation'>): Promise<GifResult> {
+  const profile=parseRenderProfile(options.profile??'detailed');
   const emptyRoom = assets.length===0 && options.scope==='room' && options.allowEmptyRoom===true;
   if(!assets.length&&!emptyRoom) throw new Error('Import an asset before rendering a GIF.');
   const view=options.camera??defaultGifCamera;
@@ -58,14 +60,14 @@ export async function renderGif(assets: Asset[], room: number[], options: GifOpt
   const delay=Math.round(100/options.fps)*10;
   const frames=options.motion==='animation'?Math.ceil((end-start)*1000/delay):options.duration*options.fps;
   const section=options.scope==='section'?regionBounds(options.region,room):undefined;
-  const world=createWorld(assets,room); let renderer:THREE.WebGLRenderer|undefined;
+  const world=createWorld(assets,room,-1,-1,undefined,profile); let renderer:THREE.WebGLRenderer|undefined;
   const evidence=pov? povEvidence(pov, await captureSceneHash({room: [...room] as Workspace['room'], items: state.items, animation:state.animation})):undefined;
   const snapshots=Array.from({length:frames},(_,frame)=>evaluateWorkspace(state.items,state.animation,options.motion==='animation'?start+frame*delay/1000:options.snapshotTime??null));
   const isolated=options.scope==='asset'&&options.motion!=='animation';
   const eligible=(index:number)=>options.scope!=='asset'||index===options.assetIndex;
   try {
     if(signal.aborted) throw new DOMException('Export cancelled','AbortError');
-    renderer=new THREE.WebGLRenderer({antialias:true,preserveDrawingBuffer:true}); renderer.setPixelRatio(1); renderer.setSize(options.size,options.size);
+    renderer=new THREE.WebGLRenderer({antialias:profile==='detailed',preserveDrawingBuffer:true}); renderer.setPixelRatio(1); renderer.setSize(options.size,options.size);
     world.environment.visible=options.scope!=='asset';
     let bounds=section?.clone()??(options.scope==='asset'?new THREE.Box3():new THREE.Box3(new THREE.Vector3(-room[0]/2,0,-room[1]/2),new THREE.Vector3(room[0]/2,room[2],room[1]/2)));
     const included=new Set<number>();
@@ -85,7 +87,7 @@ export async function renderGif(assets: Asset[], room: number[], options: GifOpt
     const lift=size.y*.3;if(options.motion==='sample')center.y+=lift/2;
     const canvas=document.createElement('canvas');canvas.width=options.size;canvas.height=options.size;const context=canvas.getContext('2d',{willReadFrequently:true});if(!context)throw new Error('This browser cannot capture GIF frames.');
     const gif=GIFEncoder();
-    const metadata:GifMetadata={schemaVersion:1,units:'m',upAxis:'Y',scope:options.scope,motion:options.motion,width:options.size,height:options.size,frameCount:frames,frameDelayMs:delay,durationSeconds:frames*delay/1000,room:[...room],...(pov?{pov:evidence}:{camera:{...view,target:center.toArray(),distance}}),emptyRoom,...(section?{region:{...options.region}}:{}),
+    const metadata:GifMetadata={schemaVersion:1,units:'m',upAxis:'Y',scope:options.scope,motion:options.motion,renderProfile:profile,width:options.size,height:options.size,frameCount:frames,frameDelayMs:delay,durationSeconds:frames*delay/1000,room:[...room],...(pov?{pov:evidence}:{camera:{...view,target:center.toArray(),distance}}),emptyRoom,...(section?{region:{...options.region}}:{}),
       assets:[...included].map(i=>({id:assets[i].id,instanceId:state.items[i].id,name:state.items[i].name,source:{...assets[i].source},position:[...snapshots[0][i].position],rotation:[...snapshots[0][i].rotation],visible:snapshots[0][i].visible,warnings:[...assets[i].warnings]})),
       note:pov?'Synthetic camera render from evaluated scene poses; not a real camera observation.':options.motion==='animation'?'Authored timeline evaluated at the recorded frame times; fixed review camera.':options.motion==='sample'?'Synthetic lift-and-return preview; isolated asset. Not an authored physical process.':`${isolated?'Isolated asset camera orbit; metadata retains room coordinates.':'Camera orbit around current instance poses.'} Floor-section geometry is clipped at its boundaries.`,
       ...(options.motion==='animation'?{animation:structuredClone(state.animation),frames:[]}:{}),
@@ -111,7 +113,7 @@ export async function renderGif(assets: Asset[], room: number[], options: GifOpt
       }
       renderer.render(world.scene,camera);
       metadata.frames?.push({time:start+frame*delay/1000,instances:[...included].map(i=>({id:state.items[i].id,position:poses[i].position,rotation:poses[i].rotation,visible:poses[i].visible,parts:poses[i].parts}))});
-      context.drawImage(renderer.domElement,0,0);context.fillStyle='#101716';context.fillRect(0,options.size-29,options.size,29);context.fillStyle='#dfe7df';context.font='11px sans-serif';context.fillText(pov?'OpenIndustries | SYNTHETIC POV | NOT A CAMERA OBSERVATION':`OpenIndustries | ${options.scope.toUpperCase()} | ${options.motion.toUpperCase()} | meters`,10,options.size-11);
+      context.drawImage(renderer.domElement,0,0);context.fillStyle='#101716';context.fillRect(0,options.size-29,options.size,29);context.fillStyle='#dfe7df';context.font='11px sans-serif';context.fillText(pov?'OpenIndustries | SYNTHETIC POV | NOT A CAMERA OBSERVATION':`OpenIndustries | ${profile.toUpperCase()} | ${options.scope.toUpperCase()} | ${options.motion.toUpperCase()}`,10,options.size-11);
       const pixels=context.getImageData(0,0,options.size,options.size).data;const palette=quantize(pixels,256);gif.writeFrame(applyPalette(pixels,palette),options.size,options.size,{palette,delay,repeat:options.motion==='animation'&&!state.animation.loop?-1:0});
       progress((frame+1)/frames);await new Promise(resolve=>setTimeout(resolve,0));
     }

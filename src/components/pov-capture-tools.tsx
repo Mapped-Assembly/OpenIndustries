@@ -8,12 +8,14 @@ import {
 import { renderGif } from '../lib/gif';
 import { renderPovScreenshot } from '../lib/pov-screenshot';
 import type { Workspace } from '../lib/workspace';
+import type { RenderProfile } from '../lib/render-profile';
 
 type Props = {
   workspace: Workspace; selected: number; sceneKey: string; sceneRevision: number | null;
   cameraSession: RefObject<CameraSession>; viewMode: '3d' | 'plan' | 'pov' | 'mounted'; onActivatePov: () => void;
   mountedRig: PovCameraPreset | null; onActivateMounted: (rig: PovCameraPreset) => void;
   size: number; duration: number; fps: number; rangeStart: number; rangeEnd: number; time: number | null;
+  renderProfile?: RenderProfile;
 };
 
 type CaptureResult = { blob: Blob; filename: string; metadata: unknown };
@@ -34,7 +36,7 @@ function useMediaUrl(blob: Blob | undefined): string {
 /** User-initiated, scene-scoped presets and synthetic POV exports. */
 export function PovCaptureTools({
   workspace, selected, sceneKey, sceneRevision, cameraSession, viewMode, onActivatePov, mountedRig, onActivateMounted,
-  size, duration, fps, rangeStart, rangeEnd, time,
+  size, duration, fps, rangeStart, rangeEnd, time, renderProfile,
 }: Props) {
   const [name, setName] = useState('My POV');
   const [presets, setPresets] = useState<PovCameraPreset[]>([]);
@@ -145,7 +147,7 @@ export function PovCaptureTools({
         output = await renderGif(workspace.items.map(item => item.asset), workspace.room, {
           scope: 'room', assetIndex: 0, region: { x: 0, z: 0, width: workspace.room[0], depth: workspace.room[1] },
           motion: format === 'animation-gif' ? 'animation' : 'pov', size, duration, fps, rangeStart, rangeEnd,
-          snapshotTime: shotTime, allowEmptyRoom: true, pov: preset,
+          snapshotTime: shotTime, allowEmptyRoom: true, pov: preset, profile:renderProfile ?? 'detailed',
         }, controller.signal, value => setProgress(value), workspace);
       }
       if (controller.signal.aborted) throw new DOMException('Capture cancelled.', 'AbortError');

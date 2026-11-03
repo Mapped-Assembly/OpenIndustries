@@ -14,3 +14,13 @@
 .oi-view-mode button[aria-pressed=true]{background:#a7cb79;color:#152019;font-weight:700}
 .oi-view-mode button:focus-visible{outline:2px solid #c8ef82}
 @media(max-width:650px){.oi-view-mode{top:100px;left:8px}.oi-plan-tools{top:147px}}
+
+.oi-view-mode{flex-wrap:wrap;max-width:calc(100% - 48px);align-items:center}
+.oi-view-mode .oi-profile-label{display:flex;flex-direction:row;align-items:center;gap:7px;margin:0 0 0 7px;padding:0 5px;border-left:1px solid #506755;font-size:11px;white-space:nowrap;color:#d5e3d3}
+.oi-view-mode .oi-profile-label select{width:auto;min-width:91px;margin:0;padding:7px;background:#21362c;font-size:11px;color:#e6f1e2}
+@media(max-width:650px){
+  .oi-view-mode{max-width:calc(100% - 16px);gap:1px}
+  .oi-view-mode button{padding:6px 7px}
+  .oi-view-mode .oi-profile-label{margin-left:2px;gap:3px;font-size:10px;padding:0 2px}
+  .oi-view-mode .oi-profile-label select{min-width:77px;padding:5px}
+}

@@ -1,5 +1,6 @@
 import * as THREE from 'three';
 import type { PovCameraPreset } from './pov-capture';
+import type { RenderProfile } from './render-profile';
 
 export type FloorRegion = { x: number; z: number; width: number; depth: number };
 export type GifCamera = { azimuthDegrees: number; elevationDegrees: number; distanceScale: number; fovDegrees: number };
@@ -9,6 +10,8 @@ export type GifOptions = {
   motion: 'turntable' | 'sample' | 'animation' | 'pov'; size: number; duration: number; fps: number;
   rangeStart?: number; rangeEnd?: number; snapshotTime?: number | null;
   camera?: GifCamera; allowEmptyRoom?: boolean;
+  /** Shader quality profile; same assets, geometry and evaluated poses. */
+  profile?: RenderProfile;
   /** Synthetic first-person/attached-camera view; uses the same evaluated scene as orbit GIFs. */
   pov?: PovCameraPreset;
 };

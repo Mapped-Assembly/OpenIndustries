@@ -108,6 +108,8 @@
     "test:pov-capture-browser": "node scripts/pov-capture-browser-smoke.mjs",
     "test:mounted-pov": "node --import tsx scripts/mounted-pov-test.ts",
     "test:mounted-pov-browser": "node scripts/mounted-pov-browser-smoke.mjs",
+    "test:render-lite": "node --import tsx scripts/lite-render-test.ts",
+    "test:render-lite-browser": "node scripts/lite-browser-smoke.mjs",
     "test:system-inspector": "node --import tsx scripts/system-inspector-test.ts",
     "test:system-inspector-browser": "node --import tsx scripts/system-inspector-browser-test.ts",
     "demo:system-inspector": "node --import tsx scripts/system-inspector-fixture.ts --write"
