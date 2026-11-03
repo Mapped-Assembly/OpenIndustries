@@ -5,6 +5,8 @@ export type Point3 = [number, number, number];
 export type CameraSession = {
   orbit?: { position: Point3; target: Point3 };
   pov?: PovPose;
+  /** One-shot request from the saved-camera picker; consumed by the active viewer. */
+  requestedPov?: { id: string; pose: PovPose };
 };
 
 /** Y-up viewpoint; zero yaw looks toward negative world Z. */
