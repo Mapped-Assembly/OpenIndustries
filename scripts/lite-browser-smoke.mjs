@@ -73,12 +73,6 @@ try{
   assert.ok(meta.performance.drawCalls>0,'draw calls must be measured');
   assert.ok(meta.performance.gpuGeometries>0,'WebGL must upload visible geometries');
 
-  const selection=page.locator('.asset').first();
-  await selection.click();
-  await expect(page.getByLabel('Prep table 1 X position')).toBeVisible();
-  await page.getByLabel('Prep table 1 X position').fill('-6.900');
-  await expect.poll(()=>canvas.getAttribute('data-scene-instances')).toBe('79');
-  await expect(canvas).toHaveAttribute('data-identity-probe','same-canvas');
   await page.getByLabel('3D render profile').selectOption('detailed');
   await expect.poll(()=>canvas.getAttribute('data-render-profile')).toBe('detailed');
   await expect(canvas).toHaveAttribute('data-identity-probe','same-canvas');
@@ -92,6 +86,16 @@ try{
   await page.screenshot({path:'test-results/lite-kitchen-detailed.png'});
   await page.getByLabel('3D render profile').selectOption('lite');
   await expect.poll(()=>canvas.getAttribute('data-render-profile')).toBe('lite');
+  await expect(canvas).toHaveAttribute('data-identity-probe','same-canvas');
+  assert.equal(detailedEnd.drawCalls,liteEnd.drawCalls,
+    'Lite and Detailed must account for the same visible geometry and occlusion from the same camera');
+
+  // After measuring the identical scene/camera, edit precisely one instance.
+  const selection=page.locator('.asset').first();
+  await selection.click();
+  await expect(page.getByLabel('Prep table 1 X position')).toBeVisible();
+  await page.getByLabel('Prep table 1 X position').fill('-6.900');
+  await expect.poll(()=>canvas.getAttribute('data-scene-instances')).toBe('79');
   await expect(canvas).toHaveAttribute('data-identity-probe','same-canvas');
 
   // Check original instance and asset identities after a single instance edit.
@@ -109,7 +113,7 @@ try{
     elapsedToSceneReadyMs:performance.now()-open,
     liteStaticFramesOver550ms:liteEnd.frames-liteStart.frames,
     detailedFramesOver500ms:detailedEnd.frames-detailedStart.frames,
-    beforeEditLite:liteEnd,afterEditDetailed:detailedEnd,
+    sameCameraLite:liteEnd,sameCameraDetailed:detailedEnd,
     screenshot:{bytes:png.length,sha256:meta.mediaSha256,cpuRasterAndReadMs:meta.performance.cpuRasterAndReadMs},
     browser:await browser.version(),
   };
