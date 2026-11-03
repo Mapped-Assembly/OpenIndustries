@@ -30,6 +30,7 @@ You can import, edit, animate, and export locally without signing in. Optional c
 | --- | --- |
 | Import equipment | Open Form project JSON and `.step` / `.stp` CAD files, with geometry normalized to meters. |
 | Arrange a room | Set width, depth, and height; move, rotate, rename, duplicate, hide, or remove equipment instances; undo and redo edits. |
+| Walk through a space | Switch to [POV mode](docs/pov.md) for first-person visual inspection with keyboard/mouse or touch controls; not validated collision clearance. |
 | Inspect a design | View available components, bill of materials (BOM), validation findings, and source/project metadata. |
 | Author motion | Add position and rotation keyframes for equipment or components, then play or scrub the timeline. |
 | Export a visual review | Render GIFs of a room, a floor section, or a selected asset, with companion JSON recording spatial and animation context. |
