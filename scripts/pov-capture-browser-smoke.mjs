@@ -19,12 +19,16 @@ async function download(link) {
 try{
   await page.goto('http://127.0.0.1:8787');
   await page.locator('canvas').waitFor();
+  // Canvas mounting precedes async draft/auth restoration; importing while busy
+  // causes load() to return without processing any file.
+  await expect(page.getByRole('button',{name:'+ Import project',exact:true})).toBeEnabled({timeout:20000});
   const fixture={name:'pov-fixture.json',mimeType:'application/json',buffer:Buffer.from(JSON.stringify({
     hardware_ir_version:'0.2',overview:{title:'POV camera fixture'},
     mechanical:{render_dimensions:{x_mm:750,y_mm:620,z_mm:540}},
   }))};
   await page.getByLabel('Import files').setInputFiles([fixture]);
-  await expect(page.locator('.asset')).toHaveCount(1);
+  await expect(page.locator('.asset')).toHaveCount(1,{timeout:20000});
+  await expect(page.getByRole('status')).toContainText('Imported 1 asset(s)',{timeout:20000});
   await page.getByRole('button',{name:'POV',exact:true}).click();
   await expect.poll(()=>page.locator('canvas').getAttribute('data-camera-mode')).toBe('pov');
   await page.getByRole('button',{name:'GIF studio',exact:true}).click();
