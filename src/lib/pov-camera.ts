@@ -40,11 +40,10 @@ export function choosePovSpawn(
   const eye = Math.min(1.65, Math.max(0.2, room[2] - 0.15));
   const xs = [0, -0.25, 0.25, -0.4, 0.4];
   const zs = [0.25, 0, -0.25, 0.4, -0.4];
-  let fallback: Point3 = clampPovPosition([0, eye, room[1] * 0.25], room);
+  const fallback: Point3 = clampPovPosition([0, eye, room[1] * 0.25], room);
   for (const z of zs) for (const x of xs) {
     const candidate = clampPovPosition([room[0] * x, eye, room[1] * z], room);
     if (!blocked(candidate)) return { pose: { position: candidate, yaw: 0, pitch: 0 }, verified: true };
-    fallback = fallback ?? candidate;
   }
   return { pose: { position: fallback, yaw: 0, pitch: 0 }, verified: false };
 }
