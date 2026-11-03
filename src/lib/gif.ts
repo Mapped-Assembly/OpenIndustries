@@ -4,7 +4,7 @@ import type { Asset } from './scene';
 import { applyWorldPoses, createWorld } from './world';
 import { appendAssets, canonicalJSON, emptyWorkspace, evaluateWorkspace, makeManifest, type Workspace } from './workspace';
 import { updateCameraDepth, updatePovCameraDepth } from './camera-depth';
-import { resolvePovCameraFrame, validatePovPreset, type PovCameraFrame, type PovCameraPreset } from './pov-capture';
+import { assertPovSceneBudget, resolvePovCameraFrame, validatePovPreset, type PovCameraFrame, type PovCameraPreset } from './pov-capture';
 import { defaultGifCamera, regionBounds, type FloorRegion, type GifOptions, type GifCamera } from './gif-contract';
 export { defaultGifCamera, regionBounds, type FloorRegion, type GifOptions, type GifCamera } from './gif-contract';
 
@@ -46,6 +46,7 @@ export async function renderGif(assets: Asset[], room: number[], options: GifOpt
   if(options.motion==='sample'&&options.scope!=='asset') throw new Error('Sample motion is available for individual assets.');
   if(options.scope==='asset'&&!assets[options.assetIndex]) throw new Error('Select an asset to render.');
   const state=layout??appendAssets(emptyWorkspace(),assets);
+  if (pov) assertPovSceneBudget({room:[...room] as Workspace['room'],items:state.items,animation:state.animation});
   if(state.items.some(i=>i.missing&&(options.scope!=='asset'||i===state.items[options.assetIndex]))) throw new Error('Reimport missing geometry before exporting a review GIF.');
   const start=options.rangeStart??0; const end=options.rangeEnd??Math.min(state.animation.duration,3);
   if(options.motion==='animation'&&(!state.animation.tracks.length||!Number.isFinite(start)||!Number.isFinite(end)||start<0||end<=start||end>state.animation.duration||end-start>4)) throw new Error('Choose an authored animation range of at most 4 seconds within the timeline.');
