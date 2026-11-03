@@ -1,0 +1,8966 @@
+{
+  "format": "astra.scene",
+  "version": 1,
+  "units": "m",
+  "upAxis": "Y",
+  "room": [
+    18,
+    12,
+    4
+  ],
+  "assets": [
+    {
+      "id": "KITCHEN-LITE-ASSET-001",
+      "name": "Prep table",
+      "source": {
+        "kind": "generated",
+        "filename": "generated-kitchen-lite-stress-1.json",
+        "digest": "synthetic-fixture-v1-1",
+        "generator": "oi-fixture"
+      },
+      "dimensions": [
+        0.4,
+        0.6,
+        0.35
+      ]
+    },
+    {
+      "id": "KITCHEN-LITE-ASSET-002",
+      "name": "Wash sink",
+      "source": {
+        "kind": "generated",
+        "filename": "generated-kitchen-lite-stress-2.json",
+        "digest": "synthetic-fixture-v1-2",
+        "generator": "oi-fixture"
+      },
+      "dimensions": [
+        0.48,
+        0.73,
+        0.44
+      ]
+    },
+    {
+      "id": "KITCHEN-LITE-ASSET-003",
+      "name": "Cold cabinet",
+      "source": {
+        "kind": "generated",
+        "filename": "generated-kitchen-lite-stress-3.json",
+        "digest": "synthetic-fixture-v1-3",
+        "generator": "oi-fixture"
+      },
+      "dimensions": [
+        0.56,
+        0.86,
+        0.53
+      ]
+    },
+    {
+      "id": "KITCHEN-LITE-ASSET-004",
+      "name": "Dry cabinet",
+      "source": {
+        "kind": "generated",
+        "filename": "generated-kitchen-lite-stress-4.json",
+        "digest": "synthetic-fixture-v1-4",
+        "generator": "oi-fixture"
+      },
+      "dimensions": [
+        0.64,
+        0.99,
+        0.35
+      ]
+    },
+    {
+      "id": "KITCHEN-LITE-ASSET-005",
+      "name": "Range",
+      "source": {
+        "kind": "generated",
+        "filename": "generated-kitchen-lite-stress-5.json",
+        "digest": "synthetic-fixture-v1-5",
+        "generator": "oi-fixture"
+      },
+      "dimensions": [
+        0.72,
+        0.6,
+        0.44
+      ]
+    },
+    {
+      "id": "KITCHEN-LITE-ASSET-006",
+      "name": "Oven",
+      "source": {
+        "kind": "generated",
+        "filename": "generated-kitchen-lite-stress-6.json",
+        "digest": "synthetic-fixture-v1-6",
+        "generator": "oi-fixture"
+      },
+      "dimensions": [
+        0.4,
+        0.73,
+        0.53
+      ]
+    },
+    {
+      "id": "KITCHEN-LITE-ASSET-007",
+      "name": "Vent hood",
+      "source": {
+        "kind": "generated",
+        "filename": "generated-kitchen-lite-stress-7.json",
+        "digest": "synthetic-fixture-v1-7",
+        "generator": "oi-fixture"
+      },
+      "dimensions": [
+        0.48,
+        0.86,
+        0.35
+      ]
+    },
+    {
+      "id": "KITCHEN-LITE-ASSET-008",
+      "name": "Dishwasher",
+      "source": {
+        "kind": "generated",
+        "filename": "generated-kitchen-lite-stress-8.json",
+        "digest": "synthetic-fixture-v1-8",
+        "generator": "oi-fixture"
+      },
+      "dimensions": [
+        0.56,
+        0.99,
+        0.44
+      ]
+    },
+    {
+      "id": "KITCHEN-LITE-ASSET-009",
+      "name": "Service counter",
+      "source": {
+        "kind": "generated",
+        "filename": "generated-kitchen-lite-stress-9.json",
+        "digest": "synthetic-fixture-v1-9",
+        "generator": "oi-fixture"
+      },
+      "dimensions": [
+        0.64,
+        0.6,
+        0.53
+      ]
+    },
+    {
+      "id": "KITCHEN-LITE-ASSET-010",
+      "name": "Refrigerator",
+      "source": {
+        "kind": "generated",
+        "filename": "generated-kitchen-lite-stress-10.json",
+        "digest": "synthetic-fixture-v1-10",
+        "generator": "oi-fixture"
+      },
+      "dimensions": [
+        0.72,
+        0.73,
+        0.35
+      ]
+    },
+    {
+      "id": "KITCHEN-LITE-ASSET-011",
+      "name": "Freezer",
+      "source": {
+        "kind": "generated",
+        "filename": "generated-kitchen-lite-stress-11.json",
+        "digest": "synthetic-fixture-v1-11",
+        "generator": "oi-fixture"
+      },
+      "dimensions": [
+        0.4,
+        0.86,
+        0.44
+      ]
+    },
+    {
+      "id": "KITCHEN-LITE-ASSET-012",
+      "name": "Island workstation",
+      "source": {
+        "kind": "generated",
+        "filename": "generated-kitchen-lite-stress-12.json",
+        "digest": "synthetic-fixture-v1-12",
+        "generator": "oi-fixture"
+      },
+      "dimensions": [
+        0.48,
+        0.99,
+        0.53
+      ]
+    },
+    {
+      "id": "KITCHEN-LITE-ASSET-013",
+      "name": "Cutting station",
+      "source": {
+        "kind": "generated",
+        "filename": "generated-kitchen-lite-stress-13.json",
+        "digest": "synthetic-fixture-v1-13",
+        "generator": "oi-fixture"
+      },
+      "dimensions": [
+        0.56,
+        0.6,
+        0.35
+      ]
+    },
+    {
+      "id": "KITCHEN-LITE-ASSET-014",
+      "name": "Ingredient storage",
+      "source": {
+        "kind": "generated",
+        "filename": "generated-kitchen-lite-stress-14.json",
+        "digest": "synthetic-fixture-v1-14",
+        "generator": "oi-fixture"
+      },
+      "dimensions": [
+        0.64,
+        0.73,
+        0.44
+      ]
+    },
+    {
+      "id": "KITCHEN-LITE-ASSET-015",
+      "name": "Pan rack",
+      "source": {
+        "kind": "generated",
+        "filename": "generated-kitchen-lite-stress-15.json",
+        "digest": "synthetic-fixture-v1-15",
+        "generator": "oi-fixture"
+      },
+      "dimensions": [
+        0.72,
+        0.86,
+        0.53
+      ]
+    },
+    {
+      "id": "KITCHEN-LITE-ASSET-016",
+      "name": "Handwash sink",
+      "source": {
+        "kind": "generated",
+        "filename": "generated-kitchen-lite-stress-16.json",
+        "digest": "synthetic-fixture-v1-16",
+        "generator": "oi-fixture"
+      },
+      "dimensions": [
+        0.4,
+        0.99,
+        0.35
+      ]
+    },
+    {
+      "id": "KITCHEN-LITE-ASSET-017",
+      "name": "Waste station",
+      "source": {
+        "kind": "generated",
+        "filename": "generated-kitchen-lite-stress-17.json",
+        "digest": "synthetic-fixture-v1-17",
+        "generator": "oi-fixture"
+      },
+      "dimensions": [
+        0.48,
+        0.6,
+        0.44
+      ]
+    },
+    {
+      "id": "KITCHEN-LITE-ASSET-018",
+      "name": "Food processor",
+      "source": {
+        "kind": "generated",
+        "filename": "generated-kitchen-lite-stress-18.json",
+        "digest": "synthetic-fixture-v1-18",
+        "generator": "oi-fixture"
+      },
+      "dimensions": [
+        0.56,
+        0.73,
+        0.53
+      ]
+    },
+    {
+      "id": "KITCHEN-LITE-ASSET-019",
+      "name": "Mixer",
+      "source": {
+        "kind": "generated",
+        "filename": "generated-kitchen-lite-stress-19.json",
+        "digest": "synthetic-fixture-v1-19",
+        "generator": "oi-fixture"
+      },
+      "dimensions": [
+        0.64,
+        0.86,
+        0.35
+      ]
+    },
+    {
+      "id": "KITCHEN-LITE-ASSET-020",
+      "name": "Plate rack",
+      "source": {
+        "kind": "generated",
+        "filename": "generated-kitchen-lite-stress-20.json",
+        "digest": "synthetic-fixture-v1-20",
+        "generator": "oi-fixture"
+      },
+      "dimensions": [
+        0.72,
+        0.99,
+        0.44
+      ]
+    },
+    {
+      "id": "KITCHEN-LITE-ASSET-021",
+      "name": "Pass station",
+      "source": {
+        "kind": "generated",
+        "filename": "generated-kitchen-lite-stress-21.json",
+        "digest": "synthetic-fixture-v1-21",
+        "generator": "oi-fixture"
+      },
+      "dimensions": [
+        0.4,
+        0.6,
+        0.53
+      ]
+    },
+    {
+      "id": "KITCHEN-LITE-ASSET-022",
+      "name": "Steam cabinet",
+      "source": {
+        "kind": "generated",
+        "filename": "generated-kitchen-lite-stress-22.json",
+        "digest": "synthetic-fixture-v1-22",
+        "generator": "oi-fixture"
+      },
+      "dimensions": [
+        0.48,
+        0.73,
+        0.35
+      ]
+    },
+    {
+      "id": "KITCHEN-LITE-ASSET-023",
+      "name": "Grill",
+      "source": {
+        "kind": "generated",
+        "filename": "generated-kitchen-lite-stress-23.json",
+        "digest": "synthetic-fixture-v1-23",
+        "generator": "oi-fixture"
+      },
+      "dimensions": [
+        0.56,
+        0.86,
+        0.44
+      ]
+    },
+    {
+      "id": "KITCHEN-LITE-ASSET-024",
+      "name": "Deep sink",
+      "source": {
+        "kind": "generated",
+        "filename": "generated-kitchen-lite-stress-24.json",
+        "digest": "synthetic-fixture-v1-24",
+        "generator": "oi-fixture"
+      },
+      "dimensions": [
+        0.64,
+        0.99,
+        0.53
+      ]
+    },
+    {
+      "id": "KITCHEN-LITE-ASSET-025",
+      "name": "Packaging station",
+      "source": {
+        "kind": "generated",
+        "filename": "generated-kitchen-lite-stress-25.json",
+        "digest": "synthetic-fixture-v1-25",
+        "generator": "oi-fixture"
+      },
+      "dimensions": [
+        0.72,
+        0.6,
+        0.35
+      ]
+    },
+    {
+      "id": "KITCHEN-LITE-ASSET-026",
+      "name": "Drying rack",
+      "source": {
+        "kind": "generated",
+        "filename": "generated-kitchen-lite-stress-26.json",
+        "digest": "synthetic-fixture-v1-26",
+        "generator": "oi-fixture"
+      },
+      "dimensions": [
+        0.4,
+        0.73,
+        0.44
+      ]
+    },
+    {
+      "id": "KITCHEN-LITE-ASSET-027",
+      "name": "Service island",
+      "source": {
+        "kind": "generated",
+        "filename": "generated-kitchen-lite-stress-27.json",
+        "digest": "synthetic-fixture-v1-27",
+        "generator": "oi-fixture"
+      },
+      "dimensions": [
+        0.48,
+        0.86,
+        0.53
+      ]
+    },
+    {
+      "id": "KITCHEN-LITE-ASSET-028",
+      "name": "Tray cart",
+      "source": {
+        "kind": "generated",
+        "filename": "generated-kitchen-lite-stress-28.json",
+        "digest": "synthetic-fixture-v1-28",
+        "generator": "oi-fixture"
+      },
+      "dimensions": [
+        0.56,
+        0.99,
+        0.35
+      ]
+    },
+    {
+      "id": "KITCHEN-LITE-ASSET-029",
+      "name": "Cooking platform",
+      "source": {
+        "kind": "generated",
+        "filename": "generated-kitchen-lite-stress-29.json",
+        "digest": "synthetic-fixture-v1-29",
+        "generator": "oi-fixture"
+      },
+      "dimensions": [
+        0.64,
+        0.6,
+        0.44
+      ]
+    },
+    {
+      "id": "KITCHEN-LITE-ASSET-030",
+      "name": "Sanitizer station",
+      "source": {
+        "kind": "generated",
+        "filename": "generated-kitchen-lite-stress-30.json",
+        "digest": "synthetic-fixture-v1-30",
+        "generator": "oi-fixture"
+      },
+      "dimensions": [
+        0.72,
+        0.73,
+        0.53
+      ]
+    },
+    {
+      "id": "KITCHEN-LITE-ASSET-031",
+      "name": "Cutlery cabinet",
+      "source": {
+        "kind": "generated",
+        "filename": "generated-kitchen-lite-stress-31.json",
+        "digest": "synthetic-fixture-v1-31",
+        "generator": "oi-fixture"
+      },
+      "dimensions": [
+        0.4,
+        0.86,
+        0.35
+      ]
+    },
+    {
+      "id": "KITCHEN-LITE-ASSET-032",
+      "name": "Utensil shelf",
+      "source": {
+        "kind": "generated",
+        "filename": "generated-kitchen-lite-stress-32.json",
+        "digest": "synthetic-fixture-v1-32",
+        "generator": "oi-fixture"
+      },
+      "dimensions": [
+        0.48,
+        0.99,
+        0.44
+      ]
+    },
+    {
+      "id": "KITCHEN-LITE-ASSET-033",
+      "name": "Spice rack",
+      "source": {
+        "kind": "generated",
+        "filename": "generated-kitchen-lite-stress-33.json",
+        "digest": "synthetic-fixture-v1-33",
+        "generator": "oi-fixture"
+      },
+      "dimensions": [
+        0.56,
+        0.6,
+        0.53
+      ]
+    },
+    {
+      "id": "KITCHEN-LITE-ASSET-034",
+      "name": "Beverage station",
+      "source": {
+        "kind": "generated",
+        "filename": "generated-kitchen-lite-stress-34.json",
+        "digest": "synthetic-fixture-v1-34",
+        "generator": "oi-fixture"
+      },
+      "dimensions": [
+        0.64,
+        0.73,
+        0.35
+      ]
+    },
+    {
+      "id": "KITCHEN-LITE-ASSET-035",
+      "name": "Water filter",
+      "source": {
+        "kind": "generated",
+        "filename": "generated-kitchen-lite-stress-35.json",
+        "digest": "synthetic-fixture-v1-35",
+        "generator": "oi-fixture"
+      },
+      "dimensions": [
+        0.72,
+        0.86,
+        0.44
+      ]
+    },
+    {
+      "id": "KITCHEN-LITE-ASSET-036",
+      "name": "Floor drain cover",
+      "source": {
+        "kind": "generated",
+        "filename": "generated-kitchen-lite-stress-36.json",
+        "digest": "synthetic-fixture-v1-36",
+        "generator": "oi-fixture"
+      },
+      "dimensions": [
+        0.4,
+        0.99,
+        0.53
+      ]
+    },
+    {
+      "id": "KITCHEN-LITE-ASSET-037",
+      "name": "Dish return",
+      "source": {
+        "kind": "generated",
+        "filename": "generated-kitchen-lite-stress-37.json",
+        "digest": "synthetic-fixture-v1-37",
+        "generator": "oi-fixture"
+      },
+      "dimensions": [
+        0.48,
+        0.6,
+        0.35
+      ]
+    },
+    {
+      "id": "KITCHEN-LITE-ASSET-038",
+      "name": "Cleaning cart",
+      "source": {
+        "kind": "generated",
+        "filename": "generated-kitchen-lite-stress-38.json",
+        "digest": "synthetic-fixture-v1-38",
+        "generator": "oi-fixture"
+      },
+      "dimensions": [
+        0.56,
+        0.73,
+        0.44
+      ]
+    },
+    {
+      "id": "KITCHEN-LITE-ASSET-039",
+      "name": "Storage shelf",
+      "source": {
+        "kind": "generated",
+        "filename": "generated-kitchen-lite-stress-39.json",
+        "digest": "synthetic-fixture-v1-39",
+        "generator": "oi-fixture"
+      },
+      "dimensions": [
+        0.64,
+        0.86,
+        0.53
+      ]
+    },
+    {
+      "id": "KITCHEN-LITE-ASSET-040",
+      "name": "Sorting table",
+      "source": {
+        "kind": "generated",
+        "filename": "generated-kitchen-lite-stress-40.json",
+        "digest": "synthetic-fixture-v1-40",
+        "generator": "oi-fixture"
+      },
+      "dimensions": [
+        0.72,
+        0.99,
+        0.35
+      ]
+    },
+    {
+      "id": "KITCHEN-LITE-ASSET-041",
+      "name": "Rolling cart",
+      "source": {
+        "kind": "generated",
+        "filename": "generated-kitchen-lite-stress-41.json",
+        "digest": "synthetic-fixture-v1-41",
+        "generator": "oi-fixture"
+      },
+      "dimensions": [
+        0.4,
+        0.6,
+        0.44
+      ]
+    },
+    {
+      "id": "KITCHEN-LITE-ASSET-042",
+      "name": "Cookware rack",
+      "source": {
+        "kind": "generated",
+        "filename": "generated-kitchen-lite-stress-42.json",
+        "digest": "synthetic-fixture-v1-42",
+        "generator": "oi-fixture"
+      },
+      "dimensions": [
+        0.48,
+        0.73,
+        0.53
+      ]
+    },
+    {
+      "id": "KITCHEN-LITE-ASSET-043",
+      "name": "Fryer enclosure",
+      "source": {
+        "kind": "generated",
+        "filename": "generated-kitchen-lite-stress-43.json",
+        "digest": "synthetic-fixture-v1-43",
+        "generator": "oi-fixture"
+      },
+      "dimensions": [
+        0.56,
+        0.86,
+        0.35
+      ]
+    },
+    {
+      "id": "KITCHEN-LITE-ASSET-044",
+      "name": "Cold prep bench",
+      "source": {
+        "kind": "generated",
+        "filename": "generated-kitchen-lite-stress-44.json",
+        "digest": "synthetic-fixture-v1-44",
+        "generator": "oi-fixture"
+      },
+      "dimensions": [
+        0.64,
+        0.99,
+        0.44
+      ]
+    },
+    {
+      "id": "KITCHEN-LITE-ASSET-045",
+      "name": "Safety cabinet",
+      "source": {
+        "kind": "generated",
+        "filename": "generated-kitchen-lite-stress-45.json",
+        "digest": "synthetic-fixture-v1-45",
+        "generator": "oi-fixture"
+      },
+      "dimensions": [
+        0.72,
+        0.6,
+        0.53
+      ]
+    },
+    {
+      "id": "KITCHEN-LITE-ASSET-046",
+      "name": "Counter module",
+      "source": {
+        "kind": "generated",
+        "filename": "generated-kitchen-lite-stress-46.json",
+        "digest": "synthetic-fixture-v1-46",
+        "generator": "oi-fixture"
+      },
+      "dimensions": [
+        0.4,
+        0.73,
+        0.35
+      ]
+    },
+    {
+      "id": "KITCHEN-LITE-ASSET-047",
+      "name": "Utensil wash",
+      "source": {
+        "kind": "generated",
+        "filename": "generated-kitchen-lite-stress-47.json",
+        "digest": "synthetic-fixture-v1-47",
+        "generator": "oi-fixture"
+      },
+      "dimensions": [
+        0.48,
+        0.86,
+        0.44
+      ]
+    },
+    {
+      "id": "KITCHEN-LITE-ASSET-048",
+      "name": "Bottle station",
+      "source": {
+        "kind": "generated",
+        "filename": "generated-kitchen-lite-stress-48.json",
+        "digest": "synthetic-fixture-v1-48",
+        "generator": "oi-fixture"
+      },
+      "dimensions": [
+        0.56,
+        0.99,
+        0.53
+      ]
+    },
+    {
+      "id": "KITCHEN-LITE-ASSET-049",
+      "name": "Assembly table",
+      "source": {
+        "kind": "generated",
+        "filename": "generated-kitchen-lite-stress-49.json",
+        "digest": "synthetic-fixture-v1-49",
+        "generator": "oi-fixture"
+      },
+      "dimensions": [
+        0.64,
+        0.6,
+        0.35
+      ]
+    },
+    {
+      "id": "KITCHEN-LITE-ASSET-050",
+      "name": "Weighing station",
+      "source": {
+        "kind": "generated",
+        "filename": "generated-kitchen-lite-stress-50.json",
+        "digest": "synthetic-fixture-v1-50",
+        "generator": "oi-fixture"
+      },
+      "dimensions": [
+        0.72,
+        0.73,
+        0.44
+      ]
+    },
+    {
+      "id": "KITCHEN-LITE-ASSET-051",
+      "name": "Packaging counter",
+      "source": {
+        "kind": "generated",
+        "filename": "generated-kitchen-lite-stress-51.json",
+        "digest": "synthetic-fixture-v1-51",
+        "generator": "oi-fixture"
+      },
+      "dimensions": [
+        0.4,
+        0.86,
+        0.53
+      ]
+    },
+    {
+      "id": "KITCHEN-LITE-ASSET-052",
+      "name": "Dry storage module",
+      "source": {
+        "kind": "generated",
+        "filename": "generated-kitchen-lite-stress-52.json",
+        "digest": "synthetic-fixture-v1-52",
+        "generator": "oi-fixture"
+      },
+      "dimensions": [
+        0.48,
+        0.99,
+        0.35
+      ]
+    },
+    {
+      "id": "KITCHEN-LITE-ASSET-053",
+      "name": "Waste sorting",
+      "source": {
+        "kind": "generated",
+        "filename": "generated-kitchen-lite-stress-53.json",
+        "digest": "synthetic-fixture-v1-53",
+        "generator": "oi-fixture"
+      },
+      "dimensions": [
+        0.56,
+        0.6,
+        0.44
+      ]
+    },
+    {
+      "id": "KITCHEN-LITE-ASSET-054",
+      "name": "Tool trolley",
+      "source": {
+        "kind": "generated",
+        "filename": "generated-kitchen-lite-stress-54.json",
+        "digest": "synthetic-fixture-v1-54",
+        "generator": "oi-fixture"
+      },
+      "dimensions": [
+        0.64,
+        0.73,
+        0.53
+      ]
+    },
+    {
+      "id": "KITCHEN-LITE-ASSET-055",
+      "name": "Ingredient bench",
+      "source": {
+        "kind": "generated",
+        "filename": "generated-kitchen-lite-stress-55.json",
+        "digest": "synthetic-fixture-v1-55",
+        "generator": "oi-fixture"
+      },
+      "dimensions": [
+        0.72,
+        0.86,
+        0.35
+      ]
+    },
+    {
+      "id": "KITCHEN-LITE-ASSET-056",
+      "name": "Cooling platform",
+      "source": {
+        "kind": "generated",
+        "filename": "generated-kitchen-lite-stress-56.json",
+        "digest": "synthetic-fixture-v1-56",
+        "generator": "oi-fixture"
+      },
+      "dimensions": [
+        0.4,
+        0.99,
+        0.44
+      ]
+    },
+    {
+      "id": "KITCHEN-LITE-ASSET-057",
+      "name": "Pot sink",
+      "source": {
+        "kind": "generated",
+        "filename": "generated-kitchen-lite-stress-57.json",
+        "digest": "synthetic-fixture-v1-57",
+        "generator": "oi-fixture"
+      },
+      "dimensions": [
+        0.48,
+        0.6,
+        0.53
+      ]
+    },
+    {
+      "id": "KITCHEN-LITE-ASSET-058",
+      "name": "Prep sink",
+      "source": {
+        "kind": "generated",
+        "filename": "generated-kitchen-lite-stress-58.json",
+        "digest": "synthetic-fixture-v1-58",
+        "generator": "oi-fixture"
+      },
+      "dimensions": [
+        0.56,
+        0.73,
+        0.35
+      ]
+    },
+    {
+      "id": "KITCHEN-LITE-ASSET-059",
+      "name": "Workstation base",
+      "source": {
+        "kind": "generated",
+        "filename": "generated-kitchen-lite-stress-59.json",
+        "digest": "synthetic-fixture-v1-59",
+        "generator": "oi-fixture"
+      },
+      "dimensions": [
+        0.64,
+        0.86,
+        0.44
+      ]
+    },
+    {
+      "id": "KITCHEN-LITE-ASSET-060",
+      "name": "Service cabinet",
+      "source": {
+        "kind": "generated",
+        "filename": "generated-kitchen-lite-stress-60.json",
+        "digest": "synthetic-fixture-v1-60",
+        "generator": "oi-fixture"
+      },
+      "dimensions": [
+        0.72,
+        0.99,
+        0.53
+      ]
+    }
+  ],
+  "instances": [
+    {
+      "id": "KITCHEN-LITE-INSTANCE-001",
+      "name": "Prep table 1",
+      "assetId": "KITCHEN-LITE-ASSET-001",
+      "position": [
+        -7.55,
+        0,
+        -4.75
+      ],
+      "rotation": [
+        0,
+        0,
+        0
+      ],
+      "visible": true
+    },
+    {
+      "id": "KITCHEN-LITE-INSTANCE-002",
+      "name": "Wash sink 2",
+      "assetId": "KITCHEN-LITE-ASSET-002",
+      "position": [
+        -5.88,
+        0,
+        -4.75
+      ],
+      "rotation": [
+        0,
+        90,
+        0
+      ],
+      "visible": true
+    },
+    {
+      "id": "KITCHEN-LITE-INSTANCE-003",
+      "name": "Cold cabinet 3",
+      "assetId": "KITCHEN-LITE-ASSET-003",
+      "position": [
+        -4.21,
+        0,
+        -4.75
+      ],
+      "rotation": [
+        0,
+        180,
+        0
+      ],
+      "visible": true
+    },
+    {
+      "id": "KITCHEN-LITE-INSTANCE-004",
+      "name": "Dry cabinet 4",
+      "assetId": "KITCHEN-LITE-ASSET-004",
+      "position": [
+        -2.54,
+        0,
+        -4.75
+      ],
+      "rotation": [
+        0,
+        270,
+        0
+      ],
+      "visible": true
+    },
+    {
+      "id": "KITCHEN-LITE-INSTANCE-005",
+      "name": "Range 5",
+      "assetId": "KITCHEN-LITE-ASSET-005",
+      "position": [
+        -0.87,
+        0,
+        -4.75
+      ],
+      "rotation": [
+        0,
+        0,
+        0
+      ],
+      "visible": true
+    },
+    {
+      "id": "KITCHEN-LITE-INSTANCE-006",
+      "name": "Oven 6",
+      "assetId": "KITCHEN-LITE-ASSET-006",
+      "position": [
+        0.8,
+        0,
+        -4.75
+      ],
+      "rotation": [
+        0,
+        90,
+        0
+      ],
+      "visible": true
+    },
+    {
+      "id": "KITCHEN-LITE-INSTANCE-007",
+      "name": "Vent hood 7",
+      "assetId": "KITCHEN-LITE-ASSET-007",
+      "position": [
+        2.47,
+        0,
+        -4.75
+      ],
+      "rotation": [
+        0,
+        180,
+        0
+      ],
+      "visible": true
+    },
+    {
+      "id": "KITCHEN-LITE-INSTANCE-008",
+      "name": "Dishwasher 8",
+      "assetId": "KITCHEN-LITE-ASSET-008",
+      "position": [
+        4.14,
+        0,
+        -4.75
+      ],
+      "rotation": [
+        0,
+        270,
+        0
+      ],
+      "visible": true
+    },
+    {
+      "id": "KITCHEN-LITE-INSTANCE-009",
+      "name": "Service counter 9",
+      "assetId": "KITCHEN-LITE-ASSET-009",
+      "position": [
+        5.81,
+        0,
+        -4.75
+      ],
+      "rotation": [
+        0,
+        0,
+        0
+      ],
+      "visible": true
+    },
+    {
+      "id": "KITCHEN-LITE-INSTANCE-010",
+      "name": "Refrigerator 10",
+      "assetId": "KITCHEN-LITE-ASSET-010",
+      "position": [
+        7.48,
+        0,
+        -4.75
+      ],
+      "rotation": [
+        0,
+        90,
+        0
+      ],
+      "visible": true
+    },
+    {
+      "id": "KITCHEN-LITE-INSTANCE-011",
+      "name": "Freezer 11",
+      "assetId": "KITCHEN-LITE-ASSET-011",
+      "position": [
+        -7.55,
+        0,
+        -3.37
+      ],
+      "rotation": [
+        0,
+        180,
+        0
+      ],
+      "visible": true
+    },
+    {
+      "id": "KITCHEN-LITE-INSTANCE-012",
+      "name": "Island workstation 12",
+      "assetId": "KITCHEN-LITE-ASSET-012",
+      "position": [
+        -5.88,
+        0,
+        -3.37
+      ],
+      "rotation": [
+        0,
+        270,
+        0
+      ],
+      "visible": true
+    },
+    {
+      "id": "KITCHEN-LITE-INSTANCE-013",
+      "name": "Cutting station 13",
+      "assetId": "KITCHEN-LITE-ASSET-013",
+      "position": [
+        -4.21,
+        0,
+        -3.37
+      ],
+      "rotation": [
+        0,
+        0,
+        0
+      ],
+      "visible": true
+    },
+    {
+      "id": "KITCHEN-LITE-INSTANCE-014",
+      "name": "Ingredient storage 14",
+      "assetId": "KITCHEN-LITE-ASSET-014",
+      "position": [
+        -2.54,
+        0,
+        -3.37
+      ],
+      "rotation": [
+        0,
+        90,
+        0
+      ],
+      "visible": true
+    },
+    {
+      "id": "KITCHEN-LITE-INSTANCE-015",
+      "name": "Pan rack 15",
+      "assetId": "KITCHEN-LITE-ASSET-015",
+      "position": [
+        -0.87,
+        0,
+        -3.37
+      ],
+      "rotation": [
+        0,
+        180,
+        0
+      ],
+      "visible": true
+    },
+    {
+      "id": "KITCHEN-LITE-INSTANCE-016",
+      "name": "Handwash sink 16",
+      "assetId": "KITCHEN-LITE-ASSET-016",
+      "position": [
+        0.8,
+        0,
+        -3.37
+      ],
+      "rotation": [
+        0,
+        270,
+        0
+      ],
+      "visible": true
+    },
+    {
+      "id": "KITCHEN-LITE-INSTANCE-017",
+      "name": "Waste station 17",
+      "assetId": "KITCHEN-LITE-ASSET-017",
+      "position": [
+        2.47,
+        0,
+        -3.37
+      ],
+      "rotation": [
+        0,
+        0,
+        0
+      ],
+      "visible": true
+    },
+    {
+      "id": "KITCHEN-LITE-INSTANCE-018",
+      "name": "Food processor 18",
+      "assetId": "KITCHEN-LITE-ASSET-018",
+      "position": [
+        4.14,
+        0,
+        -3.37
+      ],
+      "rotation": [
+        0,
+        90,
+        0
+      ],
+      "visible": true
+    },
+    {
+      "id": "KITCHEN-LITE-INSTANCE-019",
+      "name": "Mixer 19",
+      "assetId": "KITCHEN-LITE-ASSET-019",
+      "position": [
+        5.81,
+        0,
+        -3.37
+      ],
+      "rotation": [
+        0,
+        180,
+        0
+      ],
+      "visible": true
+    },
+    {
+      "id": "KITCHEN-LITE-INSTANCE-020",
+      "name": "Plate rack 20",
+      "assetId": "KITCHEN-LITE-ASSET-020",
+      "position": [
+        7.48,
+        0,
+        -3.37
+      ],
+      "rotation": [
+        0,
+        270,
+        0
+      ],
+      "visible": true
+    },
+    {
+      "id": "KITCHEN-LITE-INSTANCE-021",
+      "name": "Pass station 21",
+      "assetId": "KITCHEN-LITE-ASSET-021",
+      "position": [
+        -7.55,
+        0,
+        -1.99
+      ],
+      "rotation": [
+        0,
+        0,
+        0
+      ],
+      "visible": true
+    },
+    {
+      "id": "KITCHEN-LITE-INSTANCE-022",
+      "name": "Steam cabinet 22",
+      "assetId": "KITCHEN-LITE-ASSET-022",
+      "position": [
+        -5.88,
+        0,
+        -1.99
+      ],
+      "rotation": [
+        0,
+        90,
+        0
+      ],
+      "visible": true
+    },
+    {
+      "id": "KITCHEN-LITE-INSTANCE-023",
+      "name": "Grill 23",
+      "assetId": "KITCHEN-LITE-ASSET-023",
+      "position": [
+        -4.21,
+        0,
+        -1.99
+      ],
+      "rotation": [
+        0,
+        180,
+        0
+      ],
+      "visible": true
+    },
+    {
+      "id": "KITCHEN-LITE-INSTANCE-024",
+      "name": "Deep sink 24",
+      "assetId": "KITCHEN-LITE-ASSET-024",
+      "position": [
+        -2.54,
+        0,
+        -1.99
+      ],
+      "rotation": [
+        0,
+        270,
+        0
+      ],
+      "visible": true
+    },
+    {
+      "id": "KITCHEN-LITE-INSTANCE-025",
+      "name": "Packaging station 25",
+      "assetId": "KITCHEN-LITE-ASSET-025",
+      "position": [
+        -0.87,
+        0,
+        -1.99
+      ],
+      "rotation": [
+        0,
+        0,
+        0
+      ],
+      "visible": true
+    },
+    {
+      "id": "KITCHEN-LITE-INSTANCE-026",
+      "name": "Drying rack 26",
+      "assetId": "KITCHEN-LITE-ASSET-026",
+      "position": [
+        0.8,
+        0,
+        -1.99
+      ],
+      "rotation": [
+        0,
+        90,
+        0
+      ],
+      "visible": true
+    },
+    {
+      "id": "KITCHEN-LITE-INSTANCE-027",
+      "name": "Service island 27",
+      "assetId": "KITCHEN-LITE-ASSET-027",
+      "position": [
+        2.47,
+        0,
+        -1.99
+      ],
+      "rotation": [
+        0,
+        180,
+        0
+      ],
+      "visible": true
+    },
+    {
+      "id": "KITCHEN-LITE-INSTANCE-028",
+      "name": "Tray cart 28",
+      "assetId": "KITCHEN-LITE-ASSET-028",
+      "position": [
+        4.14,
+        0,
+        -1.99
+      ],
+      "rotation": [
+        0,
+        270,
+        0
+      ],
+      "visible": true
+    },
+    {
+      "id": "KITCHEN-LITE-INSTANCE-029",
+      "name": "Cooking platform 29",
+      "assetId": "KITCHEN-LITE-ASSET-029",
+      "position": [
+        5.81,
+        0,
+        -1.99
+      ],
+      "rotation": [
+        0,
+        0,
+        0
+      ],
+      "visible": true
+    },
+    {
+      "id": "KITCHEN-LITE-INSTANCE-030",
+      "name": "Sanitizer station 30",
+      "assetId": "KITCHEN-LITE-ASSET-030",
+      "position": [
+        7.48,
+        0,
+        -1.99
+      ],
+      "rotation": [
+        0,
+        90,
+        0
+      ],
+      "visible": true
+    },
+    {
+      "id": "KITCHEN-LITE-INSTANCE-031",
+      "name": "Cutlery cabinet 31",
+      "assetId": "KITCHEN-LITE-ASSET-031",
+      "position": [
+        -7.55,
+        0,
+        -0.61
+      ],
+      "rotation": [
+        0,
+        180,
+        0
+      ],
+      "visible": true
+    },
+    {
+      "id": "KITCHEN-LITE-INSTANCE-032",
+      "name": "Utensil shelf 32",
+      "assetId": "KITCHEN-LITE-ASSET-032",
+      "position": [
+        -5.88,
+        0,
+        -0.61
+      ],
+      "rotation": [
+        0,
+        270,
+        0
+      ],
+      "visible": true
+    },
+    {
+      "id": "KITCHEN-LITE-INSTANCE-033",
+      "name": "Spice rack 33",
+      "assetId": "KITCHEN-LITE-ASSET-033",
+      "position": [
+        -4.21,
+        0,
+        -0.61
+      ],
+      "rotation": [
+        0,
+        0,
+        0
+      ],
+      "visible": true
+    },
+    {
+      "id": "KITCHEN-LITE-INSTANCE-034",
+      "name": "Beverage station 34",
+      "assetId": "KITCHEN-LITE-ASSET-034",
+      "position": [
+        -2.54,
+        0,
+        -0.61
+      ],
+      "rotation": [
+        0,
+        90,
+        0
+      ],
+      "visible": true
+    },
+    {
+      "id": "KITCHEN-LITE-INSTANCE-035",
+      "name": "Water filter 35",
+      "assetId": "KITCHEN-LITE-ASSET-035",
+      "position": [
+        -0.87,
+        0,
+        -0.61
+      ],
+      "rotation": [
+        0,
+        180,
+        0
+      ],
+      "visible": true
+    },
+    {
+      "id": "KITCHEN-LITE-INSTANCE-036",
+      "name": "Floor drain cover 36",
+      "assetId": "KITCHEN-LITE-ASSET-036",
+      "position": [
+        0.8,
+        0,
+        -0.61
+      ],
+      "rotation": [
+        0,
+        270,
+        0
+      ],
+      "visible": true
+    },
+    {
+      "id": "KITCHEN-LITE-INSTANCE-037",
+      "name": "Dish return 37",
+      "assetId": "KITCHEN-LITE-ASSET-037",
+      "position": [
+        2.47,
+        0,
+        -0.61
+      ],
+      "rotation": [
+        0,
+        0,
+        0
+      ],
+      "visible": true
+    },
+    {
+      "id": "KITCHEN-LITE-INSTANCE-038",
+      "name": "Cleaning cart 38",
+      "assetId": "KITCHEN-LITE-ASSET-038",
+      "position": [
+        4.14,
+        0,
+        -0.61
+      ],
+      "rotation": [
+        0,
+        90,
+        0
+      ],
+      "visible": true
+    },
+    {
+      "id": "KITCHEN-LITE-INSTANCE-039",
+      "name": "Storage shelf 39",
+      "assetId": "KITCHEN-LITE-ASSET-039",
+      "position": [
+        5.81,
+        0,
+        -0.61
+      ],
+      "rotation": [
+        0,
+        180,
+        0
+      ],
+      "visible": true
+    },
+    {
+      "id": "KITCHEN-LITE-INSTANCE-040",
+      "name": "Sorting table 40",
+      "assetId": "KITCHEN-LITE-ASSET-040",
+      "position": [
+        7.48,
+        0,
+        -0.61
+      ],
+      "rotation": [
+        0,
+        270,
+        0
+      ],
+      "visible": true
+    },
+    {
+      "id": "KITCHEN-LITE-INSTANCE-041",
+      "name": "Rolling cart 41",
+      "assetId": "KITCHEN-LITE-ASSET-041",
+      "position": [
+        -7.55,
+        0,
+        0.77
+      ],
+      "rotation": [
+        0,
+        0,
+        0
+      ],
+      "visible": true
+    },
+    {
+      "id": "KITCHEN-LITE-INSTANCE-042",
+      "name": "Cookware rack 42",
+      "assetId": "KITCHEN-LITE-ASSET-042",
+      "position": [
+        -5.88,
+        0,
+        0.77
+      ],
+      "rotation": [
+        0,
+        90,
+        0
+      ],
+      "visible": true
+    },
+    {
+      "id": "KITCHEN-LITE-INSTANCE-043",
+      "name": "Fryer enclosure 43",
+      "assetId": "KITCHEN-LITE-ASSET-043",
+      "position": [
+        -4.21,
+        0,
+        0.77
+      ],
+      "rotation": [
+        0,
+        180,
+        0
+      ],
+      "visible": true
+    },
+    {
+      "id": "KITCHEN-LITE-INSTANCE-044",
+      "name": "Cold prep bench 44",
+      "assetId": "KITCHEN-LITE-ASSET-044",
+      "position": [
+        -2.54,
+        0,
+        0.77
+      ],
+      "rotation": [
+        0,
+        270,
+        0
+      ],
+      "visible": true
+    },
+    {
+      "id": "KITCHEN-LITE-INSTANCE-045",
+      "name": "Safety cabinet 45",
+      "assetId": "KITCHEN-LITE-ASSET-045",
+      "position": [
+        -0.87,
+        0,
+        0.77
+      ],
+      "rotation": [
+        0,
+        0,
+        0
+      ],
+      "visible": true
+    },
+    {
+      "id": "KITCHEN-LITE-INSTANCE-046",
+      "name": "Counter module 46",
+      "assetId": "KITCHEN-LITE-ASSET-046",
+      "position": [
+        0.8,
+        0,
+        0.77
+      ],
+      "rotation": [
+        0,
+        90,
+        0
+      ],
+      "visible": true
+    },
+    {
+      "id": "KITCHEN-LITE-INSTANCE-047",
+      "name": "Utensil wash 47",
+      "assetId": "KITCHEN-LITE-ASSET-047",
+      "position": [
+        2.47,
+        0,
+        0.77
+      ],
+      "rotation": [
+        0,
+        180,
+        0
+      ],
+      "visible": true
+    },
+    {
+      "id": "KITCHEN-LITE-INSTANCE-048",
+      "name": "Bottle station 48",
+      "assetId": "KITCHEN-LITE-ASSET-048",
+      "position": [
+        4.14,
+        0,
+        0.77
+      ],
+      "rotation": [
+        0,
+        270,
+        0
+      ],
+      "visible": true
+    },
+    {
+      "id": "KITCHEN-LITE-INSTANCE-049",
+      "name": "Assembly table 49",
+      "assetId": "KITCHEN-LITE-ASSET-049",
+      "position": [
+        5.81,
+        0,
+        0.77
+      ],
+      "rotation": [
+        0,
+        0,
+        0
+      ],
+      "visible": true
+    },
+    {
+      "id": "KITCHEN-LITE-INSTANCE-050",
+      "name": "Weighing station 50",
+      "assetId": "KITCHEN-LITE-ASSET-050",
+      "position": [
+        7.48,
+        0,
+        0.77
+      ],
+      "rotation": [
+        0,
+        90,
+        0
+      ],
+      "visible": true
+    },
+    {
+      "id": "KITCHEN-LITE-INSTANCE-051",
+      "name": "Packaging counter 51",
+      "assetId": "KITCHEN-LITE-ASSET-051",
+      "position": [
+        -7.55,
+        0,
+        2.15
+      ],
+      "rotation": [
+        0,
+        180,
+        0
+      ],
+      "visible": true
+    },
+    {
+      "id": "KITCHEN-LITE-INSTANCE-052",
+      "name": "Dry storage module 52",
+      "assetId": "KITCHEN-LITE-ASSET-052",
+      "position": [
+        -5.88,
+        0,
+        2.15
+      ],
+      "rotation": [
+        0,
+        270,
+        0
+      ],
+      "visible": true
+    },
+    {
+      "id": "KITCHEN-LITE-INSTANCE-053",
+      "name": "Waste sorting 53",
+      "assetId": "KITCHEN-LITE-ASSET-053",
+      "position": [
+        -4.21,
+        0,
+        2.15
+      ],
+      "rotation": [
+        0,
+        0,
+        0
+      ],
+      "visible": true
+    },
+    {
+      "id": "KITCHEN-LITE-INSTANCE-054",
+      "name": "Tool trolley 54",
+      "assetId": "KITCHEN-LITE-ASSET-054",
+      "position": [
+        -2.54,
+        0,
+        2.15
+      ],
+      "rotation": [
+        0,
+        90,
+        0
+      ],
+      "visible": true
+    },
+    {
+      "id": "KITCHEN-LITE-INSTANCE-055",
+      "name": "Ingredient bench 55",
+      "assetId": "KITCHEN-LITE-ASSET-055",
+      "position": [
+        -0.87,
+        0,
+        2.15
+      ],
+      "rotation": [
+        0,
+        180,
+        0
+      ],
+      "visible": true
+    },
+    {
+      "id": "KITCHEN-LITE-INSTANCE-056",
+      "name": "Cooling platform 56",
+      "assetId": "KITCHEN-LITE-ASSET-056",
+      "position": [
+        0.8,
+        0,
+        2.15
+      ],
+      "rotation": [
+        0,
+        270,
+        0
+      ],
+      "visible": true
+    },
+    {
+      "id": "KITCHEN-LITE-INSTANCE-057",
+      "name": "Pot sink 57",
+      "assetId": "KITCHEN-LITE-ASSET-057",
+      "position": [
+        2.47,
+        0,
+        2.15
+      ],
+      "rotation": [
+        0,
+        0,
+        0
+      ],
+      "visible": true
+    },
+    {
+      "id": "KITCHEN-LITE-INSTANCE-058",
+      "name": "Prep sink 58",
+      "assetId": "KITCHEN-LITE-ASSET-058",
+      "position": [
+        4.14,
+        0,
+        2.15
+      ],
+      "rotation": [
+        0,
+        90,
+        0
+      ],
+      "visible": true
+    },
+    {
+      "id": "KITCHEN-LITE-INSTANCE-059",
+      "name": "Workstation base 59",
+      "assetId": "KITCHEN-LITE-ASSET-059",
+      "position": [
+        5.81,
+        0,
+        2.15
+      ],
+      "rotation": [
+        0,
+        180,
+        0
+      ],
+      "visible": true
+    },
+    {
+      "id": "KITCHEN-LITE-INSTANCE-060",
+      "name": "Service cabinet 60",
+      "assetId": "KITCHEN-LITE-ASSET-060",
+      "position": [
+        7.48,
+        0,
+        2.15
+      ],
+      "rotation": [
+        0,
+        270,
+        0
+      ],
+      "visible": true
+    },
+    {
+      "id": "KITCHEN-LITE-INSTANCE-061",
+      "name": "Prep table 61",
+      "assetId": "KITCHEN-LITE-ASSET-001",
+      "position": [
+        -7.55,
+        0,
+        3.53
+      ],
+      "rotation": [
+        0,
+        0,
+        0
+      ],
+      "visible": true
+    },
+    {
+      "id": "KITCHEN-LITE-INSTANCE-062",
+      "name": "Wash sink 62",
+      "assetId": "KITCHEN-LITE-ASSET-002",
+      "position": [
+        -5.88,
+        0,
+        3.53
+      ],
+      "rotation": [
+        0,
+        90,
+        0
+      ],
+      "visible": true
+    },
+    {
+      "id": "KITCHEN-LITE-INSTANCE-063",
+      "name": "Cold cabinet 63",
+      "assetId": "KITCHEN-LITE-ASSET-003",
+      "position": [
+        -4.21,
+        0,
+        3.53
+      ],
+      "rotation": [
+        0,
+        180,
+        0
+      ],
+      "visible": true
+    },
+    {
+      "id": "KITCHEN-LITE-INSTANCE-064",
+      "name": "Dry cabinet 64",
+      "assetId": "KITCHEN-LITE-ASSET-004",
+      "position": [
+        -2.54,
+        0,
+        3.53
+      ],
+      "rotation": [
+        0,
+        270,
+        0
+      ],
+      "visible": true
+    },
+    {
+      "id": "KITCHEN-LITE-INSTANCE-065",
+      "name": "Range 65",
+      "assetId": "KITCHEN-LITE-ASSET-005",
+      "position": [
+        -0.87,
+        0,
+        3.53
+      ],
+      "rotation": [
+        0,
+        0,
+        0
+      ],
+      "visible": true
+    },
+    {
+      "id": "KITCHEN-LITE-INSTANCE-066",
+      "name": "Oven 66",
+      "assetId": "KITCHEN-LITE-ASSET-006",
+      "position": [
+        0.8,
+        0,
+        3.53
+      ],
+      "rotation": [
+        0,
+        90,
+        0
+      ],
+      "visible": true
+    },
+    {
+      "id": "KITCHEN-LITE-INSTANCE-067",
+      "name": "Vent hood 67",
+      "assetId": "KITCHEN-LITE-ASSET-007",
+      "position": [
+        2.47,
+        0,
+        3.53
+      ],
+      "rotation": [
+        0,
+        180,
+        0
+      ],
+      "visible": true
+    },
+    {
+      "id": "KITCHEN-LITE-INSTANCE-068",
+      "name": "Dishwasher 68",
+      "assetId": "KITCHEN-LITE-ASSET-008",
+      "position": [
+        4.14,
+        0,
+        3.53
+      ],
+      "rotation": [
+        0,
+        270,
+        0
+      ],
+      "visible": true
+    },
+    {
+      "id": "KITCHEN-LITE-INSTANCE-069",
+      "name": "Service counter 69",
+      "assetId": "KITCHEN-LITE-ASSET-009",
+      "position": [
+        5.81,
+        0,
+        3.53
+      ],
+      "rotation": [
+        0,
+        0,
+        0
+      ],
+      "visible": true
+    },
+    {
+      "id": "KITCHEN-LITE-INSTANCE-070",
+      "name": "Refrigerator 70",
+      "assetId": "KITCHEN-LITE-ASSET-010",
+      "position": [
+        7.48,
+        0,
+        3.53
+      ],
+      "rotation": [
+        0,
+        90,
+        0
+      ],
+      "visible": true
+    },
+    {
+      "id": "KITCHEN-LITE-INSTANCE-071",
+      "name": "Freezer 71",
+      "assetId": "KITCHEN-LITE-ASSET-011",
+      "position": [
+        -7.55,
+        0,
+        4.91
+      ],
+      "rotation": [
+        0,
+        180,
+        0
+      ],
+      "visible": true
+    },
+    {
+      "id": "KITCHEN-LITE-INSTANCE-072",
+      "name": "Island workstation 72",
+      "assetId": "KITCHEN-LITE-ASSET-012",
+      "position": [
+        -5.88,
+        0,
+        4.91
+      ],
+      "rotation": [
+        0,
+        270,
+        0
+      ],
+      "visible": true
+    },
+    {
+      "id": "KITCHEN-LITE-INSTANCE-073",
+      "name": "Cutting station 73",
+      "assetId": "KITCHEN-LITE-ASSET-013",
+      "position": [
+        -4.21,
+        0,
+        4.91
+      ],
+      "rotation": [
+        0,
+        0,
+        0
+      ],
+      "visible": true
+    },
+    {
+      "id": "KITCHEN-LITE-INSTANCE-074",
+      "name": "Ingredient storage 74",
+      "assetId": "KITCHEN-LITE-ASSET-014",
+      "position": [
+        -2.54,
+        0,
+        4.91
+      ],
+      "rotation": [
+        0,
+        90,
+        0
+      ],
+      "visible": true
+    },
+    {
+      "id": "KITCHEN-LITE-INSTANCE-075",
+      "name": "Pan rack 75",
+      "assetId": "KITCHEN-LITE-ASSET-015",
+      "position": [
+        -0.87,
+        0,
+        4.91
+      ],
+      "rotation": [
+        0,
+        180,
+        0
+      ],
+      "visible": true
+    },
+    {
+      "id": "KITCHEN-LITE-INSTANCE-076",
+      "name": "Handwash sink 76",
+      "assetId": "KITCHEN-LITE-ASSET-016",
+      "position": [
+        0.8,
+        0,
+        4.91
+      ],
+      "rotation": [
+        0,
+        270,
+        0
+      ],
+      "visible": true
+    },
+    {
+      "id": "KITCHEN-LITE-INSTANCE-077",
+      "name": "Waste station 77",
+      "assetId": "KITCHEN-LITE-ASSET-017",
+      "position": [
+        2.47,
+        0,
+        4.91
+      ],
+      "rotation": [
+        0,
+        0,
+        0
+      ],
+      "visible": true
+    },
+    {
+      "id": "KITCHEN-LITE-INSTANCE-078",
+      "name": "Food processor 78",
+      "assetId": "KITCHEN-LITE-ASSET-018",
+      "position": [
+        4.14,
+        0,
+        4.91
+      ],
+      "rotation": [
+        0,
+        90,
+        0
+      ],
+      "visible": true
+    },
+    {
+      "id": "KITCHEN-LITE-INSTANCE-079",
+      "name": "Mixer 79",
+      "assetId": "KITCHEN-LITE-ASSET-019",
+      "position": [
+        5.81,
+        0,
+        4.91
+      ],
+      "rotation": [
+        0,
+        180,
+        0
+      ],
+      "visible": true
+    }
+  ],
+  "animation": {
+    "duration": 3,
+    "loop": true,
+    "tracks": []
+  },
+  "bundledAssets": [
+    {
+      "schemaVersion": 1,
+      "id": "KITCHEN-LITE-ASSET-001",
+      "name": "Prep table",
+      "units": "m",
+      "upAxis": "Y",
+      "dimensions": [
+        0.4,
+        0.6,
+        0.35
+      ],
+      "originOffset": [
+        0,
+        0,
+        0
+      ],
+      "source": {
+        "kind": "generated",
+        "filename": "generated-kitchen-lite-stress-1.json",
+        "digest": "synthetic-fixture-v1-1",
+        "generator": "oi-fixture"
+      },
+      "parts": [
+        {
+          "id": "KITCHEN-LITE-ASSET-001:envelope",
+          "name": "Prep table",
+          "vertices": [
+            -0.2,
+            0,
+            -0.175,
+            0.2,
+            0,
+            -0.175,
+            0.2,
+            0.6,
+            -0.175,
+            -0.2,
+            0.6,
+            -0.175,
+            -0.2,
+            0,
+            0.175,
+            0.2,
+            0,
+            0.175,
+            0.2,
+            0.6,
+            0.175,
+            -0.2,
+            0.6,
+            0.175
+          ],
+          "indices": [
+            0,
+            2,
+            1,
+            0,
+            3,
+            2,
+            4,
+            5,
+            6,
+            4,
+            6,
+            7,
+            0,
+            1,
+            5,
+            0,
+            5,
+            4,
+            3,
+            7,
+            6,
+            3,
+            6,
+            2,
+            0,
+            4,
+            7,
+            0,
+            7,
+            3,
+            1,
+            2,
+            6,
+            1,
+            6,
+            5
+          ],
+          "color": [
+            0.22,
+            0.36,
+            0.29
+          ],
+          "metadata": {
+            "representation": "synthetic benchmark planning envelope",
+            "notVerifiedGeometry": "true"
+          }
+        }
+      ],
+      "hierarchy": {
+        "id": "KITCHEN-LITE-ASSET-001:root",
+        "name": "Prep table",
+        "partIds": [
+          "KITCHEN-LITE-ASSET-001:envelope"
+        ],
+        "children": []
+      },
+      "warnings": [
+        "Synthetic planning envelope — not an imported restaurant-kitchen CAD part."
+      ]
+    },
+    {
+      "schemaVersion": 1,
+      "id": "KITCHEN-LITE-ASSET-002",
+      "name": "Wash sink",
+      "units": "m",
+      "upAxis": "Y",
+      "dimensions": [
+        0.48,
+        0.73,
+        0.44
+      ],
+      "originOffset": [
+        0,
+        0,
+        0
+      ],
+      "source": {
+        "kind": "generated",
+        "filename": "generated-kitchen-lite-stress-2.json",
+        "digest": "synthetic-fixture-v1-2",
+        "generator": "oi-fixture"
+      },
+      "parts": [
+        {
+          "id": "KITCHEN-LITE-ASSET-002:envelope",
+          "name": "Wash sink",
+          "vertices": [
+            -0.24,
+            0,
+            -0.22,
+            0.24,
+            0,
+            -0.22,
+            0.24,
+            0.73,
+            -0.22,
+            -0.24,
+            0.73,
+            -0.22,
+            -0.24,
+            0,
+            0.22,
+            0.24,
+            0,
+            0.22,
+            0.24,
+            0.73,
+            0.22,
+            -0.24,
+            0.73,
+            0.22
+          ],
+          "indices": [
+            0,
+            2,
+            1,
+            0,
+            3,
+            2,
+            4,
+            5,
+            6,
+            4,
+            6,
+            7,
+            0,
+            1,
+            5,
+            0,
+            5,
+            4,
+            3,
+            7,
+            6,
+            3,
+            6,
+            2,
+            0,
+            4,
+            7,
+            0,
+            7,
+            3,
+            1,
+            2,
+            6,
+            1,
+            6,
+            5
+          ],
+          "color": [
+            0.29000000000000004,
+            0.45999999999999996,
+            0.35
+          ],
+          "metadata": {
+            "representation": "synthetic benchmark planning envelope",
+            "notVerifiedGeometry": "true"
+          }
+        }
+      ],
+      "hierarchy": {
+        "id": "KITCHEN-LITE-ASSET-002:root",
+        "name": "Wash sink",
+        "partIds": [
+          "KITCHEN-LITE-ASSET-002:envelope"
+        ],
+        "children": []
+      },
+      "warnings": [
+        "Synthetic planning envelope — not an imported restaurant-kitchen CAD part."
+      ]
+    },
+    {
+      "schemaVersion": 1,
+      "id": "KITCHEN-LITE-ASSET-003",
+      "name": "Cold cabinet",
+      "units": "m",
+      "upAxis": "Y",
+      "dimensions": [
+        0.56,
+        0.86,
+        0.53
+      ],
+      "originOffset": [
+        0,
+        0,
+        0
+      ],
+      "source": {
+        "kind": "generated",
+        "filename": "generated-kitchen-lite-stress-3.json",
+        "digest": "synthetic-fixture-v1-3",
+        "generator": "oi-fixture"
+      },
+      "parts": [
+        {
+          "id": "KITCHEN-LITE-ASSET-003:envelope",
+          "name": "Cold cabinet",
+          "vertices": [
+            -0.28,
+            0,
+            -0.265,
+            0.28,
+            0,
+            -0.265,
+            0.28,
+            0.86,
+            -0.265,
+            -0.28,
+            0.86,
+            -0.265,
+            -0.28,
+            0,
+            0.265,
+            0.28,
+            0,
+            0.265,
+            0.28,
+            0.86,
+            0.265,
+            -0.28,
+            0.86,
+            0.265
+          ],
+          "indices": [
+            0,
+            2,
+            1,
+            0,
+            3,
+            2,
+            4,
+            5,
+            6,
+            4,
+            6,
+            7,
+            0,
+            1,
+            5,
+            0,
+            5,
+            4,
+            3,
+            7,
+            6,
+            3,
+            6,
+            2,
+            0,
+            4,
+            7,
+            0,
+            7,
+            3,
+            1,
+            2,
+            6,
+            1,
+            6,
+            5
+          ],
+          "color": [
+            0.36,
+            0.56,
+            0.41
+          ],
+          "metadata": {
+            "representation": "synthetic benchmark planning envelope",
+            "notVerifiedGeometry": "true"
+          }
+        }
+      ],
+      "hierarchy": {
+        "id": "KITCHEN-LITE-ASSET-003:root",
+        "name": "Cold cabinet",
+        "partIds": [
+          "KITCHEN-LITE-ASSET-003:envelope"
+        ],
+        "children": []
+      },
+      "warnings": [
+        "Synthetic planning envelope — not an imported restaurant-kitchen CAD part."
+      ]
+    },
+    {
+      "schemaVersion": 1,
+      "id": "KITCHEN-LITE-ASSET-004",
+      "name": "Dry cabinet",
+      "units": "m",
+      "upAxis": "Y",
+      "dimensions": [
+        0.64,
+        0.99,
+        0.35
+      ],
+      "originOffset": [
+        0,
+        0,
+        0
+      ],
+      "source": {
+        "kind": "generated",
+        "filename": "generated-kitchen-lite-stress-4.json",
+        "digest": "synthetic-fixture-v1-4",
+        "generator": "oi-fixture"
+      },
+      "parts": [
+        {
+          "id": "KITCHEN-LITE-ASSET-004:envelope",
+          "name": "Dry cabinet",
+          "vertices": [
+            -0.32,
+            0,
+            -0.175,
+            0.32,
+            0,
+            -0.175,
+            0.32,
+            0.99,
+            -0.175,
+            -0.32,
+            0.99,
+            -0.175,
+            -0.32,
+            0,
+            0.175,
+            0.32,
+            0,
+            0.175,
+            0.32,
+            0.99,
+            0.175,
+            -0.32,
+            0.99,
+            0.175
+          ],
+          "indices": [
+            0,
+            2,
+            1,
+            0,
+            3,
+            2,
+            4,
+            5,
+            6,
+            4,
+            6,
+            7,
+            0,
+            1,
+            5,
+            0,
+            5,
+            4,
+            3,
+            7,
+            6,
+            3,
+            6,
+            2,
+            0,
+            4,
+            7,
+            0,
+            7,
+            3,
+            1,
+            2,
+            6,
+            1,
+            6,
+            5
+          ],
+          "color": [
+            0.43000000000000005,
+            0.66,
+            0.47
+          ],
+          "metadata": {
+            "representation": "synthetic benchmark planning envelope",
+            "notVerifiedGeometry": "true"
+          }
+        }
+      ],
+      "hierarchy": {
+        "id": "KITCHEN-LITE-ASSET-004:root",
+        "name": "Dry cabinet",
+        "partIds": [
+          "KITCHEN-LITE-ASSET-004:envelope"
+        ],
+        "children": []
+      },
+      "warnings": [
+        "Synthetic planning envelope — not an imported restaurant-kitchen CAD part."
+      ]
+    },
+    {
+      "schemaVersion": 1,
+      "id": "KITCHEN-LITE-ASSET-005",
+      "name": "Range",
+      "units": "m",
+      "upAxis": "Y",
+      "dimensions": [
+        0.72,
+        0.6,
+        0.44
+      ],
+      "originOffset": [
+        0,
+        0,
+        0
+      ],
+      "source": {
+        "kind": "generated",
+        "filename": "generated-kitchen-lite-stress-5.json",
+        "digest": "synthetic-fixture-v1-5",
+        "generator": "oi-fixture"
+      },
+      "parts": [
+        {
+          "id": "KITCHEN-LITE-ASSET-005:envelope",
+          "name": "Range",
+          "vertices": [
+            -0.36,
+            0,
+            -0.22,
+            0.36,
+            0,
+            -0.22,
+            0.36,
+            0.6,
+            -0.22,
+            -0.36,
+            0.6,
+            -0.22,
+            -0.36,
+            0,
+            0.22,
+            0.36,
+            0,
+            0.22,
+            0.36,
+            0.6,
+            0.22,
+            -0.36,
+            0.6,
+            0.22
+          ],
+          "indices": [
+            0,
+            2,
+            1,
+            0,
+            3,
+            2,
+            4,
+            5,
+            6,
+            4,
+            6,
+            7,
+            0,
+            1,
+            5,
+            0,
+            5,
+            4,
+            3,
+            7,
+            6,
+            3,
+            6,
+            2,
+            0,
+            4,
+            7,
+            0,
+            7,
+            3,
+            1,
+            2,
+            6,
+            1,
+            6,
+            5
+          ],
+          "color": [
+            0.5,
+            0.36,
+            0.53
+          ],
+          "metadata": {
+            "representation": "synthetic benchmark planning envelope",
+            "notVerifiedGeometry": "true"
+          }
+        }
+      ],
+      "hierarchy": {
+        "id": "KITCHEN-LITE-ASSET-005:root",
+        "name": "Range",
+        "partIds": [
+          "KITCHEN-LITE-ASSET-005:envelope"
+        ],
+        "children": []
+      },
+      "warnings": [
+        "Synthetic planning envelope — not an imported restaurant-kitchen CAD part."
+      ]
+    },
+    {
+      "schemaVersion": 1,
+      "id": "KITCHEN-LITE-ASSET-006",
+      "name": "Oven",
+      "units": "m",
+      "upAxis": "Y",
+      "dimensions": [
+        0.4,
+        0.73,
+        0.53
+      ],
+      "originOffset": [
+        0,
+        0,
+        0
+      ],
+      "source": {
+        "kind": "generated",
+        "filename": "generated-kitchen-lite-stress-6.json",
+        "digest": "synthetic-fixture-v1-6",
+        "generator": "oi-fixture"
+      },
+      "parts": [
+        {
+          "id": "KITCHEN-LITE-ASSET-006:envelope",
+          "name": "Oven",
+          "vertices": [
+            -0.2,
+            0,
+            -0.265,
+            0.2,
+            0,
+            -0.265,
+            0.2,
+            0.73,
+            -0.265,
+            -0.2,
+            0.73,
+            -0.265,
+            -0.2,
+            0,
+            0.265,
+            0.2,
+            0,
+            0.265,
+            0.2,
+            0.73,
+            0.265,
+            -0.2,
+            0.73,
+            0.265
+          ],
+          "indices": [
+            0,
+            2,
+            1,
+            0,
+            3,
+            2,
+            4,
+            5,
+            6,
+            4,
+            6,
+            7,
+            0,
+            1,
+            5,
+            0,
+            5,
+            4,
+            3,
+            7,
+            6,
+            3,
+            6,
+            2,
+            0,
+            4,
+            7,
+            0,
+            7,
+            3,
+            1,
+            2,
+            6,
+            1,
+            6,
+            5
+          ],
+          "color": [
+            0.5700000000000001,
+            0.45999999999999996,
+            0.29
+          ],
+          "metadata": {
+            "representation": "synthetic benchmark planning envelope",
+            "notVerifiedGeometry": "true"
+          }
+        }
+      ],
+      "hierarchy": {
+        "id": "KITCHEN-LITE-ASSET-006:root",
+        "name": "Oven",
+        "partIds": [
+          "KITCHEN-LITE-ASSET-006:envelope"
+        ],
+        "children": []
+      },
+      "warnings": [
+        "Synthetic planning envelope — not an imported restaurant-kitchen CAD part."
+      ]
+    },
+    {
+      "schemaVersion": 1,
+      "id": "KITCHEN-LITE-ASSET-007",
+      "name": "Vent hood",
+      "units": "m",
+      "upAxis": "Y",
+      "dimensions": [
+        0.48,
+        0.86,
+        0.35
+      ],
+      "originOffset": [
+        0,
+        0,
+        0
+      ],
+      "source": {
+        "kind": "generated",
+        "filename": "generated-kitchen-lite-stress-7.json",
+        "digest": "synthetic-fixture-v1-7",
+        "generator": "oi-fixture"
+      },
+      "parts": [
+        {
+          "id": "KITCHEN-LITE-ASSET-007:envelope",
+          "name": "Vent hood",
+          "vertices": [
+            -0.24,
+            0,
+            -0.175,
+            0.24,
+            0,
+            -0.175,
+            0.24,
+            0.86,
+            -0.175,
+            -0.24,
+            0.86,
+            -0.175,
+            -0.24,
+            0,
+            0.175,
+            0.24,
+            0,
+            0.175,
+            0.24,
+            0.86,
+            0.175,
+            -0.24,
+            0.86,
+            0.175
+          ],
+          "indices": [
+            0,
+            2,
+            1,
+            0,
+            3,
+            2,
+            4,
+            5,
+            6,
+            4,
+            6,
+            7,
+            0,
+            1,
+            5,
+            0,
+            5,
+            4,
+            3,
+            7,
+            6,
+            3,
+            6,
+            2,
+            0,
+            4,
+            7,
+            0,
+            7,
+            3,
+            1,
+            2,
+            6,
+            1,
+            6,
+            5
+          ],
+          "color": [
+            0.22,
+            0.56,
+            0.35
+          ],
+          "metadata": {
+            "representation": "synthetic benchmark planning envelope",
+            "notVerifiedGeometry": "true"
+          }
+        }
+      ],
+      "hierarchy": {
+        "id": "KITCHEN-LITE-ASSET-007:root",
+        "name": "Vent hood",
+        "partIds": [
+          "KITCHEN-LITE-ASSET-007:envelope"
+        ],
+        "children": []
+      },
+      "warnings": [
+        "Synthetic planning envelope — not an imported restaurant-kitchen CAD part."
+      ]
+    },
+    {
+      "schemaVersion": 1,
+      "id": "KITCHEN-LITE-ASSET-008",
+      "name": "Dishwasher",
+      "units": "m",
+      "upAxis": "Y",
+      "dimensions": [
+        0.56,
+        0.99,
+        0.44
+      ],
+      "originOffset": [
+        0,
+        0,
+        0
+      ],
+      "source": {
+        "kind": "generated",
+        "filename": "generated-kitchen-lite-stress-8.json",
+        "digest": "synthetic-fixture-v1-8",
+        "generator": "oi-fixture"
+      },
+      "parts": [
+        {
+          "id": "KITCHEN-LITE-ASSET-008:envelope",
+          "name": "Dishwasher",
+          "vertices": [
+            -0.28,
+            0,
+            -0.22,
+            0.28,
+            0,
+            -0.22,
+            0.28,
+            0.99,
+            -0.22,
+            -0.28,
+            0.99,
+            -0.22,
+            -0.28,
+            0,
+            0.22,
+            0.28,
+            0,
+            0.22,
+            0.28,
+            0.99,
+            0.22,
+            -0.28,
+            0.99,
+            0.22
+          ],
+          "indices": [
+            0,
+            2,
+            1,
+            0,
+            3,
+            2,
+            4,
+            5,
+            6,
+            4,
+            6,
+            7,
+            0,
+            1,
+            5,
+            0,
+            5,
+            4,
+            3,
+            7,
+            6,
+            3,
+            6,
+            2,
+            0,
+            4,
+            7,
+            0,
+            7,
+            3,
+            1,
+            2,
+            6,
+            1,
+            6,
+            5
+          ],
+          "color": [
+            0.29000000000000004,
+            0.66,
+            0.41
+          ],
+          "metadata": {
+            "representation": "synthetic benchmark planning envelope",
+            "notVerifiedGeometry": "true"
+          }
+        }
+      ],
+      "hierarchy": {
+        "id": "KITCHEN-LITE-ASSET-008:root",
+        "name": "Dishwasher",
+        "partIds": [
+          "KITCHEN-LITE-ASSET-008:envelope"
+        ],
+        "children": []
+      },
+      "warnings": [
+        "Synthetic planning envelope — not an imported restaurant-kitchen CAD part."
+      ]
+    },
+    {
+      "schemaVersion": 1,
+      "id": "KITCHEN-LITE-ASSET-009",
+      "name": "Service counter",
+      "units": "m",
+      "upAxis": "Y",
+      "dimensions": [
+        0.64,
+        0.6,
+        0.53
+      ],
+      "originOffset": [
+        0,
+        0,
+        0
+      ],
+      "source": {
+        "kind": "generated",
+        "filename": "generated-kitchen-lite-stress-9.json",
+        "digest": "synthetic-fixture-v1-9",
+        "generator": "oi-fixture"
+      },
+      "parts": [
+        {
+          "id": "KITCHEN-LITE-ASSET-009:envelope",
+          "name": "Service counter",
+          "vertices": [
+            -0.32,
+            0,
+            -0.265,
+            0.32,
+            0,
+            -0.265,
+            0.32,
+            0.6,
+            -0.265,
+            -0.32,
+            0.6,
+            -0.265,
+            -0.32,
+            0,
+            0.265,
+            0.32,
+            0,
+            0.265,
+            0.32,
+            0.6,
+            0.265,
+            -0.32,
+            0.6,
+            0.265
+          ],
+          "indices": [
+            0,
+            2,
+            1,
+            0,
+            3,
+            2,
+            4,
+            5,
+            6,
+            4,
+            6,
+            7,
+            0,
+            1,
+            5,
+            0,
+            5,
+            4,
+            3,
+            7,
+            6,
+            3,
+            6,
+            2,
+            0,
+            4,
+            7,
+            0,
+            7,
+            3,
+            1,
+            2,
+            6,
+            1,
+            6,
+            5
+          ],
+          "color": [
+            0.36,
+            0.36,
+            0.47
+          ],
+          "metadata": {
+            "representation": "synthetic benchmark planning envelope",
+            "notVerifiedGeometry": "true"
+          }
+        }
+      ],
+      "hierarchy": {
+        "id": "KITCHEN-LITE-ASSET-009:root",
+        "name": "Service counter",
+        "partIds": [
+          "KITCHEN-LITE-ASSET-009:envelope"
+        ],
+        "children": []
+      },
+      "warnings": [
+        "Synthetic planning envelope — not an imported restaurant-kitchen CAD part."
+      ]
+    },
+    {
+      "schemaVersion": 1,
+      "id": "KITCHEN-LITE-ASSET-010",
+      "name": "Refrigerator",
+      "units": "m",
+      "upAxis": "Y",
+      "dimensions": [
+        0.72,
+        0.73,
+        0.35
+      ],
+      "originOffset": [
+        0,
+        0,
+        0
+      ],
+      "source": {
+        "kind": "generated",
+        "filename": "generated-kitchen-lite-stress-10.json",
+        "digest": "synthetic-fixture-v1-10",
+        "generator": "oi-fixture"
+      },
+      "parts": [
+        {
+          "id": "KITCHEN-LITE-ASSET-010:envelope",
+          "name": "Refrigerator",
+          "vertices": [
+            -0.36,
+            0,
+            -0.175,
+            0.36,
+            0,
+            -0.175,
+            0.36,
+            0.73,
+            -0.175,
+            -0.36,
+            0.73,
+            -0.175,
+            -0.36,
+            0,
+            0.175,
+            0.36,
+            0,
+            0.175,
+            0.36,
+            0.73,
+            0.175,
+            -0.36,
+            0.73,
+            0.175
+          ],
+          "indices": [
+            0,
+            2,
+            1,
+            0,
+            3,
+            2,
+            4,
+            5,
+            6,
+            4,
+            6,
+            7,
+            0,
+            1,
+            5,
+            0,
+            5,
+            4,
+            3,
+            7,
+            6,
+            3,
+            6,
+            2,
+            0,
+            4,
+            7,
+            0,
+            7,
+            3,
+            1,
+            2,
+            6,
+            1,
+            6,
+            5
+          ],
+          "color": [
+            0.43000000000000005,
+            0.45999999999999996,
+            0.53
+          ],
+          "metadata": {
+            "representation": "synthetic benchmark planning envelope",
+            "notVerifiedGeometry": "true"
+          }
+        }
+      ],
+      "hierarchy": {
+        "id": "KITCHEN-LITE-ASSET-010:root",
+        "name": "Refrigerator",
+        "partIds": [
+          "KITCHEN-LITE-ASSET-010:envelope"
+        ],
+        "children": []
+      },
+      "warnings": [
+        "Synthetic planning envelope — not an imported restaurant-kitchen CAD part."
+      ]
+    },
+    {
+      "schemaVersion": 1,
+      "id": "KITCHEN-LITE-ASSET-011",
+      "name": "Freezer",
+      "units": "m",
+      "upAxis": "Y",
+      "dimensions": [
+        0.4,
+        0.86,
+        0.44
+      ],
+      "originOffset": [
+        0,
+        0,
+        0
+      ],
+      "source": {
+        "kind": "generated",
+        "filename": "generated-kitchen-lite-stress-11.json",
+        "digest": "synthetic-fixture-v1-11",
+        "generator": "oi-fixture"
+      },
+      "parts": [
+        {
+          "id": "KITCHEN-LITE-ASSET-011:envelope",
+          "name": "Freezer",
+          "vertices": [
+            -0.2,
+            0,
+            -0.22,
+            0.2,
+            0,
+            -0.22,
+            0.2,
+            0.86,
+            -0.22,
+            -0.2,
+            0.86,
+            -0.22,
+            -0.2,
+            0,
+            0.22,
+            0.2,
+            0,
+            0.22,
+            0.2,
+            0.86,
+            0.22,
+            -0.2,
+            0.86,
+            0.22
+          ],
+          "indices": [
+            0,
+            2,
+            1,
+            0,
+            3,
+            2,
+            4,
+            5,
+            6,
+            4,
+            6,
+            7,
+            0,
+            1,
+            5,
+            0,
+            5,
+            4,
+            3,
+            7,
+            6,
+            3,
+            6,
+            2,
+            0,
+            4,
+            7,
+            0,
+            7,
+            3,
+            1,
+            2,
+            6,
+            1,
+            6,
+            5
+          ],
+          "color": [
+            0.5,
+            0.56,
+            0.29
+          ],
+          "metadata": {
+            "representation": "synthetic benchmark planning envelope",
+            "notVerifiedGeometry": "true"
+          }
+        }
+      ],
+      "hierarchy": {
+        "id": "KITCHEN-LITE-ASSET-011:root",
+        "name": "Freezer",
+        "partIds": [
+          "KITCHEN-LITE-ASSET-011:envelope"
+        ],
+        "children": []
+      },
+      "warnings": [
+        "Synthetic planning envelope — not an imported restaurant-kitchen CAD part."
+      ]
+    },
+    {
+      "schemaVersion": 1,
+      "id": "KITCHEN-LITE-ASSET-012",
+      "name": "Island workstation",
+      "units": "m",
+      "upAxis": "Y",
+      "dimensions": [
+        0.48,
+        0.99,
+        0.53
+      ],
+      "originOffset": [
+        0,
+        0,
+        0
+      ],
+      "source": {
+        "kind": "generated",
+        "filename": "generated-kitchen-lite-stress-12.json",
+        "digest": "synthetic-fixture-v1-12",
+        "generator": "oi-fixture"
+      },
+      "parts": [
+        {
+          "id": "KITCHEN-LITE-ASSET-012:envelope",
+          "name": "Island workstation",
+          "vertices": [
+            -0.24,
+            0,
+            -0.265,
+            0.24,
+            0,
+            -0.265,
+            0.24,
+            0.99,
+            -0.265,
+            -0.24,
+            0.99,
+            -0.265,
+            -0.24,
+            0,
+            0.265,
+            0.24,
+            0,
+            0.265,
+            0.24,
+            0.99,
+            0.265,
+            -0.24,
+            0.99,
+            0.265
+          ],
+          "indices": [
+            0,
+            2,
+            1,
+            0,
+            3,
+            2,
+            4,
+            5,
+            6,
+            4,
+            6,
+            7,
+            0,
+            1,
+            5,
+            0,
+            5,
+            4,
+            3,
+            7,
+            6,
+            3,
+            6,
+            2,
+            0,
+            4,
+            7,
+            0,
+            7,
+            3,
+            1,
+            2,
+            6,
+            1,
+            6,
+            5
+          ],
+          "color": [
+            0.5700000000000001,
+            0.66,
+            0.35
+          ],
+          "metadata": {
+            "representation": "synthetic benchmark planning envelope",
+            "notVerifiedGeometry": "true"
+          }
+        }
+      ],
+      "hierarchy": {
+        "id": "KITCHEN-LITE-ASSET-012:root",
+        "name": "Island workstation",
+        "partIds": [
+          "KITCHEN-LITE-ASSET-012:envelope"
+        ],
+        "children": []
+      },
+      "warnings": [
+        "Synthetic planning envelope — not an imported restaurant-kitchen CAD part."
+      ]
+    },
+    {
+      "schemaVersion": 1,
+      "id": "KITCHEN-LITE-ASSET-013",
+      "name": "Cutting station",
+      "units": "m",
+      "upAxis": "Y",
+      "dimensions": [
+        0.56,
+        0.6,
+        0.35
+      ],
+      "originOffset": [
+        0,
+        0,
+        0
+      ],
+      "source": {
+        "kind": "generated",
+        "filename": "generated-kitchen-lite-stress-13.json",
+        "digest": "synthetic-fixture-v1-13",
+        "generator": "oi-fixture"
+      },
+      "parts": [
+        {
+          "id": "KITCHEN-LITE-ASSET-013:envelope",
+          "name": "Cutting station",
+          "vertices": [
+            -0.28,
+            0,
+            -0.175,
+            0.28,
+            0,
+            -0.175,
+            0.28,
+            0.6,
+            -0.175,
+            -0.28,
+            0.6,
+            -0.175,
+            -0.28,
+            0,
+            0.175,
+            0.28,
+            0,
+            0.175,
+            0.28,
+            0.6,
+            0.175,
+            -0.28,
+            0.6,
+            0.175
+          ],
+          "indices": [
+            0,
+            2,
+            1,
+            0,
+            3,
+            2,
+            4,
+            5,
+            6,
+            4,
+            6,
+            7,
+            0,
+            1,
+            5,
+            0,
+            5,
+            4,
+            3,
+            7,
+            6,
+            3,
+            6,
+            2,
+            0,
+            4,
+            7,
+            0,
+            7,
+            3,
+            1,
+            2,
+            6,
+            1,
+            6,
+            5
+          ],
+          "color": [
+            0.22,
+            0.36,
+            0.41
+          ],
+          "metadata": {
+            "representation": "synthetic benchmark planning envelope",
+            "notVerifiedGeometry": "true"
+          }
+        }
+      ],
+      "hierarchy": {
+        "id": "KITCHEN-LITE-ASSET-013:root",
+        "name": "Cutting station",
+        "partIds": [
+          "KITCHEN-LITE-ASSET-013:envelope"
+        ],
+        "children": []
+      },
+      "warnings": [
+        "Synthetic planning envelope — not an imported restaurant-kitchen CAD part."
+      ]
+    },
+    {
+      "schemaVersion": 1,
+      "id": "KITCHEN-LITE-ASSET-014",
+      "name": "Ingredient storage",
+      "units": "m",
+      "upAxis": "Y",
+      "dimensions": [
+        0.64,
+        0.73,
+        0.44
+      ],
+      "originOffset": [
+        0,
+        0,
+        0
+      ],
+      "source": {
+        "kind": "generated",
+        "filename": "generated-kitchen-lite-stress-14.json",
+        "digest": "synthetic-fixture-v1-14",
+        "generator": "oi-fixture"
+      },
+      "parts": [
+        {
+          "id": "KITCHEN-LITE-ASSET-014:envelope",
+          "name": "Ingredient storage",
+          "vertices": [
+            -0.32,
+            0,
+            -0.22,
+            0.32,
+            0,
+            -0.22,
+            0.32,
+            0.73,
+            -0.22,
+            -0.32,
+            0.73,
+            -0.22,
+            -0.32,
+            0,
+            0.22,
+            0.32,
+            0,
+            0.22,
+            0.32,
+            0.73,
+            0.22,
+            -0.32,
+            0.73,
+            0.22
+          ],
+          "indices": [
+            0,
+            2,
+            1,
+            0,
+            3,
+            2,
+            4,
+            5,
+            6,
+            4,
+            6,
+            7,
+            0,
+            1,
+            5,
+            0,
+            5,
+            4,
+            3,
+            7,
+            6,
+            3,
+            6,
+            2,
+            0,
+            4,
+            7,
+            0,
+            7,
+            3,
+            1,
+            2,
+            6,
+            1,
+            6,
+            5
+          ],
+          "color": [
+            0.29000000000000004,
+            0.45999999999999996,
+            0.47
+          ],
+          "metadata": {
+            "representation": "synthetic benchmark planning envelope",
+            "notVerifiedGeometry": "true"
+          }
+        }
+      ],
+      "hierarchy": {
+        "id": "KITCHEN-LITE-ASSET-014:root",
+        "name": "Ingredient storage",
+        "partIds": [
+          "KITCHEN-LITE-ASSET-014:envelope"
+        ],
+        "children": []
+      },
+      "warnings": [
+        "Synthetic planning envelope — not an imported restaurant-kitchen CAD part."
+      ]
+    },
+    {
+      "schemaVersion": 1,
+      "id": "KITCHEN-LITE-ASSET-015",
+      "name": "Pan rack",
+      "units": "m",
+      "upAxis": "Y",
+      "dimensions": [
+        0.72,
+        0.86,
+        0.53
+      ],
+      "originOffset": [
+        0,
+        0,
+        0
+      ],
+      "source": {
+        "kind": "generated",
+        "filename": "generated-kitchen-lite-stress-15.json",
+        "digest": "synthetic-fixture-v1-15",
+        "generator": "oi-fixture"
+      },
+      "parts": [
+        {
+          "id": "KITCHEN-LITE-ASSET-015:envelope",
+          "name": "Pan rack",
+          "vertices": [
+            -0.36,
+            0,
+            -0.265,
+            0.36,
+            0,
+            -0.265,
+            0.36,
+            0.86,
+            -0.265,
+            -0.36,
+            0.86,
+            -0.265,
+            -0.36,
+            0,
+            0.265,
+            0.36,
+            0,
+            0.265,
+            0.36,
+            0.86,
+            0.265,
+            -0.36,
+            0.86,
+            0.265
+          ],
+          "indices": [
+            0,
+            2,
+            1,
+            0,
+            3,
+            2,
+            4,
+            5,
+            6,
+            4,
+            6,
+            7,
+            0,
+            1,
+            5,
+            0,
+            5,
+            4,
+            3,
+            7,
+            6,
+            3,
+            6,
+            2,
+            0,
+            4,
+            7,
+            0,
+            7,
+            3,
+            1,
+            2,
+            6,
+            1,
+            6,
+            5
+          ],
+          "color": [
+            0.36,
+            0.56,
+            0.53
+          ],
+          "metadata": {
+            "representation": "synthetic benchmark planning envelope",
+            "notVerifiedGeometry": "true"
+          }
+        }
+      ],
+      "hierarchy": {
+        "id": "KITCHEN-LITE-ASSET-015:root",
+        "name": "Pan rack",
+        "partIds": [
+          "KITCHEN-LITE-ASSET-015:envelope"
+        ],
+        "children": []
+      },
+      "warnings": [
+        "Synthetic planning envelope — not an imported restaurant-kitchen CAD part."
+      ]
+    },
+    {
+      "schemaVersion": 1,
+      "id": "KITCHEN-LITE-ASSET-016",
+      "name": "Handwash sink",
+      "units": "m",
+      "upAxis": "Y",
+      "dimensions": [
+        0.4,
+        0.99,
+        0.35
+      ],
+      "originOffset": [
+        0,
+        0,
+        0
+      ],
+      "source": {
+        "kind": "generated",
+        "filename": "generated-kitchen-lite-stress-16.json",
+        "digest": "synthetic-fixture-v1-16",
+        "generator": "oi-fixture"
+      },
+      "parts": [
+        {
+          "id": "KITCHEN-LITE-ASSET-016:envelope",
+          "name": "Handwash sink",
+          "vertices": [
+            -0.2,
+            0,
+            -0.175,
+            0.2,
+            0,
+            -0.175,
+            0.2,
+            0.99,
+            -0.175,
+            -0.2,
+            0.99,
+            -0.175,
+            -0.2,
+            0,
+            0.175,
+            0.2,
+            0,
+            0.175,
+            0.2,
+            0.99,
+            0.175,
+            -0.2,
+            0.99,
+            0.175
+          ],
+          "indices": [
+            0,
+            2,
+            1,
+            0,
+            3,
+            2,
+            4,
+            5,
+            6,
+            4,
+            6,
+            7,
+            0,
+            1,
+            5,
+            0,
+            5,
+            4,
+            3,
+            7,
+            6,
+            3,
+            6,
+            2,
+            0,
+            4,
+            7,
+            0,
+            7,
+            3,
+            1,
+            2,
+            6,
+            1,
+            6,
+            5
+          ],
+          "color": [
+            0.43000000000000005,
+            0.66,
+            0.29
+          ],
+          "metadata": {
+            "representation": "synthetic benchmark planning envelope",
+            "notVerifiedGeometry": "true"
+          }
+        }
+      ],
+      "hierarchy": {
+        "id": "KITCHEN-LITE-ASSET-016:root",
+        "name": "Handwash sink",
+        "partIds": [
+          "KITCHEN-LITE-ASSET-016:envelope"
+        ],
+        "children": []
+      },
+      "warnings": [
+        "Synthetic planning envelope — not an imported restaurant-kitchen CAD part."
+      ]
+    },
+    {
+      "schemaVersion": 1,
+      "id": "KITCHEN-LITE-ASSET-017",
+      "name": "Waste station",
+      "units": "m",
+      "upAxis": "Y",
+      "dimensions": [
+        0.48,
+        0.6,
+        0.44
+      ],
+      "originOffset": [
+        0,
+        0,
+        0
+      ],
+      "source": {
+        "kind": "generated",
+        "filename": "generated-kitchen-lite-stress-17.json",
+        "digest": "synthetic-fixture-v1-17",
+        "generator": "oi-fixture"
+      },
+      "parts": [
+        {
+          "id": "KITCHEN-LITE-ASSET-017:envelope",
+          "name": "Waste station",
+          "vertices": [
+            -0.24,
+            0,
+            -0.22,
+            0.24,
+            0,
+            -0.22,
+            0.24,
+            0.6,
+            -0.22,
+            -0.24,
+            0.6,
+            -0.22,
+            -0.24,
+            0,
+            0.22,
+            0.24,
+            0,
+            0.22,
+            0.24,
+            0.6,
+            0.22,
+            -0.24,
+            0.6,
+            0.22
+          ],
+          "indices": [
+            0,
+            2,
+            1,
+            0,
+            3,
+            2,
+            4,
+            5,
+            6,
+            4,
+            6,
+            7,
+            0,
+            1,
+            5,
+            0,
+            5,
+            4,
+            3,
+            7,
+            6,
+            3,
+            6,
+            2,
+            0,
+            4,
+            7,
+            0,
+            7,
+            3,
+            1,
+            2,
+            6,
+            1,
+            6,
+            5
+          ],
+          "color": [
+            0.5,
+            0.36,
+            0.35
+          ],
+          "metadata": {
+            "representation": "synthetic benchmark planning envelope",
+            "notVerifiedGeometry": "true"
+          }
+        }
+      ],
+      "hierarchy": {
+        "id": "KITCHEN-LITE-ASSET-017:root",
+        "name": "Waste station",
+        "partIds": [
+          "KITCHEN-LITE-ASSET-017:envelope"
+        ],
+        "children": []
+      },
+      "warnings": [
+        "Synthetic planning envelope — not an imported restaurant-kitchen CAD part."
+      ]
+    },
+    {
+      "schemaVersion": 1,
+      "id": "KITCHEN-LITE-ASSET-018",
+      "name": "Food processor",
+      "units": "m",
+      "upAxis": "Y",
+      "dimensions": [
+        0.56,
+        0.73,
+        0.53
+      ],
+      "originOffset": [
+        0,
+        0,
+        0
+      ],
+      "source": {
+        "kind": "generated",
+        "filename": "generated-kitchen-lite-stress-18.json",
+        "digest": "synthetic-fixture-v1-18",
+        "generator": "oi-fixture"
+      },
+      "parts": [
+        {
+          "id": "KITCHEN-LITE-ASSET-018:envelope",
+          "name": "Food processor",
+          "vertices": [
+            -0.28,
+            0,
+            -0.265,
+            0.28,
+            0,
+            -0.265,
+            0.28,
+            0.73,
+            -0.265,
+            -0.28,
+            0.73,
+            -0.265,
+            -0.28,
+            0,
+            0.265,
+            0.28,
+            0,
+            0.265,
+            0.28,
+            0.73,
+            0.265,
+            -0.28,
+            0.73,
+            0.265
+          ],
+          "indices": [
+            0,
+            2,
+            1,
+            0,
+            3,
+            2,
+            4,
+            5,
+            6,
+            4,
+            6,
+            7,
+            0,
+            1,
+            5,
+            0,
+            5,
+            4,
+            3,
+            7,
+            6,
+            3,
+            6,
+            2,
+            0,
+            4,
+            7,
+            0,
+            7,
+            3,
+            1,
+            2,
+            6,
+            1,
+            6,
+            5
+          ],
+          "color": [
+            0.5700000000000001,
+            0.45999999999999996,
+            0.41
+          ],
+          "metadata": {
+            "representation": "synthetic benchmark planning envelope",
+            "notVerifiedGeometry": "true"
+          }
+        }
+      ],
+      "hierarchy": {
+        "id": "KITCHEN-LITE-ASSET-018:root",
+        "name": "Food processor",
+        "partIds": [
+          "KITCHEN-LITE-ASSET-018:envelope"
+        ],
+        "children": []
+      },
+      "warnings": [
+        "Synthetic planning envelope — not an imported restaurant-kitchen CAD part."
+      ]
+    },
+    {
+      "schemaVersion": 1,
+      "id": "KITCHEN-LITE-ASSET-019",
+      "name": "Mixer",
+      "units": "m",
+      "upAxis": "Y",
+      "dimensions": [
+        0.64,
+        0.86,
+        0.35
+      ],
+      "originOffset": [
+        0,
+        0,
+        0
+      ],
+      "source": {
+        "kind": "generated",
+        "filename": "generated-kitchen-lite-stress-19.json",
+        "digest": "synthetic-fixture-v1-19",
+        "generator": "oi-fixture"
+      },
+      "parts": [
+        {
+          "id": "KITCHEN-LITE-ASSET-019:envelope",
+          "name": "Mixer",
+          "vertices": [
+            -0.32,
+            0,
+            -0.175,
+            0.32,
+            0,
+            -0.175,
+            0.32,
+            0.86,
+            -0.175,
+            -0.32,
+            0.86,
+            -0.175,
+            -0.32,
+            0,
+            0.175,
+            0.32,
+            0,
+            0.175,
+            0.32,
+            0.86,
+            0.175,
+            -0.32,
+            0.86,
+            0.175
+          ],
+          "indices": [
+            0,
+            2,
+            1,
+            0,
+            3,
+            2,
+            4,
+            5,
+            6,
+            4,
+            6,
+            7,
+            0,
+            1,
+            5,
+            0,
+            5,
+            4,
+            3,
+            7,
+            6,
+            3,
+            6,
+            2,
+            0,
+            4,
+            7,
+            0,
+            7,
+            3,
+            1,
+            2,
+            6,
+            1,
+            6,
+            5
+          ],
+          "color": [
+            0.22,
+            0.56,
+            0.47
+          ],
+          "metadata": {
+            "representation": "synthetic benchmark planning envelope",
+            "notVerifiedGeometry": "true"
+          }
+        }
+      ],
+      "hierarchy": {
+        "id": "KITCHEN-LITE-ASSET-019:root",
+        "name": "Mixer",
+        "partIds": [
+          "KITCHEN-LITE-ASSET-019:envelope"
+        ],
+        "children": []
+      },
+      "warnings": [
+        "Synthetic planning envelope — not an imported restaurant-kitchen CAD part."
+      ]
+    },
+    {
+      "schemaVersion": 1,
+      "id": "KITCHEN-LITE-ASSET-020",
+      "name": "Plate rack",
+      "units": "m",
+      "upAxis": "Y",
+      "dimensions": [
+        0.72,
+        0.99,
+        0.44
+      ],
+      "originOffset": [
+        0,
+        0,
+        0
+      ],
+      "source": {
+        "kind": "generated",
+        "filename": "generated-kitchen-lite-stress-20.json",
+        "digest": "synthetic-fixture-v1-20",
+        "generator": "oi-fixture"
+      },
+      "parts": [
+        {
+          "id": "KITCHEN-LITE-ASSET-020:envelope",
+          "name": "Plate rack",
+          "vertices": [
+            -0.36,
+            0,
+            -0.22,
+            0.36,
+            0,
+            -0.22,
+            0.36,
+            0.99,
+            -0.22,
+            -0.36,
+            0.99,
+            -0.22,
+            -0.36,
+            0,
+            0.22,
+            0.36,
+            0,
+            0.22,
+            0.36,
+            0.99,
+            0.22,
+            -0.36,
+            0.99,
+            0.22
+          ],
+          "indices": [
+            0,
+            2,
+            1,
+            0,
+            3,
+            2,
+            4,
+            5,
+            6,
+            4,
+            6,
+            7,
+            0,
+            1,
+            5,
+            0,
+            5,
+            4,
+            3,
+            7,
+            6,
+            3,
+            6,
+            2,
+            0,
+            4,
+            7,
+            0,
+            7,
+            3,
+            1,
+            2,
+            6,
+            1,
+            6,
+            5
+          ],
+          "color": [
+            0.29000000000000004,
+            0.66,
+            0.53
+          ],
+          "metadata": {
+            "representation": "synthetic benchmark planning envelope",
+            "notVerifiedGeometry": "true"
+          }
+        }
+      ],
+      "hierarchy": {
+        "id": "KITCHEN-LITE-ASSET-020:root",
+        "name": "Plate rack",
+        "partIds": [
+          "KITCHEN-LITE-ASSET-020:envelope"
+        ],
+        "children": []
+      },
+      "warnings": [
+        "Synthetic planning envelope — not an imported restaurant-kitchen CAD part."
+      ]
+    },
+    {
+      "schemaVersion": 1,
+      "id": "KITCHEN-LITE-ASSET-021",
+      "name": "Pass station",
+      "units": "m",
+      "upAxis": "Y",
+      "dimensions": [
+        0.4,
+        0.6,
+        0.53
+      ],
+      "originOffset": [
+        0,
+        0,
+        0
+      ],
+      "source": {
+        "kind": "generated",
+        "filename": "generated-kitchen-lite-stress-21.json",
+        "digest": "synthetic-fixture-v1-21",
+        "generator": "oi-fixture"
+      },
+      "parts": [
+        {
+          "id": "KITCHEN-LITE-ASSET-021:envelope",
+          "name": "Pass station",
+          "vertices": [
+            -0.2,
+            0,
+            -0.265,
+            0.2,
+            0,
+            -0.265,
+            0.2,
+            0.6,
+            -0.265,
+            -0.2,
+            0.6,
+            -0.265,
+            -0.2,
+            0,
+            0.265,
+            0.2,
+            0,
+            0.265,
+            0.2,
+            0.6,
+            0.265,
+            -0.2,
+            0.6,
+            0.265
+          ],
+          "indices": [
+            0,
+            2,
+            1,
+            0,
+            3,
+            2,
+            4,
+            5,
+            6,
+            4,
+            6,
+            7,
+            0,
+            1,
+            5,
+            0,
+            5,
+            4,
+            3,
+            7,
+            6,
+            3,
+            6,
+            2,
+            0,
+            4,
+            7,
+            0,
+            7,
+            3,
+            1,
+            2,
+            6,
+            1,
+            6,
+            5
+          ],
+          "color": [
+            0.36,
+            0.36,
+            0.29
+          ],
+          "metadata": {
+            "representation": "synthetic benchmark planning envelope",
+            "notVerifiedGeometry": "true"
+          }
+        }
+      ],
+      "hierarchy": {
+        "id": "KITCHEN-LITE-ASSET-021:root",
+        "name": "Pass station",
+        "partIds": [
+          "KITCHEN-LITE-ASSET-021:envelope"
+        ],
+        "children": []
+      },
+      "warnings": [
+        "Synthetic planning envelope — not an imported restaurant-kitchen CAD part."
+      ]
+    },
+    {
+      "schemaVersion": 1,
+      "id": "KITCHEN-LITE-ASSET-022",
+      "name": "Steam cabinet",
+      "units": "m",
+      "upAxis": "Y",
+      "dimensions": [
+        0.48,
+        0.73,
+        0.35
+      ],
+      "originOffset": [
+        0,
+        0,
+        0
+      ],
+      "source": {
+        "kind": "generated",
+        "filename": "generated-kitchen-lite-stress-22.json",
+        "digest": "synthetic-fixture-v1-22",
+        "generator": "oi-fixture"
+      },
+      "parts": [
+        {
+          "id": "KITCHEN-LITE-ASSET-022:envelope",
+          "name": "Steam cabinet",
+          "vertices": [
+            -0.24,
+            0,
+            -0.175,
+            0.24,
+            0,
+            -0.175,
+            0.24,
+            0.73,
+            -0.175,
+            -0.24,
+            0.73,
+            -0.175,
+            -0.24,
+            0,
+            0.175,
+            0.24,
+            0,
+            0.175,
+            0.24,
+            0.73,
+            0.175,
+            -0.24,
+            0.73,
+            0.175
+          ],
+          "indices": [
+            0,
+            2,
+            1,
+            0,
+            3,
+            2,
+            4,
+            5,
+            6,
+            4,
+            6,
+            7,
+            0,
+            1,
+            5,
+            0,
+            5,
+            4,
+            3,
+            7,
+            6,
+            3,
+            6,
+            2,
+            0,
+            4,
+            7,
+            0,
+            7,
+            3,
+            1,
+            2,
+            6,
+            1,
+            6,
+            5
+          ],
+          "color": [
+            0.43000000000000005,
+            0.45999999999999996,
+            0.35
+          ],
+          "metadata": {
+            "representation": "synthetic benchmark planning envelope",
+            "notVerifiedGeometry": "true"
+          }
+        }
+      ],
+      "hierarchy": {
+        "id": "KITCHEN-LITE-ASSET-022:root",
+        "name": "Steam cabinet",
+        "partIds": [
+          "KITCHEN-LITE-ASSET-022:envelope"
+        ],
+        "children": []
+      },
+      "warnings": [
+        "Synthetic planning envelope — not an imported restaurant-kitchen CAD part."
+      ]
+    },
+    {
+      "schemaVersion": 1,
+      "id": "KITCHEN-LITE-ASSET-023",
+      "name": "Grill",
+      "units": "m",
+      "upAxis": "Y",
+      "dimensions": [
+        0.56,
+        0.86,
+        0.44
+      ],
+      "originOffset": [
+        0,
+        0,
+        0
+      ],
+      "source": {
+        "kind": "generated",
+        "filename": "generated-kitchen-lite-stress-23.json",
+        "digest": "synthetic-fixture-v1-23",
+        "generator": "oi-fixture"
+      },
+      "parts": [
+        {
+          "id": "KITCHEN-LITE-ASSET-023:envelope",
+          "name": "Grill",
+          "vertices": [
+            -0.28,
+            0,
+            -0.22,
+            0.28,
+            0,
+            -0.22,
+            0.28,
+            0.86,
+            -0.22,
+            -0.28,
+            0.86,
+            -0.22,
+            -0.28,
+            0,
+            0.22,
+            0.28,
+            0,
+            0.22,
+            0.28,
+            0.86,
+            0.22,
+            -0.28,
+            0.86,
+            0.22
+          ],
+          "indices": [
+            0,
+            2,
+            1,
+            0,
+            3,
+            2,
+            4,
+            5,
+            6,
+            4,
+            6,
+            7,
+            0,
+            1,
+            5,
+            0,
+            5,
+            4,
+            3,
+            7,
+            6,
+            3,
+            6,
+            2,
+            0,
+            4,
+            7,
+            0,
+            7,
+            3,
+            1,
+            2,
+            6,
+            1,
+            6,
+            5
+          ],
+          "color": [
+            0.5,
+            0.56,
+            0.41
+          ],
+          "metadata": {
+            "representation": "synthetic benchmark planning envelope",
+            "notVerifiedGeometry": "true"
+          }
+        }
+      ],
+      "hierarchy": {
+        "id": "KITCHEN-LITE-ASSET-023:root",
+        "name": "Grill",
+        "partIds": [
+          "KITCHEN-LITE-ASSET-023:envelope"
+        ],
+        "children": []
+      },
+      "warnings": [
+        "Synthetic planning envelope — not an imported restaurant-kitchen CAD part."
+      ]
+    },
+    {
+      "schemaVersion": 1,
+      "id": "KITCHEN-LITE-ASSET-024",
+      "name": "Deep sink",
+      "units": "m",
+      "upAxis": "Y",
+      "dimensions": [
+        0.64,
+        0.99,
+        0.53
+      ],
+      "originOffset": [
+        0,
+        0,
+        0
+      ],
+      "source": {
+        "kind": "generated",
+        "filename": "generated-kitchen-lite-stress-24.json",
+        "digest": "synthetic-fixture-v1-24",
+        "generator": "oi-fixture"
+      },
+      "parts": [
+        {
+          "id": "KITCHEN-LITE-ASSET-024:envelope",
+          "name": "Deep sink",
+          "vertices": [
+            -0.32,
+            0,
+            -0.265,
+            0.32,
+            0,
+            -0.265,
+            0.32,
+            0.99,
+            -0.265,
+            -0.32,
+            0.99,
+            -0.265,
+            -0.32,
+            0,
+            0.265,
+            0.32,
+            0,
+            0.265,
+            0.32,
+            0.99,
+            0.265,
+            -0.32,
+            0.99,
+            0.265
+          ],
+          "indices": [
+            0,
+            2,
+            1,
+            0,
+            3,
+            2,
+            4,
+            5,
+            6,
+            4,
+            6,
+            7,
+            0,
+            1,
+            5,
+            0,
+            5,
+            4,
+            3,
+            7,
+            6,
+            3,
+            6,
+            2,
+            0,
+            4,
+            7,
+            0,
+            7,
+            3,
+            1,
+            2,
+            6,
+            1,
+            6,
+            5
+          ],
+          "color": [
+            0.5700000000000001,
+            0.66,
+            0.47
+          ],
+          "metadata": {
+            "representation": "synthetic benchmark planning envelope",
+            "notVerifiedGeometry": "true"
+          }
+        }
+      ],
+      "hierarchy": {
+        "id": "KITCHEN-LITE-ASSET-024:root",
+        "name": "Deep sink",
+        "partIds": [
+          "KITCHEN-LITE-ASSET-024:envelope"
+        ],
+        "children": []
+      },
+      "warnings": [
+        "Synthetic planning envelope — not an imported restaurant-kitchen CAD part."
+      ]
+    },
+    {
+      "schemaVersion": 1,
+      "id": "KITCHEN-LITE-ASSET-025",
+      "name": "Packaging station",
+      "units": "m",
+      "upAxis": "Y",
+      "dimensions": [
+        0.72,
+        0.6,
+        0.35
+      ],
+      "originOffset": [
+        0,
+        0,
+        0
+      ],
+      "source": {
+        "kind": "generated",
+        "filename": "generated-kitchen-lite-stress-25.json",
+        "digest": "synthetic-fixture-v1-25",
+        "generator": "oi-fixture"
+      },
+      "parts": [
+        {
+          "id": "KITCHEN-LITE-ASSET-025:envelope",
+          "name": "Packaging station",
+          "vertices": [
+            -0.36,
+            0,
+            -0.175,
+            0.36,
+            0,
+            -0.175,
+            0.36,
+            0.6,
+            -0.175,
+            -0.36,
+            0.6,
+            -0.175,
+            -0.36,
+            0,
+            0.175,
+            0.36,
+            0,
+            0.175,
+            0.36,
+            0.6,
+            0.175,
+            -0.36,
+            0.6,
+            0.175
+          ],
+          "indices": [
+            0,
+            2,
+            1,
+            0,
+            3,
+            2,
+            4,
+            5,
+            6,
+            4,
+            6,
+            7,
+            0,
+            1,
+            5,
+            0,
+            5,
+            4,
+            3,
+            7,
+            6,
+            3,
+            6,
+            2,
+            0,
+            4,
+            7,
+            0,
+            7,
+            3,
+            1,
+            2,
+            6,
+            1,
+            6,
+            5
+          ],
+          "color": [
+            0.22,
+            0.36,
+            0.53
+          ],
+          "metadata": {
+            "representation": "synthetic benchmark planning envelope",
+            "notVerifiedGeometry": "true"
+          }
+        }
+      ],
+      "hierarchy": {
+        "id": "KITCHEN-LITE-ASSET-025:root",
+        "name": "Packaging station",
+        "partIds": [
+          "KITCHEN-LITE-ASSET-025:envelope"
+        ],
+        "children": []
+      },
+      "warnings": [
+        "Synthetic planning envelope — not an imported restaurant-kitchen CAD part."
+      ]
+    },
+    {
+      "schemaVersion": 1,
+      "id": "KITCHEN-LITE-ASSET-026",
+      "name": "Drying rack",
+      "units": "m",
+      "upAxis": "Y",
+      "dimensions": [
+        0.4,
+        0.73,
+        0.44
+      ],
+      "originOffset": [
+        0,
+        0,
+        0
+      ],
+      "source": {
+        "kind": "generated",
+        "filename": "generated-kitchen-lite-stress-26.json",
+        "digest": "synthetic-fixture-v1-26",
+        "generator": "oi-fixture"
+      },
+      "parts": [
+        {
+          "id": "KITCHEN-LITE-ASSET-026:envelope",
+          "name": "Drying rack",
+          "vertices": [
+            -0.2,
+            0,
+            -0.22,
+            0.2,
+            0,
+            -0.22,
+            0.2,
+            0.73,
+            -0.22,
+            -0.2,
+            0.73,
+            -0.22,
+            -0.2,
+            0,
+            0.22,
+            0.2,
+            0,
+            0.22,
+            0.2,
+            0.73,
+            0.22,
+            -0.2,
+            0.73,
+            0.22
+          ],
+          "indices": [
+            0,
+            2,
+            1,
+            0,
+            3,
+            2,
+            4,
+            5,
+            6,
+            4,
+            6,
+            7,
+            0,
+            1,
+            5,
+            0,
+            5,
+            4,
+            3,
+            7,
+            6,
+            3,
+            6,
+            2,
+            0,
+            4,
+            7,
+            0,
+            7,
+            3,
+            1,
+            2,
+            6,
+            1,
+            6,
+            5
+          ],
+          "color": [
+            0.29000000000000004,
+            0.45999999999999996,
+            0.29
+          ],
+          "metadata": {
+            "representation": "synthetic benchmark planning envelope",
+            "notVerifiedGeometry": "true"
+          }
+        }
+      ],
+      "hierarchy": {
+        "id": "KITCHEN-LITE-ASSET-026:root",
+        "name": "Drying rack",
+        "partIds": [
+          "KITCHEN-LITE-ASSET-026:envelope"
+        ],
+        "children": []
+      },
+      "warnings": [
+        "Synthetic planning envelope — not an imported restaurant-kitchen CAD part."
+      ]
+    },
+    {
+      "schemaVersion": 1,
+      "id": "KITCHEN-LITE-ASSET-027",
+      "name": "Service island",
+      "units": "m",
+      "upAxis": "Y",
+      "dimensions": [
+        0.48,
+        0.86,
+        0.53
+      ],
+      "originOffset": [
+        0,
+        0,
+        0
+      ],
+      "source": {
+        "kind": "generated",
+        "filename": "generated-kitchen-lite-stress-27.json",
+        "digest": "synthetic-fixture-v1-27",
+        "generator": "oi-fixture"
+      },
+      "parts": [
+        {
+          "id": "KITCHEN-LITE-ASSET-027:envelope",
+          "name": "Service island",
+          "vertices": [
+            -0.24,
+            0,
+            -0.265,
+            0.24,
+            0,
+            -0.265,
+            0.24,
+            0.86,
+            -0.265,
+            -0.24,
+            0.86,
+            -0.265,
+            -0.24,
+            0,
+            0.265,
+            0.24,
+            0,
+            0.265,
+            0.24,
+            0.86,
+            0.265,
+            -0.24,
+            0.86,
+            0.265
+          ],
+          "indices": [
+            0,
+            2,
+            1,
+            0,
+            3,
+            2,
+            4,
+            5,
+            6,
+            4,
+            6,
+            7,
+            0,
+            1,
+            5,
+            0,
+            5,
+            4,
+            3,
+            7,
+            6,
+            3,
+            6,
+            2,
+            0,
+            4,
+            7,
+            0,
+            7,
+            3,
+            1,
+            2,
+            6,
+            1,
+            6,
+            5
+          ],
+          "color": [
+            0.36,
+            0.56,
+            0.35
+          ],
+          "metadata": {
+            "representation": "synthetic benchmark planning envelope",
+            "notVerifiedGeometry": "true"
+          }
+        }
+      ],
+      "hierarchy": {
+        "id": "KITCHEN-LITE-ASSET-027:root",
+        "name": "Service island",
+        "partIds": [
+          "KITCHEN-LITE-ASSET-027:envelope"
+        ],
+        "children": []
+      },
+      "warnings": [
+        "Synthetic planning envelope — not an imported restaurant-kitchen CAD part."
+      ]
+    },
+    {
+      "schemaVersion": 1,
+      "id": "KITCHEN-LITE-ASSET-028",
+      "name": "Tray cart",
+      "units": "m",
+      "upAxis": "Y",
+      "dimensions": [
+        0.56,
+        0.99,
+        0.35
+      ],
+      "originOffset": [
+        0,
+        0,
+        0
+      ],
+      "source": {
+        "kind": "generated",
+        "filename": "generated-kitchen-lite-stress-28.json",
+        "digest": "synthetic-fixture-v1-28",
+        "generator": "oi-fixture"
+      },
+      "parts": [
+        {
+          "id": "KITCHEN-LITE-ASSET-028:envelope",
+          "name": "Tray cart",
+          "vertices": [
+            -0.28,
+            0,
+            -0.175,
+            0.28,
+            0,
+            -0.175,
+            0.28,
+            0.99,
+            -0.175,
+            -0.28,
+            0.99,
+            -0.175,
+            -0.28,
+            0,
+            0.175,
+            0.28,
+            0,
+            0.175,
+            0.28,
+            0.99,
+            0.175,
+            -0.28,
+            0.99,
+            0.175
+          ],
+          "indices": [
+            0,
+            2,
+            1,
+            0,
+            3,
+            2,
+            4,
+            5,
+            6,
+            4,
+            6,
+            7,
+            0,
+            1,
+            5,
+            0,
+            5,
+            4,
+            3,
+            7,
+            6,
+            3,
+            6,
+            2,
+            0,
+            4,
+            7,
+            0,
+            7,
+            3,
+            1,
+            2,
+            6,
+            1,
+            6,
+            5
+          ],
+          "color": [
+            0.43000000000000005,
+            0.66,
+            0.41
+          ],
+          "metadata": {
+            "representation": "synthetic benchmark planning envelope",
+            "notVerifiedGeometry": "true"
+          }
+        }
+      ],
+      "hierarchy": {
+        "id": "KITCHEN-LITE-ASSET-028:root",
+        "name": "Tray cart",
+        "partIds": [
+          "KITCHEN-LITE-ASSET-028:envelope"
+        ],
+        "children": []
+      },
+      "warnings": [
+        "Synthetic planning envelope — not an imported restaurant-kitchen CAD part."
+      ]
+    },
+    {
+      "schemaVersion": 1,
+      "id": "KITCHEN-LITE-ASSET-029",
+      "name": "Cooking platform",
+      "units": "m",
+      "upAxis": "Y",
+      "dimensions": [
+        0.64,
+        0.6,
+        0.44
+      ],
+      "originOffset": [
+        0,
+        0,
+        0
+      ],
+      "source": {
+        "kind": "generated",
+        "filename": "generated-kitchen-lite-stress-29.json",
+        "digest": "synthetic-fixture-v1-29",
+        "generator": "oi-fixture"
+      },
+      "parts": [
+        {
+          "id": "KITCHEN-LITE-ASSET-029:envelope",
+          "name": "Cooking platform",
+          "vertices": [
+            -0.32,
+            0,
+            -0.22,
+            0.32,
+            0,
+            -0.22,
+            0.32,
+            0.6,
+            -0.22,
+            -0.32,
+            0.6,
+            -0.22,
+            -0.32,
+            0,
+            0.22,
+            0.32,
+            0,
+            0.22,
+            0.32,
+            0.6,
+            0.22,
+            -0.32,
+            0.6,
+            0.22
+          ],
+          "indices": [
+            0,
+            2,
+            1,
+            0,
+            3,
+            2,
+            4,
+            5,
+            6,
+            4,
+            6,
+            7,
+            0,
+            1,
+            5,
+            0,
+            5,
+            4,
+            3,
+            7,
+            6,
+            3,
+            6,
+            2,
+            0,
+            4,
+            7,
+            0,
+            7,
+            3,
+            1,
+            2,
+            6,
+            1,
+            6,
+            5
+          ],
+          "color": [
+            0.5,
+            0.36,
+            0.47
+          ],
+          "metadata": {
+            "representation": "synthetic benchmark planning envelope",
+            "notVerifiedGeometry": "true"
+          }
+        }
+      ],
+      "hierarchy": {
+        "id": "KITCHEN-LITE-ASSET-029:root",
+        "name": "Cooking platform",
+        "partIds": [
+          "KITCHEN-LITE-ASSET-029:envelope"
+        ],
+        "children": []
+      },
+      "warnings": [
+        "Synthetic planning envelope — not an imported restaurant-kitchen CAD part."
+      ]
+    },
+    {
+      "schemaVersion": 1,
+      "id": "KITCHEN-LITE-ASSET-030",
+      "name": "Sanitizer station",
+      "units": "m",
+      "upAxis": "Y",
+      "dimensions": [
+        0.72,
+        0.73,
+        0.53
+      ],
+      "originOffset": [
+        0,
+        0,
+        0
+      ],
+      "source": {
+        "kind": "generated",
+        "filename": "generated-kitchen-lite-stress-30.json",
+        "digest": "synthetic-fixture-v1-30",
+        "generator": "oi-fixture"
+      },
+      "parts": [
+        {
+          "id": "KITCHEN-LITE-ASSET-030:envelope",
+          "name": "Sanitizer station",
+          "vertices": [
+            -0.36,
+            0,
+            -0.265,
+            0.36,
+            0,
+            -0.265,
+            0.36,
+            0.73,
+            -0.265,
+            -0.36,
+            0.73,
+            -0.265,
+            -0.36,
+            0,
+            0.265,
+            0.36,
+            0,
+            0.265,
+            0.36,
+            0.73,
+            0.265,
+            -0.36,
+            0.73,
+            0.265
+          ],
+          "indices": [
+            0,
+            2,
+            1,
+            0,
+            3,
+            2,
+            4,
+            5,
+            6,
+            4,
+            6,
+            7,
+            0,
+            1,
+            5,
+            0,
+            5,
+            4,
+            3,
+            7,
+            6,
+            3,
+            6,
+            2,
+            0,
+            4,
+            7,
+            0,
+            7,
+            3,
+            1,
+            2,
+            6,
+            1,
+            6,
+            5
+          ],
+          "color": [
+            0.5700000000000001,
+            0.45999999999999996,
+            0.53
+          ],
+          "metadata": {
+            "representation": "synthetic benchmark planning envelope",
+            "notVerifiedGeometry": "true"
+          }
+        }
+      ],
+      "hierarchy": {
+        "id": "KITCHEN-LITE-ASSET-030:root",
+        "name": "Sanitizer station",
+        "partIds": [
+          "KITCHEN-LITE-ASSET-030:envelope"
+        ],
+        "children": []
+      },
+      "warnings": [
+        "Synthetic planning envelope — not an imported restaurant-kitchen CAD part."
+      ]
+    },
+    {
+      "schemaVersion": 1,
+      "id": "KITCHEN-LITE-ASSET-031",
+      "name": "Cutlery cabinet",
+      "units": "m",
+      "upAxis": "Y",
+      "dimensions": [
+        0.4,
+        0.86,
+        0.35
+      ],
+      "originOffset": [
+        0,
+        0,
+        0
+      ],
+      "source": {
+        "kind": "generated",
+        "filename": "generated-kitchen-lite-stress-31.json",
+        "digest": "synthetic-fixture-v1-31",
+        "generator": "oi-fixture"
+      },
+      "parts": [
+        {
+          "id": "KITCHEN-LITE-ASSET-031:envelope",
+          "name": "Cutlery cabinet",
+          "vertices": [
+            -0.2,
+            0,
+            -0.175,
+            0.2,
+            0,
+            -0.175,
+            0.2,
+            0.86,
+            -0.175,
+            -0.2,
+            0.86,
+            -0.175,
+            -0.2,
+            0,
+            0.175,
+            0.2,
+            0,
+            0.175,
+            0.2,
+            0.86,
+            0.175,
+            -0.2,
+            0.86,
+            0.175
+          ],
+          "indices": [
+            0,
+            2,
+            1,
+            0,
+            3,
+            2,
+            4,
+            5,
+            6,
+            4,
+            6,
+            7,
+            0,
+            1,
+            5,
+            0,
+            5,
+            4,
+            3,
+            7,
+            6,
+            3,
+            6,
+            2,
+            0,
+            4,
+            7,
+            0,
+            7,
+            3,
+            1,
+            2,
+            6,
+            1,
+            6,
+            5
+          ],
+          "color": [
+            0.22,
+            0.56,
+            0.29
+          ],
+          "metadata": {
+            "representation": "synthetic benchmark planning envelope",
+            "notVerifiedGeometry": "true"
+          }
+        }
+      ],
+      "hierarchy": {
+        "id": "KITCHEN-LITE-ASSET-031:root",
+        "name": "Cutlery cabinet",
+        "partIds": [
+          "KITCHEN-LITE-ASSET-031:envelope"
+        ],
+        "children": []
+      },
+      "warnings": [
+        "Synthetic planning envelope — not an imported restaurant-kitchen CAD part."
+      ]
+    },
+    {
+      "schemaVersion": 1,
+      "id": "KITCHEN-LITE-ASSET-032",
+      "name": "Utensil shelf",
+      "units": "m",
+      "upAxis": "Y",
+      "dimensions": [
+        0.48,
+        0.99,
+        0.44
+      ],
+      "originOffset": [
+        0,
+        0,
+        0
+      ],
+      "source": {
+        "kind": "generated",
+        "filename": "generated-kitchen-lite-stress-32.json",
+        "digest": "synthetic-fixture-v1-32",
+        "generator": "oi-fixture"
+      },
+      "parts": [
+        {
+          "id": "KITCHEN-LITE-ASSET-032:envelope",
+          "name": "Utensil shelf",
+          "vertices": [
+            -0.24,
+            0,
+            -0.22,
+            0.24,
+            0,
+            -0.22,
+            0.24,
+            0.99,
+            -0.22,
+            -0.24,
+            0.99,
+            -0.22,
+            -0.24,
+            0,
+            0.22,
+            0.24,
+            0,
+            0.22,
+            0.24,
+            0.99,
+            0.22,
+            -0.24,
+            0.99,
+            0.22
+          ],
+          "indices": [
+            0,
+            2,
+            1,
+            0,
+            3,
+            2,
+            4,
+            5,
+            6,
+            4,
+            6,
+            7,
+            0,
+            1,
+            5,
+            0,
+            5,
+            4,
+            3,
+            7,
+            6,
+            3,
+            6,
+            2,
+            0,
+            4,
+            7,
+            0,
+            7,
+            3,
+            1,
+            2,
+            6,
+            1,
+            6,
+            5
+          ],
+          "color": [
+            0.29000000000000004,
+            0.66,
+            0.35
+          ],
+          "metadata": {
+            "representation": "synthetic benchmark planning envelope",
+            "notVerifiedGeometry": "true"
+          }
+        }
+      ],
+      "hierarchy": {
+        "id": "KITCHEN-LITE-ASSET-032:root",
+        "name": "Utensil shelf",
+        "partIds": [
+          "KITCHEN-LITE-ASSET-032:envelope"
+        ],
+        "children": []
+      },
+      "warnings": [
+        "Synthetic planning envelope — not an imported restaurant-kitchen CAD part."
+      ]
+    },
+    {
+      "schemaVersion": 1,
+      "id": "KITCHEN-LITE-ASSET-033",
+      "name": "Spice rack",
+      "units": "m",
+      "upAxis": "Y",
+      "dimensions": [
+        0.56,
+        0.6,
+        0.53
+      ],
+      "originOffset": [
+        0,
+        0,
+        0
+      ],
+      "source": {
+        "kind": "generated",
+        "filename": "generated-kitchen-lite-stress-33.json",
+        "digest": "synthetic-fixture-v1-33",
+        "generator": "oi-fixture"
+      },
+      "parts": [
+        {
+          "id": "KITCHEN-LITE-ASSET-033:envelope",
+          "name": "Spice rack",
+          "vertices": [
+            -0.28,
+            0,
+            -0.265,
+            0.28,
+            0,
+            -0.265,
+            0.28,
+            0.6,
+            -0.265,
+            -0.28,
+            0.6,
+            -0.265,
+            -0.28,
+            0,
+            0.265,
+            0.28,
+            0,
+            0.265,
+            0.28,
+            0.6,
+            0.265,
+            -0.28,
+            0.6,
+            0.265
+          ],
+          "indices": [
+            0,
+            2,
+            1,
+            0,
+            3,
+            2,
+            4,
+            5,
+            6,
+            4,
+            6,
+            7,
+            0,
+            1,
+            5,
+            0,
+            5,
+            4,
+            3,
+            7,
+            6,
+            3,
+            6,
+            2,
+            0,
+            4,
+            7,
+            0,
+            7,
+            3,
+            1,
+            2,
+            6,
+            1,
+            6,
+            5
+          ],
+          "color": [
+            0.36,
+            0.36,
+            0.41
+          ],
+          "metadata": {
+            "representation": "synthetic benchmark planning envelope",
+            "notVerifiedGeometry": "true"
+          }
+        }
+      ],
+      "hierarchy": {
+        "id": "KITCHEN-LITE-ASSET-033:root",
+        "name": "Spice rack",
+        "partIds": [
+          "KITCHEN-LITE-ASSET-033:envelope"
+        ],
+        "children": []
+      },
+      "warnings": [
+        "Synthetic planning envelope — not an imported restaurant-kitchen CAD part."
+      ]
+    },
+    {
+      "schemaVersion": 1,
+      "id": "KITCHEN-LITE-ASSET-034",
+      "name": "Beverage station",
+      "units": "m",
+      "upAxis": "Y",
+      "dimensions": [
+        0.64,
+        0.73,
+        0.35
+      ],
+      "originOffset": [
+        0,
+        0,
+        0
+      ],
+      "source": {
+        "kind": "generated",
+        "filename": "generated-kitchen-lite-stress-34.json",
+        "digest": "synthetic-fixture-v1-34",
+        "generator": "oi-fixture"
+      },
+      "parts": [
+        {
+          "id": "KITCHEN-LITE-ASSET-034:envelope",
+          "name": "Beverage station",
+          "vertices": [
+            -0.32,
+            0,
+            -0.175,
+            0.32,
+            0,
+            -0.175,
+            0.32,
+            0.73,
+            -0.175,
+            -0.32,
+            0.73,
+            -0.175,
+            -0.32,
+            0,
+            0.175,
+            0.32,
+            0,
+            0.175,
+            0.32,
+            0.73,
+            0.175,
+            -0.32,
+            0.73,
+            0.175
+          ],
+          "indices": [
+            0,
+            2,
+            1,
+            0,
+            3,
+            2,
+            4,
+            5,
+            6,
+            4,
+            6,
+            7,
+            0,
+            1,
+            5,
+            0,
+            5,
+            4,
+            3,
+            7,
+            6,
+            3,
+            6,
+            2,
+            0,
+            4,
+            7,
+            0,
+            7,
+            3,
+            1,
+            2,
+            6,
+            1,
+            6,
+            5
+          ],
+          "color": [
+            0.43000000000000005,
+            0.45999999999999996,
+            0.47
+          ],
+          "metadata": {
+            "representation": "synthetic benchmark planning envelope",
+            "notVerifiedGeometry": "true"
+          }
+        }
+      ],
+      "hierarchy": {
+        "id": "KITCHEN-LITE-ASSET-034:root",
+        "name": "Beverage station",
+        "partIds": [
+          "KITCHEN-LITE-ASSET-034:envelope"
+        ],
+        "children": []
+      },
+      "warnings": [
+        "Synthetic planning envelope — not an imported restaurant-kitchen CAD part."
+      ]
+    },
+    {
+      "schemaVersion": 1,
+      "id": "KITCHEN-LITE-ASSET-035",
+      "name": "Water filter",
+      "units": "m",
+      "upAxis": "Y",
+      "dimensions": [
+        0.72,
+        0.86,
+        0.44
+      ],
+      "originOffset": [
+        0,
+        0,
+        0
+      ],
+      "source": {
+        "kind": "generated",
+        "filename": "generated-kitchen-lite-stress-35.json",
+        "digest": "synthetic-fixture-v1-35",
+        "generator": "oi-fixture"
+      },
+      "parts": [
+        {
+          "id": "KITCHEN-LITE-ASSET-035:envelope",
+          "name": "Water filter",
+          "vertices": [
+            -0.36,
+            0,
+            -0.22,
+            0.36,
+            0,
+            -0.22,
+            0.36,
+            0.86,
+            -0.22,
+            -0.36,
+            0.86,
+            -0.22,
+            -0.36,
+            0,
+            0.22,
+            0.36,
+            0,
+            0.22,
+            0.36,
+            0.86,
+            0.22,
+            -0.36,
+            0.86,
+            0.22
+          ],
+          "indices": [
+            0,
+            2,
+            1,
+            0,
+            3,
+            2,
+            4,
+            5,
+            6,
+            4,
+            6,
+            7,
+            0,
+            1,
+            5,
+            0,
+            5,
+            4,
+            3,
+            7,
+            6,
+            3,
+            6,
+            2,
+            0,
+            4,
+            7,
+            0,
+            7,
+            3,
+            1,
+            2,
+            6,
+            1,
+            6,
+            5
+          ],
+          "color": [
+            0.5,
+            0.56,
+            0.53
+          ],
+          "metadata": {
+            "representation": "synthetic benchmark planning envelope",
+            "notVerifiedGeometry": "true"
+          }
+        }
+      ],
+      "hierarchy": {
+        "id": "KITCHEN-LITE-ASSET-035:root",
+        "name": "Water filter",
+        "partIds": [
+          "KITCHEN-LITE-ASSET-035:envelope"
+        ],
+        "children": []
+      },
+      "warnings": [
+        "Synthetic planning envelope — not an imported restaurant-kitchen CAD part."
+      ]
+    },
+    {
+      "schemaVersion": 1,
+      "id": "KITCHEN-LITE-ASSET-036",
+      "name": "Floor drain cover",
+      "units": "m",
+      "upAxis": "Y",
+      "dimensions": [
+        0.4,
+        0.99,
+        0.53
+      ],
+      "originOffset": [
+        0,
+        0,
+        0
+      ],
+      "source": {
+        "kind": "generated",
+        "filename": "generated-kitchen-lite-stress-36.json",
+        "digest": "synthetic-fixture-v1-36",
+        "generator": "oi-fixture"
+      },
+      "parts": [
+        {
+          "id": "KITCHEN-LITE-ASSET-036:envelope",
+          "name": "Floor drain cover",
+          "vertices": [
+            -0.2,
+            0,
+            -0.265,
+            0.2,
+            0,
+            -0.265,
+            0.2,
+            0.99,
+            -0.265,
+            -0.2,
+            0.99,
+            -0.265,
+            -0.2,
+            0,
+            0.265,
+            0.2,
+            0,
+            0.265,
+            0.2,
+            0.99,
+            0.265,
+            -0.2,
+            0.99,
+            0.265
+          ],
+          "indices": [
+            0,
+            2,
+            1,
+            0,
+            3,
+            2,
+            4,
+            5,
+            6,
+            4,
+            6,
+            7,
+            0,
+            1,
+            5,
+            0,
+            5,
+            4,
+            3,
+            7,
+            6,
+            3,
+            6,
+            2,
+            0,
+            4,
+            7,
+            0,
+            7,
+            3,
+            1,
+            2,
+            6,
+            1,
+            6,
+            5
+          ],
+          "color": [
+            0.5700000000000001,
+            0.66,
+            0.29
+          ],
+          "metadata": {
+            "representation": "synthetic benchmark planning envelope",
+            "notVerifiedGeometry": "true"
+          }
+        }
+      ],
+      "hierarchy": {
+        "id": "KITCHEN-LITE-ASSET-036:root",
+        "name": "Floor drain cover",
+        "partIds": [
+          "KITCHEN-LITE-ASSET-036:envelope"
+        ],
+        "children": []
+      },
+      "warnings": [
+        "Synthetic planning envelope — not an imported restaurant-kitchen CAD part."
+      ]
+    },
+    {
+      "schemaVersion": 1,
+      "id": "KITCHEN-LITE-ASSET-037",
+      "name": "Dish return",
+      "units": "m",
+      "upAxis": "Y",
+      "dimensions": [
+        0.48,
+        0.6,
+        0.35
+      ],
+      "originOffset": [
+        0,
+        0,
+        0
+      ],
+      "source": {
+        "kind": "generated",
+        "filename": "generated-kitchen-lite-stress-37.json",
+        "digest": "synthetic-fixture-v1-37",
+        "generator": "oi-fixture"
+      },
+      "parts": [
+        {
+          "id": "KITCHEN-LITE-ASSET-037:envelope",
+          "name": "Dish return",
+          "vertices": [
+            -0.24,
+            0,
+            -0.175,
+            0.24,
+            0,
+            -0.175,
+            0.24,
+            0.6,
+            -0.175,
+            -0.24,
+            0.6,
+            -0.175,
+            -0.24,
+            0,
+            0.175,
+            0.24,
+            0,
+            0.175,
+            0.24,
+            0.6,
+            0.175,
+            -0.24,
+            0.6,
+            0.175
+          ],
+          "indices": [
+            0,
+            2,
+            1,
+            0,
+            3,
+            2,
+            4,
+            5,
+            6,
+            4,
+            6,
+            7,
+            0,
+            1,
+            5,
+            0,
+            5,
+            4,
+            3,
+            7,
+            6,
+            3,
+            6,
+            2,
+            0,
+            4,
+            7,
+            0,
+            7,
+            3,
+            1,
+            2,
+            6,
+            1,
+            6,
+            5
+          ],
+          "color": [
+            0.22,
+            0.36,
+            0.35
+          ],
+          "metadata": {
+            "representation": "synthetic benchmark planning envelope",
+            "notVerifiedGeometry": "true"
+          }
+        }
+      ],
+      "hierarchy": {
+        "id": "KITCHEN-LITE-ASSET-037:root",
+        "name": "Dish return",
+        "partIds": [
+          "KITCHEN-LITE-ASSET-037:envelope"
+        ],
+        "children": []
+      },
+      "warnings": [
+        "Synthetic planning envelope — not an imported restaurant-kitchen CAD part."
+      ]
+    },
+    {
+      "schemaVersion": 1,
+      "id": "KITCHEN-LITE-ASSET-038",
+      "name": "Cleaning cart",
+      "units": "m",
+      "upAxis": "Y",
+      "dimensions": [
+        0.56,
+        0.73,
+        0.44
+      ],
+      "originOffset": [
+        0,
+        0,
+        0
+      ],
+      "source": {
+        "kind": "generated",
+        "filename": "generated-kitchen-lite-stress-38.json",
+        "digest": "synthetic-fixture-v1-38",
+        "generator": "oi-fixture"
+      },
+      "parts": [
+        {
+          "id": "KITCHEN-LITE-ASSET-038:envelope",
+          "name": "Cleaning cart",
+          "vertices": [
+            -0.28,
+            0,
+            -0.22,
+            0.28,
+            0,
+            -0.22,
+            0.28,
+            0.73,
+            -0.22,
+            -0.28,
+            0.73,
+            -0.22,
+            -0.28,
+            0,
+            0.22,
+            0.28,
+            0,
+            0.22,
+            0.28,
+            0.73,
+            0.22,
+            -0.28,
+            0.73,
+            0.22
+          ],
+          "indices": [
+            0,
+            2,
+            1,
+            0,
+            3,
+            2,
+            4,
+            5,
+            6,
+            4,
+            6,
+            7,
+            0,
+            1,
+            5,
+            0,
+            5,
+            4,
+            3,
+            7,
+            6,
+            3,
+            6,
+            2,
+            0,
+            4,
+            7,
+            0,
+            7,
+            3,
+            1,
+            2,
+            6,
+            1,
+            6,
+            5
+          ],
+          "color": [
+            0.29000000000000004,
+            0.45999999999999996,
+            0.41
+          ],
+          "metadata": {
+            "representation": "synthetic benchmark planning envelope",
+            "notVerifiedGeometry": "true"
+          }
+        }
+      ],
+      "hierarchy": {
+        "id": "KITCHEN-LITE-ASSET-038:root",
+        "name": "Cleaning cart",
+        "partIds": [
+          "KITCHEN-LITE-ASSET-038:envelope"
+        ],
+        "children": []
+      },
+      "warnings": [
+        "Synthetic planning envelope — not an imported restaurant-kitchen CAD part."
+      ]
+    },
+    {
+      "schemaVersion": 1,
+      "id": "KITCHEN-LITE-ASSET-039",
+      "name": "Storage shelf",
+      "units": "m",
+      "upAxis": "Y",
+      "dimensions": [
+        0.64,
+        0.86,
+        0.53
+      ],
+      "originOffset": [
+        0,
+        0,
+        0
+      ],
+      "source": {
+        "kind": "generated",
+        "filename": "generated-kitchen-lite-stress-39.json",
+        "digest": "synthetic-fixture-v1-39",
+        "generator": "oi-fixture"
+      },
+      "parts": [
+        {
+          "id": "KITCHEN-LITE-ASSET-039:envelope",
+          "name": "Storage shelf",
+          "vertices": [
+            -0.32,
+            0,
+            -0.265,
+            0.32,
+            0,
+            -0.265,
+            0.32,
+            0.86,
+            -0.265,
+            -0.32,
+            0.86,
+            -0.265,
+            -0.32,
+            0,
+            0.265,
+            0.32,
+            0,
+            0.265,
+            0.32,
+            0.86,
+            0.265,
+            -0.32,
+            0.86,
+            0.265
+          ],
+          "indices": [
+            0,
+            2,
+            1,
+            0,
+            3,
+            2,
+            4,
+            5,
+            6,
+            4,
+            6,
+            7,
+            0,
+            1,
+            5,
+            0,
+            5,
+            4,
+            3,
+            7,
+            6,
+            3,
+            6,
+            2,
+            0,
+            4,
+            7,
+            0,
+            7,
+            3,
+            1,
+            2,
+            6,
+            1,
+            6,
+            5
+          ],
+          "color": [
+            0.36,
+            0.56,
+            0.47
+          ],
+          "metadata": {
+            "representation": "synthetic benchmark planning envelope",
+            "notVerifiedGeometry": "true"
+          }
+        }
+      ],
+      "hierarchy": {
+        "id": "KITCHEN-LITE-ASSET-039:root",
+        "name": "Storage shelf",
+        "partIds": [
+          "KITCHEN-LITE-ASSET-039:envelope"
+        ],
+        "children": []
+      },
+      "warnings": [
+        "Synthetic planning envelope — not an imported restaurant-kitchen CAD part."
+      ]
+    },
+    {
+      "schemaVersion": 1,
+      "id": "KITCHEN-LITE-ASSET-040",
+      "name": "Sorting table",
+      "units": "m",
+      "upAxis": "Y",
+      "dimensions": [
+        0.72,
+        0.99,
+        0.35
+      ],
+      "originOffset": [
+        0,
+        0,
+        0
+      ],
+      "source": {
+        "kind": "generated",
+        "filename": "generated-kitchen-lite-stress-40.json",
+        "digest": "synthetic-fixture-v1-40",
+        "generator": "oi-fixture"
+      },
+      "parts": [
+        {
+          "id": "KITCHEN-LITE-ASSET-040:envelope",
+          "name": "Sorting table",
+          "vertices": [
+            -0.36,
+            0,
+            -0.175,
+            0.36,
+            0,
+            -0.175,
+            0.36,
+            0.99,
+            -0.175,
+            -0.36,
+            0.99,
+            -0.175,
+            -0.36,
+            0,
+            0.175,
+            0.36,
+            0,
+            0.175,
+            0.36,
+            0.99,
+            0.175,
+            -0.36,
+            0.99,
+            0.175
+          ],
+          "indices": [
+            0,
+            2,
+            1,
+            0,
+            3,
+            2,
+            4,
+            5,
+            6,
+            4,
+            6,
+            7,
+            0,
+            1,
+            5,
+            0,
+            5,
+            4,
+            3,
+            7,
+            6,
+            3,
+            6,
+            2,
+            0,
+            4,
+            7,
+            0,
+            7,
+            3,
+            1,
+            2,
+            6,
+            1,
+            6,
+            5
+          ],
+          "color": [
+            0.43000000000000005,
+            0.66,
+            0.53
+          ],
+          "metadata": {
+            "representation": "synthetic benchmark planning envelope",
+            "notVerifiedGeometry": "true"
+          }
+        }
+      ],
+      "hierarchy": {
+        "id": "KITCHEN-LITE-ASSET-040:root",
+        "name": "Sorting table",
+        "partIds": [
+          "KITCHEN-LITE-ASSET-040:envelope"
+        ],
+        "children": []
+      },
+      "warnings": [
+        "Synthetic planning envelope — not an imported restaurant-kitchen CAD part."
+      ]
+    },
+    {
+      "schemaVersion": 1,
+      "id": "KITCHEN-LITE-ASSET-041",
+      "name": "Rolling cart",
+      "units": "m",
+      "upAxis": "Y",
+      "dimensions": [
+        0.4,
+        0.6,
+        0.44
+      ],
+      "originOffset": [
+        0,
+        0,
+        0
+      ],
+      "source": {
+        "kind": "generated",
+        "filename": "generated-kitchen-lite-stress-41.json",
+        "digest": "synthetic-fixture-v1-41",
+        "generator": "oi-fixture"
+      },
+      "parts": [
+        {
+          "id": "KITCHEN-LITE-ASSET-041:envelope",
+          "name": "Rolling cart",
+          "vertices": [
+            -0.2,
+            0,
+            -0.22,
+            0.2,
+            0,
+            -0.22,
+            0.2,
+            0.6,
+            -0.22,
+            -0.2,
+            0.6,
+            -0.22,
+            -0.2,
+            0,
+            0.22,
+            0.2,
+            0,
+            0.22,
+            0.2,
+            0.6,
+            0.22,
+            -0.2,
+            0.6,
+            0.22
+          ],
+          "indices": [
+            0,
+            2,
+            1,
+            0,
+            3,
+            2,
+            4,
+            5,
+            6,
+            4,
+            6,
+            7,
+            0,
+            1,
+            5,
+            0,
+            5,
+            4,
+            3,
+            7,
+            6,
+            3,
+            6,
+            2,
+            0,
+            4,
+            7,
+            0,
+            7,
+            3,
+            1,
+            2,
+            6,
+            1,
+            6,
+            5
+          ],
+          "color": [
+            0.5,
+            0.36,
+            0.29
+          ],
+          "metadata": {
+            "representation": "synthetic benchmark planning envelope",
+            "notVerifiedGeometry": "true"
+          }
+        }
+      ],
+      "hierarchy": {
+        "id": "KITCHEN-LITE-ASSET-041:root",
+        "name": "Rolling cart",
+        "partIds": [
+          "KITCHEN-LITE-ASSET-041:envelope"
+        ],
+        "children": []
+      },
+      "warnings": [
+        "Synthetic planning envelope — not an imported restaurant-kitchen CAD part."
+      ]
+    },
+    {
+      "schemaVersion": 1,
+      "id": "KITCHEN-LITE-ASSET-042",
+      "name": "Cookware rack",
+      "units": "m",
+      "upAxis": "Y",
+      "dimensions": [
+        0.48,
+        0.73,
+        0.53
+      ],
+      "originOffset": [
+        0,
+        0,
+        0
+      ],
+      "source": {
+        "kind": "generated",
+        "filename": "generated-kitchen-lite-stress-42.json",
+        "digest": "synthetic-fixture-v1-42",
+        "generator": "oi-fixture"
+      },
+      "parts": [
+        {
+          "id": "KITCHEN-LITE-ASSET-042:envelope",
+          "name": "Cookware rack",
+          "vertices": [
+            -0.24,
+            0,
+            -0.265,
+            0.24,
+            0,
+            -0.265,
+            0.24,
+            0.73,
+            -0.265,
+            -0.24,
+            0.73,
+            -0.265,
+            -0.24,
+            0,
+            0.265,
+            0.24,
+            0,
+            0.265,
+            0.24,
+            0.73,
+            0.265,
+            -0.24,
+            0.73,
+            0.265
+          ],
+          "indices": [
+            0,
+            2,
+            1,
+            0,
+            3,
+            2,
+            4,
+            5,
+            6,
+            4,
+            6,
+            7,
+            0,
+            1,
+            5,
+            0,
+            5,
+            4,
+            3,
+            7,
+            6,
+            3,
+            6,
+            2,
+            0,
+            4,
+            7,
+            0,
+            7,
+            3,
+            1,
+            2,
+            6,
+            1,
+            6,
+            5
+          ],
+          "color": [
+            0.5700000000000001,
+            0.45999999999999996,
+            0.35
+          ],
+          "metadata": {
+            "representation": "synthetic benchmark planning envelope",
+            "notVerifiedGeometry": "true"
+          }
+        }
+      ],
+      "hierarchy": {
+        "id": "KITCHEN-LITE-ASSET-042:root",
+        "name": "Cookware rack",
+        "partIds": [
+          "KITCHEN-LITE-ASSET-042:envelope"
+        ],
+        "children": []
+      },
+      "warnings": [
+        "Synthetic planning envelope — not an imported restaurant-kitchen CAD part."
+      ]
+    },
+    {
+      "schemaVersion": 1,
+      "id": "KITCHEN-LITE-ASSET-043",
+      "name": "Fryer enclosure",
+      "units": "m",
+      "upAxis": "Y",
+      "dimensions": [
+        0.56,
+        0.86,
+        0.35
+      ],
+      "originOffset": [
+        0,
+        0,
+        0
+      ],
+      "source": {
+        "kind": "generated",
+        "filename": "generated-kitchen-lite-stress-43.json",
+        "digest": "synthetic-fixture-v1-43",
+        "generator": "oi-fixture"
+      },
+      "parts": [
+        {
+          "id": "KITCHEN-LITE-ASSET-043:envelope",
+          "name": "Fryer enclosure",
+          "vertices": [
+            -0.28,
+            0,
+            -0.175,
+            0.28,
+            0,
+            -0.175,
+            0.28,
+            0.86,
+            -0.175,
+            -0.28,
+            0.86,
+            -0.175,
+            -0.28,
+            0,
+            0.175,
+            0.28,
+            0,
+            0.175,
+            0.28,
+            0.86,
+            0.175,
+            -0.28,
+            0.86,
+            0.175
+          ],
+          "indices": [
+            0,
+            2,
+            1,
+            0,
+            3,
+            2,
+            4,
+            5,
+            6,
+            4,
+            6,
+            7,
+            0,
+            1,
+            5,
+            0,
+            5,
+            4,
+            3,
+            7,
+            6,
+            3,
+            6,
+            2,
+            0,
+            4,
+            7,
+            0,
+            7,
+            3,
+            1,
+            2,
+            6,
+            1,
+            6,
+            5
+          ],
+          "color": [
+            0.22,
+            0.56,
+            0.41
+          ],
+          "metadata": {
+            "representation": "synthetic benchmark planning envelope",
+            "notVerifiedGeometry": "true"
+          }
+        }
+      ],
+      "hierarchy": {
+        "id": "KITCHEN-LITE-ASSET-043:root",
+        "name": "Fryer enclosure",
+        "partIds": [
+          "KITCHEN-LITE-ASSET-043:envelope"
+        ],
+        "children": []
+      },
+      "warnings": [
+        "Synthetic planning envelope — not an imported restaurant-kitchen CAD part."
+      ]
+    },
+    {
+      "schemaVersion": 1,
+      "id": "KITCHEN-LITE-ASSET-044",
+      "name": "Cold prep bench",
+      "units": "m",
+      "upAxis": "Y",
+      "dimensions": [
+        0.64,
+        0.99,
+        0.44
+      ],
+      "originOffset": [
+        0,
+        0,
+        0
+      ],
+      "source": {
+        "kind": "generated",
+        "filename": "generated-kitchen-lite-stress-44.json",
+        "digest": "synthetic-fixture-v1-44",
+        "generator": "oi-fixture"
+      },
+      "parts": [
+        {
+          "id": "KITCHEN-LITE-ASSET-044:envelope",
+          "name": "Cold prep bench",
+          "vertices": [
+            -0.32,
+            0,
+            -0.22,
+            0.32,
+            0,
+            -0.22,
+            0.32,
+            0.99,
+            -0.22,
+            -0.32,
+            0.99,
+            -0.22,
+            -0.32,
+            0,
+            0.22,
+            0.32,
+            0,
+            0.22,
+            0.32,
+            0.99,
+            0.22,
+            -0.32,
+            0.99,
+            0.22
+          ],
+          "indices": [
+            0,
+            2,
+            1,
+            0,
+            3,
+            2,
+            4,
+            5,
+            6,
+            4,
+            6,
+            7,
+            0,
+            1,
+            5,
+            0,
+            5,
+            4,
+            3,
+            7,
+            6,
+            3,
+            6,
+            2,
+            0,
+            4,
+            7,
+            0,
+            7,
+            3,
+            1,
+            2,
+            6,
+            1,
+            6,
+            5
+          ],
+          "color": [
+            0.29000000000000004,
+            0.66,
+            0.47
+          ],
+          "metadata": {
+            "representation": "synthetic benchmark planning envelope",
+            "notVerifiedGeometry": "true"
+          }
+        }
+      ],
+      "hierarchy": {
+        "id": "KITCHEN-LITE-ASSET-044:root",
+        "name": "Cold prep bench",
+        "partIds": [
+          "KITCHEN-LITE-ASSET-044:envelope"
+        ],
+        "children": []
+      },
+      "warnings": [
+        "Synthetic planning envelope — not an imported restaurant-kitchen CAD part."
+      ]
+    },
+    {
+      "schemaVersion": 1,
+      "id": "KITCHEN-LITE-ASSET-045",
+      "name": "Safety cabinet",
+      "units": "m",
+      "upAxis": "Y",
+      "dimensions": [
+        0.72,
+        0.6,
+        0.53
+      ],
+      "originOffset": [
+        0,
+        0,
+        0
+      ],
+      "source": {
+        "kind": "generated",
+        "filename": "generated-kitchen-lite-stress-45.json",
+        "digest": "synthetic-fixture-v1-45",
+        "generator": "oi-fixture"
+      },
+      "parts": [
+        {
+          "id": "KITCHEN-LITE-ASSET-045:envelope",
+          "name": "Safety cabinet",
+          "vertices": [
+            -0.36,
+            0,
+            -0.265,
+            0.36,
+            0,
+            -0.265,
+            0.36,
+            0.6,
+            -0.265,
+            -0.36,
+            0.6,
+            -0.265,
+            -0.36,
+            0,
+            0.265,
+            0.36,
+            0,
+            0.265,
+            0.36,
+            0.6,
+            0.265,
+            -0.36,
+            0.6,
+            0.265
+          ],
+          "indices": [
+            0,
+            2,
+            1,
+            0,
+            3,
+            2,
+            4,
+            5,
+            6,
+            4,
+            6,
+            7,
+            0,
+            1,
+            5,
+            0,
+            5,
+            4,
+            3,
+            7,
+            6,
+            3,
+            6,
+            2,
+            0,
+            4,
+            7,
+            0,
+            7,
+            3,
+            1,
+            2,
+            6,
+            1,
+            6,
+            5
+          ],
+          "color": [
+            0.36,
+            0.36,
+            0.53
+          ],
+          "metadata": {
+            "representation": "synthetic benchmark planning envelope",
+            "notVerifiedGeometry": "true"
+          }
+        }
+      ],
+      "hierarchy": {
+        "id": "KITCHEN-LITE-ASSET-045:root",
+        "name": "Safety cabinet",
+        "partIds": [
+          "KITCHEN-LITE-ASSET-045:envelope"
+        ],
+        "children": []
+      },
+      "warnings": [
+        "Synthetic planning envelope — not an imported restaurant-kitchen CAD part."
+      ]
+    },
+    {
+      "schemaVersion": 1,
+      "id": "KITCHEN-LITE-ASSET-046",
+      "name": "Counter module",
+      "units": "m",
+      "upAxis": "Y",
+      "dimensions": [
+        0.4,
+        0.73,
+        0.35
+      ],
+      "originOffset": [
+        0,
+        0,
+        0
+      ],
+      "source": {
+        "kind": "generated",
+        "filename": "generated-kitchen-lite-stress-46.json",
+        "digest": "synthetic-fixture-v1-46",
+        "generator": "oi-fixture"
+      },
+      "parts": [
+        {
+          "id": "KITCHEN-LITE-ASSET-046:envelope",
+          "name": "Counter module",
+          "vertices": [
+            -0.2,
+            0,
+            -0.175,
+            0.2,
+            0,
+            -0.175,
+            0.2,
+            0.73,
+            -0.175,
+            -0.2,
+            0.73,
+            -0.175,
+            -0.2,
+            0,
+            0.175,
+            0.2,
+            0,
+            0.175,
+            0.2,
+            0.73,
+            0.175,
+            -0.2,
+            0.73,
+            0.175
+          ],
+          "indices": [
+            0,
+            2,
+            1,
+            0,
+            3,
+            2,
+            4,
+            5,
+            6,
+            4,
+            6,
+            7,
+            0,
+            1,
+            5,
+            0,
+            5,
+            4,
+            3,
+            7,
+            6,
+            3,
+            6,
+            2,
+            0,
+            4,
+            7,
+            0,
+            7,
+            3,
+            1,
+            2,
+            6,
+            1,
+            6,
+            5
+          ],
+          "color": [
+            0.43000000000000005,
+            0.45999999999999996,
+            0.29
+          ],
+          "metadata": {
+            "representation": "synthetic benchmark planning envelope",
+            "notVerifiedGeometry": "true"
+          }
+        }
+      ],
+      "hierarchy": {
+        "id": "KITCHEN-LITE-ASSET-046:root",
+        "name": "Counter module",
+        "partIds": [
+          "KITCHEN-LITE-ASSET-046:envelope"
+        ],
+        "children": []
+      },
+      "warnings": [
+        "Synthetic planning envelope — not an imported restaurant-kitchen CAD part."
+      ]
+    },
+    {
+      "schemaVersion": 1,
+      "id": "KITCHEN-LITE-ASSET-047",
+      "name": "Utensil wash",
+      "units": "m",
+      "upAxis": "Y",
+      "dimensions": [
+        0.48,
+        0.86,
+        0.44
+      ],
+      "originOffset": [
+        0,
+        0,
+        0
+      ],
+      "source": {
+        "kind": "generated",
+        "filename": "generated-kitchen-lite-stress-47.json",
+        "digest": "synthetic-fixture-v1-47",
+        "generator": "oi-fixture"
+      },
+      "parts": [
+        {
+          "id": "KITCHEN-LITE-ASSET-047:envelope",
+          "name": "Utensil wash",
+          "vertices": [
+            -0.24,
+            0,
+            -0.22,
+            0.24,
+            0,
+            -0.22,
+            0.24,
+            0.86,
+            -0.22,
+            -0.24,
+            0.86,
+            -0.22,
+            -0.24,
+            0,
+            0.22,
+            0.24,
+            0,
+            0.22,
+            0.24,
+            0.86,
+            0.22,
+            -0.24,
+            0.86,
+            0.22
+          ],
+          "indices": [
+            0,
+            2,
+            1,
+            0,
+            3,
+            2,
+            4,
+            5,
+            6,
+            4,
+            6,
+            7,
+            0,
+            1,
+            5,
+            0,
+            5,
+            4,
+            3,
+            7,
+            6,
+            3,
+            6,
+            2,
+            0,
+            4,
+            7,
+            0,
+            7,
+            3,
+            1,
+            2,
+            6,
+            1,
+            6,
+            5
+          ],
+          "color": [
+            0.5,
+            0.56,
+            0.35
+          ],
+          "metadata": {
+            "representation": "synthetic benchmark planning envelope",
+            "notVerifiedGeometry": "true"
+          }
+        }
+      ],
+      "hierarchy": {
+        "id": "KITCHEN-LITE-ASSET-047:root",
+        "name": "Utensil wash",
+        "partIds": [
+          "KITCHEN-LITE-ASSET-047:envelope"
+        ],
+        "children": []
+      },
+      "warnings": [
+        "Synthetic planning envelope — not an imported restaurant-kitchen CAD part."
+      ]
+    },
+    {
+      "schemaVersion": 1,
+      "id": "KITCHEN-LITE-ASSET-048",
+      "name": "Bottle station",
+      "units": "m",
+      "upAxis": "Y",
+      "dimensions": [
+        0.56,
+        0.99,
+        0.53
+      ],
+      "originOffset": [
+        0,
+        0,
+        0
+      ],
+      "source": {
+        "kind": "generated",
+        "filename": "generated-kitchen-lite-stress-48.json",
+        "digest": "synthetic-fixture-v1-48",
+        "generator": "oi-fixture"
+      },
+      "parts": [
+        {
+          "id": "KITCHEN-LITE-ASSET-048:envelope",
+          "name": "Bottle station",
+          "vertices": [
+            -0.28,
+            0,
+            -0.265,
+            0.28,
+            0,
+            -0.265,
+            0.28,
+            0.99,
+            -0.265,
+            -0.28,
+            0.99,
+            -0.265,
+            -0.28,
+            0,
+            0.265,
+            0.28,
+            0,
+            0.265,
+            0.28,
+            0.99,
+            0.265,
+            -0.28,
+            0.99,
+            0.265
+          ],
+          "indices": [
+            0,
+            2,
+            1,
+            0,
+            3,
+            2,
+            4,
+            5,
+            6,
+            4,
+            6,
+            7,
+            0,
+            1,
+            5,
+            0,
+            5,
+            4,
+            3,
+            7,
+            6,
+            3,
+            6,
+            2,
+            0,
+            4,
+            7,
+            0,
+            7,
+            3,
+            1,
+            2,
+            6,
+            1,
+            6,
+            5
+          ],
+          "color": [
+            0.5700000000000001,
+            0.66,
+            0.41
+          ],
+          "metadata": {
+            "representation": "synthetic benchmark planning envelope",
+            "notVerifiedGeometry": "true"
+          }
+        }
+      ],
+      "hierarchy": {
+        "id": "KITCHEN-LITE-ASSET-048:root",
+        "name": "Bottle station",
+        "partIds": [
+          "KITCHEN-LITE-ASSET-048:envelope"
+        ],
+        "children": []
+      },
+      "warnings": [
+        "Synthetic planning envelope — not an imported restaurant-kitchen CAD part."
+      ]
+    },
+    {
+      "schemaVersion": 1,
+      "id": "KITCHEN-LITE-ASSET-049",
+      "name": "Assembly table",
+      "units": "m",
+      "upAxis": "Y",
+      "dimensions": [
+        0.64,
+        0.6,
+        0.35
+      ],
+      "originOffset": [
+        0,
+        0,
+        0
+      ],
+      "source": {
+        "kind": "generated",
+        "filename": "generated-kitchen-lite-stress-49.json",
+        "digest": "synthetic-fixture-v1-49",
+        "generator": "oi-fixture"
+      },
+      "parts": [
+        {
+          "id": "KITCHEN-LITE-ASSET-049:envelope",
+          "name": "Assembly table",
+          "vertices": [
+            -0.32,
+            0,
+            -0.175,
+            0.32,
+            0,
+            -0.175,
+            0.32,
+            0.6,
+            -0.175,
+            -0.32,
+            0.6,
+            -0.175,
+            -0.32,
+            0,
+            0.175,
+            0.32,
+            0,
+            0.175,
+            0.32,
+            0.6,
+            0.175,
+            -0.32,
+            0.6,
+            0.175
+          ],
+          "indices": [
+            0,
+            2,
+            1,
+            0,
+            3,
+            2,
+            4,
+            5,
+            6,
+            4,
+            6,
+            7,
+            0,
+            1,
+            5,
+            0,
+            5,
+            4,
+            3,
+            7,
+            6,
+            3,
+            6,
+            2,
+            0,
+            4,
+            7,
+            0,
+            7,
+            3,
+            1,
+            2,
+            6,
+            1,
+            6,
+            5
+          ],
+          "color": [
+            0.22,
+            0.36,
+            0.47
+          ],
+          "metadata": {
+            "representation": "synthetic benchmark planning envelope",
+            "notVerifiedGeometry": "true"
+          }
+        }
+      ],
+      "hierarchy": {
+        "id": "KITCHEN-LITE-ASSET-049:root",
+        "name": "Assembly table",
+        "partIds": [
+          "KITCHEN-LITE-ASSET-049:envelope"
+        ],
+        "children": []
+      },
+      "warnings": [
+        "Synthetic planning envelope — not an imported restaurant-kitchen CAD part."
+      ]
+    },
+    {
+      "schemaVersion": 1,
+      "id": "KITCHEN-LITE-ASSET-050",
+      "name": "Weighing station",
+      "units": "m",
+      "upAxis": "Y",
+      "dimensions": [
+        0.72,
+        0.73,
+        0.44
+      ],
+      "originOffset": [
+        0,
+        0,
+        0
+      ],
+      "source": {
+        "kind": "generated",
+        "filename": "generated-kitchen-lite-stress-50.json",
+        "digest": "synthetic-fixture-v1-50",
+        "generator": "oi-fixture"
+      },
+      "parts": [
+        {
+          "id": "KITCHEN-LITE-ASSET-050:envelope",
+          "name": "Weighing station",
+          "vertices": [
+            -0.36,
+            0,
+            -0.22,
+            0.36,
+            0,
+            -0.22,
+            0.36,
+            0.73,
+            -0.22,
+            -0.36,
+            0.73,
+            -0.22,
+            -0.36,
+            0,
+            0.22,
+            0.36,
+            0,
+            0.22,
+            0.36,
+            0.73,
+            0.22,
+            -0.36,
+            0.73,
+            0.22
+          ],
+          "indices": [
+            0,
+            2,
+            1,
+            0,
+            3,
+            2,
+            4,
+            5,
+            6,
+            4,
+            6,
+            7,
+            0,
+            1,
+            5,
+            0,
+            5,
+            4,
+            3,
+            7,
+            6,
+            3,
+            6,
+            2,
+            0,
+            4,
+            7,
+            0,
+            7,
+            3,
+            1,
+            2,
+            6,
+            1,
+            6,
+            5
+          ],
+          "color": [
+            0.29000000000000004,
+            0.45999999999999996,
+            0.53
+          ],
+          "metadata": {
+            "representation": "synthetic benchmark planning envelope",
+            "notVerifiedGeometry": "true"
+          }
+        }
+      ],
+      "hierarchy": {
+        "id": "KITCHEN-LITE-ASSET-050:root",
+        "name": "Weighing station",
+        "partIds": [
+          "KITCHEN-LITE-ASSET-050:envelope"
+        ],
+        "children": []
+      },
+      "warnings": [
+        "Synthetic planning envelope — not an imported restaurant-kitchen CAD part."
+      ]
+    },
+    {
+      "schemaVersion": 1,
+      "id": "KITCHEN-LITE-ASSET-051",
+      "name": "Packaging counter",
+      "units": "m",
+      "upAxis": "Y",
+      "dimensions": [
+        0.4,
+        0.86,
+        0.53
+      ],
+      "originOffset": [
+        0,
+        0,
+        0
+      ],
+      "source": {
+        "kind": "generated",
+        "filename": "generated-kitchen-lite-stress-51.json",
+        "digest": "synthetic-fixture-v1-51",
+        "generator": "oi-fixture"
+      },
+      "parts": [
+        {
+          "id": "KITCHEN-LITE-ASSET-051:envelope",
+          "name": "Packaging counter",
+          "vertices": [
+            -0.2,
+            0,
+            -0.265,
+            0.2,
+            0,
+            -0.265,
+            0.2,
+            0.86,
+            -0.265,
+            -0.2,
+            0.86,
+            -0.265,
+            -0.2,
+            0,
+            0.265,
+            0.2,
+            0,
+            0.265,
+            0.2,
+            0.86,
+            0.265,
+            -0.2,
+            0.86,
+            0.265
+          ],
+          "indices": [
+            0,
+            2,
+            1,
+            0,
+            3,
+            2,
+            4,
+            5,
+            6,
+            4,
+            6,
+            7,
+            0,
+            1,
+            5,
+            0,
+            5,
+            4,
+            3,
+            7,
+            6,
+            3,
+            6,
+            2,
+            0,
+            4,
+            7,
+            0,
+            7,
+            3,
+            1,
+            2,
+            6,
+            1,
+            6,
+            5
+          ],
+          "color": [
+            0.36,
+            0.56,
+            0.29
+          ],
+          "metadata": {
+            "representation": "synthetic benchmark planning envelope",
+            "notVerifiedGeometry": "true"
+          }
+        }
+      ],
+      "hierarchy": {
+        "id": "KITCHEN-LITE-ASSET-051:root",
+        "name": "Packaging counter",
+        "partIds": [
+          "KITCHEN-LITE-ASSET-051:envelope"
+        ],
+        "children": []
+      },
+      "warnings": [
+        "Synthetic planning envelope — not an imported restaurant-kitchen CAD part."
+      ]
+    },
+    {
+      "schemaVersion": 1,
+      "id": "KITCHEN-LITE-ASSET-052",
+      "name": "Dry storage module",
+      "units": "m",
+      "upAxis": "Y",
+      "dimensions": [
+        0.48,
+        0.99,
+        0.35
+      ],
+      "originOffset": [
+        0,
+        0,
+        0
+      ],
+      "source": {
+        "kind": "generated",
+        "filename": "generated-kitchen-lite-stress-52.json",
+        "digest": "synthetic-fixture-v1-52",
+        "generator": "oi-fixture"
+      },
+      "parts": [
+        {
+          "id": "KITCHEN-LITE-ASSET-052:envelope",
+          "name": "Dry storage module",
+          "vertices": [
+            -0.24,
+            0,
+            -0.175,
+            0.24,
+            0,
+            -0.175,
+            0.24,
+            0.99,
+            -0.175,
+            -0.24,
+            0.99,
+            -0.175,
+            -0.24,
+            0,
+            0.175,
+            0.24,
+            0,
+            0.175,
+            0.24,
+            0.99,
+            0.175,
+            -0.24,
+            0.99,
+            0.175
+          ],
+          "indices": [
+            0,
+            2,
+            1,
+            0,
+            3,
+            2,
+            4,
+            5,
+            6,
+            4,
+            6,
+            7,
+            0,
+            1,
+            5,
+            0,
+            5,
+            4,
+            3,
+            7,
+            6,
+            3,
+            6,
+            2,
+            0,
+            4,
+            7,
+            0,
+            7,
+            3,
+            1,
+            2,
+            6,
+            1,
+            6,
+            5
+          ],
+          "color": [
+            0.43000000000000005,
+            0.66,
+            0.35
+          ],
+          "metadata": {
+            "representation": "synthetic benchmark planning envelope",
+            "notVerifiedGeometry": "true"
+          }
+        }
+      ],
+      "hierarchy": {
+        "id": "KITCHEN-LITE-ASSET-052:root",
+        "name": "Dry storage module",
+        "partIds": [
+          "KITCHEN-LITE-ASSET-052:envelope"
+        ],
+        "children": []
+      },
+      "warnings": [
+        "Synthetic planning envelope — not an imported restaurant-kitchen CAD part."
+      ]
+    },
+    {
+      "schemaVersion": 1,
+      "id": "KITCHEN-LITE-ASSET-053",
+      "name": "Waste sorting",
+      "units": "m",
+      "upAxis": "Y",
+      "dimensions": [
+        0.56,
+        0.6,
+        0.44
+      ],
+      "originOffset": [
+        0,
+        0,
+        0
+      ],
+      "source": {
+        "kind": "generated",
+        "filename": "generated-kitchen-lite-stress-53.json",
+        "digest": "synthetic-fixture-v1-53",
+        "generator": "oi-fixture"
+      },
+      "parts": [
+        {
+          "id": "KITCHEN-LITE-ASSET-053:envelope",
+          "name": "Waste sorting",
+          "vertices": [
+            -0.28,
+            0,
+            -0.22,
+            0.28,
+            0,
+            -0.22,
+            0.28,
+            0.6,
+            -0.22,
+            -0.28,
+            0.6,
+            -0.22,
+            -0.28,
+            0,
+            0.22,
+            0.28,
+            0,
+            0.22,
+            0.28,
+            0.6,
+            0.22,
+            -0.28,
+            0.6,
+            0.22
+          ],
+          "indices": [
+            0,
+            2,
+            1,
+            0,
+            3,
+            2,
+            4,
+            5,
+            6,
+            4,
+            6,
+            7,
+            0,
+            1,
+            5,
+            0,
+            5,
+            4,
+            3,
+            7,
+            6,
+            3,
+            6,
+            2,
+            0,
+            4,
+            7,
+            0,
+            7,
+            3,
+            1,
+            2,
+            6,
+            1,
+            6,
+            5
+          ],
+          "color": [
+            0.5,
+            0.36,
+            0.41
+          ],
+          "metadata": {
+            "representation": "synthetic benchmark planning envelope",
+            "notVerifiedGeometry": "true"
+          }
+        }
+      ],
+      "hierarchy": {
+        "id": "KITCHEN-LITE-ASSET-053:root",
+        "name": "Waste sorting",
+        "partIds": [
+          "KITCHEN-LITE-ASSET-053:envelope"
+        ],
+        "children": []
+      },
+      "warnings": [
+        "Synthetic planning envelope — not an imported restaurant-kitchen CAD part."
+      ]
+    },
+    {
+      "schemaVersion": 1,
+      "id": "KITCHEN-LITE-ASSET-054",
+      "name": "Tool trolley",
+      "units": "m",
+      "upAxis": "Y",
+      "dimensions": [
+        0.64,
+        0.73,
+        0.53
+      ],
+      "originOffset": [
+        0,
+        0,
+        0
+      ],
+      "source": {
+        "kind": "generated",
+        "filename": "generated-kitchen-lite-stress-54.json",
+        "digest": "synthetic-fixture-v1-54",
+        "generator": "oi-fixture"
+      },
+      "parts": [
+        {
+          "id": "KITCHEN-LITE-ASSET-054:envelope",
+          "name": "Tool trolley",
+          "vertices": [
+            -0.32,
+            0,
+            -0.265,
+            0.32,
+            0,
+            -0.265,
+            0.32,
+            0.73,
+            -0.265,
+            -0.32,
+            0.73,
+            -0.265,
+            -0.32,
+            0,
+            0.265,
+            0.32,
+            0,
+            0.265,
+            0.32,
+            0.73,
+            0.265,
+            -0.32,
+            0.73,
+            0.265
+          ],
+          "indices": [
+            0,
+            2,
+            1,
+            0,
+            3,
+            2,
+            4,
+            5,
+            6,
+            4,
+            6,
+            7,
+            0,
+            1,
+            5,
+            0,
+            5,
+            4,
+            3,
+            7,
+            6,
+            3,
+            6,
+            2,
+            0,
+            4,
+            7,
+            0,
+            7,
+            3,
+            1,
+            2,
+            6,
+            1,
+            6,
+            5
+          ],
+          "color": [
+            0.5700000000000001,
+            0.45999999999999996,
+            0.47
+          ],
+          "metadata": {
+            "representation": "synthetic benchmark planning envelope",
+            "notVerifiedGeometry": "true"
+          }
+        }
+      ],
+      "hierarchy": {
+        "id": "KITCHEN-LITE-ASSET-054:root",
+        "name": "Tool trolley",
+        "partIds": [
+          "KITCHEN-LITE-ASSET-054:envelope"
+        ],
+        "children": []
+      },
+      "warnings": [
+        "Synthetic planning envelope — not an imported restaurant-kitchen CAD part."
+      ]
+    },
+    {
+      "schemaVersion": 1,
+      "id": "KITCHEN-LITE-ASSET-055",
+      "name": "Ingredient bench",
+      "units": "m",
+      "upAxis": "Y",
+      "dimensions": [
+        0.72,
+        0.86,
+        0.35
+      ],
+      "originOffset": [
+        0,
+        0,
+        0
+      ],
+      "source": {
+        "kind": "generated",
+        "filename": "generated-kitchen-lite-stress-55.json",
+        "digest": "synthetic-fixture-v1-55",
+        "generator": "oi-fixture"
+      },
+      "parts": [
+        {
+          "id": "KITCHEN-LITE-ASSET-055:envelope",
+          "name": "Ingredient bench",
+          "vertices": [
+            -0.36,
+            0,
+            -0.175,
+            0.36,
+            0,
+            -0.175,
+            0.36,
+            0.86,
+            -0.175,
+            -0.36,
+            0.86,
+            -0.175,
+            -0.36,
+            0,
+            0.175,
+            0.36,
+            0,
+            0.175,
+            0.36,
+            0.86,
+            0.175,
+            -0.36,
+            0.86,
+            0.175
+          ],
+          "indices": [
+            0,
+            2,
+            1,
+            0,
+            3,
+            2,
+            4,
+            5,
+            6,
+            4,
+            6,
+            7,
+            0,
+            1,
+            5,
+            0,
+            5,
+            4,
+            3,
+            7,
+            6,
+            3,
+            6,
+            2,
+            0,
+            4,
+            7,
+            0,
+            7,
+            3,
+            1,
+            2,
+            6,
+            1,
+            6,
+            5
+          ],
+          "color": [
+            0.22,
+            0.56,
+            0.53
+          ],
+          "metadata": {
+            "representation": "synthetic benchmark planning envelope",
+            "notVerifiedGeometry": "true"
+          }
+        }
+      ],
+      "hierarchy": {
+        "id": "KITCHEN-LITE-ASSET-055:root",
+        "name": "Ingredient bench",
+        "partIds": [
+          "KITCHEN-LITE-ASSET-055:envelope"
+        ],
+        "children": []
+      },
+      "warnings": [
+        "Synthetic planning envelope — not an imported restaurant-kitchen CAD part."
+      ]
+    },
+    {
+      "schemaVersion": 1,
+      "id": "KITCHEN-LITE-ASSET-056",
+      "name": "Cooling platform",
+      "units": "m",
+      "upAxis": "Y",
+      "dimensions": [
+        0.4,
+        0.99,
+        0.44
+      ],
+      "originOffset": [
+        0,
+        0,
+        0
+      ],
+      "source": {
+        "kind": "generated",
+        "filename": "generated-kitchen-lite-stress-56.json",
+        "digest": "synthetic-fixture-v1-56",
+        "generator": "oi-fixture"
+      },
+      "parts": [
+        {
+          "id": "KITCHEN-LITE-ASSET-056:envelope",
+          "name": "Cooling platform",
+          "vertices": [
+            -0.2,
+            0,
+            -0.22,
+            0.2,
+            0,
+            -0.22,
+            0.2,
+            0.99,
+            -0.22,
+            -0.2,
+            0.99,
+            -0.22,
+            -0.2,
+            0,
+            0.22,
+            0.2,
+            0,
+            0.22,
+            0.2,
+            0.99,
+            0.22,
+            -0.2,
+            0.99,
+            0.22
+          ],
+          "indices": [
+            0,
+            2,
+            1,
+            0,
+            3,
+            2,
+            4,
+            5,
+            6,
+            4,
+            6,
+            7,
+            0,
+            1,
+            5,
+            0,
+            5,
+            4,
+            3,
+            7,
+            6,
+            3,
+            6,
+            2,
+            0,
+            4,
+            7,
+            0,
+            7,
+            3,
+            1,
+            2,
+            6,
+            1,
+            6,
+            5
+          ],
+          "color": [
+            0.29000000000000004,
+            0.66,
+            0.29
+          ],
+          "metadata": {
+            "representation": "synthetic benchmark planning envelope",
+            "notVerifiedGeometry": "true"
+          }
+        }
+      ],
+      "hierarchy": {
+        "id": "KITCHEN-LITE-ASSET-056:root",
+        "name": "Cooling platform",
+        "partIds": [
+          "KITCHEN-LITE-ASSET-056:envelope"
+        ],
+        "children": []
+      },
+      "warnings": [
+        "Synthetic planning envelope — not an imported restaurant-kitchen CAD part."
+      ]
+    },
+    {
+      "schemaVersion": 1,
+      "id": "KITCHEN-LITE-ASSET-057",
+      "name": "Pot sink",
+      "units": "m",
+      "upAxis": "Y",
+      "dimensions": [
+        0.48,
+        0.6,
+        0.53
+      ],
+      "originOffset": [
+        0,
+        0,
+        0
+      ],
+      "source": {
+        "kind": "generated",
+        "filename": "generated-kitchen-lite-stress-57.json",
+        "digest": "synthetic-fixture-v1-57",
+        "generator": "oi-fixture"
+      },
+      "parts": [
+        {
+          "id": "KITCHEN-LITE-ASSET-057:envelope",
+          "name": "Pot sink",
+          "vertices": [
+            -0.24,
+            0,
+            -0.265,
+            0.24,
+            0,
+            -0.265,
+            0.24,
+            0.6,
+            -0.265,
+            -0.24,
+            0.6,
+            -0.265,
+            -0.24,
+            0,
+            0.265,
+            0.24,
+            0,
+            0.265,
+            0.24,
+            0.6,
+            0.265,
+            -0.24,
+            0.6,
+            0.265
+          ],
+          "indices": [
+            0,
+            2,
+            1,
+            0,
+            3,
+            2,
+            4,
+            5,
+            6,
+            4,
+            6,
+            7,
+            0,
+            1,
+            5,
+            0,
+            5,
+            4,
+            3,
+            7,
+            6,
+            3,
+            6,
+            2,
+            0,
+            4,
+            7,
+            0,
+            7,
+            3,
+            1,
+            2,
+            6,
+            1,
+            6,
+            5
+          ],
+          "color": [
+            0.36,
+            0.36,
+            0.35
+          ],
+          "metadata": {
+            "representation": "synthetic benchmark planning envelope",
+            "notVerifiedGeometry": "true"
+          }
+        }
+      ],
+      "hierarchy": {
+        "id": "KITCHEN-LITE-ASSET-057:root",
+        "name": "Pot sink",
+        "partIds": [
+          "KITCHEN-LITE-ASSET-057:envelope"
+        ],
+        "children": []
+      },
+      "warnings": [
+        "Synthetic planning envelope — not an imported restaurant-kitchen CAD part."
+      ]
+    },
+    {
+      "schemaVersion": 1,
+      "id": "KITCHEN-LITE-ASSET-058",
+      "name": "Prep sink",
+      "units": "m",
+      "upAxis": "Y",
+      "dimensions": [
+        0.56,
+        0.73,
+        0.35
+      ],
+      "originOffset": [
+        0,
+        0,
+        0
+      ],
+      "source": {
+        "kind": "generated",
+        "filename": "generated-kitchen-lite-stress-58.json",
+        "digest": "synthetic-fixture-v1-58",
+        "generator": "oi-fixture"
+      },
+      "parts": [
+        {
+          "id": "KITCHEN-LITE-ASSET-058:envelope",
+          "name": "Prep sink",
+          "vertices": [
+            -0.28,
+            0,
+            -0.175,
+            0.28,
+            0,
+            -0.175,
+            0.28,
+            0.73,
+            -0.175,
+            -0.28,
+            0.73,
+            -0.175,
+            -0.28,
+            0,
+            0.175,
+            0.28,
+            0,
+            0.175,
+            0.28,
+            0.73,
+            0.175,
+            -0.28,
+            0.73,
+            0.175
+          ],
+          "indices": [
+            0,
+            2,
+            1,
+            0,
+            3,
+            2,
+            4,
+            5,
+            6,
+            4,
+            6,
+            7,
+            0,
+            1,
+            5,
+            0,
+            5,
+            4,
+            3,
+            7,
+            6,
+            3,
+            6,
+            2,
+            0,
+            4,
+            7,
+            0,
+            7,
+            3,
+            1,
+            2,
+            6,
+            1,
+            6,
+            5
+          ],
+          "color": [
+            0.43000000000000005,
+            0.45999999999999996,
+            0.41
+          ],
+          "metadata": {
+            "representation": "synthetic benchmark planning envelope",
+            "notVerifiedGeometry": "true"
+          }
+        }
+      ],
+      "hierarchy": {
+        "id": "KITCHEN-LITE-ASSET-058:root",
+        "name": "Prep sink",
+        "partIds": [
+          "KITCHEN-LITE-ASSET-058:envelope"
+        ],
+        "children": []
+      },
+      "warnings": [
+        "Synthetic planning envelope — not an imported restaurant-kitchen CAD part."
+      ]
+    },
+    {
+      "schemaVersion": 1,
+      "id": "KITCHEN-LITE-ASSET-059",
+      "name": "Workstation base",
+      "units": "m",
+      "upAxis": "Y",
+      "dimensions": [
+        0.64,
+        0.86,
+        0.44
+      ],
+      "originOffset": [
+        0,
+        0,
+        0
+      ],
+      "source": {
+        "kind": "generated",
+        "filename": "generated-kitchen-lite-stress-59.json",
+        "digest": "synthetic-fixture-v1-59",
+        "generator": "oi-fixture"
+      },
+      "parts": [
+        {
+          "id": "KITCHEN-LITE-ASSET-059:envelope",
+          "name": "Workstation base",
+          "vertices": [
+            -0.32,
+            0,
+            -0.22,
+            0.32,
+            0,
+            -0.22,
+            0.32,
+            0.86,
+            -0.22,
+            -0.32,
+            0.86,
+            -0.22,
+            -0.32,
+            0,
+            0.22,
+            0.32,
+            0,
+            0.22,
+            0.32,
+            0.86,
+            0.22,
+            -0.32,
+            0.86,
+            0.22
+          ],
+          "indices": [
+            0,
+            2,
+            1,
+            0,
+            3,
+            2,
+            4,
+            5,
+            6,
+            4,
+            6,
+            7,
+            0,
+            1,
+            5,
+            0,
+            5,
+            4,
+            3,
+            7,
+            6,
+            3,
+            6,
+            2,
+            0,
+            4,
+            7,
+            0,
+            7,
+            3,
+            1,
+            2,
+            6,
+            1,
+            6,
+            5
+          ],
+          "color": [
+            0.5,
+            0.56,
+            0.47
+          ],
+          "metadata": {
+            "representation": "synthetic benchmark planning envelope",
+            "notVerifiedGeometry": "true"
+          }
+        }
+      ],
+      "hierarchy": {
+        "id": "KITCHEN-LITE-ASSET-059:root",
+        "name": "Workstation base",
+        "partIds": [
+          "KITCHEN-LITE-ASSET-059:envelope"
+        ],
+        "children": []
+      },
+      "warnings": [
+        "Synthetic planning envelope — not an imported restaurant-kitchen CAD part."
+      ]
+    },
+    {
+      "schemaVersion": 1,
+      "id": "KITCHEN-LITE-ASSET-060",
+      "name": "Service cabinet",
+      "units": "m",
+      "upAxis": "Y",
+      "dimensions": [
+        0.72,
+        0.99,
+        0.53
+      ],
+      "originOffset": [
+        0,
+        0,
+        0
+      ],
+      "source": {
+        "kind": "generated",
+        "filename": "generated-kitchen-lite-stress-60.json",
+        "digest": "synthetic-fixture-v1-60",
+        "generator": "oi-fixture"
+      },
+      "parts": [
+        {
+          "id": "KITCHEN-LITE-ASSET-060:envelope",
+          "name": "Service cabinet",
+          "vertices": [
+            -0.36,
+            0,
+            -0.265,
+            0.36,
+            0,
+            -0.265,
+            0.36,
+            0.99,
+            -0.265,
+            -0.36,
+            0.99,
+            -0.265,
+            -0.36,
+            0,
+            0.265,
+            0.36,
+            0,
+            0.265,
+            0.36,
+            0.99,
+            0.265,
+            -0.36,
+            0.99,
+            0.265
+          ],
+          "indices": [
+            0,
+            2,
+            1,
+            0,
+            3,
+            2,
+            4,
+            5,
+            6,
+            4,
+            6,
+            7,
+            0,
+            1,
+            5,
+            0,
+            5,
+            4,
+            3,
+            7,
+            6,
+            3,
+            6,
+            2,
+            0,
+            4,
+            7,
+            0,
+            7,
+            3,
+            1,
+            2,
+            6,
+            1,
+            6,
+            5
+          ],
+          "color": [
+            0.5700000000000001,
+            0.66,
+            0.53
+          ],
+          "metadata": {
+            "representation": "synthetic benchmark planning envelope",
+            "notVerifiedGeometry": "true"
+          }
+        }
+      ],
+      "hierarchy": {
+        "id": "KITCHEN-LITE-ASSET-060:root",
+        "name": "Service cabinet",
+        "partIds": [
+          "KITCHEN-LITE-ASSET-060:envelope"
+        ],
+        "children": []
+      },
+      "warnings": [
+        "Synthetic planning envelope — not an imported restaurant-kitchen CAD part."
+      ]
+    }
+  ]
+}
