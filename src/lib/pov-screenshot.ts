@@ -3,7 +3,7 @@ import { applyWorldPoses, createWorld } from './world';
 import { evaluateWorkspace, type Workspace } from './workspace';
 import { updatePovCameraDepth } from './camera-depth';
 import { captureSceneHash, povEvidence, type PovEvidence } from './gif';
-import { resolvePovCameraFrame, validatePovPreset, type PovCameraPreset } from './pov-capture';
+import { assertPovSceneBudget, resolvePovCameraFrame, validatePovPreset, type PovCameraPreset } from './pov-capture';
 
 /** Still image and signed-by-source (not cryptographically signed) review metadata. */
 export type PovScreenshotResult = {
@@ -11,18 +11,6 @@ export type PovScreenshotResult = {
   metadata: PovEvidence & { mediaType: 'image/png'; width: number; height: number;
     assets: { instanceId: string; assetId: string; sourceDigest: string; cloudVersionId?: string }[] };
 };
-
-/** Apply browser render budgets independently of the stricter server-side #67 limits. */
-export function assertPovSceneBudget(workspace: Workspace): void {
-  if (workspace.items.some(item => item.missing)) throw Error('POV capture refused: restore missing source geometry.');
-  if (workspace.items.length > 128) throw Error('POV capture budget exceeded: maximum 128 instances in browser.');
-  let vertices = 0, parts = 0;
-  for (const item of workspace.items) for (const part of item.asset.parts) {
-    parts++;
-    vertices += part.vertices.length / 3;
-    if (vertices > 300_000 || parts > 1024) throw Error('POV capture geometry budget exceeded (300k vertices / 1024 parts).');
-  }
-}
 
 /** Capture exact evaluated world/frame as PNG via the existing Three.js scene builder. */
 export async function renderPovScreenshot(
