@@ -4,6 +4,9 @@ import { renderGif, type FloorRegion, type GifOptions, type GifResult } from '..
 import { deleteLibrary, listLibrary, saveLibrary, type LibraryEntry } from '../lib/library';
 import { CloudLibrary } from './cloud-library';
 import type { Workspace } from '../lib/workspace';
+import type { CameraSession } from '../lib/pov-camera';
+import type { RefObject } from 'react';
+import { PovCaptureTools } from './pov-capture-tools';
 import './capture-tools.css';
 
 function useBlobUrl(blob?: Blob) {
@@ -29,12 +32,13 @@ function LibraryCard({ entry, disabled, render, add, remove }: {
   </article>;
 }
 
-export function CaptureTools({ open, assets, room, selected, close, addAsset, onRegion, workspace, time, roomOperation, onFeedback }: {
+export function CaptureTools({ open, assets, room, selected, close, addAsset, onRegion, workspace, time, roomOperation, onFeedback, cameraSession, sceneKey, sceneRevision, viewMode }: {
   open: boolean; assets: Asset[]; room: number[]; selected: number; close: () => void;
   addAsset: (asset: Asset, cloudVersionId?: string) => void; onRegion: (region: FloorRegion | null) => void;
   workspace?: Workspace; time?: number | null; roomOperation?: number; onFeedback?: (review: GifResult['metadata'], instruction: string) => Promise<void>;
+  cameraSession?: RefObject<CameraSession>; sceneKey?: string; sceneRevision?: number | null; viewMode?: '3d' | 'plan' | 'pov';
 }) {
-  const [tab, setTab] = useState<'export' | 'library'>('export');
+  const [tab, setTab] = useState<'export' | 'library' | 'pov'>('export');
   const [scope, setScope] = useState<GifOptions['scope']>('room');
   const [motion, setMotion] = useState<GifOptions['motion']>('turntable');
   const [size, setSize] = useState(480);
@@ -117,7 +121,7 @@ export function CaptureTools({ open, assets, room, selected, close, addAsset, on
   if (!open) return null;
   return <section className="capture-panel" aria-label="GIF studio">
     <div className="capture-heading"><div><div className="eyebrow">VISUAL REVIEW</div><h2>GIF studio</h2></div><button aria-label="Close GIF studio" onClick={() => { controller.current?.abort(); close(); }}>×</button></div>
-    <div className="capture-tabs"><button aria-pressed={tab === 'export'} onClick={() => setTab('export')}>Floor export</button><button aria-pressed={tab === 'library'} onClick={() => setTab('library')}>Asset library ({entries.length})</button></div>
+    <div className="capture-tabs"><button aria-pressed={tab === 'export'} onClick={() => setTab('export')}>Floor export</button><button aria-pressed={tab === 'pov'} onClick={() => setTab('pov')}>POV capture</button><button aria-pressed={tab === 'library'} onClick={() => setTab('library')}>Asset library ({entries.length})</button></div>
     <div className="capture-settings">
       <label>GIF resolution<select value={size} disabled={busy} onChange={e => setSize(Number(e.target.value))}>{[320, 480, 640].map(value => <option key={value} value={value}>{value} × {value}</option>)}</select></label>
       <label>Duration<select value={duration} disabled={busy} onChange={e => setDuration(Number(e.target.value))}>{[2, 3, 4].map(value => <option key={value} value={value}>{value} seconds</option>)}</select></label>
@@ -133,7 +137,10 @@ export function CaptureTools({ open, assets, room, selected, close, addAsset, on
       {scope === 'asset' && motion === 'sample' && <p className="notice">Synthetic demonstration motion, not a physical simulation or an authored animation track.</p>}
       <button className="capture-primary" disabled={busy || !assets.length || (scope === 'asset' && !assets[selected])} onClick={() => void capture()}>Render GIF</button>
       {!assets.length && <p>Import a Form project or STEP file to get started.</p>}
-    </> : <>
+    </> : tab === 'pov' && workspace && cameraSession && sceneKey ? <PovCaptureTools
+      workspace={workspace} selected={selected} cameraSession={cameraSession} sceneKey={sceneKey}
+      sceneRevision={sceneRevision ?? null} viewMode={viewMode ?? '3d'} size={size} duration={duration} fps={fps}
+      rangeStart={rangeStart} rangeEnd={rangeEnd} time={time ?? null}/>: <>
       <p>Save imported objects and their animated previews on this device. Reuse them after refreshing; clearing browser storage removes this library.</p>
       <button disabled={busy || !assets[selected]} onClick={() => void saveSelected()}>Save selected asset to library</button>
       <p>{assets[selected] ? `Selected: ${assets[selected].name}` : 'Select a room asset to save it.'}</p>
