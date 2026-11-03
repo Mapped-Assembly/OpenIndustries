@@ -129,3 +129,13 @@ export function assertPovSceneBudget(workspace: Workspace): void {
     if (vertices > 300_000 || parts > 1024) throw Error('POV capture geometry budget exceeded (300k vertices / 1024 parts).');
   }
 }
+
+/** Return saved world camera to the yaw/pitch representation used by the viewer. */
+export function interactivePoseFromPreset(preset: PovCameraPreset): PovPose {
+  const valid = validatePovPreset(preset);
+  if (valid.binding.kind !== 'worldPose') throw Error('Attached camera playback requires #104.');
+  const q = new THREE.Quaternion(...valid.binding.quaternion);
+  const euler = new THREE.Euler().setFromQuaternion(q, 'YXZ');
+  if (Math.abs(euler.z) > 1e-4) throw Error('Camera roll cannot be represented by the current free POV viewer.');
+  return { position: [...valid.binding.position], yaw: euler.y, pitch: euler.x };
+}
