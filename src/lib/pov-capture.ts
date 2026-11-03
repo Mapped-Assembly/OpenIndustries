@@ -5,7 +5,7 @@ import type { Workspace } from './workspace';
 export type Quaternion4 = [number, number, number, number];
 export type CameraBinding =
   | { kind: 'worldPose'; position: Point3; quaternion: Quaternion4 }
-  | { kind: 'attachedPose'; instanceId: string; partId?: string; position: Point3; quaternion: Quaternion4 };
+  | { kind: 'attachedPose'; instanceId: string; partId?: string; assetId?: string; sourceDigest?: string; cloudVersionId?: string; position: Point3; quaternion: Quaternion4 };
 /** A portable, explicitly saved camera preset; not a measured camera observation. */
 export type PovCameraPreset = {
   schemaVersion: 1; id: string; name: string; sceneKey: string; sceneRevision: number | null;
@@ -38,7 +38,11 @@ export function validatePovPreset(input: unknown): PovCameraPreset {
     || preset.clip.farMeters / preset.clip.nearMeters > 100_000
     || !binding || !point(binding.position) || !quaternion(binding.quaternion)
     || (binding.kind !== 'worldPose' && binding.kind !== 'attachedPose')
-    || (binding.kind === 'attachedPose' && (!validId(binding.instanceId) || (binding.partId !== undefined && !validId(binding.partId))))) {
+    || (binding.kind === 'attachedPose' && (!validId(binding.instanceId)
+      || (binding.partId !== undefined && !validId(binding.partId))
+      || (binding.assetId !== undefined && !validId(binding.assetId))
+      || (binding.sourceDigest !== undefined && !validId(binding.sourceDigest))
+      || (binding.cloudVersionId !== undefined && !validId(binding.cloudVersionId))))) {
     throw Error('Invalid POV camera preset or camera frame.');
   }
   return structuredClone(preset);
@@ -72,7 +76,8 @@ export function attachedPreset(
     schemaVersion: 1, id: crypto.randomUUID(), name: name.trim(), sceneKey, sceneRevision,
     savedAt: new Date().toISOString(), fovDegrees: 45,
     clip: {nearMeters: .02, farMeters: Math.max(12, Math.hypot(...workspace.room) * 2)},
-    binding: { kind: 'attachedPose', instanceId, ...(partId ? { partId } : {}),
+    binding: { kind: 'attachedPose', instanceId, assetId:item.asset.id, sourceDigest:item.asset.source.digest,
+      ...(item.cloudVersionId ? {cloudVersionId:item.cloudVersionId} : {}), ...(partId ? { partId } : {}),
       position: [0, 0.12, 0], quaternion: [0, 0, 0, 1] },
   });
 }
@@ -85,7 +90,13 @@ export function resolvePovCameraFrame(
   const b = camera.binding;
   if (b.kind === 'worldPose') return { time, position: [...b.position], quaternion: [...b.quaternion] };
   const index = workspace.items.findIndex(item => item.id === b.instanceId);
-  if (index < 0 || workspace.items[index].missing) throw Error('POV camera parent is missing; capture cancelled.');
+  if (index < 0 || workspace.items[index].missing) throw Error('POV camera parent is missing; view is unbound.');
+  const item = workspace.items[index];
+  if ((b.assetId !== undefined && item.asset.id !== b.assetId)
+    || (b.sourceDigest !== undefined && item.asset.source.digest !== b.sourceDigest)
+    || (b.cloudVersionId !== undefined && item.cloudVersionId !== b.cloudVersionId)) {
+    throw Error('POV camera parent was replaced or its asset version changed; view is unbound.');
+  }
   const group = groups[index];
   if (!group?.visible) throw Error('POV camera parent is hidden or unavailable at this frame.');
   const partIndex = b.partId === undefined ? -1 : workspace.items[index].asset.parts.findIndex(part => part.id === b.partId);
@@ -138,4 +149,36 @@ export function interactivePoseFromPreset(preset: PovCameraPreset): PovPose {
   const euler = new THREE.Euler().setFromQuaternion(q, 'YXZ');
   if (Math.abs(euler.z) > 1e-4) throw Error('Camera roll cannot be represented by the current free POV viewer.');
   return { position: [...valid.binding.position], yaw: euler.y, pitch: euler.x };
+}
+
+/** Change the declared mount transform, never an object's authored scene pose. */
+export function configureAttachedRig(
+  preset: PovCameraPreset,
+  options: { position?: Point3; eulerDegrees?: Point3; fovDegrees?: number },
+): PovCameraPreset {
+  const valid = validatePovPreset(preset);
+  if (valid.binding.kind !== 'attachedPose') throw Error('An attached camera binding is required.');
+  const angle = options.eulerDegrees;
+  if (angle && (!point(angle) || angle.some(v => Math.abs(v) > 360))) {
+    throw Error('Camera mount angles must be finite degrees between -360 and 360.');
+  }
+  const rotation = angle ? new THREE.Quaternion().setFromEuler(
+    new THREE.Euler(...angle.map(THREE.MathUtils.degToRad) as Point3, 'YXZ'),
+  ).toArray() as Quaternion4 : valid.binding.quaternion;
+  return validatePovPreset({
+    ...valid, fovDegrees: options.fovDegrees ?? valid.fovDegrees,
+    binding: {
+      ...valid.binding, position: options.position ?? valid.binding.position,
+      quaternion: rotation,
+    },
+  });
+}
+
+/** Read a rig's parent-relative rotation using YXZ, in degrees. */
+export function attachedRigEulerDegrees(preset: PovCameraPreset): Point3 {
+  const valid = validatePovPreset(preset);
+  if (valid.binding.kind !== 'attachedPose') throw Error('Camera is not attached.');
+  const q = new THREE.Quaternion(...valid.binding.quaternion);
+  const euler = new THREE.Euler().setFromQuaternion(q, 'YXZ');
+  return [euler.x,euler.y,euler.z].map(THREE.MathUtils.radToDeg) as Point3;
 }

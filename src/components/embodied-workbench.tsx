@@ -2,6 +2,8 @@ import { useEffect, useRef, useState } from 'react';
 import type { Asset } from '../lib/scene';
 import { loadRobotAssets, runWorkspace, type CabinetTrace, type RunSnapshot } from '../lib/embodied-scene';
 import { WorkspaceViewer } from './workspace-viewer';
+import { AttachedCameraControls } from './attached-camera-controls';
+import type { PovCameraPreset } from '../lib/pov-capture';
 import './embodied-workbench.css';
 
 type RequestBody={task_id:string|null;request_id:string;run_id:string;action:string;text:string;selected_id:string|null;scene_revision:number};
@@ -12,6 +14,8 @@ export function EmbodiedWorkbench() {
   const [connected,setConnected]=useState(true),[stale,setStale]=useState(true),[sending,setSending]=useState(false);
   const pending=useRef<RequestBody|null>(null),last=useRef(0),generation=useRef(0);
   const [focus,setFocus]=useState(0);
+  const [cameraMode,setCameraMode]=useState<'orbit'|'mounted'>('orbit');
+  const [cameraRig,setCameraRig]=useState<PovCameraPreset|null>(null);
   const [objectX,setObjectX]=useState('.15'),[objectY,setObjectY]=useState('-.05');
   const [trace,setTrace]=useState<CabinetTrace|null>(null),[replay,setReplay]=useState<number|null>(null),[reveal,setReveal]=useState(false);
   useEffect(()=>{let cancelled=false;loadRobotAssets().then(value=>{if(!cancelled)setAssets(value);}).catch(e=>{if(!cancelled)setError(String(e));});return()=>{cancelled=true;};},[]);
@@ -64,18 +68,28 @@ export function EmbodiedWorkbench() {
   const workspace=displayed&&assets?runWorkspace(displayed,assets,reveal):null;
   const index=workspace?.items.findIndex(item=>item.id===selected)??-1;
   const active=run?.task&&['planning','running','paused'].includes(run.task.stage);
+  const cameraRevision=run?.scene_revision && run.scene_revision>0 ? run.scene_revision : null;
   return <div className="embodied-shell">
     <header><div><b>OpenIndustries / {run?.cabinet?.name??'SO-101 tabletop'}</b><p>Simulated kinematics · no grasp, contact or physical validation</p></div><a href="/">Return to scene editor</a></header>
     <nav aria-label="Run controls">
       <button disabled={replay!==null||stale||!assets||!!active} onClick={()=>void send(run?.mode==='run'?'edit':'run')}>{run?.mode==='run'?'Leave Run mode':'Enter Run mode'}</button>
       <button onClick={()=>{setConnected(v=>!v);setError('');}}>{connected?'Disconnect viewer':'Reconnect'}</button>
+      <button aria-pressed={cameraMode==='orbit'} onClick={()=>setCameraMode('orbit')}>Orbit camera</button>
+      <button aria-pressed={cameraMode==='mounted'} onClick={()=>setCameraMode('mounted')}>Robot camera POV</button>
       <button className="stop" disabled={replay!==null||!run||!connected} onClick={()=>void send('stop')}>Stop</button>
       <button disabled={replay!==null||stale||run?.task?.stage!=='paused'} onClick={()=>void send('resume')}>Resume</button>
       <button disabled={replay!==null||stale||!active} onClick={()=>void send('cancel')}>Cancel task</button>
       <button disabled={replay!==null||stale} onClick={()=>void send('status')}>What are you doing?</button>
       <span role="status">{replay!==null?'REPLAY · read only':stale?'Disconnected / stale — last pose held':`${run?.mode.toUpperCase()} · ${run?.task?.stage??'idle'}`}</span>
     </nav>
-    <main><section className="embodied-view">{workspace?<WorkspaceViewer workspace={workspace} selected={index} selectedPart={-1} time={null} focus={focus} focusSelection={false} overview={{position:[.65,.5,.7],target:[.12,.1,0]}} region={null} onSelect={i=>{const id=workspace.items[i]?.id;setSelected(run!.objects.some(o=>o.id===id)?id:null);setFocus(v=>v+1);}}/>:<p>Loading pinned model…</p>}</section>
+    <main><section className="embodied-view">{workspace?<WorkspaceViewer workspace={workspace} selected={index} selectedPart={-1} time={null} focus={focus}
+          mode={cameraMode} mountedCamera={cameraRig}
+          rigStale={cameraMode==='mounted' && (replay===null && (stale || !connected) ||
+            !!cameraRig && (cameraRig.sceneKey !== `run:${run?.run_id}` || cameraRig.sceneRevision !== cameraRevision))}
+          focusSelection={false} overview={{position:[.65,.5,.7],target:[.12,.1,0]}} region={null} onSelect={i=>{const id=workspace.items[i]?.id;setSelected(run!.objects.some(o=>o.id===id)?id:null);setFocus(v=>v+1);}}/>:<p>Loading pinned model…</p>}
+      {workspace && cameraMode==='mounted' && <AttachedCameraControls workspace={workspace} rig={cameraRig}
+        onRigChange={setCameraRig} sceneKey={`run:${run?.run_id}`} sceneRevision={cameraRevision}/>}
+      </section>
     <aside><h1>Robot chat</h1><p>SO-101 follower · {run?.policy_mode==='model'?'Configured model':'Manual test mode — no natural-language model connected'}</p>
       <label>Selected object <select value={selected??''} onChange={e=>setSelected(e.target.value||null)}><option value="">None</option>{run?.objects.map(o=><option key={o.id} value={o.id}>{o.name}</option>)}</select></label>
       {run?.mode==='edit'&&!run.cabinet&&<fieldset><legend>Explicit fixture edit (metres)</legend><label>X <input aria-label="Object X" type="number" step=".01" min=".05" max=".35" value={objectX} onChange={e=>setObjectX(e.target.value)}/></label><label>Y <input aria-label="Object Y" type="number" step=".01" min="-.15" max=".15" value={objectY} onChange={e=>setObjectY(e.target.value)}/></label><button disabled={!selected||stale} onClick={()=>void send('edit_object')}>Save object position</button></fieldset>}

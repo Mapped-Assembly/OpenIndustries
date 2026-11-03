@@ -105,7 +105,9 @@
     "test:pov-camera": "node --import tsx scripts/pov-camera-test.ts",
     "test:pov-browser": "node scripts/pov-browser-smoke.mjs",
     "test:pov-capture": "node --import tsx scripts/pov-capture-test.ts",
-    "test:pov-capture-browser": "node scripts/pov-capture-browser-smoke.mjs"
+    "test:pov-capture-browser": "node scripts/pov-capture-browser-smoke.mjs",
+    "test:mounted-pov": "node --import tsx scripts/mounted-pov-test.ts",
+    "test:mounted-pov-browser": "node scripts/mounted-pov-browser-smoke.mjs"
   },
   "dependencies": {
     "@supabase/supabase-js": "^2.116.0",

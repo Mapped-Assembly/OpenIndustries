@@ -1,0 +1,12 @@
+.oi-attached-tools{position:absolute;top:152px;left:24px;z-index:4;width:min(340px,calc(100% - 48px));max-height:calc(100% - 210px);overflow:auto;background:#17241ef5;border:1px solid #64806a;border-radius:8px;padding:11px 13px;box-shadow:0 12px 30px #0007}
+.oi-attached-title{display:flex;justify-content:space-between;gap:9px;align-items:center;font-size:13px}
+.oi-attached-title span{font-size:10px;color:#a5c7aa}
+.oi-attached-tools label{font-size:11px;display:block;margin-top:9px}
+.oi-attached-tools select,.oi-attached-tools input{margin-top:3px;padding:6px;font-size:11px}
+.oi-attached-tools fieldset{margin:8px 0;border:1px solid #405b48;padding:3px 6px 8px;border-radius:4px}
+.oi-attached-tools legend{font-size:10px;color:#bcd5c0}
+.oi-attached-fields{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:5px}
+.oi-attached-fields label{margin-top:1px}
+.oi-attached-tools p{margin:9px 0;color:#dcebcf;font-size:11px}
+.oi-attached-tools small{display:block;line-height:1.5}
+@media(max-width:650px){.oi-attached-tools{top:145px;left:8px;width:min(295px,calc(100% - 16px));max-height:calc(100% - 191px)}}
