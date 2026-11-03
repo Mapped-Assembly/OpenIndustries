@@ -2,3 +2,11 @@
 
 .embodied-shell p,.embodied-shell label,.embodied-shell summary,.embodied-shell pre{color:#324f49}.embodied-shell textarea,.embodied-shell input{background:#f7faf8;color:#193936;border:1px solid #b7c8c1}.embodied-shell select{color:#193936}.embodied-shell input{width:90px;padding:7px;margin:4px}.embodied-shell h1{font-size:26px}.embodied-shell [role=alert]{color:#a32626}
 .embodied-shell input[type=checkbox]{width:auto}.embodied-shell input[type=range]{width:95%}.embodied-shell table{width:100%;font-size:12px;border-collapse:collapse;margin:12px 0}.embodied-shell th,.embodied-shell td{padding:5px;text-align:left;border-bottom:1px solid #d3dfd9}.embodied-shell [data-testid=state-id]{font-size:11px;overflow-wrap:anywhere}
+
+/* The Run interface is light, but the shared simulated camera editor remains dark. */
+.embodied-shell .oi-attached-tools{color:#dfe7df}
+.embodied-shell .oi-attached-tools p,.embodied-shell .oi-attached-tools label,
+.embodied-shell .oi-attached-tools small{color:#dcebcf}
+.embodied-shell .oi-attached-tools select,.embodied-shell .oi-attached-tools input{width:100%;min-width:0;background:#1c2722;color:#e0e8db;border-color:#506755}
+.embodied-shell .oi-attached-tools input{margin:3px 0;padding:6px}
+.embodied-shell .oi-attached-tools .oi-attached-fields input{max-width:100%}
