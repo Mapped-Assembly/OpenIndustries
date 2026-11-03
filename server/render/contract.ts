@@ -2,6 +2,7 @@
 import { createHash } from 'node:crypto';
 import { canonicalJSON, hydrateManifest, makeManifest, readManifest, type SceneManifest } from '../../src/lib/workspace.ts';
 import { defaultGifCamera, regionBounds, type GifOptions } from '../../src/lib/gif-contract.ts';
+import { validatePovPreset } from '../../src/lib/pov-capture.ts';
 
 export const LIMITS = { inputBytes:8*1024*1024, instances:64, vertices:200_000, indices:600_000,
   parts:512, frames:60, outputBytes:64*1024*1024, queue:8, jobs:128, deadlineMs:120_000, retentionMs:7*86400_000 } as const;
@@ -44,11 +45,29 @@ export function normalize(request:RenderRequest, scene:unknown, resolved?:Resolv
     for(const item of workspace.items)for(const part of item.asset.parts){vertices+=part.vertices.length/3;indices+=part.indices.length;parts++;}
     if(vertices>LIMITS.vertices||indices>LIMITS.indices||parts>LIMITS.parts)throw new RenderError('GEOMETRY_LIMIT','Expanded instance geometry exceeds the render budget.');
     const raw=request.options??{};
-    if(!raw||typeof raw!=='object'||Array.isArray(raw)||Object.keys(raw).some(k=>!['scope','assetIndex','region','motion','size','duration','fps','rangeStart','rangeEnd','snapshotTime','camera'].includes(k)))throw new RenderError('INVALID_OPTIONS','Unknown render option.');
+    if(!raw||typeof raw!=='object'||Array.isArray(raw)||Object.keys(raw).some(k=>!['scope','assetIndex','region','motion','size','duration','fps','rangeStart','rangeEnd','snapshotTime','camera','pov'].includes(k)))throw new RenderError('INVALID_OPTIONS','Unknown render option.');
     const options:GifOptions={scope:'room',assetIndex:0,region:{x:0,z:0,width:workspace.room[0],depth:workspace.room[1]},motion:'turntable',size:640,duration:4,fps:15,...raw,allowEmptyRoom:true,camera:{...defaultGifCamera,...raw.camera}};
-    if(!['room','section','asset'].includes(options.scope)||!['turntable','sample','animation'].includes(options.motion)||![320,480,640].includes(options.size)||![2,3,4].includes(options.duration)||![10,15].includes(options.fps))throw new RenderError('INVALID_OPTIONS','Use GIF studio presets: 320/480/640 px, 2/3/4 seconds, 10/15 fps.');
+    if(!['room','section','asset'].includes(options.scope)||!['turntable','sample','animation','pov'].includes(options.motion)||![320,480,640].includes(options.size)||![2,3,4].includes(options.duration)||![10,15].includes(options.fps))throw new RenderError('INVALID_OPTIONS','Use GIF studio presets: 320/480/640 px, 2/3/4 seconds, 10/15 fps.');
     if(!Number.isSafeInteger(options.assetIndex)||options.assetIndex<0||options.scope==='asset'&&!workspace.items[options.assetIndex])throw new RenderError('INVALID_ASSET','Select an existing asset index.');
     if(options.motion==='sample'&&options.scope!=='asset')throw new RenderError('INVALID_OPTIONS','Sample motion requires asset scope.');
+    if(options.motion==='pov'&&!raw.pov)throw new RenderError('INVALID_CAMERA','POV motion requires a POV camera preset.');
+    if(raw.pov){
+      try{options.pov=validatePovPreset(raw.pov);}catch{throw new RenderError('INVALID_CAMERA','Invalid synthetic POV camera rig.');}
+      if(options.scope!=='room'||!['pov','animation'].includes(options.motion))throw new RenderError('INVALID_OPTIONS','POV requires room scope and a fixed or authored animation view.');
+      if(request.saved_scene){
+        if(!resolved||options.pov.sceneKey!==resolved.scene_id||options.pov.sceneRevision!==resolved.revision)
+          throw new RenderError('CAMERA_REVISION_MISMATCH','POV camera preset must target the exact pinned saved scene revision.');
+      } else if(options.pov.sceneRevision!==null) {
+        throw new RenderError('CAMERA_REVISION_UNVERIFIED','Portable scenes cannot claim a verified saved revision; use a revisionless camera preset.');
+      }
+      if(options.pov.binding.kind==='attachedPose'){
+        // Camera identity is checked against original scene IDs, not imported indices.
+        const rig=options.pov.binding;
+        const parent=workspace.items.find(item=>item.id===rig.instanceId);
+        if(!parent||parent.missing||(rig.partId&&!parent.asset.parts.some(part=>part.id===rig.partId)))
+          throw new RenderError('CAMERA_FRAME_MISSING','POV camera parent instance or part is unavailable.');
+      }
+    }
     if(options.scope==='section')regionBounds(options.region,workspace.room);
     if(raw.camera!==undefined&&(!raw.camera||typeof raw.camera!=='object'||Array.isArray(raw.camera)))throw new RenderError('INVALID_CAMERA','Camera must be an object.');
     for(const key of ['rangeStart','rangeEnd'] as const)if(raw[key]!==undefined&&(typeof raw[key]!=='number'||!Number.isFinite(raw[key])))throw new RenderError('INVALID_TIME','Range endpoints must be finite seconds.');

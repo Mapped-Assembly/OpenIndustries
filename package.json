@@ -103,7 +103,9 @@
     "test:space-ir": "node --import tsx scripts/space-ir-test.ts",
     "typecheck:space-ir": "tsc --noEmit -p packages/space-ir/tsconfig.json",
     "test:pov-camera": "node --import tsx scripts/pov-camera-test.ts",
-    "test:pov-browser": "node scripts/pov-browser-smoke.mjs"
+    "test:pov-browser": "node scripts/pov-browser-smoke.mjs",
+    "test:pov-capture": "node --import tsx scripts/pov-capture-test.ts",
+    "test:pov-capture-browser": "node scripts/pov-capture-browser-smoke.mjs"
   },
   "dependencies": {
     "@supabase/supabase-js": "^2.116.0",

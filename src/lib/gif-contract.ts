@@ -1,13 +1,16 @@
 import * as THREE from 'three';
+import type { PovCameraPreset } from './pov-capture';
 
 export type FloorRegion = { x: number; z: number; width: number; depth: number };
 export type GifCamera = { azimuthDegrees: number; elevationDegrees: number; distanceScale: number; fovDegrees: number };
 export const defaultGifCamera: GifCamera = { azimuthDegrees:45, elevationDegrees:35.272421, distanceScale:1.15, fovDegrees:40 };
 export type GifOptions = {
   scope: 'room' | 'section' | 'asset'; assetIndex: number; region: FloorRegion;
-  motion: 'turntable' | 'sample' | 'animation'; size: number; duration: number; fps: number;
+  motion: 'turntable' | 'sample' | 'animation' | 'pov'; size: number; duration: number; fps: number;
   rangeStart?: number; rangeEnd?: number; snapshotTime?: number | null;
   camera?: GifCamera; allowEmptyRoom?: boolean;
+  /** Synthetic first-person/attached-camera view; uses the same evaluated scene as orbit GIFs. */
+  pov?: PovCameraPreset;
 };
 
 export function regionBounds(region: FloorRegion, room: number[]) {
