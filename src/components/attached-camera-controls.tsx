@@ -25,11 +25,25 @@ export function AttachedCameraControls({
   const parent = workspace.items.find(item => item.id === bound?.instanceId);
   const angles: Point3 = rig && bound ? attachedRigEulerDegrees(rig) : [0, 0, 0];
   const offset: Point3 = bound?.position ?? [0, 0.12, 0];
-  const unavailable = !!bound && (!parent || !!parent.missing || !parent.visible
+  const staleRevision = !!rig && (rig.sceneKey !== sceneKey || rig.sceneRevision !== sceneRevision);
+  const unavailable = !!bound && (staleRevision || !parent || !!parent.missing || !parent.visible
     || (bound.assetId !== undefined && bound.assetId !== parent.asset.id)
     || (bound.sourceDigest !== undefined && bound.sourceDigest !== parent.asset.source.digest)
     || (bound.cloudVersionId !== undefined && bound.cloudVersionId !== parent.cloudVersionId)
     || (!!bound.partId && !parent.asset.parts.some(part => part.id === bound.partId)));
+
+  /** Explicitly rebind a stale camera to the currently loaded scene source. */
+  const rebind = (): void => {
+    if (!rig || !bound || !parent || parent.missing) return;
+    try {
+      const next = attachedPreset(workspace, parent.id, 'Live mounted POV', sceneKey, sceneRevision, bound.partId);
+      if (next.binding.kind !== 'attachedPose') return;
+      onRigChange({
+        ...next, fovDegrees: rig.fovDegrees,
+        binding: { ...next.binding, position: [...bound.position], quaternion: [...bound.quaternion] },
+      });
+    } catch { /* Missing source remains explicitly unbound. */ }
+  };
 
   /** Only an explicit selector change may assign a new parent identity. */
   const attach = (instanceId: string, partId?: string): void => {
@@ -103,6 +117,9 @@ export function AttachedCameraControls({
           }}/>
       </label>
     </div>}
+    {staleRevision && parent && !parent.missing && <button type="button" onClick={rebind}>
+      Rebind camera to current scene revision
+    </button>}
     <p role="status">{!bound ? 'Choose an existing instance to attach the camera.'
       : unavailable ? 'UNBOUND · The selected instance, part, or asset version is missing or hidden. Camera view is held.'
         : `Attached to ${parent?.name}${bound.partId ? ` / ${bound.partId}` : ''}. Transforms follow evaluated scene poses.`}</p>
