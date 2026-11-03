@@ -2,7 +2,7 @@ import { useEffect, useMemo, useRef, useState } from 'react';
 import type { RefObject } from 'react';
 import type { CameraSession } from '../lib/pov-camera';
 import {
-  attachedPreset, loadPovPresets, storePovPresets, worldPresetFromSession,
+  attachedPreset, interactivePoseFromPreset, loadPovPresets, storePovPresets, worldPresetFromSession,
   type PovCameraPreset,
 } from '../lib/pov-capture';
 import { renderGif } from '../lib/gif';
@@ -11,7 +11,7 @@ import type { Workspace } from '../lib/workspace';
 
 type Props = {
   workspace: Workspace; selected: number; sceneKey: string; sceneRevision: number | null;
-  cameraSession: RefObject<CameraSession>; viewMode: '3d' | 'plan' | 'pov';
+  cameraSession: RefObject<CameraSession>; viewMode: '3d' | 'plan' | 'pov'; onActivatePov: () => void;
   size: number; duration: number; fps: number; rangeStart: number; rangeEnd: number; time: number | null;
 };
 
@@ -32,7 +32,7 @@ function useMediaUrl(blob: Blob | undefined): string {
 
 /** User-initiated, scene-scoped presets and synthetic POV exports. */
 export function PovCaptureTools({
-  workspace, selected, sceneKey, sceneRevision, cameraSession, viewMode,
+  workspace, selected, sceneKey, sceneRevision, cameraSession, viewMode, onActivatePov,
   size, duration, fps, rangeStart, rangeEnd, time,
 }: Props) {
   const [name, setName] = useState('My POV');
@@ -94,6 +94,17 @@ export function PovCaptureTools({
     } catch (cause) { setError((cause as Error).message); }
   }
 
+  function useCamera(): void {
+    if (!preset) return;
+    try {
+      const pose = interactivePoseFromPreset(preset);
+      cameraSession.current.requestedPov = {id:crypto.randomUUID(),pose};
+      onActivatePov();
+      setMessage('Restoring saved world camera in POV; authored scene unchanged.');
+      setError('');
+    } catch (cause) { setError((cause as Error).message); }
+  }
+
   function remove(): void {
     if (!preset) return;
     try {
@@ -147,6 +158,7 @@ export function PovCaptureTools({
       <p>Scene revision: {preset.sceneRevision ?? 'unversioned local draft'}{stale ? ' · changed since preset saved' : ''}</p>
       <div className="capture-actions">
         {stale && <button disabled={busy} onClick={rebind}>Rebind to current revision</button>}
+        {preset.binding.kind === 'worldPose' && <button disabled={busy || stale} onClick={useCamera}>Use saved POV in viewer</button>}
         <button disabled={busy} onClick={remove}>Delete camera preset</button>
       </div>
     </div>}
