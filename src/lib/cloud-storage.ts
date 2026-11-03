@@ -36,6 +36,7 @@ export function parseCloudBundle(text: string): LibraryEntry {
     }
   }
   const ids = new Set(asset.parts.map(p => p.id));
+  if (asset.cadSource !== undefined && (asset.cadSource.format !== 'step' || !/^[a-f0-9]{64}$/.test(asset.cadSource.sha256))) throw new Error('Invalid original CAD digest.');
   let count = 0;
   const validateNode = (node: AssetNode, depth: number) => {
     if (++count > 10000 || depth > 64 || !node || typeof node.id !== 'string' || typeof node.name !== 'string'

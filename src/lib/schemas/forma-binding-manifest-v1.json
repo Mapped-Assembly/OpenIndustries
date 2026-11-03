@@ -1,0 +1,614 @@
+{
+  "$defs": {
+    "Binding": {
+      "additionalProperties": false,
+      "description": "One independently versioned semantic-to-geometric association.",
+      "properties": {
+        "binding_id": {
+          "minLength": 1,
+          "title": "Binding Id",
+          "type": "string"
+        },
+        "semantic": {
+          "$ref": "#/$defs/SemanticRef"
+        },
+        "selector": {
+          "anyOf": [
+            {
+              "minLength": 1,
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Selector"
+        },
+        "role": {
+          "enum": [
+            "physical_body",
+            "envelope",
+            "mounting_face",
+            "mating_interface",
+            "pin",
+            "fluid_boundary",
+            "clearance",
+            "biological_host",
+            "feature"
+          ],
+          "title": "Role",
+          "type": "string"
+        },
+        "method": {
+          "default": "artifact_local",
+          "enum": [
+            "named_feature",
+            "artifact_local",
+            "approximate"
+          ],
+          "title": "Method",
+          "type": "string"
+        },
+        "required": {
+          "default": true,
+          "title": "Required",
+          "type": "boolean"
+        },
+        "resolution": {
+          "default": "unresolved",
+          "enum": [
+            "resolved",
+            "unresolved",
+            "ambiguous",
+            "stale",
+            "unsupported",
+            "not_applicable"
+          ],
+          "title": "Resolution",
+          "type": "string"
+        },
+        "fidelity": {
+          "default": "unknown",
+          "enum": [
+            "envelope",
+            "simplified",
+            "detailed",
+            "unknown"
+          ],
+          "title": "Fidelity",
+          "type": "string"
+        },
+        "source": {
+          "enum": [
+            "supplied_cad",
+            "measured",
+            "specification",
+            "authored",
+            "agent_estimate",
+            "heuristic"
+          ],
+          "title": "Source",
+          "type": "string"
+        },
+        "occurrence_pose": {
+          "$ref": "#/$defs/Pose"
+        },
+        "assumptions": {
+          "items": {
+            "minLength": 1,
+            "type": "string"
+          },
+          "title": "Assumptions",
+          "type": "array"
+        }
+      },
+      "required": [
+        "binding_id",
+        "semantic",
+        "role",
+        "source"
+      ],
+      "title": "Binding",
+      "type": "object"
+    },
+    "GeometryArtifact": {
+      "additionalProperties": false,
+      "description": "A pinned CAD/mesh revision with one declared metric coordinate frame.",
+      "properties": {
+        "artifact_id": {
+          "minLength": 1,
+          "title": "Artifact Id",
+          "type": "string"
+        },
+        "revision": {
+          "minimum": 1,
+          "title": "Revision",
+          "type": "integer"
+        },
+        "sha256": {
+          "pattern": "^[a-f0-9]{64}$",
+          "title": "Sha256",
+          "type": "string"
+        },
+        "format": {
+          "enum": [
+            "step",
+            "stl",
+            "obj",
+            "3mf",
+            "opencad",
+            "glb",
+            "scene",
+            "synthetic"
+          ],
+          "title": "Format",
+          "type": "string"
+        },
+        "producer": {
+          "minLength": 1,
+          "title": "Producer",
+          "type": "string"
+        },
+        "producer_version": {
+          "minLength": 1,
+          "title": "Producer Version",
+          "type": "string"
+        },
+        "frame": {
+          "minLength": 1,
+          "title": "Frame",
+          "type": "string"
+        },
+        "units": {
+          "default": "mm",
+          "enum": [
+            "mm",
+            "m"
+          ],
+          "title": "Units",
+          "type": "string"
+        },
+        "handedness": {
+          "const": "right",
+          "default": "right",
+          "title": "Handedness",
+          "type": "string"
+        }
+      },
+      "required": [
+        "artifact_id",
+        "revision",
+        "sha256",
+        "format",
+        "producer",
+        "producer_version",
+        "frame"
+      ],
+      "title": "GeometryArtifact",
+      "type": "object"
+    },
+    "GeometryEntity": {
+      "additionalProperties": false,
+      "description": "A geometric item exposed by an adapter, with revision-local identity.\n\nA named selector is valid only within this exact geometry artifact revision.\nA mesh envelope has no implied exact face, contact or pin features.",
+      "properties": {
+        "entity_id": {
+          "minLength": 1,
+          "title": "Entity Id",
+          "type": "string"
+        },
+        "selector": {
+          "minLength": 1,
+          "title": "Selector",
+          "type": "string"
+        },
+        "kind": {
+          "enum": [
+            "assembly",
+            "body",
+            "face",
+            "edge",
+            "vertex",
+            "datum",
+            "port",
+            "region",
+            "mesh_group"
+          ],
+          "title": "Kind",
+          "type": "string"
+        },
+        "anchor": {
+          "default": [
+            0.0,
+            0.0,
+            0.0
+          ],
+          "maxItems": 3,
+          "minItems": 3,
+          "prefixItems": [
+            {
+              "type": "number"
+            },
+            {
+              "type": "number"
+            },
+            {
+              "type": "number"
+            }
+          ],
+          "title": "Anchor",
+          "type": "array"
+        },
+        "normal": {
+          "anyOf": [
+            {
+              "maxItems": 3,
+              "minItems": 3,
+              "prefixItems": [
+                {
+                  "type": "number"
+                },
+                {
+                  "type": "number"
+                },
+                {
+                  "type": "number"
+                }
+              ],
+              "type": "array"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Normal"
+        },
+        "bounds_mm": {
+          "anyOf": [
+            {
+              "maxItems": 3,
+              "minItems": 3,
+              "prefixItems": [
+                {
+                  "type": "number"
+                },
+                {
+                  "type": "number"
+                },
+                {
+                  "type": "number"
+                }
+              ],
+              "type": "array"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Bounds Mm"
+        },
+        "fidelity": {
+          "default": "unknown",
+          "enum": [
+            "envelope",
+            "simplified",
+            "detailed",
+            "unknown"
+          ],
+          "title": "Fidelity",
+          "type": "string"
+        },
+        "source": {
+          "enum": [
+            "supplied_cad",
+            "measured",
+            "specification",
+            "authored",
+            "agent_estimate",
+            "heuristic"
+          ],
+          "title": "Source",
+          "type": "string"
+        },
+        "verified_from_artifact": {
+          "default": false,
+          "title": "Verified From Artifact",
+          "type": "boolean"
+        }
+      },
+      "required": [
+        "entity_id",
+        "selector",
+        "kind",
+        "source"
+      ],
+      "title": "GeometryEntity",
+      "type": "object"
+    },
+    "GeometryRequirement": {
+      "additionalProperties": false,
+      "description": "A bounded requirement, distinct from a measured geometric result.",
+      "properties": {
+        "requirement_id": {
+          "minLength": 1,
+          "title": "Requirement Id",
+          "type": "string"
+        },
+        "kind": {
+          "enum": [
+            "coincident",
+            "aligned",
+            "axis_offset",
+            "envelope_clearance"
+          ],
+          "title": "Kind",
+          "type": "string"
+        },
+        "source_binding_id": {
+          "minLength": 1,
+          "title": "Source Binding Id",
+          "type": "string"
+        },
+        "target_binding_id": {
+          "minLength": 1,
+          "title": "Target Binding Id",
+          "type": "string"
+        },
+        "tolerance_mm": {
+          "default": 0.1,
+          "minimum": 0,
+          "title": "Tolerance Mm",
+          "type": "number"
+        },
+        "tolerance_deg": {
+          "default": 1.0,
+          "minimum": 0,
+          "title": "Tolerance Deg",
+          "type": "number"
+        },
+        "offset_mm": {
+          "anyOf": [
+            {
+              "type": "number"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Offset Mm"
+        },
+        "axis": {
+          "anyOf": [
+            {
+              "enum": [
+                "x",
+                "y",
+                "z"
+              ],
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Axis"
+        },
+        "required": {
+          "default": true,
+          "title": "Required",
+          "type": "boolean"
+        }
+      },
+      "required": [
+        "requirement_id",
+        "kind",
+        "source_binding_id",
+        "target_binding_id"
+      ],
+      "title": "GeometryRequirement",
+      "type": "object"
+    },
+    "Pose": {
+      "additionalProperties": false,
+      "description": "Active right-handed XYZ Euler pose, applying Rx then Ry then Rz, in mm.",
+      "properties": {
+        "translation_mm": {
+          "default": [
+            0.0,
+            0.0,
+            0.0
+          ],
+          "maxItems": 3,
+          "minItems": 3,
+          "prefixItems": [
+            {
+              "type": "number"
+            },
+            {
+              "type": "number"
+            },
+            {
+              "type": "number"
+            }
+          ],
+          "title": "Translation Mm",
+          "type": "array"
+        },
+        "euler_xyz_deg": {
+          "default": [
+            0.0,
+            0.0,
+            0.0
+          ],
+          "maxItems": 3,
+          "minItems": 3,
+          "prefixItems": [
+            {
+              "type": "number"
+            },
+            {
+              "type": "number"
+            },
+            {
+              "type": "number"
+            }
+          ],
+          "title": "Euler Xyz Deg",
+          "type": "array"
+        },
+        "convention": {
+          "const": "RH_active_XYZ",
+          "default": "RH_active_XYZ",
+          "title": "Convention",
+          "type": "string"
+        }
+      },
+      "title": "Pose",
+      "type": "object"
+    },
+    "SemanticRef": {
+      "additionalProperties": false,
+      "description": "Stable domain entity and actual occurrence; display labels are not keys.",
+      "properties": {
+        "domain": {
+          "minLength": 1,
+          "title": "Domain",
+          "type": "string"
+        },
+        "artifact_id": {
+          "minLength": 1,
+          "title": "Artifact Id",
+          "type": "string"
+        },
+        "revision": {
+          "minimum": 1,
+          "title": "Revision",
+          "type": "integer"
+        },
+        "sha256": {
+          "pattern": "^[a-f0-9]{64}$",
+          "title": "Sha256",
+          "type": "string"
+        },
+        "entity_id": {
+          "minLength": 1,
+          "title": "Entity Id",
+          "type": "string"
+        },
+        "occurrence_path": {
+          "items": {
+            "minLength": 1,
+            "type": "string"
+          },
+          "minItems": 1,
+          "title": "Occurrence Path",
+          "type": "array"
+        },
+        "feature_id": {
+          "anyOf": [
+            {
+              "minLength": 1,
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Feature Id"
+        },
+        "part_definition_id": {
+          "anyOf": [
+            {
+              "minLength": 1,
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Part Definition Id"
+        },
+        "label": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Label"
+        }
+      },
+      "required": [
+        "domain",
+        "artifact_id",
+        "revision",
+        "sha256",
+        "entity_id",
+        "occurrence_path"
+      ],
+      "title": "SemanticRef",
+      "type": "object"
+    }
+  },
+  "additionalProperties": false,
+  "description": "Portable sidecar, separate from CAD/source IR and scene/runtime state.",
+  "properties": {
+    "schema_version": {
+      "const": "1.0",
+      "default": "1.0",
+      "title": "Schema Version",
+      "type": "string"
+    },
+    "product_id": {
+      "minLength": 1,
+      "title": "Product Id",
+      "type": "string"
+    },
+    "geometry": {
+      "$ref": "#/$defs/GeometryArtifact"
+    },
+    "entities": {
+      "items": {
+        "$ref": "#/$defs/GeometryEntity"
+      },
+      "title": "Entities",
+      "type": "array"
+    },
+    "bindings": {
+      "items": {
+        "$ref": "#/$defs/Binding"
+      },
+      "title": "Bindings",
+      "type": "array"
+    },
+    "requirements": {
+      "items": {
+        "$ref": "#/$defs/GeometryRequirement"
+      },
+      "title": "Requirements",
+      "type": "array"
+    },
+    "evidence": {
+      "additionalProperties": {
+        "type": "string"
+      },
+      "title": "Evidence",
+      "type": "object"
+    }
+  },
+  "required": [
+    "product_id",
+    "geometry"
+  ],
+  "title": "BindingManifest",
+  "type": "object"
+}

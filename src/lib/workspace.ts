@@ -1,6 +1,7 @@
 import { Box3, BoxGeometry, Euler, Matrix4, Quaternion, MathUtils, Vector3 } from 'three';
 import type { Asset, Vec3 } from './scene';
 import { parseCloudBundle, scrubCloudData } from './cloud-storage';
+import { readSystemInspection, type SystemInspection } from './system-inspection';
 
 export type VersionedAsset = { cloudVersionId: string; asset: Asset };
 export type Pose = { position: Vec3; rotation: Vec3 };
@@ -8,13 +9,14 @@ export type SceneItem = Pose & { id: string; name: string; asset: Asset; visible
 export type Keyframe = Pose & { id: string; time: number; visible?: boolean };
 export type Track = { id: string; instanceId: string; partId?: string; keys: Keyframe[] };
 export type Animation = { duration: number; loop: boolean; tracks: Track[] };
-export type Workspace = { room: Vec3; items: SceneItem[]; animation: Animation };
+export type Workspace = { room: Vec3; items: SceneItem[]; animation: Animation; inspection?: SystemInspection };
 export type EvaluatedPose = Pose & { visible: boolean; parts: Record<string, Pose> };
 export type AssetReference = Pick<Asset, 'id' | 'name' | 'source' | 'dimensions'> & { projectRevision?: string };
 export type SceneManifest = {
   format: 'astra.scene'; version: 1; units: 'm'; upAxis: 'Y'; room: Vec3;
   assets: AssetReference[]; instances: (Pose & { id: string; name: string; assetId: string; visible: boolean; cloudVersionId?: string })[];
   animation: Animation; bundledAssets?: Asset[]; bundledVersions?: VersionedAsset[];
+  inspection?: SystemInspection;
 };
 
 export const zeroPose = (): Pose => ({ position: [0, 0, 0], rotation: [0, 0, 0] });
@@ -88,6 +90,7 @@ export function makeManifest(workspace: Workspace, bundle = false): SceneManifes
     assets: assets.map(({ id, name, source, dimensions, formProject }) => ({ id, name, source, dimensions, projectRevision: formProject?.revision })),
     instances: workspace.items.map(({ id, name, asset, position, rotation, visible, cloudVersionId }) => ({ id, name, assetId: asset.id, position, rotation, visible, cloudVersionId })),
     animation: workspace.animation,
+    ...(workspace.inspection ? { inspection: readSystemInspection(workspace.inspection) } : {}),
     ...(bundle ? {
       bundledAssets: [...new Map(workspace.items.filter(item => !item.missing && !item.cloudVersionId).map(item => [item.asset.id, item.asset])).values()],
       bundledVersions: [...new Map(workspace.items.filter(item => !item.missing && item.cloudVersionId).map(item => [item.cloudVersionId!, { cloudVersionId: item.cloudVersionId!, asset: item.asset }])).values()],
@@ -137,6 +140,7 @@ export function readManifest(value: unknown): SceneManifest {
       versions.add(entry.cloudVersionId);
     }
   }
+  if (m.inspection !== undefined) m.inspection = readSystemInspection(m.inspection);
   return m;
 }
 export function missingAsset(ref: AssetReference, cloudVersionId?: string): Asset {
@@ -179,13 +183,13 @@ export function hydrateManifest(manifest: SceneManifest, available: Asset[], ava
     const item = items.find(i => i.id === track.instanceId)!;
     if (!item.missing && track.partId && !item.asset.parts.some(p => p.id === track.partId)) throw new Error(`Animation component is missing in ${item.name}.`);
   }
-  return { room: manifest.room, items, animation: manifest.animation };
+  return { room: manifest.room, items, animation: manifest.animation, ...(manifest.inspection ? { inspection: readSystemInspection(manifest.inspection) } : {}) };
 }
 
 /** Compare editable content without authorship metadata or portable geometry. */
 export function sceneContent(value: unknown) {
-  const { format, version, units, upAxis, room, assets, instances, animation } = readManifest(value);
-  return { format, version, units, upAxis, room, assets, instances, animation };
+  const { format, version, units, upAxis, room, assets, instances, animation, inspection } = readManifest(value);
+  return { format, version, units, upAxis, room, assets, instances, animation, ...(inspection ? { inspection } : {}) };
 }
 export function workspaceVersions(workspace: Workspace): VersionedAsset[] {
   return [...new Map(workspace.items.filter(item => item.cloudVersionId && !item.missing)
