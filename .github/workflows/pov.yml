@@ -21,6 +21,7 @@ jobs:
           npm run build
           npm run test:pov-camera
           npm run test:pov-capture
+          npm run test:mounted-pov
           npm run test:camera-depth
       - run: npx playwright install --with-deps chromium
       - name: Browser walkthrough, switch, and session restoration
@@ -37,6 +38,7 @@ jobs:
           if [[ "$ready" != 1 ]]; then cat /tmp/openindustries-pov.log; exit 1; fi
           npm run test:pov-browser
           npm run test:pov-capture-browser
+          npm run test:mounted-pov-browser
       - name: Server diagnostic output on failure
         if: failure()
         run: cat /tmp/openindustries-pov.log || true
