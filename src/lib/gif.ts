@@ -20,7 +20,7 @@ export async function captureSceneHash(workspace: Workspace): Promise<string> {
 }
 /** Content-address an exported media Blob or other exact byte payload. */
 export async function captureBytesHash(bytes: Uint8Array | ArrayBuffer | Blob): Promise<string> {
-  const buffer = bytes instanceof Blob ? await bytes.arrayBuffer() : bytes instanceof Uint8Array ? bytes.slice().buffer : bytes;
+  const buffer: ArrayBuffer = bytes instanceof Blob ? await bytes.arrayBuffer() : bytes instanceof Uint8Array ? bytes.slice().buffer as ArrayBuffer : bytes;
   const digest = await crypto.subtle.digest('SHA-256', buffer);
   return Array.from(new Uint8Array(digest), value => value.toString(16).padStart(2, '0')).join('');
 }
