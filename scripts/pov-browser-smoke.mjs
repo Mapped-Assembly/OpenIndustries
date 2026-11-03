@@ -5,7 +5,7 @@ import { chromium, expect } from '@playwright/test';
  * Browser-level check for the first-person viewport. Run against an already
  * started local production server (npm run build && npm start).
  */
-const browser = await chromium.launch({ channel: 'chrome', headless: true });
+const browser = await chromium.launch({ headless: true });
 const errors = [];
 const page = await browser.newPage({ viewport: { width: 1440, height: 900 } });
 page.on('pageerror', error => errors.push(error.message));
@@ -37,9 +37,7 @@ try {
   assert.equal(returned, moved, 'a POV pose should survive switching through Plan');
 
   await page.getByRole('button', { name: 'Reset POV' }).click();
-  const reset = await page.locator('canvas').getAttribute('data-camera-position');
   await expect.poll(() => page.locator('canvas').getAttribute('data-camera-position')).not.toBe(moved);
-  assert.notEqual(reset, moved, 'reset should return to a new valid spawn');
 
   await page.getByRole('button', { name: '3D', exact: true }).click();
   await expect.poll(() => page.locator('canvas').getAttribute('data-camera-mode')).toBe('orbit');
