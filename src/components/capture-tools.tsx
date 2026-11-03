@@ -144,7 +144,7 @@ export function CaptureTools({ open, assets, room, selected, close, addAsset, on
       {!assets.length && <p>Import a Form project or STEP file to get started.</p>}
     </> : tab === 'pov' && workspace && cameraSession && sceneKey ? <PovCaptureTools
       workspace={workspace} selected={selected} cameraSession={cameraSession} sceneKey={sceneKey}
-      sceneRevision={sceneRevision ?? null} viewMode={viewMode ?? '3d'} onActivatePov={onActivatePov ?? (() => {})} renderProfile={renderProfile ?? 'detailed'}
+      sceneRevision={sceneRevision ?? null} viewMode={viewMode ?? '3d'} onActivatePov={onActivatePov ?? (() => {})}
       mountedRig={mountedRig??null} onActivateMounted={onActivateMounted??(()=>{})}
       renderProfile={renderProfile??'detailed'} size={size} duration={duration} fps={fps}
       rangeStart={rangeStart} rangeEnd={rangeEnd} time={time ?? null}/>: <>
