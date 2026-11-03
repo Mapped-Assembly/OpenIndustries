@@ -1,0 +1,51 @@
+name: 3D Lite render profile
+on:
+  pull_request:
+  push:
+    branches: [main]
+permissions:
+  contents: read
+jobs:
+  lite:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 25
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+          cache: npm
+      - run: npm ci
+      - name: Build and Lite resource/contract tests
+        run: |
+          npm run build
+          npm run test:render-lite
+          npm run test:camera-depth
+          npm run test:pov-capture
+      - run: npx playwright install --with-deps chromium
+      - name: Synthetic 79-instance kitchen visual and performance benchmark
+        shell: bash
+        run: |
+          npm start > /tmp/oi-lite.log 2>&1 &
+          server_pid=$!
+          trap 'kill "$server_pid" || true' EXIT
+          ready=0
+          for i in {1..45}; do
+            if curl -fsS http://127.0.0.1:8787/ > /dev/null; then ready=1; break; fi
+            sleep 1
+          done
+          if [[ "$ready" != 1 ]]; then cat /tmp/oi-lite.log; exit 1; fi
+          npm run test:render-lite-browser
+      - name: Upload scene snapshots and honest per-run environment measurements
+        uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: lite-kitchen-stress-evidence
+          path: |
+            test-results/lite-kitchen-metrics.json
+            test-results/lite-kitchen-initial.png
+            test-results/lite-kitchen-detailed.png
+          if-no-files-found: warn
+      - name: Diagnostics
+        if: failure()
+        run: cat /tmp/oi-lite.log || true
