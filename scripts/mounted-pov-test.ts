@@ -3,6 +3,7 @@ import * as THREE from 'three';
 import { canonicalJSON, evaluateWorkspace, makeManifest, type Workspace } from '../src/lib/workspace';
 import type { Asset, Vec3 } from '../src/lib/scene';
 import { applyWorldPoses, createWorld } from '../src/lib/world';
+import { runWorkspace, type RunSnapshot } from '../src/lib/embodied-scene';
 import {
   attachedPreset, attachedRigEulerDegrees, configureAttachedRig, resolvePovCameraFrame,
 } from '../src/lib/pov-capture';
@@ -83,4 +84,28 @@ const noPartWorld=createWorld([wrongPart.items[0].asset],wrongPart.room);
 applyWorldPoses(noPartWorld.groups,evaluateWorkspace(wrongPart.items,wrongPart.animation,0));
 assert.throws(()=>resolvePovCameraFrame(changed,wrongPart,noPartWorld.groups,0),/part binding is missing/);
 noPartWorld.dispose();
+
+/** Use controller frame data, not authored keyframes, to validate Run mode following. */
+const poseRows=(x:number):number[][]=>[
+  [1,0,0,x],[0,1,0,0],[0,0,1,0],[0,0,0,1],
+];
+const snapshot:RunSnapshot={
+  run_id:'robot-run',scene_id:'station',scene_revision:1,revision:1,mode:'run',
+  policy_mode:'manual',healthy:true,skills:[],objects:[],
+  destination:{id:'marked-destination',position_m:[0,0,0],size_m:[.1,.1,.1]},
+  robot:{frames:{gripper_link:poseRows(0)},tcp_m:[0,0,0],model_sha256:'pinned-fixture'},
+  task:null,messages:[],observations:[],
+};
+const run0=runWorkspace(snapshot,{gripper_link:robot});
+const liveRig=attachedPreset(run0,'gripper_link','Live gripper camera','run:robot-run',1);
+const run1=runWorkspace({...snapshot,revision:2,robot:{...snapshot.robot,frames:{gripper_link:poseRows(.4)}}},{gripper_link:robot});
+const runWorld=createWorld(run0.items.map(v=>v.asset),run0.room);
+applyWorldPoses(runWorld.groups,evaluateWorkspace(run0.items,run0.animation,null));
+const pose0=resolvePovCameraFrame(liveRig,run0,runWorld.groups,0);
+applyWorldPoses(runWorld.groups,evaluateWorkspace(run1.items,run1.animation,null));
+const pose1=resolvePovCameraFrame(liveRig,run1,runWorld.groups,0);
+assert.notDeepEqual(pose0.position,pose1.position,'controller frame changes must move the attached view, without keyframe tracks');
+assert.equal(run0.animation.tracks.length,0);
+runWorld.dispose();
+
 console.log('PASS live attached camera: parent+part motion, offset quaternion, scene immutability, hidden, replacement, deleted and missing frame.');
