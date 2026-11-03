@@ -23,3 +23,13 @@
 .oi-mounted-indicator span{color:#ffd6a1;font-weight:600}
 .oi-mounted-indicator small{font-size:10px;line-height:1.4}
 @media(max-width:650px){.oi-mounted-indicator{bottom:9px;right:6px;left:6px;max-width:none}}
+
+.oi-lite-snapshot{position:absolute;z-index:4;bottom:54px;right:14px;display:flex;flex-wrap:wrap;gap:5px;align-items:center;justify-content:flex-end;max-width:min(520px,calc(100% - 28px));font-size:11px}
+.oi-lite-snapshot button,.oi-lite-snapshot a{background:#20352bdf;color:#e9f4e7;border:1px solid #719078;border-radius:6px;padding:7px 9px;font-size:11px;text-decoration:none}
+.oi-lite-snapshot [role=alert]{flex-basis:100%;text-align:right;color:#ffd3b5;background:#321e18ee;padding:5px 8px;border-radius:4px}
+.oi-mounted-viewport .oi-lite-snapshot{bottom:145px}
+@media(max-width:650px){
+  .oi-lite-snapshot{right:6px;bottom:10px;max-width:calc(100% - 12px)}
+  .oi-pov-viewport .oi-lite-snapshot{bottom:151px}
+  .oi-mounted-viewport .oi-lite-snapshot{bottom:88px}
+}
