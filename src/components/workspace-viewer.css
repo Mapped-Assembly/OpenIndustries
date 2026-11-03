@@ -15,3 +15,11 @@
   .oi-pov-viewport + .hint{bottom:7px}
 }
 @media(max-width:650px){.oi-pov-reticle{font-size:21px}.oi-pov-info{font-size:10px}}
+
+.oi-mounted-viewport{position:relative;isolation:isolate}
+.oi-mounted-viewport canvas{display:block}
+.oi-mounted-indicator{position:absolute;z-index:3;right:14px;bottom:41px;max-width:min(420px,calc(100% - 28px));background:#15231de9;border:1px solid #799d7a;border-radius:7px;padding:8px 10px;pointer-events:none;display:flex;flex-direction:column;gap:3px;font-size:10px;color:#d9f0dd}
+.oi-mounted-indicator strong{font-size:11px;letter-spacing:.6px}
+.oi-mounted-indicator span{color:#ffd6a1;font-weight:600}
+.oi-mounted-indicator small{font-size:10px;line-height:1.4}
+@media(max-width:650px){.oi-mounted-indicator{bottom:9px;right:6px;left:6px;max-width:none}}
