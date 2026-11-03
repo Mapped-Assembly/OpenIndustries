@@ -26,6 +26,8 @@ import { localBinding } from './lib/local-scene-session';
 import { LocalSceneControls, OpenLocalScene, useLocalScene } from './components/local-scene-controls';
 import { SceneControls } from './components/scene-controls';
 import { ProjectInspector } from './components/project-inspector';
+import { SystemInspector } from './components/system-inspector';
+import { readSystemInspection } from './lib/system-inspection';
 import { FormGeneration } from './components/form-generation';
 import { generateFormProject, type GenerationRequest } from './lib/form-generation';
 import { downloadProject, formaProjectJSON, oiProjectJSON, projectFilename } from './lib/project-files';
@@ -43,6 +45,7 @@ function App(){
   const [history,setHistory]=useState<History>(()=>({past:[],present:emptyWorkspace(),future:[]}));
   const workspace=history.present;const assets=workspace.items.map(i=>i.asset);
   const latestWorkspace=useRef(workspace);latestWorkspace.current=workspace;
+  const [inspectionSelection,setInspectionSelection]=useState(0);
   const [selected,setSelected]=useState(-1);const[selectedPart,setSelectedPart]=useState(-1);const[focus,setFocus]=useState(0);
   const [time,setTime]=useState<number|null>(null);const[playing,setPlaying]=useState(false);
   const [viewMode,setViewMode]=useState<'3d'|'plan'|'pov'|'mounted'>('3d');
@@ -236,6 +239,13 @@ function App(){
         let json;try{json=JSON.parse(await files[0].text());}catch{/* Form importer supplies its normal invalid-JSON diagnostic. */}
         if(!valid())return;
         if(json?.format==='astra.scene')destination=hydrateManifest(readManifest(json),assets);
+        if(json?.format==='oi.system-inspection'){
+          if(oiOnly)throw new Error('Use Import project to attach an inspection sidecar to the current scene.');
+          const inspection=readSystemInspection(json);
+          change({...latestWorkspace.current,inspection});
+          setStatus('System inspection imported. Unresolved or stale mappings remain visible.');
+          return;
+        }
       }
       if(localScene&&destination)throw new Error('Open a browser-local room to replace a whole project. Export this draft first; local scene revisions remain attached here.');
       if(oiOnly&&!destination)throw new Error('Choose an exported OI project (.oi.json) or legacy scene JSON. Use Import project for Forma equipment and STEP files.');
@@ -335,7 +345,7 @@ function App(){
             onRotate={(i,amount)=>{if(busy||cloudLinkMode||localScene?.revision!==undefined)return;const current=latestWorkspace.current;if(!current.items[i])return;setPlaying(false);setTime(null);change({...current,items:current.items.map((v,j)=>j===i?{...v,rotation:[v.rotation[0],v.rotation[1]+amount,v.rotation[2]] as Vec3}:v)});}}/>:
           <WorkspaceViewer workspace={workspace} selected={selected} selectedPart={selectedPart} time={time} focus={focus} region={captureRegion} mode={viewMode==='pov'?'pov':viewMode==='mounted'?'mounted':'orbit'} mountedCamera={mountedRig}
              rigStale={!!mountedRig && (mountedRig.sceneRevision !== (currentScene?.revision??localSync.view.loaded??localScene?.revision??null) || (!!localScene && (!localSync.view.ready || !!localSync.view.error)))}
-             cameraSession={cameraSession} sessionKey={roomId} onSelect={(i,j)=>{setSelected(i);setSelectedPart(j);}}/>}
+             cameraSession={cameraSession} sessionKey={roomId} onSelect={(i,j)=>{setSelected(i);setSelectedPart(j);setInspectionSelection(n=>n+1);}}/>}
         {viewMode==='mounted'&&<AttachedCameraControls workspace={workspace} rig={mountedRig}
            onRigChange={setMountedRig}
            sceneKey={`${owner??'guest'}:${currentScene?.id??linkedScene?.id??localScene?.id??roomId}`}
@@ -344,7 +354,7 @@ function App(){
         {viewMode==='3d'&&<div className="hint">{time!==null?`ANIMATION ${time.toFixed(2)}s · `:''}Drag to orbit · Right-drag to pan · Scroll to zoom</div>}
         {viewMode==='pov'&&<div className="hint">{time!==null?`ANIMATION ${time.toFixed(2)}s · `:''}Click scene for mouse-look · WASD / arrows to move · Shift to move faster · Esc releases mouse</div>}
       </div>
-      <aside className="inspector"><div className="eyebrow">INSPECTOR</div><ProjectInspector item={workspace.items[selected]} selectedPart={selectedPart} selectPart={index=>{setSelectedPart(index);setFocus(n=>n+1);}}/></aside>
+      <aside className="inspector"><div className="eyebrow">INSPECTOR</div><SystemInspector selectionVersion={inspectionSelection} workspace={workspace} selected={selected} selectedPart={selectedPart} onSelect={(i,j)=>{setSelected(i);setSelectedPart(j);setViewMode('3d');setPlaying(false);setTime(null);setFocus(n=>n+1);}}/><ProjectInspector item={workspace.items[selected]} selectedPart={selectedPart} selectPart={index=>{setSelectedPart(index);setFocus(n=>n+1);setInspectionSelection(n=>n+1);}}/></aside>
     </main><footer><span role="status">{busy?'◌ ':'● '}{status}</span><span>FORM POWERED · LOCAL + CLOUD</span></footer>
     {adoptionPending&&(isFullscreen&&stage.current?createPortal(<div className="draft-recovery adoption" role="dialog" aria-label="Adopt anonymous draft"><b>Anonymous draft found</b><p>This workspace was created before sign-in. Adopt it into your account, or start a separate clean workspace. The anonymous draft is retained either way.</p><div className="capture-actions"><button onClick={adoptAnonymousDraft}>Adopt draft</button><button onClick={discardAnonymousDraft}>Start clean workspace</button></div></div>,stage.current):<div className="draft-recovery adoption" role="dialog" aria-label="Adopt anonymous draft"><b>Anonymous draft found</b><p>This workspace was created before sign-in. Adopt it into your account, or start a separate clean workspace. The anonymous draft is retained either way.</p><div className="capture-actions"><button onClick={adoptAnonymousDraft}>Adopt draft</button><button onClick={discardAnonymousDraft}>Start clean workspace</button></div></div>)}
     {draftRecovery&&(isFullscreen&&stage.current?createPortal(<div className="draft-recovery" role="alert"><b>Saved workspace needs recovery</b><p>{draftRecovery.message}</p><div className="capture-actions"><button disabled={busy} onClick={()=>{setDraftRecovery(null);setError('');setDraftReady(false);window.location.reload();}}>Retry loading</button><button disabled={busy} onClick={()=>void exportCorruptDraft()}>Download backup</button><button disabled={busy} onClick={()=>void resetCorruptDraft()}>Start clean workspace</button></div></div>,stage.current):<div className="draft-recovery" role="alert"><b>Saved workspace needs recovery</b><p>{draftRecovery.message}</p><div className="capture-actions"><button disabled={busy} onClick={()=>{setDraftRecovery(null);setError('');setDraftReady(false);window.location.reload();}}>Retry loading</button><button disabled={busy} onClick={()=>void exportCorruptDraft()}>Download backup</button><button disabled={busy} onClick={()=>void resetCorruptDraft()}>Start clean workspace</button></div></div>)}

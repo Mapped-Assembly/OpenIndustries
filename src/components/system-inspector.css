@@ -1,0 +1,10 @@
+.system-inspector { border-bottom: 1px solid #3b4436; padding-bottom: 18px; margin-bottom: 20px; overflow-wrap: anywhere; }
+.system-inspector h3 { margin-top: 8px; }
+.system-binding-list { display: grid; gap: 6px; max-height: 260px; overflow-y: auto; }
+.system-binding-list button { text-align: left; padding: 10px; }
+.system-binding-list button[aria-pressed="true"] { border-color: #c8ef82; background: #293420; }
+.system-inspector small { display: block; margin-top: 4px; }
+.system-inspector h4 { margin-bottom: 8px; }
+.system-inspector code { white-space: normal; font-size: 11px; }
+.system-annotations { margin: 16px 0; }
+.locate-binding { margin: 4px 0; }

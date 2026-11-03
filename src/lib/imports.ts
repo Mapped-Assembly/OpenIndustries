@@ -80,6 +80,7 @@ export class ImportService {
         const geometry = await this.step(cad, { upAxis: 'Z', scale: 1 }, progress);
         assets.push({ ...geometry, id: `form-${digest}-${geometry.source.digest}`, name: doc.name,
           formProject: doc.project,
+          cadSource: { format: 'step', sha256: geometry.source.digest },
           source: { kind: 'form', filename: file.name, digest, projectId: doc.projectId, version: doc.version } });
         used.add(cad);
       } else {

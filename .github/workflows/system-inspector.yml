@@ -1,0 +1,35 @@
+name: System inspector
+on:
+  pull_request:
+  push:
+    branches: [main]
+permissions:
+  contents: read
+jobs:
+  inspector:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 15
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+          cache: npm
+      - run: npm ci
+      - name: Build and contract/import regressions
+        run: |
+          npm run build
+          npm run test:system-inspector
+          npm run test:workspace
+          npm run test:project-files
+          npm run test:form-import
+          npm run test:portable-scenes
+      - run: npx playwright install --with-deps chromium
+      - name: Browser selection, persistence and real STEP handoff
+        run: npm run test:system-inspector-browser
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: system-inspector-evidence
+          path: test-results/system-inspector/
+          if-no-files-found: ignore
