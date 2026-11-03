@@ -71,7 +71,7 @@ export function PovCaptureTools({
   }
 
   function saveWorld(): void {
-    try { savePreset(worldPresetFromSession(cameraSession.current, name, sceneKey, sceneRevision)); }
+    try { savePreset(worldPresetFromSession(cameraSession.current, name, sceneKey, sceneRevision, workspace.room)); }
     catch (cause) { setError((cause as Error).message); }
   }
 
@@ -143,7 +143,7 @@ export function PovCaptureTools({
       {presets.map(item => <option key={item.id} value={item.id}>{item.name} — {item.binding.kind === 'attachedPose' ? 'attached' : 'free POV'}</option>)}
     </select></label>
     {preset && <div className="pov-preset-details">
-      <p>Camera: {preset.binding.kind} · 45° FOV · Y-up / meters</p>
+      <p>Camera: {preset.binding.kind} · {preset.fovDegrees}° FOV · near {preset.clip.nearMeters} m / far {preset.clip.farMeters.toFixed(1)} m</p>
       <p>Scene revision: {preset.sceneRevision ?? 'unversioned local draft'}{stale ? ' · changed since preset saved' : ''}</p>
       <div className="capture-actions">
         {stale && <button disabled={busy} onClick={rebind}>Rebind to current revision</button>}
