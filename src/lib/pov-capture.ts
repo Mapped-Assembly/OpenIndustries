@@ -94,13 +94,13 @@ export function resolvePovCameraFrame(
 }
 
 /** Local view records remain outside workspace revisions, scoped by scene and owner. */
-export function loadPovPresets(storage: Pick<Storage, 'getItem'>, scope: string): PovCameraPreset[] {
+export function loadPovPresets(storage: Pick<Storage, 'getItem'>, scope: string, sceneKey: string): PovCameraPreset[] {
   try {
     const raw = storage.getItem('oi-pov-presets-v1:' + scope);
     if (!raw) return [];
     const values: unknown = JSON.parse(raw);
     if (!Array.isArray(values) || values.length > 32) throw Error('Invalid saved camera list.');
-    return values.map(validatePovPreset).filter(preset => preset.sceneKey === scope.split(':').slice(1).join(':'));
+    return values.map(validatePovPreset).filter(preset => preset.sceneKey === sceneKey);
   } catch { return []; }
 }
 
@@ -109,4 +109,16 @@ export function storePovPresets(storage: Pick<Storage, 'setItem'>, scope: string
   if (presets.length > 32) throw Error('At most 32 POV presets can be saved per scene.');
   const selected = presets.map(validatePovPreset);
   storage.setItem('oi-pov-presets-v1:' + scope, JSON.stringify(selected));
+}
+
+/** Bound browser capture capacity, including repeated instances, before allocating GPU buffers. */
+export function assertPovSceneBudget(workspace: Workspace): void {
+  if (workspace.items.some(item => item.missing)) throw Error('POV capture refused: restore missing source geometry.');
+  if (workspace.items.length > 128) throw Error('POV capture budget exceeded: maximum 128 instances in browser.');
+  let vertices = 0, parts = 0;
+  for (const item of workspace.items) for (const part of item.asset.parts) {
+    parts++;
+    vertices += part.vertices.length / 3;
+    if (vertices > 300_000 || parts > 1024) throw Error('POV capture geometry budget exceeded (300k vertices / 1024 parts).');
+  }
 }
