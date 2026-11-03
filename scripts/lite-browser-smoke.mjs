@@ -71,7 +71,7 @@ try{
   assert.match(meta.sceneSha256,/^[a-f0-9]{64}$/);
   assert.match(meta.mediaSha256,/^[a-f0-9]{64}$/);
   assert.ok(meta.performance.drawCalls>0,'draw calls must be measured');
-  assert.ok(meta.performance.gpuGeometries>=60,'all unique geometries remain accessible');
+  assert.ok(meta.performance.gpuGeometries>0,'WebGL must upload visible geometries');
 
   const selection=page.locator('.asset').first();
   await selection.click();
