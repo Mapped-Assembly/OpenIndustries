@@ -14,7 +14,7 @@ The scene editor now offers **3D**, **2D Plan**, and **POV** views of the same O
 
 On touch devices, drag within the canvas to look and hold the onscreen movement/turn controls. Controls stop on pointer release, canceled touch, canvas blur, tab visibility loss, or viewport unmount.
 
-POV keeps its view position and angle while switching between views **within the current session**. A room replacement or new scene resets the camera. Saved camera rigs and GIF capture are tracked separately in [#104](https://github.com/Mapped-Assembly/OpenIndustries/issues/104) and [#105](https://github.com/Mapped-Assembly/OpenIndustries/issues/105).
+POV keeps its view position and angle while switching between views **within the current session**. A room replacement or new scene resets the camera. Saved camera presets, synthetic PNG and GIF export are described in [POV capture](pov-capture.md) (#105). Interactive robot-mounted camera controls remain tracked by [#104](https://github.com/Mapped-Assembly/OpenIndustries/issues/104).
 
 ## Geometry and safety limits
 
