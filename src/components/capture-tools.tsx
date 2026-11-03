@@ -4,6 +4,7 @@ import { renderGif, type FloorRegion, type GifOptions, type GifResult } from '..
 import { deleteLibrary, listLibrary, saveLibrary, type LibraryEntry } from '../lib/library';
 import { CloudLibrary } from './cloud-library';
 import type { Workspace } from '../lib/workspace';
+import type { RenderProfile } from '../lib/render-profile';
 import type { CameraSession } from '../lib/pov-camera';
 import type { PovCameraPreset } from '../lib/pov-capture';
 import type { RefObject } from 'react';
@@ -33,12 +34,13 @@ function LibraryCard({ entry, disabled, render, add, remove }: {
   </article>;
 }
 
-export function CaptureTools({ open, assets, room, selected, close, addAsset, onRegion, workspace, time, roomOperation, onFeedback, cameraSession, sceneKey, sceneRevision, viewMode, onActivatePov, mountedRig, onActivateMounted }: {
+export function CaptureTools({ open, assets, room, selected, close, addAsset, onRegion, workspace, time, roomOperation, onFeedback, cameraSession, sceneKey, sceneRevision, viewMode, onActivatePov, mountedRig, onActivateMounted, renderProfile }: {
   open: boolean; assets: Asset[]; room: number[]; selected: number; close: () => void;
   addAsset: (asset: Asset, cloudVersionId?: string) => void; onRegion: (region: FloorRegion | null) => void;
   workspace?: Workspace; time?: number | null; roomOperation?: number; onFeedback?: (review: GifResult['metadata'], instruction: string) => Promise<void>;
   cameraSession?: RefObject<CameraSession>; sceneKey?: string; sceneRevision?: number | null; viewMode?: '3d' | 'plan' | 'pov' | 'mounted'; onActivatePov?: () => void;
   mountedRig?: PovCameraPreset | null; onActivateMounted?: (rig: PovCameraPreset) => void;
+  renderProfile?: RenderProfile;
 }) {
   const [tab, setTab] = useState<'export' | 'library' | 'pov'>('export');
   const [scope, setScope] = useState<GifOptions['scope']>('room');
@@ -100,6 +102,7 @@ export function CaptureTools({ open, assets, room, selected, close, addAsset, on
       const output = await renderGif(entry ? [entry.asset] : assets, room, {
         scope: entry ? 'asset' : scope, assetIndex: entry ? 0 : selected,
         motion: preset ?? motion, region, size, duration, fps, rangeStart, rangeEnd, snapshotTime:time,
+        profile:renderProfile ?? 'detailed',
       }, abort.signal, setProgress, entry ? undefined : workspace);
       setResult(output); setMetadataBlob(new Blob([JSON.stringify(output.metadata, null, 2)], { type: 'application/json' }));
       if (entry) {
@@ -130,7 +133,7 @@ export function CaptureTools({ open, assets, room, selected, close, addAsset, on
       <label>Frame rate<select value={fps} disabled={busy} onChange={e => setFps(Number(e.target.value))}><option value={10}>10 fps</option><option value={15}>15 fps</option></select></label>
     </div>
     {tab === 'export' ? <>
-      <p>Capture geometry for positioning review. Exporting uses a separate camera and leaves your room unchanged.</p>
+      <p>Capture geometry for positioning review. Exporting uses the selected {renderProfile ?? 'detailed'} shader profile and leaves your room unchanged. Backend GIF jobs retain independent instance and worker budgets.</p>
       <label>Export scope<select disabled={busy} value={scope} onChange={e => {setScope(e.target.value as GifOptions['scope']);if(motion==='sample')setMotion('turntable');}}><option value="room">Entire room</option><option value="section">Floor section</option><option value="asset">Selected asset</option></select></label>
       <label>Preview motion<select disabled={busy} value={motion} onChange={e=>setMotion(e.target.value as GifOptions['motion'])}><option value="turntable">Turntable camera orbit</option>{scope==='asset'&&<option value="sample">Sample lift-and-return</option>}<option value="animation">Authored timeline animation</option></select></label>
       {motion==='animation'&&<><p>Export up to 4 seconds of the authored timeline with a fixed camera.</p><div className="dimensions"><label>Range start<input aria-label="Animation export start" type="number" min="0" step=".1" value={rangeStart} onChange={e=>setRangeStart(Number(e.target.value))}/></label><label>Range end<input aria-label="Animation export end" type="number" min="0" step=".1" value={rangeEnd} onChange={e=>setRangeEnd(Number(e.target.value))}/></label></div></>}
@@ -142,7 +145,8 @@ export function CaptureTools({ open, assets, room, selected, close, addAsset, on
     </> : tab === 'pov' && workspace && cameraSession && sceneKey ? <PovCaptureTools
       workspace={workspace} selected={selected} cameraSession={cameraSession} sceneKey={sceneKey}
       sceneRevision={sceneRevision ?? null} viewMode={viewMode ?? '3d'} onActivatePov={onActivatePov ?? (() => {})}
-      mountedRig={mountedRig??null} onActivateMounted={onActivateMounted??(()=>{})} size={size} duration={duration} fps={fps}
+      mountedRig={mountedRig??null} onActivateMounted={onActivateMounted??(()=>{})}
+      renderProfile={renderProfile??'detailed'} size={size} duration={duration} fps={fps}
       rangeStart={rangeStart} rangeEnd={rangeEnd} time={time ?? null}/>: <>
       <p>Save imported objects and their animated previews on this device. Reuse them after refreshing; clearing browser storage removes this library.</p>
       <button disabled={busy || !assets[selected]} onClick={() => void saveSelected()}>Save selected asset to library</button>
