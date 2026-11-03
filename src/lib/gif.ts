@@ -3,7 +3,7 @@ import { GIFEncoder, applyPalette, quantize } from 'gifenc';
 import type { Asset } from './scene';
 import { applyWorldPoses, createWorld } from './world';
 import { appendAssets, canonicalJSON, emptyWorkspace, evaluateWorkspace, makeManifest, type Workspace } from './workspace';
-import { updateCameraDepth, updatePovCameraDepth } from './camera-depth';
+import { updateCameraDepth } from './camera-depth';
 import { assertPovSceneBudget, resolvePovCameraFrame, validatePovPreset, type PovCameraFrame, type PovCameraPreset } from './pov-capture';
 import { defaultGifCamera, regionBounds, type FloorRegion, type GifOptions, type GifCamera } from './gif-contract';
 export { defaultGifCamera, regionBounds, type FloorRegion, type GifOptions, type GifCamera } from './gif-contract';
@@ -96,7 +96,7 @@ export async function renderGif(assets: Asset[], room: number[], options: GifOpt
         const resolved=resolvePovCameraFrame(pov,state,world.groups,frameTime);
         camera.position.fromArray(resolved.position);
         camera.quaternion.fromArray(resolved.quaternion);
-        updatePovCameraDepth(camera,room);
+        camera.near=pov.clip.nearMeters;camera.far=pov.clip.farMeters;camera.updateProjectionMatrix();
         evidence!.frames.push(resolved);
       }else{
         const angle=THREE.MathUtils.degToRad(view.azimuthDegrees)+(options.motion==='turntable'?frame/frames*Math.PI*2:0);
