@@ -23,7 +23,7 @@ try{
     hardware_ir_version:'0.2',overview:{title:'POV camera fixture'},
     mechanical:{render_dimensions:{x_mm:750,y_mm:620,z_mm:540}},
   }))};
-  await page.locator('input[type=file]').setInputFiles([fixture]);
+  await page.getByLabel('Import files').setInputFiles([fixture]);
   await expect(page.locator('.asset')).toHaveCount(1);
   await page.getByRole('button',{name:'POV',exact:true}).click();
   await expect.poll(()=>page.locator('canvas').getAttribute('data-camera-mode')).toBe('pov');
@@ -61,7 +61,6 @@ try{
   await page.locator('.asset').first().click();
   await studio.getByLabel('POV camera name').fill('Mounted fixture');
   await studio.getByRole('button',{name:'Save selected instance camera'}).click();
-  await studio.getByRole('button',{name:'Capture POV PNG'}).count(); // UI remains responsive
   await studio.getByLabel('POV export format').selectOption('png');
   await studio.getByRole('button',{name:'Capture POV PNG'}).click();
   await expect(studio.getByRole('status',{name:'POV capture status'})).toContainText('PNG ready',{timeout:90000});
