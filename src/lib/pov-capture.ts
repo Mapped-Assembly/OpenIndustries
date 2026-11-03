@@ -9,7 +9,7 @@ export type CameraBinding =
 /** A portable, explicitly saved camera preset; not a measured camera observation. */
 export type PovCameraPreset = {
   schemaVersion: 1; id: string; name: string; sceneKey: string; sceneRevision: number | null;
-  savedAt: string; fovDegrees: number; binding: CameraBinding;
+  savedAt: string; fovDegrees: number; clip: { nearMeters: number; farMeters: number }; binding: CameraBinding;
 };
 export type PovCameraFrame = {
   time: number; position: Point3; quaternion: Quaternion4; parentInstanceId?: string; parentPartId?: string;
@@ -32,6 +32,10 @@ export function validatePovPreset(input: unknown): PovCameraPreset {
     || !validId(preset.name) || !validRevision(preset.sceneRevision)
     || typeof preset.savedAt !== 'string' || !Number.isFinite(Date.parse(preset.savedAt))
     || !finite(preset.fovDegrees) || preset.fovDegrees < 20 || preset.fovDegrees > 100
+    || !preset.clip || !finite(preset.clip.nearMeters) || !finite(preset.clip.farMeters)
+    || preset.clip.nearMeters < 0.005 || preset.clip.nearMeters > 1
+    || preset.clip.farMeters <= preset.clip.nearMeters || preset.clip.farMeters > 1000
+    || preset.clip.farMeters / preset.clip.nearMeters > 100_000
     || !binding || !point(binding.position) || !quaternion(binding.quaternion)
     || (binding.kind !== 'worldPose' && binding.kind !== 'attachedPose')
     || (binding.kind === 'attachedPose' && (!validId(binding.instanceId) || (binding.partId !== undefined && !validId(binding.partId))))) {
@@ -43,6 +47,7 @@ export function validatePovPreset(input: unknown): PovCameraPreset {
 /** Use the identical YXZ rotation convention as the interactive #103 POV viewer. */
 export function worldPresetFromSession(
   session: CameraSession, name: string, sceneKey: string, sceneRevision: number | null,
+  room: readonly number[] = [6, 5, 3],
 ): PovCameraPreset {
   if (!session.pov) throw Error('Enter POV before saving the current camera.');
   const pose: PovPose = session.pov;
@@ -50,6 +55,7 @@ export function worldPresetFromSession(
   return validatePovPreset({
     schemaVersion: 1, id: crypto.randomUUID(), name: name.trim(), sceneKey, sceneRevision,
     savedAt: new Date().toISOString(), fovDegrees: 45,
+    clip: {nearMeters: .02, farMeters: Math.max(12, Math.hypot(...room) * 2)},
     binding: { kind: 'worldPose', position: [...pose.position], quaternion: rotation.toArray() },
   });
 }
@@ -65,6 +71,7 @@ export function attachedPreset(
   return validatePovPreset({
     schemaVersion: 1, id: crypto.randomUUID(), name: name.trim(), sceneKey, sceneRevision,
     savedAt: new Date().toISOString(), fovDegrees: 45,
+    clip: {nearMeters: .02, farMeters: Math.max(12, Math.hypot(...workspace.room) * 2)},
     binding: { kind: 'attachedPose', instanceId, ...(partId ? { partId } : {}),
       position: [0, 0.12, 0], quaternion: [0, 0, 0, 1] },
   });
@@ -89,7 +96,7 @@ export function resolvePovCameraFrame(
   const translation = new THREE.Vector3(...b.position).applyMatrix4(mount.matrixWorld);
   const rotation = new THREE.Quaternion(); mount.getWorldQuaternion(rotation);
   rotation.multiply(new THREE.Quaternion(...b.quaternion));
-  return { time, position: translation.toArray(), quaternion: rotation.toArray(),
+  return { time, position: translation.toArray() as Point3, quaternion: rotation.toArray() as Quaternion4,
     parentInstanceId: b.instanceId, ...(b.partId ? { parentPartId: b.partId } : {}) };
 }
 
