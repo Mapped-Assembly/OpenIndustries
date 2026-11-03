@@ -32,11 +32,11 @@ function LibraryCard({ entry, disabled, render, add, remove }: {
   </article>;
 }
 
-export function CaptureTools({ open, assets, room, selected, close, addAsset, onRegion, workspace, time, roomOperation, onFeedback, cameraSession, sceneKey, sceneRevision, viewMode }: {
+export function CaptureTools({ open, assets, room, selected, close, addAsset, onRegion, workspace, time, roomOperation, onFeedback, cameraSession, sceneKey, sceneRevision, viewMode, onActivatePov }: {
   open: boolean; assets: Asset[]; room: number[]; selected: number; close: () => void;
   addAsset: (asset: Asset, cloudVersionId?: string) => void; onRegion: (region: FloorRegion | null) => void;
   workspace?: Workspace; time?: number | null; roomOperation?: number; onFeedback?: (review: GifResult['metadata'], instruction: string) => Promise<void>;
-  cameraSession?: RefObject<CameraSession>; sceneKey?: string; sceneRevision?: number | null; viewMode?: '3d' | 'plan' | 'pov';
+  cameraSession?: RefObject<CameraSession>; sceneKey?: string; sceneRevision?: number | null; viewMode?: '3d' | 'plan' | 'pov'; onActivatePov?: () => void;
 }) {
   const [tab, setTab] = useState<'export' | 'library' | 'pov'>('export');
   const [scope, setScope] = useState<GifOptions['scope']>('room');
@@ -139,7 +139,7 @@ export function CaptureTools({ open, assets, room, selected, close, addAsset, on
       {!assets.length && <p>Import a Form project or STEP file to get started.</p>}
     </> : tab === 'pov' && workspace && cameraSession && sceneKey ? <PovCaptureTools
       workspace={workspace} selected={selected} cameraSession={cameraSession} sceneKey={sceneKey}
-      sceneRevision={sceneRevision ?? null} viewMode={viewMode ?? '3d'} size={size} duration={duration} fps={fps}
+      sceneRevision={sceneRevision ?? null} viewMode={viewMode ?? '3d'} onActivatePov={onActivatePov ?? (() => {})} size={size} duration={duration} fps={fps}
       rangeStart={rangeStart} rangeEnd={rangeEnd} time={time ?? null}/>: <>
       <p>Save imported objects and their animated previews on this device. Reuse them after refreshing; clearing browser storage removes this library.</p>
       <button disabled={busy || !assets[selected]} onClick={() => void saveSelected()}>Save selected asset to library</button>
