@@ -43,6 +43,8 @@ export type Asset = {
   originOffset: Vec3;
   warnings: string[];
   formProject?: FormProject;
+  /** Original CAD bytes retained when the source document is a Forma project. */
+  cadSource?: { format: 'step'; sha256: string };
 };
 
 export function finalizeAsset(asset: Omit<Asset, 'dimensions' | 'originOffset' | 'units' | 'upAxis' | 'schemaVersion'>): Asset {
