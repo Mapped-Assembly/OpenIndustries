@@ -5,6 +5,7 @@ import { applyWorldPoses, createWorld } from '../lib/world';
 import { evaluateWorkspace, type Workspace } from '../lib/workspace';
 import { regionBounds, type FloorRegion } from '../lib/gif';
 import { updateCameraDepth, updatePovCameraDepth } from '../lib/camera-depth';
+import { resolvePovCameraFrame, type PovCameraPreset } from '../lib/pov-capture';
 import './workspace-viewer.css';
 import {
   choosePovSpawn, clampPovPosition, lookPov, stepPov,
@@ -15,7 +16,8 @@ type Props = {
   workspace: Workspace; selected: number; selectedPart: number; time: number | null; focus: number;
   overview?: { position: [number, number, number]; target: [number, number, number] }; focusSelection?: boolean;
   region: FloorRegion | null; onSelect: (instance: number, part: number) => void;
-  mode?: 'orbit' | 'pov'; cameraSession?: RefObject<CameraSession>; sessionKey?: string;
+  mode?: 'orbit' | 'pov' | 'mounted'; mountedCamera?: PovCameraPreset | null; rigStale?: boolean;
+  cameraSession?: RefObject<CameraSession>; sessionKey?: string;
 };
 
 const keyAction: Record<string, PovAction> = {
@@ -59,7 +61,7 @@ export function WorkspaceViewer(props: Props) {
     const clock = new THREE.Clock();
     let down: [number, number] = [0, 0];
     let touchLook: { id: number; x: number; y: number } | null = null;
-    let currentMode: 'orbit' | 'pov' = 'orbit';
+    let currentMode: 'orbit' | 'pov' | 'mounted' = 'orbit';
     let povPose: PovPose | null = null;
     let lastFocus = remembered ? `${p.selected}:${p.selectedPart}:${p.focus}` : '';
     let lastRegion = '';
@@ -92,17 +94,26 @@ export function WorkspaceViewer(props: Props) {
     };
 
     /** Enter or leave POV while retaining the same renderer, geometry and selection. */
-    const switchMode = (next: 'orbit' | 'pov'): void => {
+    const switchMode = (next: 'orbit' | 'pov' | 'mounted'): void => {
       if (next === currentMode) return;
       held.current.clear();
       if (next === 'pov') {
-        rememberOrbit();
+        if (currentMode === 'orbit') rememberOrbit();
         controls.enabled = false;
         povPose = cameraMemory.current.pov
           ? { ...cameraMemory.current.pov, position: clampPovPosition(cameraMemory.current.pov.position, latest.current.workspace.room) }
           : spawn();
         cameraMemory.current.pov = povPose;
         canvas.setAttribute('aria-label', 'POV scene canvas. Click to look, WASD to move, Escape to release mouse.');
+      } else if (next === 'mounted') {
+        if (currentMode === 'orbit') rememberOrbit();
+        if (povPose) cameraMemory.current.pov = povPose;
+        povPose = null;
+        held.current.clear();
+        touchLook = null;
+        if (document.pointerLockElement === canvas) document.exitPointerLock();
+        controls.enabled = false;
+        canvas.setAttribute('aria-label','Mounted camera viewport. Select a declared instance and frame in camera controls.');
       } else {
         if (povPose) cameraMemory.current.pov = povPose;
         povPose = null;
@@ -216,7 +227,7 @@ export function WorkspaceViewer(props: Props) {
     resize();
 
     renderer.setAnimationLoop(() => {
-      const { workspace, selected, selectedPart, time, focus, region, mode } = latest.current;
+      const { workspace, selected, selectedPart, time, focus, region, mode, mountedCamera, rigStale } = latest.current;
       applyWorldPoses(world.groups, evaluateWorkspace(workspace.items, workspace.animation, time));
       world.groups.forEach((group, i) => group.children.forEach((object, j) => {
         ((object as THREE.Mesh).material as THREE.MeshStandardMaterial).emissive.setHex(
@@ -270,7 +281,38 @@ export function WorkspaceViewer(props: Props) {
         } catch { /* Invalid region is explained in the export panel. */ }
       }
       const delta = clock.getDelta();
-      if (currentMode === 'pov' && povPose) {
+      let cameraAvailable = true;
+      if (currentMode !== 'mounted' && camera.fov !== 45) {
+        camera.fov = 45;
+        camera.updateProjectionMatrix();
+      }
+      if (currentMode === 'mounted') {
+        // Never interpret stale data or a missing parent as a successfully attached view.
+        if (!mountedCamera) {
+          cameraAvailable = false;
+          setNotice(previous => previous === 'Choose a camera parent in Mounted POV controls.' ? previous : 'Choose a camera parent in Mounted POV controls.');
+        } else if (rigStale) {
+          cameraAvailable = false;
+          setNotice(previous => previous === 'Camera source is stale or disconnected; view is held.' ? previous : 'Camera source is stale or disconnected; view is held.');
+        } else {
+          try {
+            const frame = resolvePovCameraFrame(mountedCamera, workspace, world.groups, time ?? 0);
+            camera.position.fromArray(frame.position);
+            camera.quaternion.fromArray(frame.quaternion);
+            if (camera.fov !== mountedCamera.fovDegrees || camera.near !== mountedCamera.clip.nearMeters || camera.far !== mountedCamera.clip.farMeters) {
+              camera.fov = mountedCamera.fovDegrees;
+              camera.near = mountedCamera.clip.nearMeters;
+              camera.far = mountedCamera.clip.farMeters;
+              camera.updateProjectionMatrix();
+            }
+            setNotice(previous => previous === '' ? previous : '');
+          } catch (error) {
+            cameraAvailable = false;
+            const message = error instanceof Error ? error.message : 'Camera mount is unavailable.';
+            setNotice(previous => previous === message ? previous : message);
+          }
+        }
+      } else if (currentMode === 'pov' && povPose) {
         povPose = stepPov(povPose, held.current, delta, workspace.room);
         cameraMemory.current.pov = povPose;
         camera.position.fromArray(povPose.position);
@@ -283,8 +325,10 @@ export function WorkspaceViewer(props: Props) {
         rememberOrbit();
       }
       canvas.dataset.cameraMode = currentMode;
+      canvas.dataset.cameraStatus = cameraAvailable ? 'bound' : 'unbound';
       canvas.dataset.cameraPosition = camera.position.toArray().map(value => value.toFixed(3)).join(',');
-      renderer.render(world.scene, camera);
+      if (cameraAvailable) renderer.render(world.scene, camera);
+      else renderer.clear();
     });
     return () => {
       if (currentMode === 'pov' && povPose) cameraMemory.current.pov = povPose;
@@ -324,8 +368,13 @@ export function WorkspaceViewer(props: Props) {
       onKeyUp={() => held.current.delete(action)}
       onBlur={() => held.current.delete(action)}>{symbol}</button>;
 
-  return <div className={`viewport${props.mode === 'pov' ? ' oi-pov-viewport' : ''}`}
+  return <div className={`viewport${props.mode === 'pov' ? ' oi-pov-viewport' : ''}${props.mode === 'mounted' ? ' oi-mounted-viewport' : ''}`}
     ref={host} aria-label={props.mode === 'pov' ? 'First-person view of the room' : 'Interactive 3D room'}>
+    {props.mode === 'mounted' && <div className="oi-mounted-indicator" role="status">
+      <strong>SIMULATED CAMERA · LIVE MOUNTED POV</strong>
+      {notice && <span>{notice}</span>}
+      <small>Camera from evaluated scene poses; not real sensor video or validated perception.</small>
+    </div>}
     {props.mode === 'pov' && <>
       <div className="oi-pov-reticle" aria-hidden="true">+</div>
       <div className="oi-pov-info" role="status">
