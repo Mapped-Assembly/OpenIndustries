@@ -4,7 +4,7 @@ import type { Asset } from '../src/lib/scene';
 import { evaluateWorkspace, type Workspace } from '../src/lib/workspace';
 import { createWorld, applyWorldPoses } from '../src/lib/world';
 import {
-  attachedPreset, loadPovPresets, resolvePovCameraFrame, storePovPresets,
+  attachedPreset, interactivePoseFromPreset, loadPovPresets, resolvePovCameraFrame, storePovPresets,
   validatePovPreset, worldPresetFromSession, assertPovSceneBudget,
 } from '../src/lib/pov-capture';
 import { normalize, RenderError } from '../server/render/contract';
@@ -28,6 +28,11 @@ const workspace:Workspace={
 };
 const saved=worldPresetFromSession({pov:{position:[0,1.65,1],yaw:.2,pitch:.1}},'Workbench','user:scene',null);
 assert.equal(validatePovPreset(saved).binding.kind,'worldPose');
+const restored=interactivePoseFromPreset(saved);
+assert.ok(Math.abs(restored.yaw-.2)<1e-8);
+assert.ok(Math.abs(restored.pitch-.1)<1e-8);
+assert.equal(saved.clip.nearMeters,.02);
+assert.ok(saved.clip.farMeters>12);
 assert.throws(()=>validatePovPreset({...saved,fovDegrees:180}),/Invalid POV/);
 assert.throws(()=>validatePovPreset({...saved,binding:{kind:'worldPose',position:[0,0,0],quaternion:[1,1,1,1]}}),/Invalid POV/);
 const local=new Map<string,string>();
