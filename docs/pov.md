@@ -36,3 +36,5 @@ npm run test:pov-browser
 ```
 
 The browser test uses local Chromium from Playwright and expects the built app at `http://127.0.0.1:8787/`. Install the browser with `npx playwright install chromium` if needed. The PR workflow runs these tests automatically.
+
+Live robot-, tool- and fixture-mounted camera views are documented in [Mounted POV](mounted-pov.md) (#104). These views follow the same evaluated scene/Run-state transforms rather than a separate camera animation.
