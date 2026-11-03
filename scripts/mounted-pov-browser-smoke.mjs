@@ -26,6 +26,7 @@ try {
   await expect.poll(()=>canvas.getAttribute('data-camera-mode')).toBe('mounted');
   await expect.poll(()=>canvas.getAttribute('data-camera-status')).toBe('unbound');
   await controls.getByLabel('Camera parent instance').selectOption({index:1});
+  const pinnedParent=await controls.getByLabel('Camera parent instance').inputValue();
   await expect.poll(()=>canvas.getAttribute('data-camera-status')).toBe('bound');
   const before=await canvas.getAttribute('data-camera-position');
   await controls.getByLabel('Camera offset X').fill('0.6');
@@ -59,7 +60,7 @@ try {
   await expect(page.locator('.asset')).toHaveCount(0);
   await expect.poll(()=>page.locator('canvas').getAttribute('data-camera-status')).toBe('unbound');
   await expect(page.locator('.oi-mounted-indicator')).toContainText(/missing|unavailable|unbound/i);
-  await expect(controls.getByLabel('Camera parent instance')).toHaveValue('');
+  await expect(controls.getByLabel('Camera parent instance')).toHaveValue(pinnedParent);
 
   await page.getByRole('button',{name:'3D',exact:true}).click();
   await expect.poll(()=>page.locator('canvas').getAttribute('data-camera-mode')).toBe('orbit');
