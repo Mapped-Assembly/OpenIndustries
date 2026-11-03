@@ -10,7 +10,7 @@ OpenIndustries can save named human POV viewpoints or camera mounts attached to 
 2. Open **GIF studio → POV capture** and choose **Save current POV**. A name is required.
 3. Alternatively, select an existing scene instance and press **Save selected instance camera**. This creates a simple mount with a local +0.12 m vertical offset. This is a synthetic camera; full tool/robot camera controls belong to #104.
 4. Select the saved preset, choose **PNG screenshot**, **fixed POV GIF**, or **authored timeline GIF**, then export.
-5. For a saved world camera, click **Use saved POV in viewer** to restore its original position and look direction. Attached camera views are currently capture-only pending #104.
+5. For a saved world camera, click **Use saved POV in viewer** to restore its original position and look direction. Attached cameras can also be followed in **Mounted POV**; see [live mounted cameras](mounted-pov.md) (#104).
 6. Download the media and accompanying **POV evidence** JSON. Reuse named presets in the same scene on this browser. Presets are not embedded in exported OI scene JSON and do not alter scene revisions.
 
 Any preset saved for an earlier numbered scene revision requires an **explicit rebind** before capture. Rebinding changes the local preset only. The renderer fails closed for missing or hidden camera-parent instance/part bindings.
