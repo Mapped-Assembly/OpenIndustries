@@ -46,6 +46,14 @@ try{
   assert.match(pngMetadata.sceneSha256,/^[a-f0-9]{64}$/);
   assert.equal(pngMetadata.preset.binding.kind,'worldPose');
   assert.equal(pngMetadata.assets.length,1);
+  assert.match(pngMetadata.mediaSha256,/^[a-f0-9]{64}$/);
+  const originalCamera=pngMetadata.frames[0].position.map(value=>value.toFixed(3)).join(',');
+  const povCanvas=page.locator('.oi-pov-viewport canvas');
+  await povCanvas.evaluate(element=>element.focus());
+  await page.keyboard.down('w'); await page.waitForTimeout(300); await page.keyboard.up('w');
+  await expect.poll(()=>povCanvas.getAttribute('data-camera-position')).not.toBe(originalCamera);
+  await studio.getByRole('button',{name:'Use saved POV in viewer'}).click();
+  await expect.poll(()=>povCanvas.getAttribute('data-camera-position')).toBe(originalCamera);
 
   await studio.getByLabel('POV export format').selectOption('static-gif');
   await studio.getByRole('button',{name:'Render POV GIF'}).click();
@@ -56,6 +64,7 @@ try{
   assert.equal(gifMetadata.pov.sourceClassification,'synthetic_scene_render');
   assert.equal(gifMetadata.pov.frames.length,20);
   assert.equal(gifMetadata.pov.sceneSha256,pngMetadata.sceneSha256);
+  assert.match(gifMetadata.pov.mediaSha256,/^[a-f0-9]{64}$/);
 
   // Bind a second camera to a real selected scene instance; no invented hardware frames.
   await page.locator('.asset').first().click();
