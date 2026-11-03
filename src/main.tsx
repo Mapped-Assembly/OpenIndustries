@@ -16,6 +16,8 @@ import { SPACE_BRIEFS, buildSpace, inferSpaceBrief, type SpaceBriefKey } from '.
 import { CaptureTools } from './components/capture-tools';
 import { AuthControls } from './components/auth-controls';
 import { WorkspaceViewer } from './components/workspace-viewer';
+import { AttachedCameraControls } from './components/attached-camera-controls';
+import type { PovCameraPreset } from './lib/pov-capture';
 import type { CameraSession } from './lib/pov-camera';
 import { PlanViewer } from './components/plan-viewer';
 import { EmbodiedWorkbench } from './components/embodied-workbench';
@@ -43,7 +45,8 @@ function App(){
   const latestWorkspace=useRef(workspace);latestWorkspace.current=workspace;
   const [selected,setSelected]=useState(-1);const[selectedPart,setSelectedPart]=useState(-1);const[focus,setFocus]=useState(0);
   const [time,setTime]=useState<number|null>(null);const[playing,setPlaying]=useState(false);
-  const [viewMode,setViewMode]=useState<'3d'|'plan'|'pov'>('3d');
+  const [viewMode,setViewMode]=useState<'3d'|'plan'|'pov'|'mounted'>('3d');
+  const [mountedRig,setMountedRig]=useState<PovCameraPreset|null>(null);
   const cameraSession=useRef<CameraSession>({});
   const [currentScene,setCurrentScene]=useState<SavedScene|null>(null);
   const [roomId,setRoomId]=useState('local');
@@ -91,7 +94,7 @@ function App(){
       window.history.replaceState(null,'',`/?sceneId=${encodeURIComponent(scene.id)}&revision=${scene.revision}`);
     }
   }
-  function replace(next:Workspace){cameraSession.current={};setLocalSaved(false);roomOperation.current++;latestWorkspace.current=next;session.current.workspace=next;setPlaying(false);setTime(null);setSelected(-1);setSelectedPart(-1);setHistory({past:[],present:next,future:[]});setFocus(n=>n+1);}
+  function replace(next:Workspace){cameraSession.current={};setMountedRig(null);setViewMode('3d');setLocalSaved(false);roomOperation.current++;latestWorkspace.current=next;session.current.workspace=next;setPlaying(false);setTime(null);setSelected(-1);setSelectedPart(-1);setHistory({past:[],present:next,future:[]});setFocus(n=>n+1);}
   function installRoom(destination:RoomDestination){
     // Identity and contents change in the same React update and synchronous guard.
     session.current={...session.current,workspace:destination.workspace,roomId:destination.roomId,currentScene:destination.scene};
@@ -320,8 +323,8 @@ function App(){
     <main onDragOver={e=>e.preventDefault()} onDrop={e=>{e.preventDefault();void load(Array.from(e.dataTransfer.files));}}>
       <div ref={workspaceSlot} style={{display:'contents'}}/>{createPortal(side,workspaceHost)}
       <div ref={stage} className={`stage${expanded?' stage-expanded':''}`}>
-        <div className="stage-label"><span className="dot"/> {viewMode==='plan'?'2D PLAN / X-Z':viewMode==='pov'?'FIRST-PERSON POV':'PERSPECTIVE VIEW'} <span>METERS</span></div>
-        <div className="oi-view-mode" role="group" aria-label="Viewport mode"><button aria-pressed={viewMode==='3d'} onClick={()=>setViewMode('3d')}>3D</button><button aria-pressed={viewMode==='plan'} onClick={()=>setViewMode('plan')}>2D Plan</button><button aria-pressed={viewMode==='pov'} onClick={()=>setViewMode('pov')}>POV</button></div>
+        <div className="stage-label"><span className="dot"/> {viewMode==='plan'?'2D PLAN / X-Z':viewMode==='pov'?'FIRST-PERSON POV':viewMode==='mounted'?'ATTACHED CAMERA POV':'PERSPECTIVE VIEW'} <span>METERS</span></div>
+        <div className="oi-view-mode" role="group" aria-label="Viewport mode"><button aria-pressed={viewMode==='3d'} onClick={()=>setViewMode('3d')}>3D</button><button aria-pressed={viewMode==='plan'} onClick={()=>setViewMode('plan')}>2D Plan</button><button aria-pressed={viewMode==='pov'} onClick={()=>setViewMode('pov')}>POV</button><button aria-pressed={viewMode==='mounted'} onClick={()=>setViewMode('mounted')}>Mounted POV</button></div>
         {isFullscreen&&<button className="workspace-toggle" aria-controls="workspace-panel" aria-expanded={workspaceVisible} onClick={()=>setWorkspaceVisible(v=>!v)}>{workspaceVisible?'Hide workspace':'Show workspace'}</button>}
         <button className="fullscreen-toggle" aria-label={isFullscreen?'Exit fullscreen':'Enter fullscreen'} aria-pressed={isFullscreen} onClick={()=>void toggleFullscreen()}>{isFullscreen?'↙ Exit fullscreen':'⛶ Fullscreen'}</button>
         <button className="capture-launch" aria-expanded={captureOpen} onClick={()=>setCaptureOpen(v=>!v)}>GIF studio</button>
@@ -330,8 +333,14 @@ function App(){
             onSelect={i=>{setSelected(i);setSelectedPart(-1);}}
             onMove={(i,x,z)=>{if(busy||cloudLinkMode||localScene?.revision!==undefined)return;const current=latestWorkspace.current;const item=current.items[i];if(!item)return;setPlaying(false);setTime(null);change({...current,items:current.items.map((v,j)=>j===i?{...v,position:[x,v.position[1],z] as Vec3}:v)});}}
             onRotate={(i,amount)=>{if(busy||cloudLinkMode||localScene?.revision!==undefined)return;const current=latestWorkspace.current;if(!current.items[i])return;setPlaying(false);setTime(null);change({...current,items:current.items.map((v,j)=>j===i?{...v,rotation:[v.rotation[0],v.rotation[1]+amount,v.rotation[2]] as Vec3}:v)});}}/>:
-          <WorkspaceViewer workspace={workspace} selected={selected} selectedPart={selectedPart} time={time} focus={focus} region={captureRegion} mode={viewMode==='pov'?'pov':'orbit'} cameraSession={cameraSession} sessionKey={roomId} onSelect={(i,j)=>{setSelected(i);setSelectedPart(j);}}/>}
-        <CaptureTools key={`${owner}:${roomId}:${roomOperation.current}`} open={captureOpen} assets={assets} room={workspace.room} selected={selected} close={()=>setCaptureOpen(false)} onRegion={setCaptureRegion} addAsset={addAsset} workspace={workspace} time={time} roomOperation={roomOperation.current} onFeedback={sendAnimationFeedback} cameraSession={cameraSession} sceneKey={`${owner??'guest'}:${currentScene?.id??linkedScene?.id??localScene?.id??roomId}`} sceneRevision={currentScene?.revision??localSync.view.loaded??localScene?.revision??null} viewMode={viewMode} onActivatePov={()=>setViewMode('pov')}/>
+          <WorkspaceViewer workspace={workspace} selected={selected} selectedPart={selectedPart} time={time} focus={focus} region={captureRegion} mode={viewMode==='pov'?'pov':viewMode==='mounted'?'mounted':'orbit'} mountedCamera={mountedRig}
+             rigStale={!!mountedRig && (mountedRig.sceneRevision !== (currentScene?.revision??localSync.view.loaded??localScene?.revision??null) || (!!localScene && (!localSync.view.ready || !!localSync.view.error)))}
+             cameraSession={cameraSession} sessionKey={roomId} onSelect={(i,j)=>{setSelected(i);setSelectedPart(j);}}/>}
+        {viewMode==='mounted'&&<AttachedCameraControls workspace={workspace} rig={mountedRig}
+           onRigChange={setMountedRig}
+           sceneKey={`${owner??'guest'}:${currentScene?.id??linkedScene?.id??localScene?.id??roomId}`}
+           sceneRevision={currentScene?.revision??localSync.view.loaded??localScene?.revision??null}/>}
+        <CaptureTools key={`${owner}:${roomId}:${roomOperation.current}`} open={captureOpen} assets={assets} room={workspace.room} selected={selected} close={()=>setCaptureOpen(false)} onRegion={setCaptureRegion} addAsset={addAsset} workspace={workspace} time={time} roomOperation={roomOperation.current} onFeedback={sendAnimationFeedback} cameraSession={cameraSession} sceneKey={`${owner??'guest'}:${currentScene?.id??linkedScene?.id??localScene?.id??roomId}`} sceneRevision={currentScene?.revision??localSync.view.loaded??localScene?.revision??null} viewMode={viewMode} onActivatePov={()=>setViewMode('pov')} mountedRig={mountedRig} onActivateMounted={rig=>{setMountedRig(rig);setViewMode('mounted');}}/>
         {viewMode==='3d'&&<div className="hint">{time!==null?`ANIMATION ${time.toFixed(2)}s · `:''}Drag to orbit · Right-drag to pan · Scroll to zoom</div>}
         {viewMode==='pov'&&<div className="hint">{time!==null?`ANIMATION ${time.toFixed(2)}s · `:''}Click scene for mouse-look · WASD / arrows to move · Shift to move faster · Esc releases mouse</div>}
       </div>
