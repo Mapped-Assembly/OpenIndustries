@@ -11,13 +11,18 @@ export { defaultGifCamera, regionBounds, type FloorRegion, type GifOptions, type
 export type GifResult = { blob: Blob; filename: string; metadata: GifMetadata };
 export type PovEvidence = {
   sourceClassification: 'synthetic_scene_render'; units: 'm'; upAxis: 'Y';
-  preset: PovCameraPreset; sceneSha256: string; frames: PovCameraFrame[];
+  preset: PovCameraPreset; sceneSha256: string; mediaSha256?: string; frames: PovCameraFrame[];
 };
 /** Hash the exact scene manifest evaluated for this capture, not the live mutable revision head. */
 export async function captureSceneHash(workspace: Workspace): Promise<string> {
   const serialized = new TextEncoder().encode(canonicalJSON(makeManifest(workspace, false)));
-  const result = await crypto.subtle.digest('SHA-256', serialized);
-  return Array.from(new Uint8Array(result), v => v.toString(16).padStart(2, '0')).join('');
+  return captureBytesHash(serialized);
+}
+/** Content-address an exported media Blob or other exact byte payload. */
+export async function captureBytesHash(bytes: Uint8Array | ArrayBuffer | Blob): Promise<string> {
+  const buffer = bytes instanceof Blob ? await bytes.arrayBuffer() : bytes instanceof Uint8Array ? bytes.slice().buffer : bytes;
+  const digest = await crypto.subtle.digest('SHA-256', buffer);
+  return Array.from(new Uint8Array(digest), value => value.toString(16).padStart(2, '0')).join('');
 }
 /** Common provenance marker used by GIFs and still screenshots. */
 export function povEvidence(preset: PovCameraPreset, sceneSha256: string): PovEvidence {
@@ -112,6 +117,8 @@ export async function renderGif(assets: Asset[], room: number[], options: GifOpt
     }
     if(signal.aborted)throw new DOMException('Export cancelled','AbortError');gif.finish();
     const name=options.scope==='asset'?state.items[options.assetIndex].name:`floor-${options.scope}`;
-    return{blob:new Blob([new Uint8Array(gif.bytes())],{type:'image/gif'}),filename:pov?`pov-${pov.name.replace(/[^a-z0-9_-]+/gi,'-').slice(0,60)||'camera'}-${options.motion}.gif`:`${name.replace(/[^a-z0-9_-]+/gi,'-').slice(0,80)||'asset'}-${options.motion}.gif`,metadata};
+    const blob=new Blob([new Uint8Array(gif.bytes())],{type:'image/gif'});
+    if(evidence) evidence.mediaSha256=await captureBytesHash(blob);
+    return{blob,filename:pov?`pov-${pov.name.replace(/[^a-z0-9_-]+/gi,'-').slice(0,60)||'camera'}-${options.motion}.gif`:`${name.replace(/[^a-z0-9_-]+/gi,'-').slice(0,80)||'asset'}-${options.motion}.gif`,metadata};
   }finally{world.dispose();renderer?.dispose();renderer?.forceContextLoss();}
 }
