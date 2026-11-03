@@ -1,7 +1,6 @@
 import * as THREE from 'three';
 import { applyWorldPoses, createWorld } from './world';
 import { evaluateWorkspace, type Workspace } from './workspace';
-import { updatePovCameraDepth } from './camera-depth';
 import { captureSceneHash, povEvidence, type PovEvidence } from './gif';
 import { assertPovSceneBudget, resolvePovCameraFrame, validatePovPreset, type PovCameraPreset } from './pov-capture';
 
@@ -32,10 +31,9 @@ export async function renderPovScreenshot(
     renderer = new THREE.WebGLRenderer({ antialias: true, preserveDrawingBuffer: true });
     renderer.setPixelRatio(1);
     renderer.setSize(size,size);
-    const camera = new THREE.PerspectiveCamera(cameraPreset.fovDegrees, 1, .02, 100);
+    const camera = new THREE.PerspectiveCamera(cameraPreset.fovDegrees, 1, cameraPreset.clip.nearMeters, cameraPreset.clip.farMeters);
     camera.position.fromArray(frame.position);
     camera.quaternion.fromArray(frame.quaternion);
-    updatePovCameraDepth(camera, workspace.room);
     renderer.render(world.scene, camera);
     if (signal.aborted) throw new DOMException('Capture cancelled.', 'AbortError');
     const canvas = renderer.domElement;
