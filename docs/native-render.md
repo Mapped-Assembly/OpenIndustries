@@ -190,3 +190,12 @@ contact grasp, lift, transfer, release and verified settling with the pinned
 robot meshes. Run `python benchmarks/native-render/so101/run.py` after installing
 `.[native-render,physics]`. It includes a negative test with finger contacts
 disabled, and uses the native renderer without Chromium.
+
+## JSON-configured workcell and task
+
+The [JSON SO-101 candidate and comparison](../benchmarks/native-render/so101/json/README.md)
+loads workcell geometry, robot adaptations, task/control/success criteria and
+render settings from four versioned JSON files. It preserves the preceding
+Python demo as a benchmark baseline. Run `json/run_json.py` for the candidate
+and `json/compare.py` for repeated baseline parity and JSON-only perturbations,
+relative to `benchmarks/native-render/so101/`.

@@ -1,0 +1,879 @@
+{
+  "baseline_commit": "aff9e1d7b22b8d4ec7ded48b322781c7f00abfab",
+  "baseline_controller_sha256": "0c374afa5d263582a8f396e43f96e809c9ba4eba18f6bfe097bbf93540be46c0",
+  "configuration_sha256": {
+    "workcell.json": "28808b78a7de6027d0118d5ecda5b5ad57fa9374087546407d3c1016103798a3",
+    "robot-adapter.json": "08dc612345d7cc7139be93026cf6370c83316733d8f69ef61929afb78bd00777",
+    "task.json": "085a4d798bacecfa92f6b23c6b1a03d57b61133a69d0a2da18bc4a5f05599be3",
+    "render.json": "b83975844ac4d12ed14acc8c0bc45452cd5a4090b6b1ba4e1915c22baa38cee5",
+    "cases.json": "314165cf503b42828b53176af89b5124cd5b56fcd16dc29f9d98531b7aaa83e4"
+  },
+  "model_parity": {
+    "body_pos": true,
+    "body_quat": true,
+    "body_mass": true,
+    "body_inertia": true,
+    "geom_type": true,
+    "geom_bodyid": true,
+    "geom_pos": true,
+    "geom_quat": true,
+    "geom_size": true,
+    "geom_friction": true,
+    "geom_contype": true,
+    "geom_conaffinity": true,
+    "geom_solref": true,
+    "geom_solimp": true,
+    "jnt_range": true,
+    "jnt_axis": true,
+    "jnt_pos": true,
+    "dof_damping": true,
+    "dof_frictionloss": true,
+    "dof_armature": true,
+    "actuator_gainprm": true,
+    "actuator_biasprm": true,
+    "actuator_forcerange": true,
+    "actuator_ctrlrange": true,
+    "mesh_vert": true,
+    "mesh_face": true,
+    "qpos0": true,
+    "counts": true,
+    "timestep": true,
+    "gravity": true,
+    "integrator": true
+  },
+  "tolerances": {
+    "durationSeconds": 0.02,
+    "liftHeightM": 0.002,
+    "finalPositionM": 0.001,
+    "trajectoryPositionM": 0.002
+  },
+  "repeats": [
+    {
+      "baseline": {
+        "engine": "mujoco",
+        "version": "4.0.1",
+        "success": true,
+        "duration_seconds": 9.109999999999712,
+        "timestep": 0.002,
+        "bilateral_contact_observed": true,
+        "maximum_object_height_m": 0.0817893333654752,
+        "placement_verified": true,
+        "final_object_position_m": [
+          0.13856941727376637,
+          -0.11344093991857945,
+          0.039900933698968605
+        ],
+        "final_object_speed": 0.0012615855459872558,
+        "equality_constraints": 0,
+        "warnings": 0,
+        "error": null,
+        "phase": "complete",
+        "events": [
+          {
+            "time": 0.0,
+            "phase": "approach",
+            "can": 0
+          },
+          {
+            "time": 1.0,
+            "phase": "inspect",
+            "can": 0
+          },
+          {
+            "time": 1.5,
+            "phase": "descend",
+            "can": 0
+          },
+          {
+            "time": 2.0,
+            "phase": "grasp",
+            "can": 0
+          },
+          {
+            "time": 3.502,
+            "phase": "lift",
+            "can": 0
+          },
+          {
+            "time": 4.504,
+            "phase": "transfer",
+            "can": 0
+          },
+          {
+            "time": 5.506,
+            "phase": "place",
+            "can": 0
+          },
+          {
+            "time": 6.508,
+            "phase": "release",
+            "can": 0
+          },
+          {
+            "time": 7.51,
+            "phase": "retreat",
+            "can": 0
+          },
+          {
+            "time": 8.51,
+            "phase": "verify",
+            "can": 0
+          },
+          {
+            "time": 9.11,
+            "phase": "complete",
+            "can": 1
+          }
+        ]
+      },
+      "json": {
+        "engine": "mujoco",
+        "version": "4.0.1",
+        "success": true,
+        "duration_seconds": 9.109999999999712,
+        "timestep": 0.002,
+        "bilateral_contact_observed": true,
+        "maximum_object_height_m": 0.08178928732368398,
+        "placement_verified": true,
+        "final_object_position_m": [
+          0.138569439965998,
+          -0.11343901560137913,
+          0.039901068090992094
+        ],
+        "final_object_speed": 0.002329109969131038,
+        "equality_constraints": 0,
+        "warnings": 0,
+        "error": null,
+        "phase": "complete",
+        "events": [
+          {
+            "time": 0.0,
+            "phase": "approach",
+            "can": 0
+          },
+          {
+            "time": 1.0,
+            "phase": "inspect",
+            "can": 0
+          },
+          {
+            "time": 1.5,
+            "phase": "descend",
+            "can": 0
+          },
+          {
+            "time": 2.0,
+            "phase": "grasp",
+            "can": 0
+          },
+          {
+            "time": 3.502,
+            "phase": "lift",
+            "can": 0
+          },
+          {
+            "time": 4.504,
+            "phase": "transfer",
+            "can": 0
+          },
+          {
+            "time": 5.506,
+            "phase": "place",
+            "can": 0
+          },
+          {
+            "time": 6.508,
+            "phase": "release",
+            "can": 0
+          },
+          {
+            "time": 7.51,
+            "phase": "retreat",
+            "can": 0
+          },
+          {
+            "time": 8.51,
+            "phase": "verify",
+            "can": 0
+          },
+          {
+            "time": 9.11,
+            "phase": "complete",
+            "can": 1
+          }
+        ]
+      },
+      "delta": {
+        "duration_seconds": 0.0,
+        "lift_height_m": 4.6041791212925176e-08,
+        "final_position_m": 1.92913784909432e-06,
+        "max_trajectory_position_m": 5.659690285517335e-06,
+        "phase_timing_equal": true
+      }
+    },
+    {
+      "baseline": {
+        "engine": "mujoco",
+        "version": "4.0.1",
+        "success": true,
+        "duration_seconds": 9.109999999999712,
+        "timestep": 0.002,
+        "bilateral_contact_observed": true,
+        "maximum_object_height_m": 0.0817893333654752,
+        "placement_verified": true,
+        "final_object_position_m": [
+          0.13856941727376637,
+          -0.11344093991857945,
+          0.039900933698968605
+        ],
+        "final_object_speed": 0.0012615855459872558,
+        "equality_constraints": 0,
+        "warnings": 0,
+        "error": null,
+        "phase": "complete",
+        "events": [
+          {
+            "time": 0.0,
+            "phase": "approach",
+            "can": 0
+          },
+          {
+            "time": 1.0,
+            "phase": "inspect",
+            "can": 0
+          },
+          {
+            "time": 1.5,
+            "phase": "descend",
+            "can": 0
+          },
+          {
+            "time": 2.0,
+            "phase": "grasp",
+            "can": 0
+          },
+          {
+            "time": 3.502,
+            "phase": "lift",
+            "can": 0
+          },
+          {
+            "time": 4.504,
+            "phase": "transfer",
+            "can": 0
+          },
+          {
+            "time": 5.506,
+            "phase": "place",
+            "can": 0
+          },
+          {
+            "time": 6.508,
+            "phase": "release",
+            "can": 0
+          },
+          {
+            "time": 7.51,
+            "phase": "retreat",
+            "can": 0
+          },
+          {
+            "time": 8.51,
+            "phase": "verify",
+            "can": 0
+          },
+          {
+            "time": 9.11,
+            "phase": "complete",
+            "can": 1
+          }
+        ]
+      },
+      "json": {
+        "engine": "mujoco",
+        "version": "4.0.1",
+        "success": true,
+        "duration_seconds": 9.109999999999712,
+        "timestep": 0.002,
+        "bilateral_contact_observed": true,
+        "maximum_object_height_m": 0.08178928732368398,
+        "placement_verified": true,
+        "final_object_position_m": [
+          0.138569439965998,
+          -0.11343901560137913,
+          0.039901068090992094
+        ],
+        "final_object_speed": 0.002329109969131038,
+        "equality_constraints": 0,
+        "warnings": 0,
+        "error": null,
+        "phase": "complete",
+        "events": [
+          {
+            "time": 0.0,
+            "phase": "approach",
+            "can": 0
+          },
+          {
+            "time": 1.0,
+            "phase": "inspect",
+            "can": 0
+          },
+          {
+            "time": 1.5,
+            "phase": "descend",
+            "can": 0
+          },
+          {
+            "time": 2.0,
+            "phase": "grasp",
+            "can": 0
+          },
+          {
+            "time": 3.502,
+            "phase": "lift",
+            "can": 0
+          },
+          {
+            "time": 4.504,
+            "phase": "transfer",
+            "can": 0
+          },
+          {
+            "time": 5.506,
+            "phase": "place",
+            "can": 0
+          },
+          {
+            "time": 6.508,
+            "phase": "release",
+            "can": 0
+          },
+          {
+            "time": 7.51,
+            "phase": "retreat",
+            "can": 0
+          },
+          {
+            "time": 8.51,
+            "phase": "verify",
+            "can": 0
+          },
+          {
+            "time": 9.11,
+            "phase": "complete",
+            "can": 1
+          }
+        ]
+      },
+      "delta": {
+        "duration_seconds": 0.0,
+        "lift_height_m": 4.6041791212925176e-08,
+        "final_position_m": 1.92913784909432e-06,
+        "max_trajectory_position_m": 5.659690285517335e-06,
+        "phase_timing_equal": true
+      }
+    },
+    {
+      "baseline": {
+        "engine": "mujoco",
+        "version": "4.0.1",
+        "success": true,
+        "duration_seconds": 9.109999999999712,
+        "timestep": 0.002,
+        "bilateral_contact_observed": true,
+        "maximum_object_height_m": 0.0817893333654752,
+        "placement_verified": true,
+        "final_object_position_m": [
+          0.13856941727376637,
+          -0.11344093991857945,
+          0.039900933698968605
+        ],
+        "final_object_speed": 0.0012615855459872558,
+        "equality_constraints": 0,
+        "warnings": 0,
+        "error": null,
+        "phase": "complete",
+        "events": [
+          {
+            "time": 0.0,
+            "phase": "approach",
+            "can": 0
+          },
+          {
+            "time": 1.0,
+            "phase": "inspect",
+            "can": 0
+          },
+          {
+            "time": 1.5,
+            "phase": "descend",
+            "can": 0
+          },
+          {
+            "time": 2.0,
+            "phase": "grasp",
+            "can": 0
+          },
+          {
+            "time": 3.502,
+            "phase": "lift",
+            "can": 0
+          },
+          {
+            "time": 4.504,
+            "phase": "transfer",
+            "can": 0
+          },
+          {
+            "time": 5.506,
+            "phase": "place",
+            "can": 0
+          },
+          {
+            "time": 6.508,
+            "phase": "release",
+            "can": 0
+          },
+          {
+            "time": 7.51,
+            "phase": "retreat",
+            "can": 0
+          },
+          {
+            "time": 8.51,
+            "phase": "verify",
+            "can": 0
+          },
+          {
+            "time": 9.11,
+            "phase": "complete",
+            "can": 1
+          }
+        ]
+      },
+      "json": {
+        "engine": "mujoco",
+        "version": "4.0.1",
+        "success": true,
+        "duration_seconds": 9.109999999999712,
+        "timestep": 0.002,
+        "bilateral_contact_observed": true,
+        "maximum_object_height_m": 0.08178928732368398,
+        "placement_verified": true,
+        "final_object_position_m": [
+          0.138569439965998,
+          -0.11343901560137913,
+          0.039901068090992094
+        ],
+        "final_object_speed": 0.002329109969131038,
+        "equality_constraints": 0,
+        "warnings": 0,
+        "error": null,
+        "phase": "complete",
+        "events": [
+          {
+            "time": 0.0,
+            "phase": "approach",
+            "can": 0
+          },
+          {
+            "time": 1.0,
+            "phase": "inspect",
+            "can": 0
+          },
+          {
+            "time": 1.5,
+            "phase": "descend",
+            "can": 0
+          },
+          {
+            "time": 2.0,
+            "phase": "grasp",
+            "can": 0
+          },
+          {
+            "time": 3.502,
+            "phase": "lift",
+            "can": 0
+          },
+          {
+            "time": 4.504,
+            "phase": "transfer",
+            "can": 0
+          },
+          {
+            "time": 5.506,
+            "phase": "place",
+            "can": 0
+          },
+          {
+            "time": 6.508,
+            "phase": "release",
+            "can": 0
+          },
+          {
+            "time": 7.51,
+            "phase": "retreat",
+            "can": 0
+          },
+          {
+            "time": 8.51,
+            "phase": "verify",
+            "can": 0
+          },
+          {
+            "time": 9.11,
+            "phase": "complete",
+            "can": 1
+          }
+        ]
+      },
+      "delta": {
+        "duration_seconds": 0.0,
+        "lift_height_m": 4.6041791212925176e-08,
+        "final_position_m": 1.92913784909432e-06,
+        "max_trajectory_position_m": 5.659690285517335e-06,
+        "phase_timing_equal": true
+      }
+    }
+  ],
+  "baseline_disabled_contacts": {
+    "engine": "mujoco",
+    "version": "4.0.1",
+    "success": false,
+    "duration_seconds": 3.501999999999836,
+    "timestep": 0.002,
+    "bilateral_contact_observed": false,
+    "maximum_object_height_m": 0.04096076,
+    "placement_verified": false,
+    "final_object_position_m": [
+      0.23999939178314533,
+      -0.04506072600298297,
+      0.039899798230212724
+    ],
+    "final_object_speed": 0.00015914557014488591,
+    "equality_constraints": 0,
+    "warnings": 0,
+    "error": "Grasp failed: bilateral finger contact absent",
+    "phase": "fault",
+    "events": [
+      {
+        "time": 0.0,
+        "phase": "approach",
+        "can": 0
+      },
+      {
+        "time": 1.0,
+        "phase": "inspect",
+        "can": 0
+      },
+      {
+        "time": 1.5,
+        "phase": "descend",
+        "can": 0
+      },
+      {
+        "time": 2.0,
+        "phase": "grasp",
+        "can": 0
+      }
+    ]
+  },
+  "baseline_negative_passed": true,
+  "cases": {
+    "renamed-object-and-phases": {
+      "engine": "mujoco",
+      "version": "4.0.1",
+      "success": true,
+      "duration_seconds": 9.109999999999712,
+      "timestep": 0.002,
+      "bilateral_contact_observed": true,
+      "maximum_object_height_m": 0.08178928732368398,
+      "placement_verified": true,
+      "final_object_position_m": [
+        0.138569439965998,
+        -0.11343901560137913,
+        0.039901068090992094
+      ],
+      "final_object_speed": 0.002329109969131038,
+      "equality_constraints": 0,
+      "warnings": 0,
+      "error": null,
+      "phase": "complete",
+      "events": [
+        {
+          "time": 0.0,
+          "phase": "stage-0",
+          "can": 0
+        },
+        {
+          "time": 1.0,
+          "phase": "stage-1",
+          "can": 0
+        },
+        {
+          "time": 1.5,
+          "phase": "stage-2",
+          "can": 0
+        },
+        {
+          "time": 2.0,
+          "phase": "stage-3",
+          "can": 0
+        },
+        {
+          "time": 3.502,
+          "phase": "stage-4",
+          "can": 0
+        },
+        {
+          "time": 4.504,
+          "phase": "stage-5",
+          "can": 0
+        },
+        {
+          "time": 5.506,
+          "phase": "stage-6",
+          "can": 0
+        },
+        {
+          "time": 6.508,
+          "phase": "stage-7",
+          "can": 0
+        },
+        {
+          "time": 7.51,
+          "phase": "stage-8",
+          "can": 0
+        },
+        {
+          "time": 8.51,
+          "phase": "stage-9",
+          "can": 0
+        },
+        {
+          "time": 9.11,
+          "phase": "complete",
+          "can": 1
+        }
+      ],
+      "expected": "success",
+      "passed": true
+    },
+    "pickup-shift-10mm": {
+      "engine": "mujoco",
+      "version": "4.0.1",
+      "success": true,
+      "duration_seconds": 9.109999999999712,
+      "timestep": 0.002,
+      "bilateral_contact_observed": true,
+      "maximum_object_height_m": 0.08075933706284869,
+      "placement_verified": true,
+      "final_object_position_m": [
+        0.14000258096465776,
+        -0.11535474148563844,
+        0.03990011877671538
+      ],
+      "final_object_speed": 0.006125256820280907,
+      "equality_constraints": 0,
+      "warnings": 0,
+      "error": null,
+      "phase": "complete",
+      "events": [
+        {
+          "time": 0.0,
+          "phase": "approach",
+          "can": 0
+        },
+        {
+          "time": 1.0,
+          "phase": "inspect",
+          "can": 0
+        },
+        {
+          "time": 1.5,
+          "phase": "descend",
+          "can": 0
+        },
+        {
+          "time": 2.0,
+          "phase": "grasp",
+          "can": 0
+        },
+        {
+          "time": 3.502,
+          "phase": "lift",
+          "can": 0
+        },
+        {
+          "time": 4.504,
+          "phase": "transfer",
+          "can": 0
+        },
+        {
+          "time": 5.506,
+          "phase": "place",
+          "can": 0
+        },
+        {
+          "time": 6.508,
+          "phase": "release",
+          "can": 0
+        },
+        {
+          "time": 7.51,
+          "phase": "retreat",
+          "can": 0
+        },
+        {
+          "time": 8.51,
+          "phase": "verify",
+          "can": 0
+        },
+        {
+          "time": 9.11,
+          "phase": "complete",
+          "can": 1
+        }
+      ],
+      "expected": "success",
+      "passed": true
+    },
+    "tray-and-target-shift-10mm": {
+      "engine": "mujoco",
+      "version": "4.0.1",
+      "success": true,
+      "duration_seconds": 10.00400000000001,
+      "timestep": 0.002,
+      "bilateral_contact_observed": true,
+      "maximum_object_height_m": 0.08178928732368398,
+      "placement_verified": true,
+      "final_object_position_m": [
+        0.13810938817863128,
+        -0.12282769545706453,
+        0.04018293189740386
+      ],
+      "final_object_speed": 0.029936105901548063,
+      "equality_constraints": 0,
+      "warnings": 0,
+      "error": null,
+      "phase": "complete",
+      "events": [
+        {
+          "time": 0.0,
+          "phase": "approach",
+          "can": 0
+        },
+        {
+          "time": 1.0,
+          "phase": "inspect",
+          "can": 0
+        },
+        {
+          "time": 1.5,
+          "phase": "descend",
+          "can": 0
+        },
+        {
+          "time": 2.0,
+          "phase": "grasp",
+          "can": 0
+        },
+        {
+          "time": 3.502,
+          "phase": "lift",
+          "can": 0
+        },
+        {
+          "time": 4.504,
+          "phase": "transfer",
+          "can": 0
+        },
+        {
+          "time": 5.506,
+          "phase": "place",
+          "can": 0
+        },
+        {
+          "time": 6.508,
+          "phase": "release",
+          "can": 0
+        },
+        {
+          "time": 7.51,
+          "phase": "retreat",
+          "can": 0
+        },
+        {
+          "time": 8.51,
+          "phase": "verify",
+          "can": 0
+        },
+        {
+          "time": 10.004,
+          "phase": "complete",
+          "can": 1
+        }
+      ],
+      "expected": "success",
+      "passed": true
+    },
+    "disabled-finger-contacts": {
+      "engine": "mujoco",
+      "version": "4.0.1",
+      "success": false,
+      "duration_seconds": 3.501999999999836,
+      "timestep": 0.002,
+      "bilateral_contact_observed": false,
+      "maximum_object_height_m": 0.04096076,
+      "placement_verified": false,
+      "final_object_position_m": [
+        0.23999939178314533,
+        -0.04506072600298297,
+        0.039899798230212724
+      ],
+      "final_object_speed": 0.00015914557014488591,
+      "equality_constraints": 0,
+      "warnings": 0,
+      "error": "Task check failed: bilateral_contact",
+      "phase": "fault",
+      "events": [
+        {
+          "time": 0.0,
+          "phase": "approach",
+          "can": 0
+        },
+        {
+          "time": 1.0,
+          "phase": "inspect",
+          "can": 0
+        },
+        {
+          "time": 1.5,
+          "phase": "descend",
+          "can": 0
+        },
+        {
+          "time": 2.0,
+          "phase": "grasp",
+          "can": 0
+        }
+      ],
+      "expected": "failure",
+      "passed": true
+    },
+    "missing-target": {
+      "expected": "invalid",
+      "passed": true,
+      "error": "Missing mjOBJ_BODY reference: not-present"
+    },
+    "misspelled-task-field": {
+      "expected": "invalid",
+      "passed": true,
+      "error": "Expected fields ['maxJointStep', 'phaseTimeout', 'reachedTolerance'], optional []; got {'maxJointStep': 0.002, 'reachedTolerance': 0.025, 'phaseTimeout': 15, 'maxJointStepp': 0.002}"
+    }
+  },
+  "parity_passed": true,
+  "passed": true
+}

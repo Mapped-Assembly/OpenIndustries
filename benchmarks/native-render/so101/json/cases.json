@@ -1,0 +1,235 @@
+{
+  "parityTolerances": {
+    "durationSeconds": 0.02,
+    "liftHeightM": 0.002,
+    "finalPositionM": 0.001,
+    "trajectoryPositionM": 0.002
+  },
+  "cases": [
+    {
+      "name": "renamed-object-and-phases",
+      "expected": "success",
+      "changes": [
+        {
+          "file": "workcell.json",
+          "path": "/world/16/attributes/name",
+          "value": "specimen"
+        },
+        {
+          "file": "workcell.json",
+          "path": "/world/16/children/0/attributes/name",
+          "value": "specimen"
+        },
+        {
+          "file": "workcell.json",
+          "path": "/world/16/children/1/attributes/name",
+          "value": "specimen"
+        },
+        {
+          "file": "task.json",
+          "path": "/references/object/body",
+          "value": "specimen"
+        },
+        {
+          "file": "task.json",
+          "path": "/success/body",
+          "value": "specimen"
+        },
+        {
+          "file": "task.json",
+          "path": "/success/geom",
+          "value": "specimen"
+        },
+        {
+          "file": "task.json",
+          "path": "/success/freeJoint",
+          "value": "specimen"
+        },
+        {
+          "file": "task.json",
+          "path": "/phases/0/id",
+          "value": "stage-0"
+        },
+        {
+          "file": "task.json",
+          "path": "/phases/1/id",
+          "value": "stage-1"
+        },
+        {
+          "file": "task.json",
+          "path": "/phases/2/id",
+          "value": "stage-2"
+        },
+        {
+          "file": "task.json",
+          "path": "/phases/3/id",
+          "value": "stage-3"
+        },
+        {
+          "file": "task.json",
+          "path": "/phases/4/id",
+          "value": "stage-4"
+        },
+        {
+          "file": "task.json",
+          "path": "/phases/5/id",
+          "value": "stage-5"
+        },
+        {
+          "file": "task.json",
+          "path": "/phases/6/id",
+          "value": "stage-6"
+        },
+        {
+          "file": "task.json",
+          "path": "/phases/7/id",
+          "value": "stage-7"
+        },
+        {
+          "file": "task.json",
+          "path": "/phases/8/id",
+          "value": "stage-8"
+        },
+        {
+          "file": "task.json",
+          "path": "/phases/9/id",
+          "value": "stage-9"
+        }
+      ]
+    },
+    {
+      "name": "pickup-shift-10mm",
+      "expected": "success",
+      "changes": [
+        {
+          "file": "workcell.json",
+          "path": "/world/16/attributes/pos",
+          "value": [
+            0.23,
+            -0.045,
+            0.041
+          ]
+        }
+      ]
+    },
+    {
+      "name": "tray-and-target-shift-10mm",
+      "expected": "success",
+      "changes": [
+        {
+          "file": "workcell.json",
+          "path": "/world/6/attributes/pos",
+          "value": [
+            0.16,
+            -0.15000000000000002,
+            0.005
+          ]
+        },
+        {
+          "file": "workcell.json",
+          "path": "/world/7/attributes/pos",
+          "value": [
+            0.095,
+            -0.15000000000000002,
+            0.02
+          ]
+        },
+        {
+          "file": "workcell.json",
+          "path": "/world/8/attributes/pos",
+          "value": [
+            0.225,
+            -0.15000000000000002,
+            0.02
+          ]
+        },
+        {
+          "file": "workcell.json",
+          "path": "/world/9/attributes/pos",
+          "value": [
+            0.16,
+            -0.21500000000000002,
+            0.02
+          ]
+        },
+        {
+          "file": "workcell.json",
+          "path": "/world/10/attributes/pos",
+          "value": [
+            0.16,
+            -0.085,
+            0.02
+          ]
+        },
+        {
+          "file": "task.json",
+          "path": "/references/destination/position",
+          "value": [
+            0.14,
+            -0.125,
+            0.05
+          ]
+        },
+        {
+          "file": "task.json",
+          "path": "/success/center",
+          "value": [
+            0.16,
+            -0.15
+          ]
+        }
+      ]
+    },
+    {
+      "name": "disabled-finger-contacts",
+      "expected": "failure",
+      "errorContains": "bilateral_contact",
+      "changes": [
+        {
+          "file": "robot-adapter.json",
+          "path": "/append/0/nodes/1/attributes/contype",
+          "value": 0
+        },
+        {
+          "file": "robot-adapter.json",
+          "path": "/append/0/nodes/1/attributes/conaffinity",
+          "value": 0
+        },
+        {
+          "file": "robot-adapter.json",
+          "path": "/append/1/nodes/0/attributes/contype",
+          "value": 0
+        },
+        {
+          "file": "robot-adapter.json",
+          "path": "/append/1/nodes/0/attributes/conaffinity",
+          "value": 0
+        }
+      ]
+    },
+    {
+      "name": "missing-target",
+      "expected": "invalid",
+      "errorContains": "Missing mjOBJ_BODY",
+      "changes": [
+        {
+          "file": "task.json",
+          "path": "/references/object/body",
+          "value": "not-present"
+        }
+      ]
+    },
+    {
+      "name": "misspelled-task-field",
+      "expected": "invalid",
+      "errorContains": "Expected fields",
+      "changes": [
+        {
+          "file": "task.json",
+          "path": "/control/maxJointStepp",
+          "value": 0.002
+        }
+      ]
+    }
+  ]
+}
