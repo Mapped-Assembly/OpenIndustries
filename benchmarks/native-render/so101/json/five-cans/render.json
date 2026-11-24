@@ -1,0 +1,28 @@
+{
+  "schema": "oi.native-view",
+  "version": 1,
+  "width": 560,
+  "height": 400,
+  "fps": 15,
+  "azimuth": 135,
+  "elevation": 30,
+  "loop": true,
+  "room": [
+    1,
+    1,
+    1
+  ],
+  "roomGuides": false,
+  "exclude": [
+    "floor",
+    "camera-post",
+    "camera-arm",
+    "inspection-camera",
+    "camera-lens",
+    "leg-0.48-0.38",
+    "leg-0.480.38",
+    "leg0.48-0.38",
+    "leg0.480.38"
+  ],
+  "frame": "non-world-bodies"
+}
