@@ -1,0 +1,11 @@
+{
+  "format": "astra.scene",
+  "version": 1,
+  "units": "m",
+  "upAxis": "Y",
+  "room": [10, 10, 3],
+  "assets": [],
+  "instances": [],
+  "bundledAssets": [],
+  "animation": {"duration": 3, "loop": true, "tracks": []}
+}

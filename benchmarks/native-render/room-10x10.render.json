@@ -1,0 +1,24 @@
+{
+  "backend": "pygfx/wgpu-native",
+  "adapter": {
+    "vendor": "llvmpipe",
+    "architecture": "",
+    "device": "llvmpipe (LLVM 19.1.7, 256 bits)",
+    "description": "Mesa 25.0.7-2+deb13u1 (LLVM 19.1.7)",
+    "stackgroup_min_size": 4,
+    "stackgroup_max_size": 128,
+    "vendor_id": 65541,
+    "device_id": 0,
+    "adapter_type": "CPU",
+    "backend_type": "Vulkan"
+  },
+  "input_sha256": "68b7a031e8b4671aa8402fe5e00994f2767a08770991191f8663e39dbec82f87",
+  "output_sha256": "00c41f53182cad48fa7091398097ce6d70cdd3a09875aaeb46b64cd422fa76ea",
+  "width": 960,
+  "height": 720,
+  "azimuth": 35,
+  "elevation": 30,
+  "base_layout": false,
+  "animation_sampled": false,
+  "environment": "presentation floor and wire room envelope; no inferred walls"
+}
