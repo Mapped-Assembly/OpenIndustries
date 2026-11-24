@@ -35,4 +35,4 @@ oi-render-scene = "native_render:main"
 
 [tool.setuptools]
 package-dir = {"" = "tools/geospatial"}
-py-modules = ["export_scene", "native_render"]
+py-modules = ["export_scene", "native_render", "native_animation"]

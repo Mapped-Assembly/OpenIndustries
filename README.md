@@ -226,7 +226,7 @@ The `Publish packages` workflow validates both builds before publishing. Add a c
 
 ## Documentation
 
-- [Native rendering PoC](docs/native-render.md) — render portable scenes to PNG with Python and native WebGPU, without Chromium.
+- [Native rendering PoC](docs/native-render.md) — render portable scenes to PNG or animated GIF with Python and native WebGPU, without Chromium.
 
 - [OpenIndustries naming migration](docs/naming-migration.md) — current MCP/CLI names, local OpenCode setup, and compatibility with existing installations.
 
