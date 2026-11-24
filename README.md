@@ -226,6 +226,8 @@ The `Publish packages` workflow validates both builds before publishing. Add a c
 
 ## Documentation
 
+- [Native rendering PoC](docs/native-render.md) — render portable scenes to PNG/GIF with native WebGPU and optional MuJoCo physics, without Chromium.
+
 - [OpenIndustries naming migration](docs/naming-migration.md) — current MCP/CLI names, local OpenCode setup, and compatibility with existing installations.
 
 - [Workspace guide](docs/workspace.md) — editing, animation, persistence, missing-geometry recovery, and the inspector.

@@ -1,0 +1,67 @@
+{
+  "version": 1,
+  "modelUpAxis": "Z",
+  "keyframe": "release",
+  "bindings": [
+    {
+      "instanceId": "block",
+      "body": "falling-block",
+      "bodyFromVisual": [
+        [
+          1,
+          0,
+          0,
+          0
+        ],
+        [
+          0,
+          0,
+          -1,
+          0
+        ],
+        [
+          0,
+          1,
+          0,
+          -0.4
+        ],
+        [
+          0,
+          0,
+          0,
+          1
+        ]
+      ]
+    },
+    {
+      "instanceId": "pendulum",
+      "body": "pendulum",
+      "bodyFromVisual": [
+        [
+          1,
+          0,
+          0,
+          0
+        ],
+        [
+          0,
+          0,
+          -1,
+          0
+        ],
+        [
+          0,
+          1,
+          0,
+          -1.6
+        ],
+        [
+          0,
+          0,
+          0,
+          1
+        ]
+      ]
+    }
+  ]
+}

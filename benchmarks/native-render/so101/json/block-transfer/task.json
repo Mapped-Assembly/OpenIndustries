@@ -1,0 +1,240 @@
+{
+  "schema": "oi.pick-place-task",
+  "version": 1,
+  "robot": {
+    "armJoints": [
+      "shoulder_pan",
+      "shoulder_lift",
+      "elbow_flex",
+      "wrist_flex",
+      "wrist_roll"
+    ],
+    "armActuators": [
+      "shoulder_pan",
+      "shoulder_lift",
+      "elbow_flex",
+      "wrist_flex",
+      "wrist_roll"
+    ],
+    "gripperJoint": "gripper",
+    "gripperActuator": "gripper",
+    "tcpSite": "pickup"
+  },
+  "initial": {
+    "arm": [
+      0,
+      -1,
+      1,
+      0,
+      0
+    ],
+    "gripper": 0.8,
+    "tcp": [
+      0.2,
+      0,
+      0.1
+    ]
+  },
+  "ik": {
+    "seeds": [
+      [
+        0,
+        -0.5,
+        1,
+        0.8,
+        0
+      ],
+      [
+        0,
+        0,
+        0,
+        0,
+        0
+      ]
+    ],
+    "iterations": 200,
+    "orientationWeight": 0.15,
+    "orientationAxes": [
+      0,
+      1
+    ],
+    "toolAxis": 2,
+    "worldAxis": [
+      0,
+      0,
+      1
+    ],
+    "convergence": 0.0005,
+    "damping": 1e-05,
+    "maxJointStep": 0.12,
+    "jointMargin": 0.01,
+    "maxPositionError": 0.008
+  },
+  "control": {
+    "maxJointStep": 0.002,
+    "reachedTolerance": 0.025,
+    "phaseTimeout": 15
+  },
+  "gripperCommands": {
+    "open": 0.8,
+    "closed": -0.1
+  },
+  "references": {
+    "object": {
+      "body": "block0"
+    },
+    "destination": {
+      "position": [
+        0.14,
+        -0.125,
+        0.05
+      ]
+    }
+  },
+  "success": {
+    "body": "block0",
+    "geom": "block0",
+    "freeJoint": "block0",
+    "fingerGeoms": [
+      "fixed-pad",
+      "moving-pad"
+    ],
+    "supportGeom": "accept-tray",
+    "center": [
+      0.16,
+      -0.15000000000000002
+    ],
+    "axes": [
+      0,
+      1
+    ],
+    "tolerance": [
+      0.05,
+      0.05
+    ],
+    "maxSpeed": 0.03,
+    "heightAxis": 2,
+    "minLiftHeight": 0.065
+  },
+  "phases": [
+    {
+      "id": "approach",
+      "target": {
+        "reference": "object",
+        "offset": [
+          0,
+          0,
+          0.06
+        ]
+      },
+      "grip": "open",
+      "minSeconds": 1,
+      "requireReached": true
+    },
+    {
+      "id": "inspect",
+      "target": {
+        "reference": "object",
+        "offset": [
+          0,
+          0,
+          0.06
+        ]
+      },
+      "minSeconds": 0.5,
+      "requireReached": false
+    },
+    {
+      "id": "descend",
+      "target": {
+        "reference": "object",
+        "offset": [
+          0,
+          0,
+          0
+        ]
+      },
+      "grip": "open",
+      "minSeconds": 0.5,
+      "requireReached": true
+    },
+    {
+      "id": "grasp",
+      "grip": "closed",
+      "minSeconds": 1.5,
+      "requireReached": false,
+      "check": "bilateral_contact"
+    },
+    {
+      "id": "lift",
+      "target": {
+        "reference": "object",
+        "offset": [
+          0,
+          0,
+          0.04
+        ]
+      },
+      "minSeconds": 1,
+      "requireReached": true,
+      "check": "lift_height"
+    },
+    {
+      "id": "transfer",
+      "target": {
+        "reference": "destination",
+        "offset": [
+          0,
+          0,
+          0.035
+        ]
+      },
+      "minSeconds": 1,
+      "requireReached": true
+    },
+    {
+      "id": "place",
+      "target": {
+        "reference": "destination",
+        "offset": [
+          0,
+          0,
+          0
+        ]
+      },
+      "minSeconds": 1,
+      "requireReached": true
+    },
+    {
+      "id": "release",
+      "grip": "open",
+      "minSeconds": 1,
+      "requireReached": false
+    },
+    {
+      "id": "retreat",
+      "target": {
+        "reference": "destination",
+        "offset": [
+          0,
+          0,
+          0.035
+        ]
+      },
+      "minSeconds": 1,
+      "requireReached": true
+    },
+    {
+      "id": "verify",
+      "minSeconds": 0.6,
+      "requireReached": false,
+      "check": "placement",
+      "retryUntil": 5
+    }
+  ],
+  "record": {
+    "maxSteps": 30000,
+    "sampleEverySteps": 10,
+    "negativeMaxSteps": 10000
+  }
+}
