@@ -1,0 +1,161 @@
+{
+  "schema": "oi.mujoco-adapter",
+  "version": 1,
+  "updates": [
+    {
+      "selector": {
+        "tag": "position",
+        "name": "gripper"
+      },
+      "attributes": {
+        "forcerange": [
+          -0.3,
+          0.3
+        ]
+      },
+      "many": false
+    },
+    {
+      "selector": {
+        "tag": "geom",
+        "mesh": "wrist_roll_follower_so101_v1",
+        "class": "collision"
+      },
+      "attributes": {
+        "contype": 0,
+        "conaffinity": 0
+      },
+      "many": true
+    },
+    {
+      "selector": {
+        "tag": "geom",
+        "mesh": "moving_jaw_so101_v1",
+        "class": "collision"
+      },
+      "attributes": {
+        "contype": 0,
+        "conaffinity": 0
+      },
+      "many": true
+    },
+    {
+      "selector": {
+        "tag": "geom",
+        "class": "collision"
+      },
+      "attributes": {
+        "friction": [
+          1.5,
+          0.02,
+          0.002
+        ],
+        "condim": 6
+      },
+      "many": true
+    }
+  ],
+  "append": [
+    {
+      "selector": {
+        "tag": "body",
+        "name": "gripper"
+      },
+      "nodes": [
+        {
+          "tag": "site",
+          "attributes": {
+            "name": "pickup",
+            "pos": [
+              0.012,
+              -0.0002,
+              -0.08
+            ],
+            "size": 0.003,
+            "rgba": [
+              0.0,
+              1.0,
+              0.0,
+              1.0
+            ]
+          }
+        },
+        {
+          "tag": "geom",
+          "attributes": {
+            "name": "fixed-pad",
+            "type": "box",
+            "pos": [
+              -0.012,
+              -0.0002,
+              -0.08
+            ],
+            "size": [
+              0.004,
+              0.009,
+              0.02
+            ],
+            "friction": [
+              3.0,
+              0.02,
+              0.002
+            ],
+            "condim": 6.0,
+            "solref": [
+              0.004,
+              1.0
+            ],
+            "rgba": [
+              0.08,
+              0.08,
+              0.08,
+              1.0
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "selector": {
+        "tag": "body",
+        "name": "moving_jaw_so101_v1"
+      },
+      "nodes": [
+        {
+          "tag": "geom",
+          "attributes": {
+            "name": "moving-pad",
+            "type": "box",
+            "pos": [
+              -0.0082,
+              -0.0566,
+              0.0188
+            ],
+            "size": [
+              0.004,
+              0.02,
+              0.009
+            ],
+            "friction": [
+              3.0,
+              0.02,
+              0.002
+            ],
+            "condim": 6.0,
+            "solref": [
+              0.004,
+              1.0
+            ],
+            "rgba": [
+              0.08,
+              0.08,
+              0.08,
+              1.0
+            ]
+          }
+        }
+      ]
+    }
+  ],
+  "unnamedGeomPrefix": "part-"
+}
