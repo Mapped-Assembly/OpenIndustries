@@ -13,7 +13,7 @@
     "backend_type": "Vulkan"
   },
   "input_sha256": "66a9e38818587254cfd90617b5f6817b88f3e20b52756d946557b98bad206605",
-  "output_sha256": "494dfe8851eedb519bf6843850676976aa3320eb5cb6dbae6387595d8404f666",
+  "output_sha256": "34c09accea5ebfecebd77728ec6fbca8ac476db556ab014d300f84eda26f43aa",
   "width": 640,
   "height": 480,
   "azimuth": 35,
@@ -27,5 +27,7 @@
   "duration_ms": 4000,
   "start_seconds": 0,
   "loop": true,
-  "environment": "presentation floor and wire room envelope; no inferred walls"
+  "physics": null,
+  "palette": "shared-256-color",
+  "environment": "wire room envelope; presentation floor only when no visible instances; no inferred walls"
 }

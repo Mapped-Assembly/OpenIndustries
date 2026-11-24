@@ -13,12 +13,12 @@
     "backend_type": "Vulkan"
   },
   "input_sha256": "66a9e38818587254cfd90617b5f6817b88f3e20b52756d946557b98bad206605",
-  "output_sha256": "3e9530f0ab8715d8eb2b38b3e1a4037bda2f01211a19f7ae6cfe00b19e16f799",
+  "output_sha256": "562d62910faf60272242fe80095bc1b9c6b9bcfb355556c6f17df13ce4a96f5c",
   "width": 960,
   "height": 720,
   "azimuth": 35,
   "elevation": 30,
   "base_layout": true,
   "animation_sampled": false,
-  "environment": "presentation floor and wire room envelope; no inferred walls"
+  "environment": "wire room envelope; presentation floor only when no visible instances; no inferred walls"
 }

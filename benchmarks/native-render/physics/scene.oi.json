@@ -1,0 +1,451 @@
+{
+  "format": "astra.scene",
+  "version": 1,
+  "units": "m",
+  "upAxis": "Y",
+  "room": [
+    8,
+    6,
+    4
+  ],
+  "assets": [
+    {
+      "id": "ground",
+      "name": "ground",
+      "source": {
+        "kind": "generated",
+        "generator": "oi-fixture",
+        "filename": "physics/build_fixture.py",
+        "digest": "61406b5b77fa974b00f45d8375e744bcd2120831b2c773f06a3a3d8f3dbdf047"
+      },
+      "dimensions": [
+        8,
+        0.1,
+        6
+      ]
+    },
+    {
+      "id": "block",
+      "name": "block",
+      "source": {
+        "kind": "generated",
+        "generator": "oi-fixture",
+        "filename": "physics/build_fixture.py",
+        "digest": "860c9d5ce3173fade4d6aa42aad4535d5be902534dc63ffe99736f8ddd15f1ee"
+      },
+      "dimensions": [
+        1,
+        0.8,
+        0.6
+      ]
+    },
+    {
+      "id": "pendulum",
+      "name": "pendulum",
+      "source": {
+        "kind": "generated",
+        "generator": "oi-fixture",
+        "filename": "physics/build_fixture.py",
+        "digest": "35fc9155cb0d2db3f650ca54e820c841411721e9f2f365b3e2f64b438e3914c4"
+      },
+      "dimensions": [
+        0.2,
+        1.6,
+        0.2
+      ]
+    }
+  ],
+  "bundledAssets": [
+    {
+      "schemaVersion": 1,
+      "id": "ground",
+      "name": "ground",
+      "units": "m",
+      "upAxis": "Y",
+      "originOffset": [
+        0,
+        0,
+        0
+      ],
+      "dimensions": [
+        8,
+        0.1,
+        6
+      ],
+      "source": {
+        "kind": "generated",
+        "generator": "oi-fixture",
+        "filename": "physics/build_fixture.py",
+        "digest": "61406b5b77fa974b00f45d8375e744bcd2120831b2c773f06a3a3d8f3dbdf047"
+      },
+      "parts": [
+        {
+          "id": "ground",
+          "name": "ground",
+          "vertices": [
+            -4.0,
+            0.0,
+            -3.0,
+            4.0,
+            0.0,
+            -3.0,
+            4.0,
+            0.1,
+            -3.0,
+            -4.0,
+            0.1,
+            -3.0,
+            -4.0,
+            0.0,
+            3.0,
+            4.0,
+            0.0,
+            3.0,
+            4.0,
+            0.1,
+            3.0,
+            -4.0,
+            0.1,
+            3.0
+          ],
+          "indices": [
+            0,
+            2,
+            1,
+            0,
+            3,
+            2,
+            4,
+            5,
+            6,
+            4,
+            6,
+            7,
+            0,
+            1,
+            5,
+            0,
+            5,
+            4,
+            3,
+            7,
+            6,
+            3,
+            6,
+            2,
+            0,
+            4,
+            7,
+            0,
+            7,
+            3,
+            1,
+            2,
+            6,
+            1,
+            6,
+            5
+          ],
+          "color": [
+            0.25,
+            0.3,
+            0.35
+          ],
+          "metadata": {
+            "representation": "New MIT-licensed conceptual box; not CAD or engineering validation"
+          }
+        }
+      ],
+      "hierarchy": {
+        "id": "ground",
+        "name": "ground",
+        "partIds": [
+          "ground"
+        ],
+        "children": []
+      },
+      "warnings": [
+        "Conceptual envelope only; authored for this interchange fixture."
+      ]
+    },
+    {
+      "schemaVersion": 1,
+      "id": "block",
+      "name": "block",
+      "units": "m",
+      "upAxis": "Y",
+      "originOffset": [
+        0,
+        0,
+        0
+      ],
+      "dimensions": [
+        1,
+        0.8,
+        0.6
+      ],
+      "source": {
+        "kind": "generated",
+        "generator": "oi-fixture",
+        "filename": "physics/build_fixture.py",
+        "digest": "860c9d5ce3173fade4d6aa42aad4535d5be902534dc63ffe99736f8ddd15f1ee"
+      },
+      "parts": [
+        {
+          "id": "block",
+          "name": "block",
+          "vertices": [
+            -0.5,
+            0.0,
+            -0.3,
+            0.5,
+            0.0,
+            -0.3,
+            0.5,
+            0.8,
+            -0.3,
+            -0.5,
+            0.8,
+            -0.3,
+            -0.5,
+            0.0,
+            0.3,
+            0.5,
+            0.0,
+            0.3,
+            0.5,
+            0.8,
+            0.3,
+            -0.5,
+            0.8,
+            0.3
+          ],
+          "indices": [
+            0,
+            2,
+            1,
+            0,
+            3,
+            2,
+            4,
+            5,
+            6,
+            4,
+            6,
+            7,
+            0,
+            1,
+            5,
+            0,
+            5,
+            4,
+            3,
+            7,
+            6,
+            3,
+            6,
+            2,
+            0,
+            4,
+            7,
+            0,
+            7,
+            3,
+            1,
+            2,
+            6,
+            1,
+            6,
+            5
+          ],
+          "color": [
+            0.8,
+            0.3,
+            0.08
+          ],
+          "metadata": {
+            "representation": "New MIT-licensed conceptual box; not CAD or engineering validation"
+          }
+        }
+      ],
+      "hierarchy": {
+        "id": "block",
+        "name": "block",
+        "partIds": [
+          "block"
+        ],
+        "children": []
+      },
+      "warnings": [
+        "Conceptual envelope only; authored for this interchange fixture."
+      ]
+    },
+    {
+      "schemaVersion": 1,
+      "id": "pendulum",
+      "name": "pendulum",
+      "units": "m",
+      "upAxis": "Y",
+      "originOffset": [
+        0,
+        0,
+        0
+      ],
+      "dimensions": [
+        0.2,
+        1.6,
+        0.2
+      ],
+      "source": {
+        "kind": "generated",
+        "generator": "oi-fixture",
+        "filename": "physics/build_fixture.py",
+        "digest": "35fc9155cb0d2db3f650ca54e820c841411721e9f2f365b3e2f64b438e3914c4"
+      },
+      "parts": [
+        {
+          "id": "pendulum",
+          "name": "pendulum",
+          "vertices": [
+            -0.1,
+            0.0,
+            -0.1,
+            0.1,
+            0.0,
+            -0.1,
+            0.1,
+            1.6,
+            -0.1,
+            -0.1,
+            1.6,
+            -0.1,
+            -0.1,
+            0.0,
+            0.1,
+            0.1,
+            0.0,
+            0.1,
+            0.1,
+            1.6,
+            0.1,
+            -0.1,
+            1.6,
+            0.1
+          ],
+          "indices": [
+            0,
+            2,
+            1,
+            0,
+            3,
+            2,
+            4,
+            5,
+            6,
+            4,
+            6,
+            7,
+            0,
+            1,
+            5,
+            0,
+            5,
+            4,
+            3,
+            7,
+            6,
+            3,
+            6,
+            2,
+            0,
+            4,
+            7,
+            0,
+            7,
+            3,
+            1,
+            2,
+            6,
+            1,
+            6,
+            5
+          ],
+          "color": [
+            0.1,
+            0.5,
+            0.8
+          ],
+          "metadata": {
+            "representation": "New MIT-licensed conceptual box; not CAD or engineering validation"
+          }
+        }
+      ],
+      "hierarchy": {
+        "id": "pendulum",
+        "name": "pendulum",
+        "partIds": [
+          "pendulum"
+        ],
+        "children": []
+      },
+      "warnings": [
+        "Conceptual envelope only; authored for this interchange fixture."
+      ]
+    }
+  ],
+  "instances": [
+    {
+      "id": "ground",
+      "name": "ground",
+      "assetId": "ground",
+      "visible": true,
+      "position": [
+        0,
+        -0.1,
+        0
+      ],
+      "rotation": [
+        0,
+        0,
+        0
+      ]
+    },
+    {
+      "id": "block",
+      "name": "block",
+      "assetId": "block",
+      "visible": true,
+      "position": [
+        -1,
+        1.6,
+        0
+      ],
+      "rotation": [
+        0,
+        0,
+        0
+      ]
+    },
+    {
+      "id": "pendulum",
+      "name": "pendulum",
+      "assetId": "pendulum",
+      "visible": true,
+      "position": [
+        1.5,
+        0.9,
+        0
+      ],
+      "rotation": [
+        0,
+        0,
+        0
+      ]
+    }
+  ],
+  "animation": {
+    "duration": 4,
+    "loop": false,
+    "tracks": []
+  }
+}

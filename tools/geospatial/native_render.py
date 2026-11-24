@@ -42,7 +42,8 @@ def build_scene(document: dict[str, Any], *, base_layout: bool = False, include_
                             [width/2, 0, depth/2], [width/2, 0, -depth/2]], dtype=np.float32),
         indices=np.array([[0, 1, 2], [0, 2, 3]], dtype=np.uint32),
     )
-    scene.add(gfx.Mesh(floor, gfx.MeshPhongMaterial(color="#55616b", side="both")))
+    if not any(instance["visible"] for instance in instances):
+        scene.add(gfx.Mesh(floor, gfx.MeshPhongMaterial(color="#55616b", side="both"), name="presentation-floor"))
     corners = np.array([[x, y, z] for y in (0, height) for z in (-depth/2, depth/2)
                         for x in (-width/2, width/2)], dtype=np.float32)
     edges = [(a, b) for a in range(8) for b in range(a+1, 8) if (a ^ b) in (1, 2, 4)]
@@ -99,10 +100,11 @@ def render_scene(document: dict[str, Any], *, width: int = 960, height: int = 72
 def render_gif(document: dict[str, Any], output: Path, *, width: int = 640, height: int = 480,
                azimuth: float = 35, elevation: float = 30, motion: str = "turntable",
                duration: float = 4, fps: int = 15, start: float = 0,
-               base_layout: bool = False, loop: bool = True) -> dict[str, Any]:
+               base_layout: bool = False, loop: bool = True,
+               physics_model: Path | None = None, physics_bindings: Path | None = None) -> dict[str, Any]:
     """Encode native frames with bounded memory and GIF centisecond timing."""
-    if motion not in ("turntable", "animation"):
-        raise ValueError("GIF motion must be turntable or animation")
+    if motion not in ("turntable", "animation", "physics"):
+        raise ValueError("GIF motion must be turntable, animation or physics")
     if not 64 <= width <= 1024 or not 64 <= height <= 1024:
         raise ValueError("GIF dimensions must be between 64 and 1024")
     if not math.isfinite(duration) or not 0.1 <= duration <= 12 or not 1 <= fps <= 50:
@@ -118,6 +120,12 @@ def render_gif(document: dict[str, Any], output: Path, *, width: int = 640, heig
         raise ValueError("--start applies only to authored animation")
     if motion == "animation" and base_layout:
         raise ValueError("--base-layout conflicts with --motion animation")
+    if motion == "physics" and (physics_model is None or physics_bindings is None):
+        raise ValueError("Physics requires --physics-model and --physics-bindings")
+    if motion != "physics" and (physics_model is not None or physics_bindings is not None):
+        raise ValueError("Physics files require --motion physics")
+    if motion == "physics" and document.get('animation', {}).get('tracks') and not base_layout:
+        raise ValueError("Physics replaces authored tracks; use --base-layout to acknowledge ignoring them")
     scene = build_scene(document, base_layout=base_layout or motion == "animation", include_hidden=True)
     tracks = validate_animation(document, scene) if motion == "animation" else []
     if motion == "animation" and (not tracks or start + duration > document['animation']['duration'] + 1e-9):
@@ -128,8 +136,16 @@ def render_gif(document: dict[str, Any], output: Path, *, width: int = 640, heig
     if min(delays) <= 0:
         raise ValueError("Requested range leaves a zero-length GIF frame")
     visibility = {i['id']: i['visible'] for i in document['instances']}
+    physics = None
+    physics_frames = []
+    if motion == 'physics':
+        from native_physics import PhysicsReplay
+        physics = PhysicsReplay(physics_model, physics_bindings, scene)
+        physics_frames = physics.sample([start + ms / 1000 for ms in boundaries[:-1]])
     boxes = []
-    for milliseconds in boundaries[:-1]:
+    for index, milliseconds in enumerate(boundaries[:-1]):
+        if physics:
+            physics.apply(physics_frames[index])
         if tracks:
             apply_animation(scene, tracks, start + milliseconds / 1000, visibility)
         boxes.append(scene.get_world_bounding_box())
@@ -142,7 +158,9 @@ def render_gif(document: dict[str, Any], output: Path, *, width: int = 640, heig
     try:
         renderer = gfx.WgpuRenderer(canvas)
         canvas.request_draw(lambda: renderer.render(scene, camera))
-        for milliseconds in boundaries[:-1]:
+        for index, milliseconds in enumerate(boundaries[:-1]):
+            if physics:
+                physics.apply(physics_frames[index])
             if tracks:
                 apply_animation(scene, tracks, start + milliseconds / 1000, visibility)
             angle = azimuth + (360 * milliseconds / boundaries[-1] if motion == "turntable" else 0)
@@ -150,8 +168,19 @@ def render_gif(document: dict[str, Any], output: Path, *, width: int = 640, heig
             camera.show_object(sphere, view_dir=(-math.sin(az)*math.cos(el), -math.sin(el),
                                                 -math.cos(az)*math.cos(el)), up=(0, 1, 0), scale=1.15)
             frame = Image.fromarray(np.asarray(canvas.draw())).convert('RGB')
-            frames.append(frame.quantize(colors=256, dither=Image.Dither.NONE))
+            frames.append(frame)
         output.parent.mkdir(parents=True, exist_ok=True)
+        # A single palette prevents identical colors changing between GIF frames.
+        atlas = Image.new('RGB', (64 * 16, 64 * math.ceil(len(frames) / 16)))
+        for index, frame in enumerate(frames):
+            atlas.paste(frame.resize((64, 64)), ((index % 16) * 64, (index // 16) * 64))
+        palette = atlas.quantize(colors=256)
+        quantized = [frame.quantize(palette=palette, dither=Image.Dither.NONE) for frame in frames]
+        for frame in frames:
+            frame.close()
+        frames = quantized
+        palette.close()
+        atlas.close()
         options = {'loop': 0} if loop else {}
         frames[0].save(output, format='GIF', save_all=True, append_images=frames[1:],
                        duration=delays, disposal=2, optimize=False, **options)
@@ -160,7 +189,8 @@ def render_gif(document: dict[str, Any], output: Path, *, width: int = 640, heig
             encoded_frames = encoded.n_frames
         return {'motion': motion, 'requested_fps': fps, 'sampled_frames': count,
                 'encoded_frames': encoded_frames, 'duration_ms': sum(delays),
-                'start_seconds': start, 'loop': loop, 'animation_sampled': motion == 'animation'}
+                'start_seconds': start, 'loop': loop, 'animation_sampled': motion == 'animation',
+                'physics': physics.report if physics else None, 'palette': 'shared-256-color'}
     finally:
         canvas.close()
         for frame in frames:
@@ -177,11 +207,13 @@ def main() -> int:
     parser.add_argument("--azimuth", type=float, default=35)
     parser.add_argument("--elevation", type=float, default=30)
     parser.add_argument("--base-layout", action="store_true")
-    parser.add_argument("--motion", choices=["turntable", "animation"], default="turntable")
+    parser.add_argument("--motion", choices=["turntable", "animation", "physics"], default="turntable")
     parser.add_argument("--duration", type=float, default=4)
     parser.add_argument("--fps", type=int, default=15)
     parser.add_argument("--start", type=float, default=0)
     parser.add_argument("--no-loop", action="store_true")
+    parser.add_argument("--physics-model", type=Path)
+    parser.add_argument("--physics-bindings", type=Path)
     args = parser.parse_args()
     try:
         if args.output.suffix.lower() not in (".png", ".gif"):
@@ -197,8 +229,11 @@ def main() -> int:
             gif_report = render_gif(document, args.output, width=args.width, height=args.height,
                                     azimuth=args.azimuth, elevation=args.elevation, motion=args.motion,
                                     duration=args.duration, fps=args.fps, start=args.start,
-                                    base_layout=args.base_layout, loop=not args.no_loop)
+                                    base_layout=args.base_layout, loop=not args.no_loop,
+                                    physics_model=args.physics_model, physics_bindings=args.physics_bindings)
         else:
+            if args.motion != 'turntable' or args.physics_model or args.physics_bindings:
+                raise ValueError('Motion/physics options require GIF output')
             pixels = render_scene(document, width=args.width, height=args.height, azimuth=args.azimuth,
                                   elevation=args.elevation, base_layout=args.base_layout)
             args.output.parent.mkdir(parents=True, exist_ok=True)
@@ -208,7 +243,7 @@ def main() -> int:
                   "input_sha256": digest(raw), "output_sha256": digest(args.output.read_bytes()),
                   "width": args.width, "height": args.height, "azimuth": args.azimuth, "elevation": args.elevation,
                   "base_layout": args.base_layout, "animation_sampled": False, **gif_report,
-                  "environment": "presentation floor and wire room envelope; no inferred walls"}
+                  "environment": "wire room envelope; presentation floor only when no visible instances; no inferred walls"}
         args.output.with_suffix(".render.json").write_text(json.dumps(report, indent=2) + "\n")
         print(json.dumps(report, indent=2))
         return 0
