@@ -1,0 +1,22 @@
+name: WASM live runtime
+on:
+  pull_request:
+    paths: ['tools/geospatial/**', 'benchmarks/live-runtime/**', 'benchmarks/native-render/so101/**', 'pyproject.toml', '.github/workflows/wasm-live-runtime.yml']
+  workflow_dispatch:
+permissions:
+  contents: read
+jobs:
+  headless:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - run: pip install -e '.[physics,native-render,live]' pytest
+      - run: python benchmarks/native-render/so101/fetch_assets.py
+      - run: python -m pytest tools/geospatial/test_live_runtime.py tools/geospatial/test_json_workcell.py -q
+      - name: Install native software-display dependencies
+        run: sudo apt-get update && sudo apt-get install -y xvfb mesa-vulkan-drivers
+      - name: Native window draws live frames without a browser
+        run: xvfb-run -a python benchmarks/live-runtime/window_smoke.py

@@ -1,0 +1,2902 @@
+{
+  "repeats": 3,
+  "paced": true,
+  "qpos_tolerance": 1e-08,
+  "passed": true,
+  "parity": [
+    {
+      "scene": "single-can",
+      "repeat": 0,
+      "same_sample_times": true,
+      "max_qpos_delta": 0.0,
+      "same_events": true,
+      "passed": true
+    },
+    {
+      "scene": "single-can",
+      "repeat": 1,
+      "same_sample_times": true,
+      "max_qpos_delta": 0.0,
+      "same_events": true,
+      "passed": true
+    },
+    {
+      "scene": "single-can",
+      "repeat": 2,
+      "same_sample_times": true,
+      "max_qpos_delta": 0.0,
+      "same_events": true,
+      "passed": true
+    },
+    {
+      "scene": "five-cans",
+      "repeat": 0,
+      "same_sample_times": true,
+      "max_qpos_delta": 0.0,
+      "same_events": true,
+      "passed": true
+    },
+    {
+      "scene": "five-cans",
+      "repeat": 1,
+      "same_sample_times": true,
+      "max_qpos_delta": 0.0,
+      "same_events": true,
+      "passed": true
+    },
+    {
+      "scene": "five-cans",
+      "repeat": 2,
+      "same_sample_times": true,
+      "max_qpos_delta": 0.0,
+      "same_events": true,
+      "passed": true
+    },
+    {
+      "scene": "blocks",
+      "repeat": 0,
+      "same_sample_times": true,
+      "max_qpos_delta": 0.0,
+      "same_events": true,
+      "passed": true
+    },
+    {
+      "scene": "blocks",
+      "repeat": 1,
+      "same_sample_times": true,
+      "max_qpos_delta": 0.0,
+      "same_events": true,
+      "passed": true
+    },
+    {
+      "scene": "blocks",
+      "repeat": 2,
+      "same_sample_times": true,
+      "max_qpos_delta": 0.0,
+      "same_events": true,
+      "passed": true
+    },
+    {
+      "scene": "gate",
+      "repeat": 0,
+      "same_sample_times": true,
+      "max_qpos_delta": 0.0,
+      "same_events": true,
+      "passed": true
+    },
+    {
+      "scene": "gate",
+      "repeat": 1,
+      "same_sample_times": true,
+      "max_qpos_delta": 0.0,
+      "same_events": true,
+      "passed": true
+    },
+    {
+      "scene": "gate",
+      "repeat": 2,
+      "same_sample_times": true,
+      "max_qpos_delta": 0.0,
+      "same_events": true,
+      "passed": true
+    }
+  ],
+  "trials": [
+    {
+      "backend": "native",
+      "native_components": [
+        "MuJoCo",
+        "IK",
+        "host",
+        "renderer"
+      ],
+      "wasm_components": [],
+      "assessment": {
+        "success": true,
+        "warnings": 0,
+        "equality_constraints": 0,
+        "bilateral_contact": true,
+        "maximum_height": 0.08178928732368398,
+        "placement_verified": true,
+        "no_finger_contact": false,
+        "object_position": [
+          0.138569439965998,
+          -0.11343901560137913,
+          0.039901068090992094
+        ]
+      },
+      "implementation_sha256": {
+        "live_runtime.py": "622f99b1963f47fe8d87ac1839079363b5cce83305c4c3b6bd6ed92e22d79626",
+        "wasm_policy.py": "95078b0526122e1395d8b5d283320c94dfbf9164c8c7ae7b1460991be3309fc1",
+        "json_workcell.py": "ceb32820826e15f209740fd19c1068ef4f93a355e2d6d321020c810ed5411ba7",
+        "live_viewer.py": "4b43621c5c9c3f24118256bcc128b2a27f311386d6bf8aaaa39f1542909a7d5e"
+      },
+      "configuration_sha256": {
+        "cases.json": "314165cf503b42828b53176af89b5124cd5b56fcd16dc29f9d98531b7aaa83e4",
+        "comparison.json": "f25f61ad397cabf310da4f8a7efa7f75885a2548f5a0c9167b6b557ce781e5b2",
+        "json-pick-and-place.render.json": "b9f91f1256ee900857695beb19a0ce0d7e40c3ae834c6cebfdae6c2c2e848598",
+        "render.json": "b83975844ac4d12ed14acc8c0bc45452cd5a4090b6b1ba4e1915c22baa38cee5",
+        "robot-adapter.json": "08dc612345d7cc7139be93026cf6370c83316733d8f69ef61929afb78bd00777",
+        "task.json": "085a4d798bacecfa92f6b23c6b1a03d57b61133a69d0a2da18bc4a5f05599be3",
+        "workcell.json": "28808b78a7de6027d0118d5ecda5b5ad57fa9374087546407d3c1016103798a3"
+      },
+      "versions": {
+        "mujoco": "4.0.1",
+        "wasmtime": "51.0.0",
+        "pygfx": "0.18.0",
+        "wgpu": "0.33.0"
+      },
+      "platform": "Linux-6.18.57-x86_64-with-glibc2.41",
+      "python": "3.12.14",
+      "cpu": "INTEL(R) XEON(R) PLATINUM 8573C",
+      "startup_seconds": 0.28218422799909604,
+      "wall_seconds": 9.115215851001267,
+      "cpu_seconds": 3.7790324990000004,
+      "cpu_percent_one_core": 41.458508067967365,
+      "peak_process_rss_kib": 394296.0,
+      "simulation_wall_ratio": 0.9994277863424395,
+      "physics_dt": 0.002,
+      "control_every": 1,
+      "tick_latency": {
+        "p50_ms": 0.3593039982661139,
+        "p95_ms": 0.6424252012948275,
+        "p99_ms": 1.4143173006596073
+      },
+      "control_tick_including_physics_latency": {
+        "p50_ms": 0.3593039982661139,
+        "p95_ms": 0.6424252012948275,
+        "p99_ms": 1.4143173006596073
+      },
+      "command_to_observation_latency": {
+        "p50_ms": 1.6046050004661083,
+        "p95_ms": 2.4927199992816895,
+        "p99_ms": 2.9169040008127887
+      },
+      "missed_compute_deadlines": 27,
+      "rendered_fps": 0,
+      "frames": 0,
+      "view": "headless",
+      "paced": true,
+      "scene": "single-can",
+      "repeat": 0,
+      "state": {
+        "state": "completed",
+        "phase": "complete",
+        "error": null,
+        "time": 9.109999999999712,
+        "steps": 4555,
+        "qvel": [
+          -5.210452994295519e-07,
+          -2.39264931533968e-07,
+          -6.301584585767358e-07,
+          -4.866130595183988e-07,
+          -4.189771877268606e-08,
+          4.12111883481264e-11,
+          5.118744683012509e-05,
+          -4.4738343265066224e-05,
+          3.626933472557186e-06,
+          -0.0011366582314185155,
+          -0.0019702077505472015,
+          0.0004963949075286204,
+          -2.1870857676287348e-05,
+          -3.3968681853902837e-06,
+          1.4924231204437603e-06,
+          -0.00015233947051056628,
+          -0.0007408340934743173,
+          5.8300325382844076e-06,
+          -0.00010620387213065842,
+          1.0729046089644655e-05,
+          -4.223905734558577e-06,
+          -0.0005850471436767766,
+          -0.00372243604545742,
+          2.2015631693448586e-05
+        ],
+        "actuators": {
+          "shoulder_pan": 0.843035302439752,
+          "shoulder_lift": -0.4536060202904307,
+          "elbow_flex": 0.521441450469025,
+          "wrist_flex": 1.5029637859613598,
+          "wrist_roll": -2.077645182222412e-05,
+          "gripper": 0.8
+        },
+        "overloads": 0,
+        "discarded_wall_seconds": 0.0
+      }
+    },
+    {
+      "backend": "wasm",
+      "native_components": [
+        "MuJoCo",
+        "IK",
+        "host",
+        "renderer"
+      ],
+      "wasm_components": [
+        "actuator slew",
+        "phase transition decisions"
+      ],
+      "assessment": {
+        "success": true,
+        "warnings": 0,
+        "equality_constraints": 0,
+        "bilateral_contact": true,
+        "maximum_height": 0.08178928732368398,
+        "placement_verified": true,
+        "no_finger_contact": false,
+        "object_position": [
+          0.138569439965998,
+          -0.11343901560137913,
+          0.039901068090992094
+        ]
+      },
+      "implementation_sha256": {
+        "live_runtime.py": "622f99b1963f47fe8d87ac1839079363b5cce83305c4c3b6bd6ed92e22d79626",
+        "wasm_policy.py": "95078b0526122e1395d8b5d283320c94dfbf9164c8c7ae7b1460991be3309fc1",
+        "json_workcell.py": "ceb32820826e15f209740fd19c1068ef4f93a355e2d6d321020c810ed5411ba7",
+        "live_viewer.py": "4b43621c5c9c3f24118256bcc128b2a27f311386d6bf8aaaa39f1542909a7d5e"
+      },
+      "configuration_sha256": {
+        "cases.json": "314165cf503b42828b53176af89b5124cd5b56fcd16dc29f9d98531b7aaa83e4",
+        "comparison.json": "f25f61ad397cabf310da4f8a7efa7f75885a2548f5a0c9167b6b557ce781e5b2",
+        "json-pick-and-place.render.json": "b9f91f1256ee900857695beb19a0ce0d7e40c3ae834c6cebfdae6c2c2e848598",
+        "render.json": "b83975844ac4d12ed14acc8c0bc45452cd5a4090b6b1ba4e1915c22baa38cee5",
+        "robot-adapter.json": "08dc612345d7cc7139be93026cf6370c83316733d8f69ef61929afb78bd00777",
+        "task.json": "085a4d798bacecfa92f6b23c6b1a03d57b61133a69d0a2da18bc4a5f05599be3",
+        "workcell.json": "28808b78a7de6027d0118d5ecda5b5ad57fa9374087546407d3c1016103798a3"
+      },
+      "versions": {
+        "mujoco": "4.0.1",
+        "wasmtime": "51.0.0",
+        "pygfx": "0.18.0",
+        "wgpu": "0.33.0"
+      },
+      "platform": "Linux-6.18.57-x86_64-with-glibc2.41",
+      "python": "3.12.14",
+      "cpu": "INTEL(R) XEON(R) PLATINUM 8573C",
+      "startup_seconds": 0.39383117300167214,
+      "wall_seconds": 9.122750529997575,
+      "cpu_seconds": 5.663365269,
+      "cpu_percent_one_core": 62.07958060869505,
+      "peak_process_rss_kib": 410836.0,
+      "simulation_wall_ratio": 0.9986023370960395,
+      "physics_dt": 0.002,
+      "control_every": 1,
+      "tick_latency": {
+        "p50_ms": 0.666397998429602,
+        "p95_ms": 1.578854301624234,
+        "p99_ms": 2.6727394203771846
+      },
+      "control_tick_including_physics_latency": {
+        "p50_ms": 0.666397998429602,
+        "p95_ms": 1.578854301624234,
+        "p99_ms": 2.6727394203771846
+      },
+      "command_to_observation_latency": {
+        "p50_ms": 1.6551890003029257,
+        "p95_ms": 2.63755299965851,
+        "p99_ms": 3.88304619846167
+      },
+      "missed_compute_deadlines": 111,
+      "rendered_fps": 0,
+      "frames": 0,
+      "view": "headless",
+      "paced": true,
+      "scene": "single-can",
+      "repeat": 0,
+      "state": {
+        "state": "completed",
+        "phase": "complete",
+        "error": null,
+        "time": 9.109999999999712,
+        "steps": 4555,
+        "qvel": [
+          -5.210452994295519e-07,
+          -2.39264931533968e-07,
+          -6.301584585767358e-07,
+          -4.866130595183988e-07,
+          -4.189771877268606e-08,
+          4.12111883481264e-11,
+          5.118744683012509e-05,
+          -4.4738343265066224e-05,
+          3.626933472557186e-06,
+          -0.0011366582314185155,
+          -0.0019702077505472015,
+          0.0004963949075286204,
+          -2.1870857676287348e-05,
+          -3.3968681853902837e-06,
+          1.4924231204437603e-06,
+          -0.00015233947051056628,
+          -0.0007408340934743173,
+          5.8300325382844076e-06,
+          -0.00010620387213065842,
+          1.0729046089644655e-05,
+          -4.223905734558577e-06,
+          -0.0005850471436767766,
+          -0.00372243604545742,
+          2.2015631693448586e-05
+        ],
+        "actuators": {
+          "shoulder_pan": 0.843035302439752,
+          "shoulder_lift": -0.4536060202904307,
+          "elbow_flex": 0.521441450469025,
+          "wrist_flex": 1.5029637859613598,
+          "wrist_roll": -2.077645182222412e-05,
+          "gripper": 0.8
+        },
+        "overloads": 1,
+        "discarded_wall_seconds": 0.002
+      }
+    },
+    {
+      "backend": "native",
+      "native_components": [
+        "MuJoCo",
+        "IK",
+        "host",
+        "renderer"
+      ],
+      "wasm_components": [],
+      "assessment": {
+        "success": true,
+        "warnings": 0,
+        "equality_constraints": 0,
+        "bilateral_contact": true,
+        "maximum_height": 0.08178928732368398,
+        "placement_verified": true,
+        "no_finger_contact": false,
+        "object_position": [
+          0.138569439965998,
+          -0.11343901560137913,
+          0.039901068090992094
+        ]
+      },
+      "implementation_sha256": {
+        "live_runtime.py": "622f99b1963f47fe8d87ac1839079363b5cce83305c4c3b6bd6ed92e22d79626",
+        "wasm_policy.py": "95078b0526122e1395d8b5d283320c94dfbf9164c8c7ae7b1460991be3309fc1",
+        "json_workcell.py": "ceb32820826e15f209740fd19c1068ef4f93a355e2d6d321020c810ed5411ba7",
+        "live_viewer.py": "4b43621c5c9c3f24118256bcc128b2a27f311386d6bf8aaaa39f1542909a7d5e"
+      },
+      "configuration_sha256": {
+        "cases.json": "314165cf503b42828b53176af89b5124cd5b56fcd16dc29f9d98531b7aaa83e4",
+        "comparison.json": "f25f61ad397cabf310da4f8a7efa7f75885a2548f5a0c9167b6b557ce781e5b2",
+        "json-pick-and-place.render.json": "b9f91f1256ee900857695beb19a0ce0d7e40c3ae834c6cebfdae6c2c2e848598",
+        "render.json": "b83975844ac4d12ed14acc8c0bc45452cd5a4090b6b1ba4e1915c22baa38cee5",
+        "robot-adapter.json": "08dc612345d7cc7139be93026cf6370c83316733d8f69ef61929afb78bd00777",
+        "task.json": "085a4d798bacecfa92f6b23c6b1a03d57b61133a69d0a2da18bc4a5f05599be3",
+        "workcell.json": "28808b78a7de6027d0118d5ecda5b5ad57fa9374087546407d3c1016103798a3"
+      },
+      "versions": {
+        "mujoco": "4.0.1",
+        "wasmtime": "51.0.0",
+        "pygfx": "0.18.0",
+        "wgpu": "0.33.0"
+      },
+      "platform": "Linux-6.18.57-x86_64-with-glibc2.41",
+      "python": "3.12.14",
+      "cpu": "INTEL(R) XEON(R) PLATINUM 8573C",
+      "startup_seconds": 0.5641185649983527,
+      "wall_seconds": 9.123716670001158,
+      "cpu_seconds": 3.710842503,
+      "cpu_percent_one_core": 40.67248729019913,
+      "peak_process_rss_kib": 395584.0,
+      "simulation_wall_ratio": 0.9984965918498382,
+      "physics_dt": 0.002,
+      "control_every": 1,
+      "tick_latency": {
+        "p50_ms": 0.346337998053059,
+        "p95_ms": 0.6428182012314211,
+        "p99_ms": 1.289031780252117
+      },
+      "control_tick_including_physics_latency": {
+        "p50_ms": 0.346337998053059,
+        "p95_ms": 0.6428182012314211,
+        "p99_ms": 1.289031780252117
+      },
+      "command_to_observation_latency": {
+        "p50_ms": 1.49232300100266,
+        "p95_ms": 2.0755870009452337,
+        "p99_ms": 2.4674017986398984
+      },
+      "missed_compute_deadlines": 18,
+      "rendered_fps": 0,
+      "frames": 0,
+      "view": "headless",
+      "paced": true,
+      "scene": "single-can",
+      "repeat": 1,
+      "state": {
+        "state": "completed",
+        "phase": "complete",
+        "error": null,
+        "time": 9.109999999999712,
+        "steps": 4555,
+        "qvel": [
+          -5.210452994295519e-07,
+          -2.39264931533968e-07,
+          -6.301584585767358e-07,
+          -4.866130595183988e-07,
+          -4.189771877268606e-08,
+          4.12111883481264e-11,
+          5.118744683012509e-05,
+          -4.4738343265066224e-05,
+          3.626933472557186e-06,
+          -0.0011366582314185155,
+          -0.0019702077505472015,
+          0.0004963949075286204,
+          -2.1870857676287348e-05,
+          -3.3968681853902837e-06,
+          1.4924231204437603e-06,
+          -0.00015233947051056628,
+          -0.0007408340934743173,
+          5.8300325382844076e-06,
+          -0.00010620387213065842,
+          1.0729046089644655e-05,
+          -4.223905734558577e-06,
+          -0.0005850471436767766,
+          -0.00372243604545742,
+          2.2015631693448586e-05
+        ],
+        "actuators": {
+          "shoulder_pan": 0.843035302439752,
+          "shoulder_lift": -0.4536060202904307,
+          "elbow_flex": 0.521441450469025,
+          "wrist_flex": 1.5029637859613598,
+          "wrist_roll": -2.077645182222412e-05,
+          "gripper": 0.8
+        },
+        "overloads": 0,
+        "discarded_wall_seconds": 0.0
+      }
+    },
+    {
+      "backend": "wasm",
+      "native_components": [
+        "MuJoCo",
+        "IK",
+        "host",
+        "renderer"
+      ],
+      "wasm_components": [
+        "actuator slew",
+        "phase transition decisions"
+      ],
+      "assessment": {
+        "success": true,
+        "warnings": 0,
+        "equality_constraints": 0,
+        "bilateral_contact": true,
+        "maximum_height": 0.08178928732368398,
+        "placement_verified": true,
+        "no_finger_contact": false,
+        "object_position": [
+          0.138569439965998,
+          -0.11343901560137913,
+          0.039901068090992094
+        ]
+      },
+      "implementation_sha256": {
+        "live_runtime.py": "622f99b1963f47fe8d87ac1839079363b5cce83305c4c3b6bd6ed92e22d79626",
+        "wasm_policy.py": "95078b0526122e1395d8b5d283320c94dfbf9164c8c7ae7b1460991be3309fc1",
+        "json_workcell.py": "ceb32820826e15f209740fd19c1068ef4f93a355e2d6d321020c810ed5411ba7",
+        "live_viewer.py": "4b43621c5c9c3f24118256bcc128b2a27f311386d6bf8aaaa39f1542909a7d5e"
+      },
+      "configuration_sha256": {
+        "cases.json": "314165cf503b42828b53176af89b5124cd5b56fcd16dc29f9d98531b7aaa83e4",
+        "comparison.json": "f25f61ad397cabf310da4f8a7efa7f75885a2548f5a0c9167b6b557ce781e5b2",
+        "json-pick-and-place.render.json": "b9f91f1256ee900857695beb19a0ce0d7e40c3ae834c6cebfdae6c2c2e848598",
+        "render.json": "b83975844ac4d12ed14acc8c0bc45452cd5a4090b6b1ba4e1915c22baa38cee5",
+        "robot-adapter.json": "08dc612345d7cc7139be93026cf6370c83316733d8f69ef61929afb78bd00777",
+        "task.json": "085a4d798bacecfa92f6b23c6b1a03d57b61133a69d0a2da18bc4a5f05599be3",
+        "workcell.json": "28808b78a7de6027d0118d5ecda5b5ad57fa9374087546407d3c1016103798a3"
+      },
+      "versions": {
+        "mujoco": "4.0.1",
+        "wasmtime": "51.0.0",
+        "pygfx": "0.18.0",
+        "wgpu": "0.33.0"
+      },
+      "platform": "Linux-6.18.57-x86_64-with-glibc2.41",
+      "python": "3.12.14",
+      "cpu": "INTEL(R) XEON(R) PLATINUM 8573C",
+      "startup_seconds": 0.2910328470024979,
+      "wall_seconds": 9.118306747001043,
+      "cpu_seconds": 5.152552841,
+      "cpu_percent_one_core": 56.50778136735359,
+      "peak_process_rss_kib": 411924.0,
+      "simulation_wall_ratio": 0.9990890033389079,
+      "physics_dt": 0.002,
+      "control_every": 1,
+      "tick_latency": {
+        "p50_ms": 0.6200989992066752,
+        "p95_ms": 1.0984655993524939,
+        "p99_ms": 1.6255627208738588
+      },
+      "control_tick_including_physics_latency": {
+        "p50_ms": 0.6200989992066752,
+        "p95_ms": 1.0984655993524939,
+        "p99_ms": 1.6255627208738588
+      },
+      "command_to_observation_latency": {
+        "p50_ms": 1.5656030009267852,
+        "p95_ms": 2.3208659986266866,
+        "p99_ms": 3.620932299600098
+      },
+      "missed_compute_deadlines": 29,
+      "rendered_fps": 0,
+      "frames": 0,
+      "view": "headless",
+      "paced": true,
+      "scene": "single-can",
+      "repeat": 1,
+      "state": {
+        "state": "completed",
+        "phase": "complete",
+        "error": null,
+        "time": 9.109999999999712,
+        "steps": 4555,
+        "qvel": [
+          -5.210452994295519e-07,
+          -2.39264931533968e-07,
+          -6.301584585767358e-07,
+          -4.866130595183988e-07,
+          -4.189771877268606e-08,
+          4.12111883481264e-11,
+          5.118744683012509e-05,
+          -4.4738343265066224e-05,
+          3.626933472557186e-06,
+          -0.0011366582314185155,
+          -0.0019702077505472015,
+          0.0004963949075286204,
+          -2.1870857676287348e-05,
+          -3.3968681853902837e-06,
+          1.4924231204437603e-06,
+          -0.00015233947051056628,
+          -0.0007408340934743173,
+          5.8300325382844076e-06,
+          -0.00010620387213065842,
+          1.0729046089644655e-05,
+          -4.223905734558577e-06,
+          -0.0005850471436767766,
+          -0.00372243604545742,
+          2.2015631693448586e-05
+        ],
+        "actuators": {
+          "shoulder_pan": 0.843035302439752,
+          "shoulder_lift": -0.4536060202904307,
+          "elbow_flex": 0.521441450469025,
+          "wrist_flex": 1.5029637859613598,
+          "wrist_roll": -2.077645182222412e-05,
+          "gripper": 0.8
+        },
+        "overloads": 0,
+        "discarded_wall_seconds": 0.0
+      }
+    },
+    {
+      "backend": "native",
+      "native_components": [
+        "MuJoCo",
+        "IK",
+        "host",
+        "renderer"
+      ],
+      "wasm_components": [],
+      "assessment": {
+        "success": true,
+        "warnings": 0,
+        "equality_constraints": 0,
+        "bilateral_contact": true,
+        "maximum_height": 0.08178928732368398,
+        "placement_verified": true,
+        "no_finger_contact": false,
+        "object_position": [
+          0.138569439965998,
+          -0.11343901560137913,
+          0.039901068090992094
+        ]
+      },
+      "implementation_sha256": {
+        "live_runtime.py": "622f99b1963f47fe8d87ac1839079363b5cce83305c4c3b6bd6ed92e22d79626",
+        "wasm_policy.py": "95078b0526122e1395d8b5d283320c94dfbf9164c8c7ae7b1460991be3309fc1",
+        "json_workcell.py": "ceb32820826e15f209740fd19c1068ef4f93a355e2d6d321020c810ed5411ba7",
+        "live_viewer.py": "4b43621c5c9c3f24118256bcc128b2a27f311386d6bf8aaaa39f1542909a7d5e"
+      },
+      "configuration_sha256": {
+        "cases.json": "314165cf503b42828b53176af89b5124cd5b56fcd16dc29f9d98531b7aaa83e4",
+        "comparison.json": "f25f61ad397cabf310da4f8a7efa7f75885a2548f5a0c9167b6b557ce781e5b2",
+        "json-pick-and-place.render.json": "b9f91f1256ee900857695beb19a0ce0d7e40c3ae834c6cebfdae6c2c2e848598",
+        "render.json": "b83975844ac4d12ed14acc8c0bc45452cd5a4090b6b1ba4e1915c22baa38cee5",
+        "robot-adapter.json": "08dc612345d7cc7139be93026cf6370c83316733d8f69ef61929afb78bd00777",
+        "task.json": "085a4d798bacecfa92f6b23c6b1a03d57b61133a69d0a2da18bc4a5f05599be3",
+        "workcell.json": "28808b78a7de6027d0118d5ecda5b5ad57fa9374087546407d3c1016103798a3"
+      },
+      "versions": {
+        "mujoco": "4.0.1",
+        "wasmtime": "51.0.0",
+        "pygfx": "0.18.0",
+        "wgpu": "0.33.0"
+      },
+      "platform": "Linux-6.18.57-x86_64-with-glibc2.41",
+      "python": "3.12.14",
+      "cpu": "INTEL(R) XEON(R) PLATINUM 8573C",
+      "startup_seconds": 0.3701789330007159,
+      "wall_seconds": 9.135145997999643,
+      "cpu_seconds": 4.24826817,
+      "cpu_percent_one_core": 46.50465543659903,
+      "peak_process_rss_kib": 395580.0,
+      "simulation_wall_ratio": 0.9972473348531662,
+      "physics_dt": 0.002,
+      "control_every": 1,
+      "tick_latency": {
+        "p50_ms": 0.37280700053088367,
+        "p95_ms": 0.8580399982747625,
+        "p99_ms": 1.868244998913725
+      },
+      "control_tick_including_physics_latency": {
+        "p50_ms": 0.37280700053088367,
+        "p95_ms": 0.8580399982747625,
+        "p99_ms": 1.868244998913725
+      },
+      "command_to_observation_latency": {
+        "p50_ms": 1.3259810002637096,
+        "p95_ms": 2.6528954986133613,
+        "p99_ms": 2.859118699416283
+      },
+      "missed_compute_deadlines": 41,
+      "rendered_fps": 0,
+      "frames": 0,
+      "view": "headless",
+      "paced": true,
+      "scene": "single-can",
+      "repeat": 2,
+      "state": {
+        "state": "completed",
+        "phase": "complete",
+        "error": null,
+        "time": 9.109999999999712,
+        "steps": 4555,
+        "qvel": [
+          -5.210452994295519e-07,
+          -2.39264931533968e-07,
+          -6.301584585767358e-07,
+          -4.866130595183988e-07,
+          -4.189771877268606e-08,
+          4.12111883481264e-11,
+          5.118744683012509e-05,
+          -4.4738343265066224e-05,
+          3.626933472557186e-06,
+          -0.0011366582314185155,
+          -0.0019702077505472015,
+          0.0004963949075286204,
+          -2.1870857676287348e-05,
+          -3.3968681853902837e-06,
+          1.4924231204437603e-06,
+          -0.00015233947051056628,
+          -0.0007408340934743173,
+          5.8300325382844076e-06,
+          -0.00010620387213065842,
+          1.0729046089644655e-05,
+          -4.223905734558577e-06,
+          -0.0005850471436767766,
+          -0.00372243604545742,
+          2.2015631693448586e-05
+        ],
+        "actuators": {
+          "shoulder_pan": 0.843035302439752,
+          "shoulder_lift": -0.4536060202904307,
+          "elbow_flex": 0.521441450469025,
+          "wrist_flex": 1.5029637859613598,
+          "wrist_roll": -2.077645182222412e-05,
+          "gripper": 0.8
+        },
+        "overloads": 2,
+        "discarded_wall_seconds": 0.018000000000000002
+      }
+    },
+    {
+      "backend": "wasm",
+      "native_components": [
+        "MuJoCo",
+        "IK",
+        "host",
+        "renderer"
+      ],
+      "wasm_components": [
+        "actuator slew",
+        "phase transition decisions"
+      ],
+      "assessment": {
+        "success": true,
+        "warnings": 0,
+        "equality_constraints": 0,
+        "bilateral_contact": true,
+        "maximum_height": 0.08178928732368398,
+        "placement_verified": true,
+        "no_finger_contact": false,
+        "object_position": [
+          0.138569439965998,
+          -0.11343901560137913,
+          0.039901068090992094
+        ]
+      },
+      "implementation_sha256": {
+        "live_runtime.py": "622f99b1963f47fe8d87ac1839079363b5cce83305c4c3b6bd6ed92e22d79626",
+        "wasm_policy.py": "95078b0526122e1395d8b5d283320c94dfbf9164c8c7ae7b1460991be3309fc1",
+        "json_workcell.py": "ceb32820826e15f209740fd19c1068ef4f93a355e2d6d321020c810ed5411ba7",
+        "live_viewer.py": "4b43621c5c9c3f24118256bcc128b2a27f311386d6bf8aaaa39f1542909a7d5e"
+      },
+      "configuration_sha256": {
+        "cases.json": "314165cf503b42828b53176af89b5124cd5b56fcd16dc29f9d98531b7aaa83e4",
+        "comparison.json": "f25f61ad397cabf310da4f8a7efa7f75885a2548f5a0c9167b6b557ce781e5b2",
+        "json-pick-and-place.render.json": "b9f91f1256ee900857695beb19a0ce0d7e40c3ae834c6cebfdae6c2c2e848598",
+        "render.json": "b83975844ac4d12ed14acc8c0bc45452cd5a4090b6b1ba4e1915c22baa38cee5",
+        "robot-adapter.json": "08dc612345d7cc7139be93026cf6370c83316733d8f69ef61929afb78bd00777",
+        "task.json": "085a4d798bacecfa92f6b23c6b1a03d57b61133a69d0a2da18bc4a5f05599be3",
+        "workcell.json": "28808b78a7de6027d0118d5ecda5b5ad57fa9374087546407d3c1016103798a3"
+      },
+      "versions": {
+        "mujoco": "4.0.1",
+        "wasmtime": "51.0.0",
+        "pygfx": "0.18.0",
+        "wgpu": "0.33.0"
+      },
+      "platform": "Linux-6.18.57-x86_64-with-glibc2.41",
+      "python": "3.12.14",
+      "cpu": "INTEL(R) XEON(R) PLATINUM 8573C",
+      "startup_seconds": 0.3006256580010813,
+      "wall_seconds": 9.136133902000438,
+      "cpu_seconds": 4.958662854,
+      "cpu_percent_one_core": 54.275286540122366,
+      "peak_process_rss_kib": 410760.0,
+      "simulation_wall_ratio": 0.9971395009879394,
+      "physics_dt": 0.002,
+      "control_every": 1,
+      "tick_latency": {
+        "p50_ms": 0.5943110008956864,
+        "p95_ms": 1.0328038013540208,
+        "p99_ms": 1.8463233982765819
+      },
+      "control_tick_including_physics_latency": {
+        "p50_ms": 0.5943110008956864,
+        "p95_ms": 1.0328038013540208,
+        "p99_ms": 1.8463233982765819
+      },
+      "command_to_observation_latency": {
+        "p50_ms": 1.6014300017559435,
+        "p95_ms": 2.330900500965072,
+        "p99_ms": 6.710956999086183
+      },
+      "missed_compute_deadlines": 39,
+      "rendered_fps": 0,
+      "frames": 0,
+      "view": "headless",
+      "paced": true,
+      "scene": "single-can",
+      "repeat": 2,
+      "state": {
+        "state": "completed",
+        "phase": "complete",
+        "error": null,
+        "time": 9.109999999999712,
+        "steps": 4555,
+        "qvel": [
+          -5.210452994295519e-07,
+          -2.39264931533968e-07,
+          -6.301584585767358e-07,
+          -4.866130595183988e-07,
+          -4.189771877268606e-08,
+          4.12111883481264e-11,
+          5.118744683012509e-05,
+          -4.4738343265066224e-05,
+          3.626933472557186e-06,
+          -0.0011366582314185155,
+          -0.0019702077505472015,
+          0.0004963949075286204,
+          -2.1870857676287348e-05,
+          -3.3968681853902837e-06,
+          1.4924231204437603e-06,
+          -0.00015233947051056628,
+          -0.0007408340934743173,
+          5.8300325382844076e-06,
+          -0.00010620387213065842,
+          1.0729046089644655e-05,
+          -4.223905734558577e-06,
+          -0.0005850471436767766,
+          -0.00372243604545742,
+          2.2015631693448586e-05
+        ],
+        "actuators": {
+          "shoulder_pan": 0.843035302439752,
+          "shoulder_lift": -0.4536060202904307,
+          "elbow_flex": 0.521441450469025,
+          "wrist_flex": 1.5029637859613598,
+          "wrist_roll": -2.077645182222412e-05,
+          "gripper": 0.8
+        },
+        "overloads": 2,
+        "discarded_wall_seconds": 0.02
+      }
+    },
+    {
+      "backend": "native",
+      "native_components": [
+        "MuJoCo",
+        "IK",
+        "host",
+        "renderer"
+      ],
+      "wasm_components": [],
+      "assessment": {
+        "success": true,
+        "warnings": 0,
+        "equality_constraints": 0,
+        "bilateral_contact": true,
+        "maximum_height": 0.08178913838939464,
+        "placement_verified": true,
+        "no_finger_contact": false,
+        "object_position": [
+          0.13857358257492136,
+          -0.11343651662468278,
+          0.039901260167808886
+        ]
+      },
+      "implementation_sha256": {
+        "live_runtime.py": "622f99b1963f47fe8d87ac1839079363b5cce83305c4c3b6bd6ed92e22d79626",
+        "wasm_policy.py": "95078b0526122e1395d8b5d283320c94dfbf9164c8c7ae7b1460991be3309fc1",
+        "json_workcell.py": "ceb32820826e15f209740fd19c1068ef4f93a355e2d6d321020c810ed5411ba7",
+        "live_viewer.py": "4b43621c5c9c3f24118256bcc128b2a27f311386d6bf8aaaa39f1542909a7d5e"
+      },
+      "configuration_sha256": {
+        "five-cans.render.json": "e155592060121fd70b48bd7fa0be8f4a43b9a3639901fc339689bad617528339",
+        "render.json": "b83975844ac4d12ed14acc8c0bc45452cd5a4090b6b1ba4e1915c22baa38cee5",
+        "robot-adapter.json": "08dc612345d7cc7139be93026cf6370c83316733d8f69ef61929afb78bd00777",
+        "task.json": "085a4d798bacecfa92f6b23c6b1a03d57b61133a69d0a2da18bc4a5f05599be3",
+        "workcell.json": "0fb5e4ba89c9addc2023331b2a98a01619a0ee17483619dc873bf679018d0c72"
+      },
+      "versions": {
+        "mujoco": "4.0.1",
+        "wasmtime": "51.0.0",
+        "pygfx": "0.18.0",
+        "wgpu": "0.33.0"
+      },
+      "platform": "Linux-6.18.57-x86_64-with-glibc2.41",
+      "python": "3.12.14",
+      "cpu": "INTEL(R) XEON(R) PLATINUM 8573C",
+      "startup_seconds": 0.26705200700234855,
+      "wall_seconds": 9.118070473999978,
+      "cpu_seconds": 4.483192618,
+      "cpu_percent_one_core": 49.16821635436738,
+      "peak_process_rss_kib": 396136.0,
+      "simulation_wall_ratio": 0.9991148923422691,
+      "physics_dt": 0.002,
+      "control_every": 1,
+      "tick_latency": {
+        "p50_ms": 0.4024500012747012,
+        "p95_ms": 0.7398770016152412,
+        "p99_ms": 1.2360161005199188
+      },
+      "control_tick_including_physics_latency": {
+        "p50_ms": 0.4024500012747012,
+        "p95_ms": 0.7398770016152412,
+        "p99_ms": 1.2360161005199188
+      },
+      "command_to_observation_latency": {
+        "p50_ms": 1.663184000790352,
+        "p95_ms": 2.642401499542757,
+        "p99_ms": 3.403112100204444
+      },
+      "missed_compute_deadlines": 16,
+      "rendered_fps": 0,
+      "frames": 0,
+      "view": "headless",
+      "paced": true,
+      "scene": "five-cans",
+      "repeat": 0,
+      "state": {
+        "state": "completed",
+        "phase": "complete",
+        "error": null,
+        "time": 9.109999999999712,
+        "steps": 4555,
+        "qvel": [
+          -5.669688043464129e-07,
+          -7.915093425655894e-07,
+          -2.2274776761756727e-06,
+          -1.9099451424325863e-06,
+          -1.987882986142301e-08,
+          9.103077544400206e-11,
+          0.00012100733657596084,
+          -4.224522427283887e-05,
+          2.9001454939803396e-06,
+          -0.0030524436191318866,
+          0.001017229832907203,
+          0.0008689042892202798,
+          -0.00010548779969309689,
+          1.9422270915059593e-05,
+          -3.184824807718927e-06,
+          -0.0009008900402700109,
+          -0.0034426491729848867,
+          2.1196836518089168e-06,
+          9.20101886312085e-05,
+          -2.8830237605209745e-05,
+          -1.450664389131255e-06,
+          0.0007131702851824952,
+          0.003140847064775677,
+          -5.923940784948705e-06,
+          1.4088420287031712e-05,
+          -3.259929277775762e-05,
+          -5.117264466760554e-07,
+          0.0008464675452947631,
+          0.0005292000941430532,
+          -5.701304851540956e-07,
+          -0.0001076093055671755,
+          7.347417968397134e-05,
+          5.711909041414002e-06,
+          -0.0027449762382828285,
+          -0.0037570478890417555,
+          1.4567629215190276e-05
+        ],
+        "actuators": {
+          "shoulder_pan": 0.8430353024397516,
+          "shoulder_lift": -0.45360602029043123,
+          "elbow_flex": 0.5214414504690248,
+          "wrist_flex": 1.5029637859613605,
+          "wrist_roll": -2.077645182398755e-05,
+          "gripper": 0.8
+        },
+        "overloads": 0,
+        "discarded_wall_seconds": 0.0
+      }
+    },
+    {
+      "backend": "wasm",
+      "native_components": [
+        "MuJoCo",
+        "IK",
+        "host",
+        "renderer"
+      ],
+      "wasm_components": [
+        "actuator slew",
+        "phase transition decisions"
+      ],
+      "assessment": {
+        "success": true,
+        "warnings": 0,
+        "equality_constraints": 0,
+        "bilateral_contact": true,
+        "maximum_height": 0.08178913838939464,
+        "placement_verified": true,
+        "no_finger_contact": false,
+        "object_position": [
+          0.13857358257492136,
+          -0.11343651662468278,
+          0.039901260167808886
+        ]
+      },
+      "implementation_sha256": {
+        "live_runtime.py": "622f99b1963f47fe8d87ac1839079363b5cce83305c4c3b6bd6ed92e22d79626",
+        "wasm_policy.py": "95078b0526122e1395d8b5d283320c94dfbf9164c8c7ae7b1460991be3309fc1",
+        "json_workcell.py": "ceb32820826e15f209740fd19c1068ef4f93a355e2d6d321020c810ed5411ba7",
+        "live_viewer.py": "4b43621c5c9c3f24118256bcc128b2a27f311386d6bf8aaaa39f1542909a7d5e"
+      },
+      "configuration_sha256": {
+        "five-cans.render.json": "e155592060121fd70b48bd7fa0be8f4a43b9a3639901fc339689bad617528339",
+        "render.json": "b83975844ac4d12ed14acc8c0bc45452cd5a4090b6b1ba4e1915c22baa38cee5",
+        "robot-adapter.json": "08dc612345d7cc7139be93026cf6370c83316733d8f69ef61929afb78bd00777",
+        "task.json": "085a4d798bacecfa92f6b23c6b1a03d57b61133a69d0a2da18bc4a5f05599be3",
+        "workcell.json": "0fb5e4ba89c9addc2023331b2a98a01619a0ee17483619dc873bf679018d0c72"
+      },
+      "versions": {
+        "mujoco": "4.0.1",
+        "wasmtime": "51.0.0",
+        "pygfx": "0.18.0",
+        "wgpu": "0.33.0"
+      },
+      "platform": "Linux-6.18.57-x86_64-with-glibc2.41",
+      "python": "3.12.14",
+      "cpu": "INTEL(R) XEON(R) PLATINUM 8573C",
+      "startup_seconds": 0.30402316699837684,
+      "wall_seconds": 9.117198062998796,
+      "cpu_seconds": 5.617483261,
+      "cpu_percent_one_core": 61.614140903639836,
+      "peak_process_rss_kib": 412340.0,
+      "simulation_wall_ratio": 0.9992104961470238,
+      "physics_dt": 0.002,
+      "control_every": 1,
+      "tick_latency": {
+        "p50_ms": 0.664720999338897,
+        "p95_ms": 1.1287414999969776,
+        "p99_ms": 1.7164969814621152
+      },
+      "control_tick_including_physics_latency": {
+        "p50_ms": 0.664720999338897,
+        "p95_ms": 1.1287414999969776,
+        "p99_ms": 1.7164969814621152
+      },
+      "command_to_observation_latency": {
+        "p50_ms": 1.661619000515202,
+        "p95_ms": 2.2353354997903807,
+        "p99_ms": 3.1296039018343382
+      },
+      "missed_compute_deadlines": 30,
+      "rendered_fps": 0,
+      "frames": 0,
+      "view": "headless",
+      "paced": true,
+      "scene": "five-cans",
+      "repeat": 0,
+      "state": {
+        "state": "completed",
+        "phase": "complete",
+        "error": null,
+        "time": 9.109999999999712,
+        "steps": 4555,
+        "qvel": [
+          -5.669688043464129e-07,
+          -7.915093425655894e-07,
+          -2.2274776761756727e-06,
+          -1.9099451424325863e-06,
+          -1.987882986142301e-08,
+          9.103077544400206e-11,
+          0.00012100733657596084,
+          -4.224522427283887e-05,
+          2.9001454939803396e-06,
+          -0.0030524436191318866,
+          0.001017229832907203,
+          0.0008689042892202798,
+          -0.00010548779969309689,
+          1.9422270915059593e-05,
+          -3.184824807718927e-06,
+          -0.0009008900402700109,
+          -0.0034426491729848867,
+          2.1196836518089168e-06,
+          9.20101886312085e-05,
+          -2.8830237605209745e-05,
+          -1.450664389131255e-06,
+          0.0007131702851824952,
+          0.003140847064775677,
+          -5.923940784948705e-06,
+          1.4088420287031712e-05,
+          -3.259929277775762e-05,
+          -5.117264466760554e-07,
+          0.0008464675452947631,
+          0.0005292000941430532,
+          -5.701304851540956e-07,
+          -0.0001076093055671755,
+          7.347417968397134e-05,
+          5.711909041414002e-06,
+          -0.0027449762382828285,
+          -0.0037570478890417555,
+          1.4567629215190276e-05
+        ],
+        "actuators": {
+          "shoulder_pan": 0.8430353024397516,
+          "shoulder_lift": -0.45360602029043123,
+          "elbow_flex": 0.5214414504690248,
+          "wrist_flex": 1.5029637859613605,
+          "wrist_roll": -2.077645182398755e-05,
+          "gripper": 0.8
+        },
+        "overloads": 0,
+        "discarded_wall_seconds": 0.0
+      }
+    },
+    {
+      "backend": "native",
+      "native_components": [
+        "MuJoCo",
+        "IK",
+        "host",
+        "renderer"
+      ],
+      "wasm_components": [],
+      "assessment": {
+        "success": true,
+        "warnings": 0,
+        "equality_constraints": 0,
+        "bilateral_contact": true,
+        "maximum_height": 0.08178913838939464,
+        "placement_verified": true,
+        "no_finger_contact": false,
+        "object_position": [
+          0.13857358257492136,
+          -0.11343651662468278,
+          0.039901260167808886
+        ]
+      },
+      "implementation_sha256": {
+        "live_runtime.py": "622f99b1963f47fe8d87ac1839079363b5cce83305c4c3b6bd6ed92e22d79626",
+        "wasm_policy.py": "95078b0526122e1395d8b5d283320c94dfbf9164c8c7ae7b1460991be3309fc1",
+        "json_workcell.py": "ceb32820826e15f209740fd19c1068ef4f93a355e2d6d321020c810ed5411ba7",
+        "live_viewer.py": "4b43621c5c9c3f24118256bcc128b2a27f311386d6bf8aaaa39f1542909a7d5e"
+      },
+      "configuration_sha256": {
+        "five-cans.render.json": "e155592060121fd70b48bd7fa0be8f4a43b9a3639901fc339689bad617528339",
+        "render.json": "b83975844ac4d12ed14acc8c0bc45452cd5a4090b6b1ba4e1915c22baa38cee5",
+        "robot-adapter.json": "08dc612345d7cc7139be93026cf6370c83316733d8f69ef61929afb78bd00777",
+        "task.json": "085a4d798bacecfa92f6b23c6b1a03d57b61133a69d0a2da18bc4a5f05599be3",
+        "workcell.json": "0fb5e4ba89c9addc2023331b2a98a01619a0ee17483619dc873bf679018d0c72"
+      },
+      "versions": {
+        "mujoco": "4.0.1",
+        "wasmtime": "51.0.0",
+        "pygfx": "0.18.0",
+        "wgpu": "0.33.0"
+      },
+      "platform": "Linux-6.18.57-x86_64-with-glibc2.41",
+      "python": "3.12.14",
+      "cpu": "INTEL(R) XEON(R) PLATINUM 8573C",
+      "startup_seconds": 0.41279896199921495,
+      "wall_seconds": 9.18492044300001,
+      "cpu_seconds": 4.481720866,
+      "cpu_percent_one_core": 48.79433516939821,
+      "peak_process_rss_kib": 396084.0,
+      "simulation_wall_ratio": 0.9918431037628207,
+      "physics_dt": 0.002,
+      "control_every": 1,
+      "tick_latency": {
+        "p50_ms": 0.42931500138365664,
+        "p95_ms": 0.7586935018480291,
+        "p99_ms": 1.2762420981744074
+      },
+      "control_tick_including_physics_latency": {
+        "p50_ms": 0.42931500138365664,
+        "p95_ms": 0.7586935018480291,
+        "p99_ms": 1.2762420981744074
+      },
+      "command_to_observation_latency": {
+        "p50_ms": 1.554249500259175,
+        "p95_ms": 2.4839349003741518,
+        "p99_ms": 4.296934887315735
+      },
+      "missed_compute_deadlines": 16,
+      "rendered_fps": 0,
+      "frames": 0,
+      "view": "headless",
+      "paced": true,
+      "scene": "five-cans",
+      "repeat": 1,
+      "state": {
+        "state": "completed",
+        "phase": "complete",
+        "error": null,
+        "time": 9.109999999999712,
+        "steps": 4555,
+        "qvel": [
+          -5.669688043464129e-07,
+          -7.915093425655894e-07,
+          -2.2274776761756727e-06,
+          -1.9099451424325863e-06,
+          -1.987882986142301e-08,
+          9.103077544400206e-11,
+          0.00012100733657596084,
+          -4.224522427283887e-05,
+          2.9001454939803396e-06,
+          -0.0030524436191318866,
+          0.001017229832907203,
+          0.0008689042892202798,
+          -0.00010548779969309689,
+          1.9422270915059593e-05,
+          -3.184824807718927e-06,
+          -0.0009008900402700109,
+          -0.0034426491729848867,
+          2.1196836518089168e-06,
+          9.20101886312085e-05,
+          -2.8830237605209745e-05,
+          -1.450664389131255e-06,
+          0.0007131702851824952,
+          0.003140847064775677,
+          -5.923940784948705e-06,
+          1.4088420287031712e-05,
+          -3.259929277775762e-05,
+          -5.117264466760554e-07,
+          0.0008464675452947631,
+          0.0005292000941430532,
+          -5.701304851540956e-07,
+          -0.0001076093055671755,
+          7.347417968397134e-05,
+          5.711909041414002e-06,
+          -0.0027449762382828285,
+          -0.0037570478890417555,
+          1.4567629215190276e-05
+        ],
+        "actuators": {
+          "shoulder_pan": 0.8430353024397516,
+          "shoulder_lift": -0.45360602029043123,
+          "elbow_flex": 0.5214414504690248,
+          "wrist_flex": 1.5029637859613605,
+          "wrist_roll": -2.077645182398755e-05,
+          "gripper": 0.8
+        },
+        "overloads": 3,
+        "discarded_wall_seconds": 0.068
+      }
+    },
+    {
+      "backend": "wasm",
+      "native_components": [
+        "MuJoCo",
+        "IK",
+        "host",
+        "renderer"
+      ],
+      "wasm_components": [
+        "actuator slew",
+        "phase transition decisions"
+      ],
+      "assessment": {
+        "success": true,
+        "warnings": 0,
+        "equality_constraints": 0,
+        "bilateral_contact": true,
+        "maximum_height": 0.08178913838939464,
+        "placement_verified": true,
+        "no_finger_contact": false,
+        "object_position": [
+          0.13857358257492136,
+          -0.11343651662468278,
+          0.039901260167808886
+        ]
+      },
+      "implementation_sha256": {
+        "live_runtime.py": "622f99b1963f47fe8d87ac1839079363b5cce83305c4c3b6bd6ed92e22d79626",
+        "wasm_policy.py": "95078b0526122e1395d8b5d283320c94dfbf9164c8c7ae7b1460991be3309fc1",
+        "json_workcell.py": "ceb32820826e15f209740fd19c1068ef4f93a355e2d6d321020c810ed5411ba7",
+        "live_viewer.py": "4b43621c5c9c3f24118256bcc128b2a27f311386d6bf8aaaa39f1542909a7d5e"
+      },
+      "configuration_sha256": {
+        "five-cans.render.json": "e155592060121fd70b48bd7fa0be8f4a43b9a3639901fc339689bad617528339",
+        "render.json": "b83975844ac4d12ed14acc8c0bc45452cd5a4090b6b1ba4e1915c22baa38cee5",
+        "robot-adapter.json": "08dc612345d7cc7139be93026cf6370c83316733d8f69ef61929afb78bd00777",
+        "task.json": "085a4d798bacecfa92f6b23c6b1a03d57b61133a69d0a2da18bc4a5f05599be3",
+        "workcell.json": "0fb5e4ba89c9addc2023331b2a98a01619a0ee17483619dc873bf679018d0c72"
+      },
+      "versions": {
+        "mujoco": "4.0.1",
+        "wasmtime": "51.0.0",
+        "pygfx": "0.18.0",
+        "wgpu": "0.33.0"
+      },
+      "platform": "Linux-6.18.57-x86_64-with-glibc2.41",
+      "python": "3.12.14",
+      "cpu": "INTEL(R) XEON(R) PLATINUM 8573C",
+      "startup_seconds": 0.37931825300256605,
+      "wall_seconds": 9.11969357199996,
+      "cpu_seconds": 5.664959591000001,
+      "cpu_percent_one_core": 62.117872122293996,
+      "peak_process_rss_kib": 410692.0,
+      "simulation_wall_ratio": 0.9989370726194123,
+      "physics_dt": 0.002,
+      "control_every": 1,
+      "tick_latency": {
+        "p50_ms": 0.6857699991087429,
+        "p95_ms": 1.17611899986514,
+        "p99_ms": 1.7166499594895868
+      },
+      "control_tick_including_physics_latency": {
+        "p50_ms": 0.6857699991087429,
+        "p95_ms": 1.17611899986514,
+        "p99_ms": 1.7166499594895868
+      },
+      "command_to_observation_latency": {
+        "p50_ms": 1.8574470013845712,
+        "p95_ms": 2.539251499911188,
+        "p99_ms": 3.536072700080693
+      },
+      "missed_compute_deadlines": 26,
+      "rendered_fps": 0,
+      "frames": 0,
+      "view": "headless",
+      "paced": true,
+      "scene": "five-cans",
+      "repeat": 1,
+      "state": {
+        "state": "completed",
+        "phase": "complete",
+        "error": null,
+        "time": 9.109999999999712,
+        "steps": 4555,
+        "qvel": [
+          -5.669688043464129e-07,
+          -7.915093425655894e-07,
+          -2.2274776761756727e-06,
+          -1.9099451424325863e-06,
+          -1.987882986142301e-08,
+          9.103077544400206e-11,
+          0.00012100733657596084,
+          -4.224522427283887e-05,
+          2.9001454939803396e-06,
+          -0.0030524436191318866,
+          0.001017229832907203,
+          0.0008689042892202798,
+          -0.00010548779969309689,
+          1.9422270915059593e-05,
+          -3.184824807718927e-06,
+          -0.0009008900402700109,
+          -0.0034426491729848867,
+          2.1196836518089168e-06,
+          9.20101886312085e-05,
+          -2.8830237605209745e-05,
+          -1.450664389131255e-06,
+          0.0007131702851824952,
+          0.003140847064775677,
+          -5.923940784948705e-06,
+          1.4088420287031712e-05,
+          -3.259929277775762e-05,
+          -5.117264466760554e-07,
+          0.0008464675452947631,
+          0.0005292000941430532,
+          -5.701304851540956e-07,
+          -0.0001076093055671755,
+          7.347417968397134e-05,
+          5.711909041414002e-06,
+          -0.0027449762382828285,
+          -0.0037570478890417555,
+          1.4567629215190276e-05
+        ],
+        "actuators": {
+          "shoulder_pan": 0.8430353024397516,
+          "shoulder_lift": -0.45360602029043123,
+          "elbow_flex": 0.5214414504690248,
+          "wrist_flex": 1.5029637859613605,
+          "wrist_roll": -2.077645182398755e-05,
+          "gripper": 0.8
+        },
+        "overloads": 0,
+        "discarded_wall_seconds": 0.0
+      }
+    },
+    {
+      "backend": "native",
+      "native_components": [
+        "MuJoCo",
+        "IK",
+        "host",
+        "renderer"
+      ],
+      "wasm_components": [],
+      "assessment": {
+        "success": true,
+        "warnings": 0,
+        "equality_constraints": 0,
+        "bilateral_contact": true,
+        "maximum_height": 0.08178913838939464,
+        "placement_verified": true,
+        "no_finger_contact": false,
+        "object_position": [
+          0.13857358257492136,
+          -0.11343651662468278,
+          0.039901260167808886
+        ]
+      },
+      "implementation_sha256": {
+        "live_runtime.py": "622f99b1963f47fe8d87ac1839079363b5cce83305c4c3b6bd6ed92e22d79626",
+        "wasm_policy.py": "95078b0526122e1395d8b5d283320c94dfbf9164c8c7ae7b1460991be3309fc1",
+        "json_workcell.py": "ceb32820826e15f209740fd19c1068ef4f93a355e2d6d321020c810ed5411ba7",
+        "live_viewer.py": "4b43621c5c9c3f24118256bcc128b2a27f311386d6bf8aaaa39f1542909a7d5e"
+      },
+      "configuration_sha256": {
+        "five-cans.render.json": "e155592060121fd70b48bd7fa0be8f4a43b9a3639901fc339689bad617528339",
+        "render.json": "b83975844ac4d12ed14acc8c0bc45452cd5a4090b6b1ba4e1915c22baa38cee5",
+        "robot-adapter.json": "08dc612345d7cc7139be93026cf6370c83316733d8f69ef61929afb78bd00777",
+        "task.json": "085a4d798bacecfa92f6b23c6b1a03d57b61133a69d0a2da18bc4a5f05599be3",
+        "workcell.json": "0fb5e4ba89c9addc2023331b2a98a01619a0ee17483619dc873bf679018d0c72"
+      },
+      "versions": {
+        "mujoco": "4.0.1",
+        "wasmtime": "51.0.0",
+        "pygfx": "0.18.0",
+        "wgpu": "0.33.0"
+      },
+      "platform": "Linux-6.18.57-x86_64-with-glibc2.41",
+      "python": "3.12.14",
+      "cpu": "INTEL(R) XEON(R) PLATINUM 8573C",
+      "startup_seconds": 0.29153535399746033,
+      "wall_seconds": 9.125135215999762,
+      "cpu_seconds": 4.187082043,
+      "cpu_percent_one_core": 45.88515067325781,
+      "peak_process_rss_kib": 396592.0,
+      "simulation_wall_ratio": 0.9983413707696612,
+      "physics_dt": 0.002,
+      "control_every": 1,
+      "tick_latency": {
+        "p50_ms": 0.3749569987121504,
+        "p95_ms": 0.6716481984767597,
+        "p99_ms": 1.2918814006116013
+      },
+      "control_tick_including_physics_latency": {
+        "p50_ms": 0.3749569987121504,
+        "p95_ms": 0.6716481984767597,
+        "p99_ms": 1.2918814006116013
+      },
+      "command_to_observation_latency": {
+        "p50_ms": 1.4973270008340478,
+        "p95_ms": 2.1439984975586412,
+        "p99_ms": 2.629236498250975
+      },
+      "missed_compute_deadlines": 22,
+      "rendered_fps": 0,
+      "frames": 0,
+      "view": "headless",
+      "paced": true,
+      "scene": "five-cans",
+      "repeat": 2,
+      "state": {
+        "state": "completed",
+        "phase": "complete",
+        "error": null,
+        "time": 9.109999999999712,
+        "steps": 4555,
+        "qvel": [
+          -5.669688043464129e-07,
+          -7.915093425655894e-07,
+          -2.2274776761756727e-06,
+          -1.9099451424325863e-06,
+          -1.987882986142301e-08,
+          9.103077544400206e-11,
+          0.00012100733657596084,
+          -4.224522427283887e-05,
+          2.9001454939803396e-06,
+          -0.0030524436191318866,
+          0.001017229832907203,
+          0.0008689042892202798,
+          -0.00010548779969309689,
+          1.9422270915059593e-05,
+          -3.184824807718927e-06,
+          -0.0009008900402700109,
+          -0.0034426491729848867,
+          2.1196836518089168e-06,
+          9.20101886312085e-05,
+          -2.8830237605209745e-05,
+          -1.450664389131255e-06,
+          0.0007131702851824952,
+          0.003140847064775677,
+          -5.923940784948705e-06,
+          1.4088420287031712e-05,
+          -3.259929277775762e-05,
+          -5.117264466760554e-07,
+          0.0008464675452947631,
+          0.0005292000941430532,
+          -5.701304851540956e-07,
+          -0.0001076093055671755,
+          7.347417968397134e-05,
+          5.711909041414002e-06,
+          -0.0027449762382828285,
+          -0.0037570478890417555,
+          1.4567629215190276e-05
+        ],
+        "actuators": {
+          "shoulder_pan": 0.8430353024397516,
+          "shoulder_lift": -0.45360602029043123,
+          "elbow_flex": 0.5214414504690248,
+          "wrist_flex": 1.5029637859613605,
+          "wrist_roll": -2.077645182398755e-05,
+          "gripper": 0.8
+        },
+        "overloads": 2,
+        "discarded_wall_seconds": 0.008
+      }
+    },
+    {
+      "backend": "wasm",
+      "native_components": [
+        "MuJoCo",
+        "IK",
+        "host",
+        "renderer"
+      ],
+      "wasm_components": [
+        "actuator slew",
+        "phase transition decisions"
+      ],
+      "assessment": {
+        "success": true,
+        "warnings": 0,
+        "equality_constraints": 0,
+        "bilateral_contact": true,
+        "maximum_height": 0.08178913838939464,
+        "placement_verified": true,
+        "no_finger_contact": false,
+        "object_position": [
+          0.13857358257492136,
+          -0.11343651662468278,
+          0.039901260167808886
+        ]
+      },
+      "implementation_sha256": {
+        "live_runtime.py": "622f99b1963f47fe8d87ac1839079363b5cce83305c4c3b6bd6ed92e22d79626",
+        "wasm_policy.py": "95078b0526122e1395d8b5d283320c94dfbf9164c8c7ae7b1460991be3309fc1",
+        "json_workcell.py": "ceb32820826e15f209740fd19c1068ef4f93a355e2d6d321020c810ed5411ba7",
+        "live_viewer.py": "4b43621c5c9c3f24118256bcc128b2a27f311386d6bf8aaaa39f1542909a7d5e"
+      },
+      "configuration_sha256": {
+        "five-cans.render.json": "e155592060121fd70b48bd7fa0be8f4a43b9a3639901fc339689bad617528339",
+        "render.json": "b83975844ac4d12ed14acc8c0bc45452cd5a4090b6b1ba4e1915c22baa38cee5",
+        "robot-adapter.json": "08dc612345d7cc7139be93026cf6370c83316733d8f69ef61929afb78bd00777",
+        "task.json": "085a4d798bacecfa92f6b23c6b1a03d57b61133a69d0a2da18bc4a5f05599be3",
+        "workcell.json": "0fb5e4ba89c9addc2023331b2a98a01619a0ee17483619dc873bf679018d0c72"
+      },
+      "versions": {
+        "mujoco": "4.0.1",
+        "wasmtime": "51.0.0",
+        "pygfx": "0.18.0",
+        "wgpu": "0.33.0"
+      },
+      "platform": "Linux-6.18.57-x86_64-with-glibc2.41",
+      "python": "3.12.14",
+      "cpu": "INTEL(R) XEON(R) PLATINUM 8573C",
+      "startup_seconds": 0.31547366000086186,
+      "wall_seconds": 9.12206987800164,
+      "cpu_seconds": 5.6083455859999995,
+      "cpu_percent_one_core": 61.481063629262756,
+      "peak_process_rss_kib": 412288.0,
+      "simulation_wall_ratio": 0.9986768487675112,
+      "physics_dt": 0.002,
+      "control_every": 1,
+      "tick_latency": {
+        "p50_ms": 0.7212910022644792,
+        "p95_ms": 1.1135146000015086,
+        "p99_ms": 1.7527294991305098
+      },
+      "control_tick_including_physics_latency": {
+        "p50_ms": 0.7212910022644792,
+        "p95_ms": 1.1135146000015086,
+        "p99_ms": 1.7527294991305098
+      },
+      "command_to_observation_latency": {
+        "p50_ms": 1.7413660025340505,
+        "p95_ms": 2.314137000212213,
+        "p99_ms": 2.596007498505052
+      },
+      "missed_compute_deadlines": 29,
+      "rendered_fps": 0,
+      "frames": 0,
+      "view": "headless",
+      "paced": true,
+      "scene": "five-cans",
+      "repeat": 2,
+      "state": {
+        "state": "completed",
+        "phase": "complete",
+        "error": null,
+        "time": 9.109999999999712,
+        "steps": 4555,
+        "qvel": [
+          -5.669688043464129e-07,
+          -7.915093425655894e-07,
+          -2.2274776761756727e-06,
+          -1.9099451424325863e-06,
+          -1.987882986142301e-08,
+          9.103077544400206e-11,
+          0.00012100733657596084,
+          -4.224522427283887e-05,
+          2.9001454939803396e-06,
+          -0.0030524436191318866,
+          0.001017229832907203,
+          0.0008689042892202798,
+          -0.00010548779969309689,
+          1.9422270915059593e-05,
+          -3.184824807718927e-06,
+          -0.0009008900402700109,
+          -0.0034426491729848867,
+          2.1196836518089168e-06,
+          9.20101886312085e-05,
+          -2.8830237605209745e-05,
+          -1.450664389131255e-06,
+          0.0007131702851824952,
+          0.003140847064775677,
+          -5.923940784948705e-06,
+          1.4088420287031712e-05,
+          -3.259929277775762e-05,
+          -5.117264466760554e-07,
+          0.0008464675452947631,
+          0.0005292000941430532,
+          -5.701304851540956e-07,
+          -0.0001076093055671755,
+          7.347417968397134e-05,
+          5.711909041414002e-06,
+          -0.0027449762382828285,
+          -0.0037570478890417555,
+          1.4567629215190276e-05
+        ],
+        "actuators": {
+          "shoulder_pan": 0.8430353024397516,
+          "shoulder_lift": -0.45360602029043123,
+          "elbow_flex": 0.5214414504690248,
+          "wrist_flex": 1.5029637859613605,
+          "wrist_roll": -2.077645182398755e-05,
+          "gripper": 0.8
+        },
+        "overloads": 1,
+        "discarded_wall_seconds": 0.004
+      }
+    },
+    {
+      "backend": "native",
+      "native_components": [
+        "MuJoCo",
+        "IK",
+        "host",
+        "renderer"
+      ],
+      "wasm_components": [],
+      "assessment": {
+        "success": true,
+        "warnings": 0,
+        "equality_constraints": 0,
+        "bilateral_contact": true,
+        "maximum_height": 0.08434687963814583,
+        "placement_verified": true,
+        "no_finger_contact": true,
+        "object_position": [
+          0.15296221480838193,
+          -0.14174844206777243,
+          0.039901788913607794
+        ]
+      },
+      "implementation_sha256": {
+        "live_runtime.py": "622f99b1963f47fe8d87ac1839079363b5cce83305c4c3b6bd6ed92e22d79626",
+        "wasm_policy.py": "95078b0526122e1395d8b5d283320c94dfbf9164c8c7ae7b1460991be3309fc1",
+        "json_workcell.py": "ceb32820826e15f209740fd19c1068ef4f93a355e2d6d321020c810ed5411ba7",
+        "live_viewer.py": "4b43621c5c9c3f24118256bcc128b2a27f311386d6bf8aaaa39f1542909a7d5e"
+      },
+      "configuration_sha256": {
+        "block-transfer.render.json": "236c81ec924fc37af36265a45c24d74b19c888cba33edd33d5c731f41ad77334",
+        "render.json": "b83975844ac4d12ed14acc8c0bc45452cd5a4090b6b1ba4e1915c22baa38cee5",
+        "robot-adapter.json": "08dc612345d7cc7139be93026cf6370c83316733d8f69ef61929afb78bd00777",
+        "task.json": "68d62a19fd495f153d9d646ce68d0923daeb8e21265724cacb314e060da9fa54",
+        "workcell.json": "1521a13beff2e50aff2d69d640d10f9e127abdad61e823e640c400e7e981919d"
+      },
+      "versions": {
+        "mujoco": "4.0.1",
+        "wasmtime": "51.0.0",
+        "pygfx": "0.18.0",
+        "wgpu": "0.33.0"
+      },
+      "platform": "Linux-6.18.57-x86_64-with-glibc2.41",
+      "python": "3.12.14",
+      "cpu": "INTEL(R) XEON(R) PLATINUM 8573C",
+      "startup_seconds": 0.4446808869979577,
+      "wall_seconds": 9.116399274000287,
+      "cpu_seconds": 3.2501934589999997,
+      "cpu_percent_one_core": 35.65216223327843,
+      "peak_process_rss_kib": 396340.0,
+      "simulation_wall_ratio": 0.9992980480770708,
+      "physics_dt": 0.002,
+      "control_every": 1,
+      "tick_latency": {
+        "p50_ms": 0.28898199889226817,
+        "p95_ms": 0.5103863008116606,
+        "p99_ms": 0.8252709993394093
+      },
+      "control_tick_including_physics_latency": {
+        "p50_ms": 0.28898199889226817,
+        "p95_ms": 0.5103863008116606,
+        "p99_ms": 0.8252709993394093
+      },
+      "command_to_observation_latency": {
+        "p50_ms": 1.4164009990054183,
+        "p95_ms": 2.1694914994441206,
+        "p99_ms": 2.651124898329726
+      },
+      "missed_compute_deadlines": 10,
+      "rendered_fps": 0,
+      "frames": 0,
+      "view": "headless",
+      "paced": true,
+      "scene": "blocks",
+      "repeat": 0,
+      "state": {
+        "state": "completed",
+        "phase": "complete",
+        "error": null,
+        "time": 9.109999999999712,
+        "steps": 4555,
+        "qvel": [
+          -1.0890694069999746e-11,
+          2.8962543134966395e-12,
+          -9.790062289695575e-13,
+          1.5084200599381568e-13,
+          -5.4765231939820013e-14,
+          7.948052233031355e-12,
+          9.616731133341789e-11,
+          -1.476876624720686e-10,
+          8.425127860349549e-16,
+          -1.7225094433419903e-12,
+          1.2756782448168147e-09,
+          3.15420771086417e-16,
+          -1.658298386520613e-10,
+          -5.750310353329386e-11,
+          8.472697301631652e-16,
+          2.704636883445954e-10,
+          -7.799775104455655e-10,
+          1.602784750352976e-16,
+          -1.745237370041418e-10,
+          -7.324484405978137e-12,
+          -1.5627116416292966e-19,
+          5.7846925964900085e-11,
+          -1.3783441483274388e-09,
+          -1.3720182865967516e-16
+        ],
+        "actuators": {
+          "shoulder_pan": 0.8844181256909929,
+          "shoulder_lift": -0.38622262120675116,
+          "elbow_flex": 0.4642054000491258,
+          "wrist_flex": 1.4928157295193476,
+          "wrist_roll": -3.2271886366165194e-05,
+          "gripper": 0.8
+        },
+        "overloads": 0,
+        "discarded_wall_seconds": 0.0
+      }
+    },
+    {
+      "backend": "wasm",
+      "native_components": [
+        "MuJoCo",
+        "IK",
+        "host",
+        "renderer"
+      ],
+      "wasm_components": [
+        "actuator slew",
+        "phase transition decisions"
+      ],
+      "assessment": {
+        "success": true,
+        "warnings": 0,
+        "equality_constraints": 0,
+        "bilateral_contact": true,
+        "maximum_height": 0.08434687963814583,
+        "placement_verified": true,
+        "no_finger_contact": true,
+        "object_position": [
+          0.15296221480838193,
+          -0.14174844206777243,
+          0.039901788913607794
+        ]
+      },
+      "implementation_sha256": {
+        "live_runtime.py": "622f99b1963f47fe8d87ac1839079363b5cce83305c4c3b6bd6ed92e22d79626",
+        "wasm_policy.py": "95078b0526122e1395d8b5d283320c94dfbf9164c8c7ae7b1460991be3309fc1",
+        "json_workcell.py": "ceb32820826e15f209740fd19c1068ef4f93a355e2d6d321020c810ed5411ba7",
+        "live_viewer.py": "4b43621c5c9c3f24118256bcc128b2a27f311386d6bf8aaaa39f1542909a7d5e"
+      },
+      "configuration_sha256": {
+        "block-transfer.render.json": "236c81ec924fc37af36265a45c24d74b19c888cba33edd33d5c731f41ad77334",
+        "render.json": "b83975844ac4d12ed14acc8c0bc45452cd5a4090b6b1ba4e1915c22baa38cee5",
+        "robot-adapter.json": "08dc612345d7cc7139be93026cf6370c83316733d8f69ef61929afb78bd00777",
+        "task.json": "68d62a19fd495f153d9d646ce68d0923daeb8e21265724cacb314e060da9fa54",
+        "workcell.json": "1521a13beff2e50aff2d69d640d10f9e127abdad61e823e640c400e7e981919d"
+      },
+      "versions": {
+        "mujoco": "4.0.1",
+        "wasmtime": "51.0.0",
+        "pygfx": "0.18.0",
+        "wgpu": "0.33.0"
+      },
+      "platform": "Linux-6.18.57-x86_64-with-glibc2.41",
+      "python": "3.12.14",
+      "cpu": "INTEL(R) XEON(R) PLATINUM 8573C",
+      "startup_seconds": 0.3498910500020429,
+      "wall_seconds": 9.11695852000048,
+      "cpu_seconds": 5.071195694,
+      "cpu_percent_one_core": 55.623766225051696,
+      "peak_process_rss_kib": 411560.0,
+      "simulation_wall_ratio": 0.9992367498453016,
+      "physics_dt": 0.002,
+      "control_every": 1,
+      "tick_latency": {
+        "p50_ms": 0.6029209980624728,
+        "p95_ms": 1.0538892009208216,
+        "p99_ms": 1.7063921187946114
+      },
+      "control_tick_including_physics_latency": {
+        "p50_ms": 0.6029209980624728,
+        "p95_ms": 1.0538892009208216,
+        "p99_ms": 1.7063921187946114
+      },
+      "command_to_observation_latency": {
+        "p50_ms": 1.61037900033989,
+        "p95_ms": 2.2605859994655475,
+        "p99_ms": 4.189497300103532
+      },
+      "missed_compute_deadlines": 38,
+      "rendered_fps": 0,
+      "frames": 0,
+      "view": "headless",
+      "paced": true,
+      "scene": "blocks",
+      "repeat": 0,
+      "state": {
+        "state": "completed",
+        "phase": "complete",
+        "error": null,
+        "time": 9.109999999999712,
+        "steps": 4555,
+        "qvel": [
+          -1.0890694069999746e-11,
+          2.8962543134966395e-12,
+          -9.790062289695575e-13,
+          1.5084200599381568e-13,
+          -5.4765231939820013e-14,
+          7.948052233031355e-12,
+          9.616731133341789e-11,
+          -1.476876624720686e-10,
+          8.425127860349549e-16,
+          -1.7225094433419903e-12,
+          1.2756782448168147e-09,
+          3.15420771086417e-16,
+          -1.658298386520613e-10,
+          -5.750310353329386e-11,
+          8.472697301631652e-16,
+          2.704636883445954e-10,
+          -7.799775104455655e-10,
+          1.602784750352976e-16,
+          -1.745237370041418e-10,
+          -7.324484405978137e-12,
+          -1.5627116416292966e-19,
+          5.7846925964900085e-11,
+          -1.3783441483274388e-09,
+          -1.3720182865967516e-16
+        ],
+        "actuators": {
+          "shoulder_pan": 0.8844181256909929,
+          "shoulder_lift": -0.38622262120675116,
+          "elbow_flex": 0.4642054000491258,
+          "wrist_flex": 1.4928157295193476,
+          "wrist_roll": -3.2271886366165194e-05,
+          "gripper": 0.8
+        },
+        "overloads": 0,
+        "discarded_wall_seconds": 0.0
+      }
+    },
+    {
+      "backend": "native",
+      "native_components": [
+        "MuJoCo",
+        "IK",
+        "host",
+        "renderer"
+      ],
+      "wasm_components": [],
+      "assessment": {
+        "success": true,
+        "warnings": 0,
+        "equality_constraints": 0,
+        "bilateral_contact": true,
+        "maximum_height": 0.08434687963814583,
+        "placement_verified": true,
+        "no_finger_contact": true,
+        "object_position": [
+          0.15296221480838193,
+          -0.14174844206777243,
+          0.039901788913607794
+        ]
+      },
+      "implementation_sha256": {
+        "live_runtime.py": "622f99b1963f47fe8d87ac1839079363b5cce83305c4c3b6bd6ed92e22d79626",
+        "wasm_policy.py": "95078b0526122e1395d8b5d283320c94dfbf9164c8c7ae7b1460991be3309fc1",
+        "json_workcell.py": "ceb32820826e15f209740fd19c1068ef4f93a355e2d6d321020c810ed5411ba7",
+        "live_viewer.py": "4b43621c5c9c3f24118256bcc128b2a27f311386d6bf8aaaa39f1542909a7d5e"
+      },
+      "configuration_sha256": {
+        "block-transfer.render.json": "236c81ec924fc37af36265a45c24d74b19c888cba33edd33d5c731f41ad77334",
+        "render.json": "b83975844ac4d12ed14acc8c0bc45452cd5a4090b6b1ba4e1915c22baa38cee5",
+        "robot-adapter.json": "08dc612345d7cc7139be93026cf6370c83316733d8f69ef61929afb78bd00777",
+        "task.json": "68d62a19fd495f153d9d646ce68d0923daeb8e21265724cacb314e060da9fa54",
+        "workcell.json": "1521a13beff2e50aff2d69d640d10f9e127abdad61e823e640c400e7e981919d"
+      },
+      "versions": {
+        "mujoco": "4.0.1",
+        "wasmtime": "51.0.0",
+        "pygfx": "0.18.0",
+        "wgpu": "0.33.0"
+      },
+      "platform": "Linux-6.18.57-x86_64-with-glibc2.41",
+      "python": "3.12.14",
+      "cpu": "INTEL(R) XEON(R) PLATINUM 8573C",
+      "startup_seconds": 0.27928247499949066,
+      "wall_seconds": 9.198832728001435,
+      "cpu_seconds": 4.1094144009999996,
+      "cpu_percent_one_core": 44.673215858038795,
+      "peak_process_rss_kib": 395500.0,
+      "simulation_wall_ratio": 0.9903430434460109,
+      "physics_dt": 0.002,
+      "control_every": 1,
+      "tick_latency": {
+        "p50_ms": 0.34444699849700555,
+        "p95_ms": 0.8012473987037083,
+        "p99_ms": 2.406286779223592
+      },
+      "control_tick_including_physics_latency": {
+        "p50_ms": 0.34444699849700555,
+        "p95_ms": 0.8012473987037083,
+        "p99_ms": 2.406286779223592
+      },
+      "command_to_observation_latency": {
+        "p50_ms": 1.5773509985592682,
+        "p95_ms": 2.538545000788872,
+        "p99_ms": 3.2959388008748496
+      },
+      "missed_compute_deadlines": 64,
+      "rendered_fps": 0,
+      "frames": 0,
+      "view": "headless",
+      "paced": true,
+      "scene": "blocks",
+      "repeat": 1,
+      "state": {
+        "state": "completed",
+        "phase": "complete",
+        "error": null,
+        "time": 9.109999999999712,
+        "steps": 4555,
+        "qvel": [
+          -1.0890694069999746e-11,
+          2.8962543134966395e-12,
+          -9.790062289695575e-13,
+          1.5084200599381568e-13,
+          -5.4765231939820013e-14,
+          7.948052233031355e-12,
+          9.616731133341789e-11,
+          -1.476876624720686e-10,
+          8.425127860349549e-16,
+          -1.7225094433419903e-12,
+          1.2756782448168147e-09,
+          3.15420771086417e-16,
+          -1.658298386520613e-10,
+          -5.750310353329386e-11,
+          8.472697301631652e-16,
+          2.704636883445954e-10,
+          -7.799775104455655e-10,
+          1.602784750352976e-16,
+          -1.745237370041418e-10,
+          -7.324484405978137e-12,
+          -1.5627116416292966e-19,
+          5.7846925964900085e-11,
+          -1.3783441483274388e-09,
+          -1.3720182865967516e-16
+        ],
+        "actuators": {
+          "shoulder_pan": 0.8844181256909929,
+          "shoulder_lift": -0.38622262120675116,
+          "elbow_flex": 0.4642054000491258,
+          "wrist_flex": 1.4928157295193476,
+          "wrist_roll": -3.2271886366165194e-05,
+          "gripper": 0.8
+        },
+        "overloads": 3,
+        "discarded_wall_seconds": 0.082
+      }
+    },
+    {
+      "backend": "wasm",
+      "native_components": [
+        "MuJoCo",
+        "IK",
+        "host",
+        "renderer"
+      ],
+      "wasm_components": [
+        "actuator slew",
+        "phase transition decisions"
+      ],
+      "assessment": {
+        "success": true,
+        "warnings": 0,
+        "equality_constraints": 0,
+        "bilateral_contact": true,
+        "maximum_height": 0.08434687963814583,
+        "placement_verified": true,
+        "no_finger_contact": true,
+        "object_position": [
+          0.15296221480838193,
+          -0.14174844206777243,
+          0.039901788913607794
+        ]
+      },
+      "implementation_sha256": {
+        "live_runtime.py": "622f99b1963f47fe8d87ac1839079363b5cce83305c4c3b6bd6ed92e22d79626",
+        "wasm_policy.py": "95078b0526122e1395d8b5d283320c94dfbf9164c8c7ae7b1460991be3309fc1",
+        "json_workcell.py": "ceb32820826e15f209740fd19c1068ef4f93a355e2d6d321020c810ed5411ba7",
+        "live_viewer.py": "4b43621c5c9c3f24118256bcc128b2a27f311386d6bf8aaaa39f1542909a7d5e"
+      },
+      "configuration_sha256": {
+        "block-transfer.render.json": "236c81ec924fc37af36265a45c24d74b19c888cba33edd33d5c731f41ad77334",
+        "render.json": "b83975844ac4d12ed14acc8c0bc45452cd5a4090b6b1ba4e1915c22baa38cee5",
+        "robot-adapter.json": "08dc612345d7cc7139be93026cf6370c83316733d8f69ef61929afb78bd00777",
+        "task.json": "68d62a19fd495f153d9d646ce68d0923daeb8e21265724cacb314e060da9fa54",
+        "workcell.json": "1521a13beff2e50aff2d69d640d10f9e127abdad61e823e640c400e7e981919d"
+      },
+      "versions": {
+        "mujoco": "4.0.1",
+        "wasmtime": "51.0.0",
+        "pygfx": "0.18.0",
+        "wgpu": "0.33.0"
+      },
+      "platform": "Linux-6.18.57-x86_64-with-glibc2.41",
+      "python": "3.12.14",
+      "cpu": "INTEL(R) XEON(R) PLATINUM 8573C",
+      "startup_seconds": 0.2995175269970787,
+      "wall_seconds": 9.238835363998078,
+      "cpu_seconds": 6.036951856,
+      "cpu_percent_one_core": 65.34321284179185,
+      "peak_process_rss_kib": 411932.0,
+      "simulation_wall_ratio": 0.9860550211230723,
+      "physics_dt": 0.002,
+      "control_every": 1,
+      "tick_latency": {
+        "p50_ms": 0.7118989997252356,
+        "p95_ms": 1.4134277975244915,
+        "p99_ms": 2.741602399255499
+      },
+      "control_tick_including_physics_latency": {
+        "p50_ms": 0.7118989997252356,
+        "p95_ms": 1.4134277975244915,
+        "p99_ms": 2.741602399255499
+      },
+      "command_to_observation_latency": {
+        "p50_ms": 1.7158695009129588,
+        "p95_ms": 3.1096638505914607,
+        "p99_ms": 9.801755568332753
+      },
+      "missed_compute_deadlines": 110,
+      "rendered_fps": 0,
+      "frames": 0,
+      "view": "headless",
+      "paced": true,
+      "scene": "blocks",
+      "repeat": 1,
+      "state": {
+        "state": "completed",
+        "phase": "complete",
+        "error": null,
+        "time": 9.109999999999712,
+        "steps": 4555,
+        "qvel": [
+          -1.0890694069999746e-11,
+          2.8962543134966395e-12,
+          -9.790062289695575e-13,
+          1.5084200599381568e-13,
+          -5.4765231939820013e-14,
+          7.948052233031355e-12,
+          9.616731133341789e-11,
+          -1.476876624720686e-10,
+          8.425127860349549e-16,
+          -1.7225094433419903e-12,
+          1.2756782448168147e-09,
+          3.15420771086417e-16,
+          -1.658298386520613e-10,
+          -5.750310353329386e-11,
+          8.472697301631652e-16,
+          2.704636883445954e-10,
+          -7.799775104455655e-10,
+          1.602784750352976e-16,
+          -1.745237370041418e-10,
+          -7.324484405978137e-12,
+          -1.5627116416292966e-19,
+          5.7846925964900085e-11,
+          -1.3783441483274388e-09,
+          -1.3720182865967516e-16
+        ],
+        "actuators": {
+          "shoulder_pan": 0.8844181256909929,
+          "shoulder_lift": -0.38622262120675116,
+          "elbow_flex": 0.4642054000491258,
+          "wrist_flex": 1.4928157295193476,
+          "wrist_roll": -3.2271886366165194e-05,
+          "gripper": 0.8
+        },
+        "overloads": 9,
+        "discarded_wall_seconds": 0.12200000000000003
+      }
+    },
+    {
+      "backend": "native",
+      "native_components": [
+        "MuJoCo",
+        "IK",
+        "host",
+        "renderer"
+      ],
+      "wasm_components": [],
+      "assessment": {
+        "success": true,
+        "warnings": 0,
+        "equality_constraints": 0,
+        "bilateral_contact": true,
+        "maximum_height": 0.08434687963814583,
+        "placement_verified": true,
+        "no_finger_contact": true,
+        "object_position": [
+          0.15296221480838193,
+          -0.14174844206777243,
+          0.039901788913607794
+        ]
+      },
+      "implementation_sha256": {
+        "live_runtime.py": "622f99b1963f47fe8d87ac1839079363b5cce83305c4c3b6bd6ed92e22d79626",
+        "wasm_policy.py": "95078b0526122e1395d8b5d283320c94dfbf9164c8c7ae7b1460991be3309fc1",
+        "json_workcell.py": "ceb32820826e15f209740fd19c1068ef4f93a355e2d6d321020c810ed5411ba7",
+        "live_viewer.py": "4b43621c5c9c3f24118256bcc128b2a27f311386d6bf8aaaa39f1542909a7d5e"
+      },
+      "configuration_sha256": {
+        "block-transfer.render.json": "236c81ec924fc37af36265a45c24d74b19c888cba33edd33d5c731f41ad77334",
+        "render.json": "b83975844ac4d12ed14acc8c0bc45452cd5a4090b6b1ba4e1915c22baa38cee5",
+        "robot-adapter.json": "08dc612345d7cc7139be93026cf6370c83316733d8f69ef61929afb78bd00777",
+        "task.json": "68d62a19fd495f153d9d646ce68d0923daeb8e21265724cacb314e060da9fa54",
+        "workcell.json": "1521a13beff2e50aff2d69d640d10f9e127abdad61e823e640c400e7e981919d"
+      },
+      "versions": {
+        "mujoco": "4.0.1",
+        "wasmtime": "51.0.0",
+        "pygfx": "0.18.0",
+        "wgpu": "0.33.0"
+      },
+      "platform": "Linux-6.18.57-x86_64-with-glibc2.41",
+      "python": "3.12.14",
+      "cpu": "INTEL(R) XEON(R) PLATINUM 8573C",
+      "startup_seconds": 0.2906283509983041,
+      "wall_seconds": 9.121722060001048,
+      "cpu_seconds": 3.7211133359999997,
+      "cpu_percent_one_core": 40.79397850014707,
+      "peak_process_rss_kib": 395984.0,
+      "simulation_wall_ratio": 0.9987149290535021,
+      "physics_dt": 0.002,
+      "control_every": 1,
+      "tick_latency": {
+        "p50_ms": 0.3134830003546085,
+        "p95_ms": 0.6381210980180185,
+        "p99_ms": 1.211224918952212
+      },
+      "control_tick_including_physics_latency": {
+        "p50_ms": 0.3134830003546085,
+        "p95_ms": 0.6381210980180185,
+        "p99_ms": 1.211224918952212
+      },
+      "command_to_observation_latency": {
+        "p50_ms": 1.5050729998620227,
+        "p95_ms": 2.3839975001465064,
+        "p99_ms": 3.709644100672448
+      },
+      "missed_compute_deadlines": 22,
+      "rendered_fps": 0,
+      "frames": 0,
+      "view": "headless",
+      "paced": true,
+      "scene": "blocks",
+      "repeat": 2,
+      "state": {
+        "state": "completed",
+        "phase": "complete",
+        "error": null,
+        "time": 9.109999999999712,
+        "steps": 4555,
+        "qvel": [
+          -1.0890694069999746e-11,
+          2.8962543134966395e-12,
+          -9.790062289695575e-13,
+          1.5084200599381568e-13,
+          -5.4765231939820013e-14,
+          7.948052233031355e-12,
+          9.616731133341789e-11,
+          -1.476876624720686e-10,
+          8.425127860349549e-16,
+          -1.7225094433419903e-12,
+          1.2756782448168147e-09,
+          3.15420771086417e-16,
+          -1.658298386520613e-10,
+          -5.750310353329386e-11,
+          8.472697301631652e-16,
+          2.704636883445954e-10,
+          -7.799775104455655e-10,
+          1.602784750352976e-16,
+          -1.745237370041418e-10,
+          -7.324484405978137e-12,
+          -1.5627116416292966e-19,
+          5.7846925964900085e-11,
+          -1.3783441483274388e-09,
+          -1.3720182865967516e-16
+        ],
+        "actuators": {
+          "shoulder_pan": 0.8844181256909929,
+          "shoulder_lift": -0.38622262120675116,
+          "elbow_flex": 0.4642054000491258,
+          "wrist_flex": 1.4928157295193476,
+          "wrist_roll": -3.2271886366165194e-05,
+          "gripper": 0.8
+        },
+        "overloads": 1,
+        "discarded_wall_seconds": 0.002
+      }
+    },
+    {
+      "backend": "wasm",
+      "native_components": [
+        "MuJoCo",
+        "IK",
+        "host",
+        "renderer"
+      ],
+      "wasm_components": [
+        "actuator slew",
+        "phase transition decisions"
+      ],
+      "assessment": {
+        "success": true,
+        "warnings": 0,
+        "equality_constraints": 0,
+        "bilateral_contact": true,
+        "maximum_height": 0.08434687963814583,
+        "placement_verified": true,
+        "no_finger_contact": true,
+        "object_position": [
+          0.15296221480838193,
+          -0.14174844206777243,
+          0.039901788913607794
+        ]
+      },
+      "implementation_sha256": {
+        "live_runtime.py": "622f99b1963f47fe8d87ac1839079363b5cce83305c4c3b6bd6ed92e22d79626",
+        "wasm_policy.py": "95078b0526122e1395d8b5d283320c94dfbf9164c8c7ae7b1460991be3309fc1",
+        "json_workcell.py": "ceb32820826e15f209740fd19c1068ef4f93a355e2d6d321020c810ed5411ba7",
+        "live_viewer.py": "4b43621c5c9c3f24118256bcc128b2a27f311386d6bf8aaaa39f1542909a7d5e"
+      },
+      "configuration_sha256": {
+        "block-transfer.render.json": "236c81ec924fc37af36265a45c24d74b19c888cba33edd33d5c731f41ad77334",
+        "render.json": "b83975844ac4d12ed14acc8c0bc45452cd5a4090b6b1ba4e1915c22baa38cee5",
+        "robot-adapter.json": "08dc612345d7cc7139be93026cf6370c83316733d8f69ef61929afb78bd00777",
+        "task.json": "68d62a19fd495f153d9d646ce68d0923daeb8e21265724cacb314e060da9fa54",
+        "workcell.json": "1521a13beff2e50aff2d69d640d10f9e127abdad61e823e640c400e7e981919d"
+      },
+      "versions": {
+        "mujoco": "4.0.1",
+        "wasmtime": "51.0.0",
+        "pygfx": "0.18.0",
+        "wgpu": "0.33.0"
+      },
+      "platform": "Linux-6.18.57-x86_64-with-glibc2.41",
+      "python": "3.12.14",
+      "cpu": "INTEL(R) XEON(R) PLATINUM 8573C",
+      "startup_seconds": 0.39766944499933743,
+      "wall_seconds": 9.221004373001051,
+      "cpu_seconds": 5.331497353,
+      "cpu_percent_one_core": 57.819052430020925,
+      "peak_process_rss_kib": 411900.0,
+      "simulation_wall_ratio": 0.9879617915238866,
+      "physics_dt": 0.002,
+      "control_every": 1,
+      "tick_latency": {
+        "p50_ms": 0.6044239999027923,
+        "p95_ms": 1.2055598999722872,
+        "p99_ms": 3.249344019859565
+      },
+      "control_tick_including_physics_latency": {
+        "p50_ms": 0.6044239999027923,
+        "p95_ms": 1.2055598999722872,
+        "p99_ms": 3.249344019859565
+      },
+      "command_to_observation_latency": {
+        "p50_ms": 1.5693200002715457,
+        "p95_ms": 2.257967500554514,
+        "p99_ms": 4.886475299281279
+      },
+      "missed_compute_deadlines": 86,
+      "rendered_fps": 0,
+      "frames": 0,
+      "view": "headless",
+      "paced": true,
+      "scene": "blocks",
+      "repeat": 2,
+      "state": {
+        "state": "completed",
+        "phase": "complete",
+        "error": null,
+        "time": 9.109999999999712,
+        "steps": 4555,
+        "qvel": [
+          -1.0890694069999746e-11,
+          2.8962543134966395e-12,
+          -9.790062289695575e-13,
+          1.5084200599381568e-13,
+          -5.4765231939820013e-14,
+          7.948052233031355e-12,
+          9.616731133341789e-11,
+          -1.476876624720686e-10,
+          8.425127860349549e-16,
+          -1.7225094433419903e-12,
+          1.2756782448168147e-09,
+          3.15420771086417e-16,
+          -1.658298386520613e-10,
+          -5.750310353329386e-11,
+          8.472697301631652e-16,
+          2.704636883445954e-10,
+          -7.799775104455655e-10,
+          1.602784750352976e-16,
+          -1.745237370041418e-10,
+          -7.324484405978137e-12,
+          -1.5627116416292966e-19,
+          5.7846925964900085e-11,
+          -1.3783441483274388e-09,
+          -1.3720182865967516e-16
+        ],
+        "actuators": {
+          "shoulder_pan": 0.8844181256909929,
+          "shoulder_lift": -0.38622262120675116,
+          "elbow_flex": 0.4642054000491258,
+          "wrist_flex": 1.4928157295193476,
+          "wrist_roll": -3.2271886366165194e-05,
+          "gripper": 0.8
+        },
+        "overloads": 8,
+        "discarded_wall_seconds": 0.10400000000000001
+      }
+    },
+    {
+      "backend": "native",
+      "native_components": [
+        "MuJoCo",
+        "IK",
+        "host",
+        "renderer"
+      ],
+      "wasm_components": [],
+      "assessment": {
+        "success": true,
+        "warnings": 0,
+        "equality_constraints": 0,
+        "phases_physically_reached": [
+          0,
+          1,
+          2
+        ],
+        "joint_positions": [
+          0.0008972023156397571
+        ]
+      },
+      "implementation_sha256": {
+        "live_runtime.py": "622f99b1963f47fe8d87ac1839079363b5cce83305c4c3b6bd6ed92e22d79626",
+        "wasm_policy.py": "95078b0526122e1395d8b5d283320c94dfbf9164c8c7ae7b1460991be3309fc1",
+        "json_workcell.py": "ceb32820826e15f209740fd19c1068ef4f93a355e2d6d321020c810ed5411ba7",
+        "live_viewer.py": "4b43621c5c9c3f24118256bcc128b2a27f311386d6bf8aaaa39f1542909a7d5e"
+      },
+      "configuration_sha256": {
+        "render.json": "2d9f27174ad20c650b7299f4214474097ea04fe7b908f1166bc391dfdaa5b481",
+        "robot-adapter.json": "0c2658622d2882e4f4a9464967b8d48ca5f0e1444aeba9c414d6c4234297b885",
+        "task.json": "5da8aa17108ef18cb915136d6cf221ce7c81a7160d9ad17ee521af0f69ecc28d",
+        "workcell.json": "3f512c468cca201a40343fa3368cc57027c1b74059767d84a382e98e61f0d568"
+      },
+      "versions": {
+        "mujoco": "4.0.1",
+        "wasmtime": "51.0.0",
+        "pygfx": "0.18.0",
+        "wgpu": "0.33.0"
+      },
+      "platform": "Linux-6.18.57-x86_64-with-glibc2.41",
+      "python": "3.12.14",
+      "cpu": "INTEL(R) XEON(R) PLATINUM 8573C",
+      "startup_seconds": 0.006489551000413485,
+      "wall_seconds": 4.026377075999335,
+      "cpu_seconds": 1.265676913,
+      "cpu_percent_one_core": 31.434634389921435,
+      "peak_process_rss_kib": 58224.0,
+      "simulation_wall_ratio": 0.9944423794450499,
+      "physics_dt": 0.002,
+      "control_every": 1,
+      "tick_latency": {
+        "p50_ms": 0.2414620012132218,
+        "p95_ms": 0.708321550882828,
+        "p99_ms": 1.7884611585031964
+      },
+      "control_tick_including_physics_latency": {
+        "p50_ms": 0.2414620012132218,
+        "p95_ms": 0.708321550882828,
+        "p99_ms": 1.7884611585031964
+      },
+      "command_to_observation_latency": {
+        "p50_ms": 1.286534999962896,
+        "p95_ms": 2.1256979998725,
+        "p99_ms": 2.575781400082634
+      },
+      "missed_compute_deadlines": 17,
+      "rendered_fps": 0,
+      "frames": 0,
+      "view": "headless",
+      "paced": true,
+      "scene": "gate",
+      "repeat": 0,
+      "state": {
+        "state": "completed",
+        "phase": "complete",
+        "error": null,
+        "time": 4.003999999999781,
+        "steps": 2002,
+        "qvel": [
+          -2.9381251301476804e-06
+        ],
+        "actuators": {
+          "gate-motor": 0.0
+        },
+        "overloads": 1,
+        "discarded_wall_seconds": 0.02
+      }
+    },
+    {
+      "backend": "wasm",
+      "native_components": [
+        "MuJoCo",
+        "IK",
+        "host",
+        "renderer"
+      ],
+      "wasm_components": [
+        "actuator slew",
+        "phase transition decisions"
+      ],
+      "assessment": {
+        "success": true,
+        "warnings": 0,
+        "equality_constraints": 0,
+        "phases_physically_reached": [
+          0,
+          1,
+          2
+        ],
+        "joint_positions": [
+          0.0008972023156397571
+        ]
+      },
+      "implementation_sha256": {
+        "live_runtime.py": "622f99b1963f47fe8d87ac1839079363b5cce83305c4c3b6bd6ed92e22d79626",
+        "wasm_policy.py": "95078b0526122e1395d8b5d283320c94dfbf9164c8c7ae7b1460991be3309fc1",
+        "json_workcell.py": "ceb32820826e15f209740fd19c1068ef4f93a355e2d6d321020c810ed5411ba7",
+        "live_viewer.py": "4b43621c5c9c3f24118256bcc128b2a27f311386d6bf8aaaa39f1542909a7d5e"
+      },
+      "configuration_sha256": {
+        "render.json": "2d9f27174ad20c650b7299f4214474097ea04fe7b908f1166bc391dfdaa5b481",
+        "robot-adapter.json": "0c2658622d2882e4f4a9464967b8d48ca5f0e1444aeba9c414d6c4234297b885",
+        "task.json": "5da8aa17108ef18cb915136d6cf221ce7c81a7160d9ad17ee521af0f69ecc28d",
+        "workcell.json": "3f512c468cca201a40343fa3368cc57027c1b74059767d84a382e98e61f0d568"
+      },
+      "versions": {
+        "mujoco": "4.0.1",
+        "wasmtime": "51.0.0",
+        "pygfx": "0.18.0",
+        "wgpu": "0.33.0"
+      },
+      "platform": "Linux-6.18.57-x86_64-with-glibc2.41",
+      "python": "3.12.14",
+      "cpu": "INTEL(R) XEON(R) PLATINUM 8573C",
+      "startup_seconds": 0.030605709998781094,
+      "wall_seconds": 4.050148730002547,
+      "cpu_seconds": 1.8079003449999997,
+      "cpu_percent_one_core": 44.63787543424023,
+      "peak_process_rss_kib": 74480.0,
+      "simulation_wall_ratio": 0.9886056702903507,
+      "physics_dt": 0.002,
+      "control_every": 1,
+      "tick_latency": {
+        "p50_ms": 0.47751550118846353,
+        "p95_ms": 1.3053855496764295,
+        "p99_ms": 2.4862362786734598
+      },
+      "control_tick_including_physics_latency": {
+        "p50_ms": 0.47751550118846353,
+        "p95_ms": 1.3053855496764295,
+        "p99_ms": 2.4862362786734598
+      },
+      "command_to_observation_latency": {
+        "p50_ms": 1.5346799991675653,
+        "p95_ms": 2.252436999697238,
+        "p99_ms": 3.011967401107542
+      },
+      "missed_compute_deadlines": 34,
+      "rendered_fps": 0,
+      "frames": 0,
+      "view": "headless",
+      "paced": true,
+      "scene": "gate",
+      "repeat": 0,
+      "state": {
+        "state": "completed",
+        "phase": "complete",
+        "error": null,
+        "time": 4.003999999999781,
+        "steps": 2002,
+        "qvel": [
+          -2.9381251301476804e-06
+        ],
+        "actuators": {
+          "gate-motor": 0.0
+        },
+        "overloads": 4,
+        "discarded_wall_seconds": 0.044
+      }
+    },
+    {
+      "backend": "native",
+      "native_components": [
+        "MuJoCo",
+        "IK",
+        "host",
+        "renderer"
+      ],
+      "wasm_components": [],
+      "assessment": {
+        "success": true,
+        "warnings": 0,
+        "equality_constraints": 0,
+        "phases_physically_reached": [
+          0,
+          1,
+          2
+        ],
+        "joint_positions": [
+          0.0008972023156397571
+        ]
+      },
+      "implementation_sha256": {
+        "live_runtime.py": "622f99b1963f47fe8d87ac1839079363b5cce83305c4c3b6bd6ed92e22d79626",
+        "wasm_policy.py": "95078b0526122e1395d8b5d283320c94dfbf9164c8c7ae7b1460991be3309fc1",
+        "json_workcell.py": "ceb32820826e15f209740fd19c1068ef4f93a355e2d6d321020c810ed5411ba7",
+        "live_viewer.py": "4b43621c5c9c3f24118256bcc128b2a27f311386d6bf8aaaa39f1542909a7d5e"
+      },
+      "configuration_sha256": {
+        "render.json": "2d9f27174ad20c650b7299f4214474097ea04fe7b908f1166bc391dfdaa5b481",
+        "robot-adapter.json": "0c2658622d2882e4f4a9464967b8d48ca5f0e1444aeba9c414d6c4234297b885",
+        "task.json": "5da8aa17108ef18cb915136d6cf221ce7c81a7160d9ad17ee521af0f69ecc28d",
+        "workcell.json": "3f512c468cca201a40343fa3368cc57027c1b74059767d84a382e98e61f0d568"
+      },
+      "versions": {
+        "mujoco": "4.0.1",
+        "wasmtime": "51.0.0",
+        "pygfx": "0.18.0",
+        "wgpu": "0.33.0"
+      },
+      "platform": "Linux-6.18.57-x86_64-with-glibc2.41",
+      "python": "3.12.14",
+      "cpu": "INTEL(R) XEON(R) PLATINUM 8573C",
+      "startup_seconds": 0.0032107400002132636,
+      "wall_seconds": 4.029521502001444,
+      "cpu_seconds": 1.2147664959999998,
+      "cpu_percent_one_core": 30.1466686651661,
+      "peak_process_rss_kib": 57844.0,
+      "simulation_wall_ratio": 0.9936663690740981,
+      "physics_dt": 0.002,
+      "control_every": 1,
+      "tick_latency": {
+        "p50_ms": 0.23146149942476768,
+        "p95_ms": 0.6531150007504037,
+        "p99_ms": 1.5697027611167869
+      },
+      "control_tick_including_physics_latency": {
+        "p50_ms": 0.23146149942476768,
+        "p95_ms": 0.6531150007504037,
+        "p99_ms": 1.5697027611167869
+      },
+      "command_to_observation_latency": {
+        "p50_ms": 1.517111999419285,
+        "p95_ms": 2.621122999698855,
+        "p99_ms": 3.2275833982566846
+      },
+      "missed_compute_deadlines": 11,
+      "rendered_fps": 0,
+      "frames": 0,
+      "view": "headless",
+      "paced": true,
+      "scene": "gate",
+      "repeat": 1,
+      "state": {
+        "state": "completed",
+        "phase": "complete",
+        "error": null,
+        "time": 4.003999999999781,
+        "steps": 2002,
+        "qvel": [
+          -2.9381251301476804e-06
+        ],
+        "actuators": {
+          "gate-motor": 0.0
+        },
+        "overloads": 1,
+        "discarded_wall_seconds": 0.024
+      }
+    },
+    {
+      "backend": "wasm",
+      "native_components": [
+        "MuJoCo",
+        "IK",
+        "host",
+        "renderer"
+      ],
+      "wasm_components": [
+        "actuator slew",
+        "phase transition decisions"
+      ],
+      "assessment": {
+        "success": true,
+        "warnings": 0,
+        "equality_constraints": 0,
+        "phases_physically_reached": [
+          0,
+          1,
+          2
+        ],
+        "joint_positions": [
+          0.0008972023156397571
+        ]
+      },
+      "implementation_sha256": {
+        "live_runtime.py": "622f99b1963f47fe8d87ac1839079363b5cce83305c4c3b6bd6ed92e22d79626",
+        "wasm_policy.py": "95078b0526122e1395d8b5d283320c94dfbf9164c8c7ae7b1460991be3309fc1",
+        "json_workcell.py": "ceb32820826e15f209740fd19c1068ef4f93a355e2d6d321020c810ed5411ba7",
+        "live_viewer.py": "4b43621c5c9c3f24118256bcc128b2a27f311386d6bf8aaaa39f1542909a7d5e"
+      },
+      "configuration_sha256": {
+        "render.json": "2d9f27174ad20c650b7299f4214474097ea04fe7b908f1166bc391dfdaa5b481",
+        "robot-adapter.json": "0c2658622d2882e4f4a9464967b8d48ca5f0e1444aeba9c414d6c4234297b885",
+        "task.json": "5da8aa17108ef18cb915136d6cf221ce7c81a7160d9ad17ee521af0f69ecc28d",
+        "workcell.json": "3f512c468cca201a40343fa3368cc57027c1b74059767d84a382e98e61f0d568"
+      },
+      "versions": {
+        "mujoco": "4.0.1",
+        "wasmtime": "51.0.0",
+        "pygfx": "0.18.0",
+        "wgpu": "0.33.0"
+      },
+      "platform": "Linux-6.18.57-x86_64-with-glibc2.41",
+      "python": "3.12.14",
+      "cpu": "INTEL(R) XEON(R) PLATINUM 8573C",
+      "startup_seconds": 0.02853349100041669,
+      "wall_seconds": 4.011394691999158,
+      "cpu_seconds": 1.5947206999999999,
+      "cpu_percent_one_core": 39.75476916247399,
+      "peak_process_rss_kib": 74336.0,
+      "simulation_wall_ratio": 0.9981565783057634,
+      "physics_dt": 0.002,
+      "control_every": 1,
+      "tick_latency": {
+        "p50_ms": 0.4556479998427676,
+        "p95_ms": 0.9075262983969877,
+        "p99_ms": 1.7999643392249716
+      },
+      "control_tick_including_physics_latency": {
+        "p50_ms": 0.4556479998427676,
+        "p95_ms": 0.9075262983969877,
+        "p99_ms": 1.7999643392249716
+      },
+      "command_to_observation_latency": {
+        "p50_ms": 1.5118504998099525,
+        "p95_ms": 2.090451100411882,
+        "p99_ms": 2.928962458208843
+      },
+      "missed_compute_deadlines": 16,
+      "rendered_fps": 0,
+      "frames": 0,
+      "view": "headless",
+      "paced": true,
+      "scene": "gate",
+      "repeat": 1,
+      "state": {
+        "state": "completed",
+        "phase": "complete",
+        "error": null,
+        "time": 4.003999999999781,
+        "steps": 2002,
+        "qvel": [
+          -2.9381251301476804e-06
+        ],
+        "actuators": {
+          "gate-motor": 0.0
+        },
+        "overloads": 1,
+        "discarded_wall_seconds": 0.004
+      }
+    },
+    {
+      "backend": "native",
+      "native_components": [
+        "MuJoCo",
+        "IK",
+        "host",
+        "renderer"
+      ],
+      "wasm_components": [],
+      "assessment": {
+        "success": true,
+        "warnings": 0,
+        "equality_constraints": 0,
+        "phases_physically_reached": [
+          0,
+          1,
+          2
+        ],
+        "joint_positions": [
+          0.0008972023156397571
+        ]
+      },
+      "implementation_sha256": {
+        "live_runtime.py": "622f99b1963f47fe8d87ac1839079363b5cce83305c4c3b6bd6ed92e22d79626",
+        "wasm_policy.py": "95078b0526122e1395d8b5d283320c94dfbf9164c8c7ae7b1460991be3309fc1",
+        "json_workcell.py": "ceb32820826e15f209740fd19c1068ef4f93a355e2d6d321020c810ed5411ba7",
+        "live_viewer.py": "4b43621c5c9c3f24118256bcc128b2a27f311386d6bf8aaaa39f1542909a7d5e"
+      },
+      "configuration_sha256": {
+        "render.json": "2d9f27174ad20c650b7299f4214474097ea04fe7b908f1166bc391dfdaa5b481",
+        "robot-adapter.json": "0c2658622d2882e4f4a9464967b8d48ca5f0e1444aeba9c414d6c4234297b885",
+        "task.json": "5da8aa17108ef18cb915136d6cf221ce7c81a7160d9ad17ee521af0f69ecc28d",
+        "workcell.json": "3f512c468cca201a40343fa3368cc57027c1b74059767d84a382e98e61f0d568"
+      },
+      "versions": {
+        "mujoco": "4.0.1",
+        "wasmtime": "51.0.0",
+        "pygfx": "0.18.0",
+        "wgpu": "0.33.0"
+      },
+      "platform": "Linux-6.18.57-x86_64-with-glibc2.41",
+      "python": "3.12.14",
+      "cpu": "INTEL(R) XEON(R) PLATINUM 8573C",
+      "startup_seconds": 0.003678114000649657,
+      "wall_seconds": 4.00887036900167,
+      "cpu_seconds": 1.077184104,
+      "cpu_percent_one_core": 26.870015861057926,
+      "peak_process_rss_kib": 58176.0,
+      "simulation_wall_ratio": 0.9987851018981435,
+      "physics_dt": 0.002,
+      "control_every": 1,
+      "tick_latency": {
+        "p50_ms": 0.2395564988546539,
+        "p95_ms": 0.485404399660183,
+        "p99_ms": 0.8521936890974758
+      },
+      "control_tick_including_physics_latency": {
+        "p50_ms": 0.2395564988546539,
+        "p95_ms": 0.485404399660183,
+        "p99_ms": 0.8521936890974758
+      },
+      "command_to_observation_latency": {
+        "p50_ms": 0.9359725008835085,
+        "p95_ms": 2.084511399334586,
+        "p99_ms": 2.746105110636563
+      },
+      "missed_compute_deadlines": 5,
+      "rendered_fps": 0,
+      "frames": 0,
+      "view": "headless",
+      "paced": true,
+      "scene": "gate",
+      "repeat": 2,
+      "state": {
+        "state": "completed",
+        "phase": "complete",
+        "error": null,
+        "time": 4.003999999999781,
+        "steps": 2002,
+        "qvel": [
+          -2.9381251301476804e-06
+        ],
+        "actuators": {
+          "gate-motor": 0.0
+        },
+        "overloads": 1,
+        "discarded_wall_seconds": 0.004
+      }
+    },
+    {
+      "backend": "wasm",
+      "native_components": [
+        "MuJoCo",
+        "IK",
+        "host",
+        "renderer"
+      ],
+      "wasm_components": [
+        "actuator slew",
+        "phase transition decisions"
+      ],
+      "assessment": {
+        "success": true,
+        "warnings": 0,
+        "equality_constraints": 0,
+        "phases_physically_reached": [
+          0,
+          1,
+          2
+        ],
+        "joint_positions": [
+          0.0008972023156397571
+        ]
+      },
+      "implementation_sha256": {
+        "live_runtime.py": "622f99b1963f47fe8d87ac1839079363b5cce83305c4c3b6bd6ed92e22d79626",
+        "wasm_policy.py": "95078b0526122e1395d8b5d283320c94dfbf9164c8c7ae7b1460991be3309fc1",
+        "json_workcell.py": "ceb32820826e15f209740fd19c1068ef4f93a355e2d6d321020c810ed5411ba7",
+        "live_viewer.py": "4b43621c5c9c3f24118256bcc128b2a27f311386d6bf8aaaa39f1542909a7d5e"
+      },
+      "configuration_sha256": {
+        "render.json": "2d9f27174ad20c650b7299f4214474097ea04fe7b908f1166bc391dfdaa5b481",
+        "robot-adapter.json": "0c2658622d2882e4f4a9464967b8d48ca5f0e1444aeba9c414d6c4234297b885",
+        "task.json": "5da8aa17108ef18cb915136d6cf221ce7c81a7160d9ad17ee521af0f69ecc28d",
+        "workcell.json": "3f512c468cca201a40343fa3368cc57027c1b74059767d84a382e98e61f0d568"
+      },
+      "versions": {
+        "mujoco": "4.0.1",
+        "wasmtime": "51.0.0",
+        "pygfx": "0.18.0",
+        "wgpu": "0.33.0"
+      },
+      "platform": "Linux-6.18.57-x86_64-with-glibc2.41",
+      "python": "3.12.14",
+      "cpu": "INTEL(R) XEON(R) PLATINUM 8573C",
+      "startup_seconds": 0.03779385200323304,
+      "wall_seconds": 4.005429245000414,
+      "cpu_seconds": 1.5754513870000002,
+      "cpu_percent_one_core": 39.332897690465565,
+      "peak_process_rss_kib": 74444.0,
+      "simulation_wall_ratio": 0.9996431730750414,
+      "physics_dt": 0.002,
+      "control_every": 1,
+      "tick_latency": {
+        "p50_ms": 0.4884169993601972,
+        "p95_ms": 0.825561301826383,
+        "p99_ms": 1.2725649911953953
+      },
+      "control_tick_including_physics_latency": {
+        "p50_ms": 0.4884169993601972,
+        "p95_ms": 0.825561301826383,
+        "p99_ms": 1.2725649911953953
+      },
+      "command_to_observation_latency": {
+        "p50_ms": 1.654088000577758,
+        "p95_ms": 2.3352700492978307,
+        "p99_ms": 3.187232349846454
+      },
+      "missed_compute_deadlines": 4,
+      "rendered_fps": 0,
+      "frames": 0,
+      "view": "headless",
+      "paced": true,
+      "scene": "gate",
+      "repeat": 2,
+      "state": {
+        "state": "completed",
+        "phase": "complete",
+        "error": null,
+        "time": 4.003999999999781,
+        "steps": 2002,
+        "qvel": [
+          -2.9381251301476804e-06
+        ],
+        "actuators": {
+          "gate-motor": 0.0
+        },
+        "overloads": 0,
+        "discarded_wall_seconds": 0.0
+      }
+    }
+  ]
+}

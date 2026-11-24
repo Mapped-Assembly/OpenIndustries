@@ -1,0 +1,37 @@
+{
+  "schema": "oi.joint-task",
+  "version": 1,
+  "bindings": [
+    {
+      "joint": "hinge",
+      "actuator": "gate-motor"
+    }
+  ],
+  "maxJointStep": 0.004,
+  "timeout": 6,
+  "tolerance": 0.02,
+  "maxSpeed": 0.04,
+  "phases": [
+    {
+      "id": "open-gate",
+      "targets": [
+        -1.2
+      ],
+      "minSeconds": 1.5
+    },
+    {
+      "id": "hold-open",
+      "targets": [
+        -1.2
+      ],
+      "minSeconds": 1
+    },
+    {
+      "id": "close-gate",
+      "targets": [
+        0.0
+      ],
+      "minSeconds": 1.5
+    }
+  ]
+}

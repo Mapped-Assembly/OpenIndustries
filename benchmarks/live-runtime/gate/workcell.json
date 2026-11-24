@@ -1,0 +1,15 @@
+{
+  "schema": "oi.mujoco-workcell",
+  "version": 1,
+  "units": "m-kg-s-rad",
+  "upAxis": "Z",
+  "robot": {
+    "file": "model.xml",
+    "sha256": "e4816c2ca32660593227f1e8b95e00090df9fc01f45ea9d4795ddd476f9164df",
+    "meshDirectory": "."
+  },
+  "options": {
+    "timestep": 0.002
+  },
+  "world": []
+}
