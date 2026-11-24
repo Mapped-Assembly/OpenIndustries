@@ -93,10 +93,10 @@ pip install pytest
 pip install -e '.[native-render,physics]'
 python -m pytest tools/geospatial/test_native_render.py \
   tools/geospatial/test_native_gif.py tools/geospatial/test_native_physics.py \
-  tools/geospatial/test_export.py -q
+  tools/geospatial/test_native_mujoco_scene.py tools/geospatial/test_export.py -q
 ```
 
-**24 tests passed** on Python 3.12, pygfx 0.18.0, wgpu 0.33.0 and Mesa 25.0.7
+**25 tests passed** on Python 3.12, pygfx 0.18.0, wgpu 0.33.0 and Mesa 25.0.7
 Lavapipe (CPU Vulkan). Tests cover geometry/asset bindings, static pixels,
 rotation conventions, shortest-path interpolation, part pivots, visibility,
 decoded GIF timing/loop settings, changing native frames and invalid ranges.
@@ -182,3 +182,11 @@ count, controls, actual sample times, contact counts and final qpos/qvel.
 The model hash covers the root XML only, not its external assets/includes.
 The existing embodied service remains kinematic; this adds the native export
 physics path and does not silently replace that service's controller.
+
+## SO-101 pick-and-place
+
+The [SO-101 demo](../benchmarks/native-render/so101/README.md) runs an actual
+contact grasp, lift, transfer, release and verified settling with the pinned
+robot meshes. Run `python benchmarks/native-render/so101/run.py` after installing
+`.[native-render,physics]`. It includes a negative test with finger contacts
+disabled, and uses the native renderer without Chromium.

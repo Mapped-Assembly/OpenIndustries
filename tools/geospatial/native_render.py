@@ -5,7 +5,7 @@ import argparse
 import json
 import math
 from pathlib import Path
-from typing import Any
+from typing import Any, Callable, Protocol
 
 import imageio.v3 as iio
 import numpy as np
@@ -18,7 +18,21 @@ from native_animation import apply_animation, validate_animation
 from export_scene import MAX_BYTES, digest, pose_matrix, validate_scene, vector
 
 
-def build_scene(document: dict[str, Any], *, base_layout: bool = False, include_hidden: bool = False) -> gfx.Scene:
+class PoseReplay(Protocol):
+    """Physics pose source consumed by rendering without advancing graphics-owned state."""
+
+    report: dict[str, Any]
+
+    def sample(self, times: list[float]) -> list[list[np.ndarray]]:
+        """Return recorded or simulated world matrices at the requested times."""
+        ...
+
+    def apply(self, matrices: list[np.ndarray]) -> None:
+        """Apply one pose sample to bound visuals."""
+        ...
+
+
+def build_scene(document: dict[str, Any], *, base_layout: bool = False, include_hidden: bool = False, room_guides: bool = True) -> gfx.Scene:
     """Adapt normalized OI meshes; animation requires explicit base-layout consent."""
     if not isinstance(document, dict):
         raise ValueError("Scene must be a JSON object")
@@ -47,8 +61,9 @@ def build_scene(document: dict[str, Any], *, base_layout: bool = False, include_
     corners = np.array([[x, y, z] for y in (0, height) for z in (-depth/2, depth/2)
                         for x in (-width/2, width/2)], dtype=np.float32)
     edges = [(a, b) for a in range(8) for b in range(a+1, 8) if (a ^ b) in (1, 2, 4)]
-    scene.add(gfx.Line(gfx.Geometry(positions=np.array([corners[i] for edge in edges for i in edge])),
-                       gfx.LineSegmentMaterial(color="#8999aa", thickness=1)))
+    if room_guides:
+        scene.add(gfx.Line(gfx.Geometry(positions=np.array([corners[i] for edge in edges for i in edge])),
+                           gfx.LineSegmentMaterial(color="#8999aa", thickness=1)))
     geometry_cache: dict[tuple[int, str], tuple[gfx.Geometry, gfx.MeshPhongMaterial]] = {}
     for instance in instances:
         if not instance["visible"] and not include_hidden:
@@ -101,7 +116,9 @@ def render_gif(document: dict[str, Any], output: Path, *, width: int = 640, heig
                azimuth: float = 35, elevation: float = 30, motion: str = "turntable",
                duration: float = 4, fps: int = 15, start: float = 0,
                base_layout: bool = False, loop: bool = True,
-               physics_model: Path | None = None, physics_bindings: Path | None = None) -> dict[str, Any]:
+               physics_model: Path | None = None, physics_bindings: Path | None = None,
+               physics_factory: Callable[[gfx.Scene], PoseReplay] | None = None,
+               room_guides: bool = True, frame_instances: set[str] | None = None) -> dict[str, Any]:
     """Encode native frames with bounded memory and GIF centisecond timing."""
     if motion not in ("turntable", "animation", "physics"):
         raise ValueError("GIF motion must be turntable, animation or physics")
@@ -120,13 +137,13 @@ def render_gif(document: dict[str, Any], output: Path, *, width: int = 640, heig
         raise ValueError("--start applies only to authored animation")
     if motion == "animation" and base_layout:
         raise ValueError("--base-layout conflicts with --motion animation")
-    if motion == "physics" and (physics_model is None or physics_bindings is None):
+    if motion == "physics" and physics_factory is None and (physics_model is None or physics_bindings is None):
         raise ValueError("Physics requires --physics-model and --physics-bindings")
-    if motion != "physics" and (physics_model is not None or physics_bindings is not None):
+    if motion != "physics" and (physics_model is not None or physics_bindings is not None or physics_factory is not None):
         raise ValueError("Physics files require --motion physics")
     if motion == "physics" and document.get('animation', {}).get('tracks') and not base_layout:
         raise ValueError("Physics replaces authored tracks; use --base-layout to acknowledge ignoring them")
-    scene = build_scene(document, base_layout=base_layout or motion == "animation", include_hidden=True)
+    scene = build_scene(document, base_layout=base_layout or motion == "animation", include_hidden=True, room_guides=room_guides)
     tracks = validate_animation(document, scene) if motion == "animation" else []
     if motion == "animation" and (not tracks or start + duration > document['animation']['duration'] + 1e-9):
         raise ValueError("Animation needs tracks and a range within its authored duration")
@@ -140,15 +157,18 @@ def render_gif(document: dict[str, Any], output: Path, *, width: int = 640, heig
     physics_frames = []
     if motion == 'physics':
         from native_physics import PhysicsReplay
-        physics = PhysicsReplay(physics_model, physics_bindings, scene)
+        physics = physics_factory(scene) if physics_factory is not None else PhysicsReplay(physics_model, physics_bindings, scene)
         physics_frames = physics.sample([start + ms / 1000 for ms in boundaries[:-1]])
+    framing = [obj for obj in scene.children if obj.name in frame_instances] if frame_instances is not None else [scene]
+    if not framing or frame_instances is not None and {obj.name for obj in framing} != frame_instances:
+        raise ValueError('Camera framing references missing visual instances')
     boxes = []
     for index, milliseconds in enumerate(boundaries[:-1]):
         if physics:
             physics.apply(physics_frames[index])
         if tracks:
             apply_animation(scene, tracks, start + milliseconds / 1000, visibility)
-        boxes.append(scene.get_world_bounding_box())
+        boxes.extend(obj.get_world_bounding_box() for obj in framing)
     low = np.min([box[0] for box in boxes], axis=0)
     high = np.max([box[1] for box in boxes], axis=0)
     sphere = (*((low + high) / 2), float(np.linalg.norm(high - low) / 2))
