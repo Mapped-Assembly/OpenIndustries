@@ -199,3 +199,10 @@ render settings from four versioned JSON files. It preserves the preceding
 Python demo as a benchmark baseline. Run `json/run_json.py` for the candidate
 and `json/compare.py` for repeated baseline parity and JSON-only perturbations,
 relative to `benchmarks/native-render/so101/`.
+
+## Live execution
+
+For continuously stepped native MuJoCo with standalone WASM control, native window
+input, or offscreen live rendering, see [the live runtime](wasm-live-runtime.md).
+`oi-live` uses the same JSON fixtures and adds lifecycle controls; it is separate
+from the record-then-render GIF path above.

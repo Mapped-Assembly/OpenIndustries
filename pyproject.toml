@@ -22,6 +22,7 @@ classifiers = [
 ]
 
 [project.optional-dependencies]
+live = ["wasmtime==51.0.0", "glfw==2.11.0"]
 physics = ["mujoco==4.0.1"]
 native-render = ["pygfx==0.18.0", "wgpu==0.33.0", "rendercanvas==3.0.1", "imageio==2.38.2"]
 
@@ -33,7 +34,8 @@ Issues = "https://github.com/Mapped-Assembly/Open-Industries/issues"
 [project.scripts]
 oi-export-scene = "export_scene:main"
 oi-render-scene = "native_render:main"
+oi-live = "live_runtime:main"
 
 [tool.setuptools]
 package-dir = {"" = "tools/geospatial"}
-py-modules = ["export_scene", "native_render", "native_animation", "native_physics", "native_mujoco_scene", "native_trajectory", "json_workcell"]
+py-modules = ["export_scene", "native_render", "native_animation", "native_physics", "native_mujoco_scene", "native_trajectory", "json_workcell", "wasm_policy", "live_runtime", "live_viewer"]

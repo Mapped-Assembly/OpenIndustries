@@ -122,6 +122,9 @@ class JsonCell:
 
     def __init__(self, scene: Path, adapter: Path, task: Path) -> None:
         """Compile configuration, resolve model references and initialize actuator state."""
+        self.policy = None
+        self.control_due = True
+        self.overrides: dict[int, float] = {}
         self.m = compile_workcell(scene, adapter)
         self.task = load(task, 'oi.pick-place-task')
         keys(self.task, {'schema', 'version', 'robot', 'initial', 'ik', 'control', 'gripperCommands', 'references', 'success', 'phases', 'record'})
@@ -315,22 +318,43 @@ class JsonCell:
             return
         try:
             c = self.task['control']
-            if self.target is not None:
-                self.d.ctrl[self.actuators] += np.clip(self.target-self.d.ctrl[self.actuators], -c['maxJointStep'], c['maxJointStep'])
+            if self.target is not None and self.control_due:
+                if self.policy is None:
+                    self.d.ctrl[self.actuators] += np.clip(self.target-self.d.ctrl[self.actuators], -c['maxJointStep'], c['maxJointStep'])
+                else:
+                    self.d.ctrl[self.actuators] = self.policy.slew_many(self.d.ctrl[self.actuators].tolist(), self.target.tolist(), c['maxJointStep'])
+            for a, value in self.overrides.items():
+                self.d.ctrl[a] = value
+            limited = self.m.actuator_ctrllimited.astype(bool)
+            if not np.isfinite(self.d.ctrl).all() or np.any(self.d.ctrl[limited] < self.m.actuator_ctrlrange[limited, 0]) or np.any(self.d.ctrl[limited] > self.m.actuator_ctrlrange[limited, 1]):
+                raise RuntimeError("Controller command exceeds actuator limits")
             mj.mj_step(self.m, self.d)
             if any(w.number for w in self.d.warning) or not np.isfinite(self.d.qpos).all():
                 raise RuntimeError('MuJoCo instability')
             elapsed = self.d.time - self.phase_time
-            if elapsed > c['phaseTimeout']:
-                raise RuntimeError(f'{self.phase} timeout')
             phase = self.task['phases'][self.phase_index]
             reached = self.target is None or np.max(np.abs(self.target-self.d.qpos[self.qadr])) < c['reachedTolerance']
-            if elapsed <= phase['minSeconds'] or phase['requireReached'] and not reached:
-                return
-            if 'check' in phase and not self.check(phase['check']):
-                if elapsed < phase.get('retryUntil', 0):
+            if self.policy is not None:
+                passed = 'check' not in phase or self.check(phase['check'])
+                decision = self.policy.transition(elapsed, phase['minSeconds'], c['phaseTimeout'],
+                                                 phase.get('retryUntil', 0), phase['requireReached'], reached, passed)
+                if decision == -2:
+                    raise RuntimeError(f'{self.phase} timeout')
+                if decision == -1:
+                    raise RuntimeError(f'Task check failed: {phase.get("check")}')
+                if decision == 0:
                     return
-                raise RuntimeError(f'Task check failed: {phase["check"]}')
+            else:
+                if elapsed > c['phaseTimeout']:
+                    raise RuntimeError(f'{self.phase} timeout')
+                phase = self.task['phases'][self.phase_index]
+                reached = self.target is None or np.max(np.abs(self.target-self.d.qpos[self.qadr])) < c['reachedTolerance']
+                if elapsed <= phase['minSeconds'] or phase['requireReached'] and not reached:
+                    return
+                if 'check' in phase and not self.check(phase['check']):
+                    if elapsed < phase.get('retryUntil', 0):
+                        return
+                    raise RuntimeError(f'Task check failed: {phase["check"]}')
             self.enter(self.phase_index + 1)
         except Exception as error:
             self.error, self.phase, self.running = str(error), 'fault', False

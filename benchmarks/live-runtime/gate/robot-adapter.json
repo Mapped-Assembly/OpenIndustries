@@ -1,0 +1,7 @@
+{
+  "schema": "oi.mujoco-adapter",
+  "version": 1,
+  "updates": [],
+  "append": [],
+  "unnamedGeomPrefix": "geom-"
+}

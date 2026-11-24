@@ -279,3 +279,6 @@ Run `npm run test:field-lab` for durable evidence matching all six frozen scenar
 `npm run field-lab:server` for the local authenticated API. Run `npm run field-lab:viewer` for the [event-driven lab scene](docs/architecture/field-lab-scene.md),
 recorded replay and OpenCAD motion handoff. Scientific validation and physical instrument
 control remain separate boundaries.
+
+Browser-independent live simulation: [WASM/native JSON runtime](docs/wasm-live-runtime.md)
+with MuJoCo physics, native window/offscreen rendering and lifecycle controls.

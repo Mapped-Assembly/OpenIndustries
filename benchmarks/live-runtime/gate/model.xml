@@ -1,0 +1,13 @@
+<mujoco model="motorized display gate">
+  <compiler angle="radian"/>
+  <option timestep="0.002" integrator="implicitfast" gravity="0 0 -9.81"/>
+  <worldbody>
+    <geom name="platform" type="box" pos="0 0 -0.025" size="0.35 0.3 0.025" rgba=".18 .24 .28 1"/>
+    <geom name="post" type="box" pos="0 0 .10" size=".025 .025 .10" rgba=".7 .7 .7 1"/>
+    <body name="gate" pos="0 0 .24">
+      <joint name="hinge" type="hinge" axis="0 1 0" range="-1.4 0" damping="1"/>
+      <geom name="barrier" type="box" pos=".14 0 0" size=".14 .016 .016" mass=".12" rgba=".95 .65 .12 1"/>
+    </body>
+  </worldbody>
+  <actuator><position name="gate-motor" joint="hinge" kp="30" kv="3" ctrlrange="-1.4 0" forcerange="-8 8"/></actuator>
+</mujoco>
