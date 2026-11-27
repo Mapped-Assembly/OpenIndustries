@@ -3,6 +3,7 @@ import { oiEnv } from '../server/oi-environment.mjs';
 import { readFile, writeFile, stat } from 'node:fs/promises';
 import { resolve } from 'node:path';
 import { LocalSceneBackend } from '../server/local-scene-backend.ts';
+import { LOCAL_ASSET_MAX_BYTES } from '../server/local-asset-limits.ts';
 import { parseCloudBundle } from '../src/lib/cloud-storage.ts';
 import { loadEnv } from './session.mjs';
 
@@ -15,11 +16,15 @@ if (revision !== undefined && (!Number.isSafeInteger(revision) || revision < 1))
 const backend = new LocalSceneBackend(resolve(oiEnv('SCENE_DATA_DIR') || '.astra/scenes'));
 try {
   if (command === 'import-asset') {
-    if ((await stat(input)).size > 25 * 1024 * 1024) throw new Error('Asset bundle exceeds 25 MiB.');
-    const asset = parseCloudBundle(await readFile(input, 'utf8')).asset;
+    if ((await stat(input)).size > LOCAL_ASSET_MAX_BYTES) throw new Error('Asset bundle exceeds 128 MiB.');
+    const text = await readFile(input, 'utf8');
+    if (Buffer.byteLength(text) > LOCAL_ASSET_MAX_BYTES) throw new Error('Asset bundle exceeds 128 MiB.');
+    const asset = parseCloudBundle(text).asset;
     console.log(JSON.stringify({ kind: 'local', version_id: await backend.persistAsset(asset) }));
   } else {
-    await writeFile(output, JSON.stringify(await backend.exportScene(input, revision)), { flag: 'wx', mode: 0o600 });
+    const text = JSON.stringify(await backend.exportScene(input, revision));
+    if (Buffer.byteLength(text) > LOCAL_ASSET_MAX_BYTES) throw new Error('Portable scene exceeds 128 MiB.');
+    await writeFile(output, text, { flag: 'wx', mode: 0o600 });
     console.log(`Exported ${input} to ${output}`);
   }
 } finally { backend.close(); }
