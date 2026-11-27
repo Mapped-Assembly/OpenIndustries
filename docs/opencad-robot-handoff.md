@@ -67,3 +67,13 @@ provide `OPENCAD_OI_ASSET_PATH=/path/to/oi.asset.json` to run the exact same
 consumer test on an asset produced by OpenCAD.
 
 See [OpenCAD issue #9](https://github.com/Mapped-Assembly/OpenCAD/issues/9).
+
+## Large local robot assets
+
+Local CLI asset import and local asset persistence/reopening accept geometry
+bundles up to 128 MiB. Native scene file export/rendering accepts complete scenes
+up to 128 MiB. Compact JSON is recommended; a scene containing several individually
+valid assets can still exceed the scene limit. Geometry validation, the 2 million
+vertex asset limit, hierarchy checks and stored-blob hashes remain enforced.
+Cloud uploads and browser file imports still use their separate 25 MiB limits.
+This local extension does not make large assets cloud-uploadable.

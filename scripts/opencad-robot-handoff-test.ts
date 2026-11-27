@@ -3,10 +3,11 @@
  */
 import assert from 'node:assert/strict';
 import { randomUUID } from 'node:crypto';
-import { mkdtemp, readFile, rm } from 'node:fs/promises';
+import { mkdtemp, readFile, rm, writeFile } from 'node:fs/promises';
 import { tmpdir } from 'node:os';
 import { join } from 'node:path';
 import { parseCloudBundle } from '../src/lib/cloud-storage.ts';
+import { LOCAL_ASSET_MAX_BYTES } from '../server/local-asset-limits.ts';
 import { LocalSceneBackend } from '../server/local-scene-backend.ts';
 import { executeSceneTool } from '../server/mcp-scenes.ts';
 
@@ -60,8 +61,12 @@ try {
   assert.deepEqual(original.asset.source, asset.source);
   const findNode = (node: typeof asset.hierarchy, id: string): boolean =>
     node.id === id || node.children.some(child => findNode(child, id));
-  assert(findNode(asset.hierarchy, 'urdf:base'));
-  assert(findNode(asset.hierarchy, 'urdf:tip'));
+  for (const part of asset.parts) assert(findNode(asset.hierarchy, part.metadata.link_id));
+  assert.deepEqual(asset.hierarchy, original.asset.hierarchy);
+  if (!sourcePath) {
+    assert(findNode(asset.hierarchy, 'urdf:base'));
+    assert(findNode(asset.hierarchy, 'urdf:tip'));
+  }
 
   const backend = new LocalSceneBackend(testRoot);
   try {
@@ -70,12 +75,16 @@ try {
     const version = await backend.asset(id);
     assert(version);
     assert.equal(version.asset?.source_kind, 'generated');
+    await assert.rejects(backend.geometry({ ...version, files: version.files.map(file =>
+      ({ ...file, size: LOCAL_ASSET_MAX_BYTES + 1 })) }), /Invalid local asset metadata/);
     const restored = parseCloudBundle(await backend.geometry(version)).asset;
     assert.deepEqual(restored.source, asset.source);
     assert.deepEqual(restored.hierarchy, asset.hierarchy);
+    assert.deepEqual(restored.parts, asset.parts);
+    for (const size of [-1, NaN, Infinity, 1.5]) await assert.rejects(backend.geometry({ ...version, files: version.files.map(file => ({ ...file, size })) }), /Invalid local asset metadata/);
     assert.deepEqual(restored.parts.map(p => p.id), asset.parts.map(p => p.id));
 
-    const context = { backend, origin: 'http://localhost:5173', signal: AbortSignal.timeout(15000) };
+    const context = { backend, origin: 'http://localhost:5173', signal: AbortSignal.timeout(sourcePath ? 180000 : 15000) };
     const inspect = await executeSceneTool('astra.inspect_scene_asset', {
       version: 1, asset: { kind: 'local', version_id: id },
     }, context);
@@ -99,6 +108,17 @@ try {
     }, context);
     assert.equal((readBack as any).scene.instances[0].asset.version_id, id);
     assert.equal((readBack as any).scene.animation.tracks.length, 0);
+
+    const reopened = new LocalSceneBackend(testRoot);
+    try {
+      const exported = await reopened.exportScene(uuid, 1);
+      const bundles = [...(exported.bundledAssets ?? []), ...(exported.bundledVersions ?? []).map(v => v.asset)];
+      assert(bundles.some(a => a.id === asset.id));
+      const recovered = bundles.find(a => a.id === asset.id)!;
+      assert.deepEqual(recovered.parts, asset.parts);
+      assert.deepEqual(recovered.hierarchy, asset.hierarchy);
+      if (process.env.OPENCAD_OI_SCENE_OUTPUT) await writeFile(process.env.OPENCAD_OI_SCENE_OUTPUT, JSON.stringify(exported), { flag: 'wx' });
+    } finally { reopened.close(); }
 
     const wrong = structuredClone(original);
     wrong.asset.source.generator = 'made-up-generator';

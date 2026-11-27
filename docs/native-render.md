@@ -76,7 +76,7 @@ benchmark. Missing/unsupported drivers fail explicitly.
 PNG dimensions: 64–4096 pixels per side. GIF dimensions: 64–1024 pixels per
 side; duration: 0.1–12 seconds; fps: 1–50; at most 240 sampled frames and
 32 million total frame-pixels. These limits bound the in-memory frame sequence.
-Input files are limited to 75 MiB. Animation ranges cannot extend beyond the
+Input files are limited to 128 MiB. Browser and cloud import limits are separate. Animation ranges cannot extend beyond the
 authored timeline; no implicit wrapping is performed.
 
 Every image gets a `.render.json` sidecar with the native adapter, camera/image

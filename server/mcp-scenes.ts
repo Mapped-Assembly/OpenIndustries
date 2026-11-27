@@ -1,3 +1,4 @@
+import { LOCAL_ASSET_MAX_BYTES } from './local-asset-limits.ts';
 import { sceneConflict } from './scene-conflicts.ts';
 import { mutateScene, mutationResult, type MutationRequest } from './scene-mutations.ts';
 import { oiEnv } from './oi-environment.mjs';
@@ -57,6 +58,8 @@ export async function executeSceneTool(name: string, raw: unknown, ctx: SceneCon
   active(ctx);
   const backend: SceneBackend = ctx.backend ?? new SupabaseSceneBackend(ctx.client, ctx.owner);
   const savedResult = (scene: { id: string; revision: number }) => ({ ...result(scene, ctx.origin), ...backend.urls?.(scene.id, scene.revision) });
+  const fileLimit = backend.kind === 'local' ? LOCAL_ASSET_MAX_BYTES : 25 * 1024 * 1024;
+  const totalLimit = backend.kind === 'local' ? LOCAL_ASSET_MAX_BYTES : limits.totalGeometry;
   let geometryBytes = 0;
   const loaded = new Map<string, { asset: Asset; version?: string }>();
   async function load(ref: AssetRef) {
@@ -75,12 +78,14 @@ export async function executeSceneTool(name: string, raw: unknown, ctx: SceneCon
       if (!selected) return fail('ASSET_UNAVAILABLE', 'Asset version is missing or unavailable.');
       version = selected;
       const file = version.files.find(file => file.name === 'asset.json');
-      if (!file || file.size > 25 * 1024 * 1024 || file.size + geometryBytes > limits.totalGeometry) return fail('PAYLOAD_TOO_LARGE', 'Referenced geometry exceeds the 25 MiB/file or 50 MiB/request limit.');
+      if (!file || file.size > fileLimit || file.size + geometryBytes > totalLimit) return fail('PAYLOAD_TOO_LARGE', `Referenced geometry exceeds ${fileLimit / 1024 / 1024} MiB/file or ${totalLimit / 1024 / 1024} MiB/request.`);
       try { text = await backend.geometry(version); }
       catch { active(ctx); return fail('ASSET_UNAVAILABLE', 'Asset geometry failed download or integrity verification. Re-upload it or select another ready version.'); }
     }
-    geometryBytes += Buffer.byteLength(text);
-    if (geometryBytes > limits.totalGeometry) return fail('PAYLOAD_TOO_LARGE', 'Referenced geometry exceeds 50 MiB.');
+    const actualBytes = Buffer.byteLength(text);
+    if (actualBytes > fileLimit) return fail('PAYLOAD_TOO_LARGE', `Referenced geometry exceeds ${fileLimit / 1024 / 1024} MiB/file.`);
+    geometryBytes += actualBytes;
+    if (geometryBytes > totalLimit) return fail('PAYLOAD_TOO_LARGE', `Referenced geometry exceeds ${totalLimit / 1024 / 1024} MiB.`);
     let asset: Asset;
     try { asset = parseCloudBundle(text).asset; }
     catch { return fail('INVALID_ASSET', 'Asset geometry is not a valid renderable OpenIndustries bundle.'); }

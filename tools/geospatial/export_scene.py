@@ -22,7 +22,7 @@ from typing import Any
 Json = dict[str, Any]
 Vec3 = tuple[float, float, float]
 Matrix = list[list[float]]
-MAX_BYTES = 75 * 1024 * 1024
+MAX_BYTES = 128 * 1024 * 1024
 C: Matrix = [[1, 0, 0, 0], [0, 0, -1, 0], [0, 1, 0, 0], [0, 0, 0, 1]]
 CI: Matrix = [[1, 0, 0, 0], [0, 0, 1, 0], [0, -1, 0, 0], [0, 0, 0, 1]]
 
@@ -316,9 +316,11 @@ def export_scene(source_path: Path, output: Path, anchor: Anchor, license_note: 
     provider configuration and credentials are never copied to outputs.
     """
     started = time.perf_counter()
+    if source_path.stat().st_size > MAX_BYTES:
+        raise ValueError("Scene exceeds the 128 MiB supported input limit")
     raw = source_path.read_bytes()
     if len(raw) > MAX_BYTES:
-        raise ValueError("Scene exceeds the 75 MiB supported input limit")
+        raise ValueError("Scene exceeds the 128 MiB supported input limit")
     scene = json.loads(raw)
     bound, refs = validate_scene(scene)
     output.mkdir(parents=True, exist_ok=True)

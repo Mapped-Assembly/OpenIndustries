@@ -241,7 +241,7 @@ def main() -> int:
         if args.scene.resolve() in (args.output.resolve(), args.output.with_suffix('.render.json').resolve()):
             raise ValueError("Output must not overwrite the source scene")
         if args.scene.stat().st_size > MAX_BYTES:
-            raise ValueError("Input exceeds the 75 MiB portable scene limit")
+            raise ValueError("Input exceeds the 128 MiB portable scene limit")
         raw = args.scene.read_bytes()
         document = json.loads(raw)
         gif_report: dict[str, Any] = {}

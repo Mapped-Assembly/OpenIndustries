@@ -9,6 +9,8 @@ import { canonicalJSON, hydrateManifest, makeManifest, readManifest, type SceneM
 import type { AssetSummary, SavedScene, SceneBackend, SceneDocument } from './scene-backend.ts';
 import { SceneToolError } from './mcp-scene-contract.mjs';
 
+import { LOCAL_ASSET_MAX_BYTES } from './local-asset-limits.ts';
+
 const sha256 = (text: string): string => createHash('sha256').update(text).digest('hex');
 const unavailable = (): never => { throw new SceneToolError('SCENE_UNAVAILABLE', 'Local scene or revision not found.'); };
 /** Single-user local persistence. SQLite serializes writers; blobs are immutable and hash checked. */
@@ -93,7 +95,7 @@ export class LocalSceneBackend implements SceneBackend {
   }
   async geometry(version: CloudVersion): Promise<string> {
     const file = version.files.find(file => file.name === 'asset.json');
-    if (!file || !/^[a-f0-9]{64}$/.test(file.sha256) || file.size > 25 * 1024 * 1024)
+    if (!file || !/^[a-f0-9]{64}$/.test(file.sha256) || !Number.isSafeInteger(file.size) || file.size < 0 || file.size > LOCAL_ASSET_MAX_BYTES)
       throw new SceneToolError('ASSET_UNAVAILABLE', 'Invalid local asset metadata.');
     const path = join(this.directory, 'assets', `${file.sha256}.json`);
     if (statSync(path).size !== file.size) throw new SceneToolError('ASSET_UNAVAILABLE', 'Local geometry size mismatch.');
@@ -105,7 +107,7 @@ export class LocalSceneBackend implements SceneBackend {
   async persistAsset(input: Asset): Promise<string> {
     const asset = parseCloudBundle(JSON.stringify({ schemaVersion: 1, asset: input })).asset;
     const text = canonicalJSON({ schemaVersion: 1, asset }), fingerprint = sha256(text);
-    if (Buffer.byteLength(text) > 25 * 1024 * 1024) throw new SceneToolError('PAYLOAD_TOO_LARGE', 'Local geometry exceeds 25 MiB.');
+    if (Buffer.byteLength(text) > LOCAL_ASSET_MAX_BYTES) throw new SceneToolError('PAYLOAD_TOO_LARGE', 'Local geometry exceeds 128 MiB.');
     const path = join(this.directory, 'assets', `${fingerprint}.json`);
     // Serialize blob publication with metadata across local processes. A failed write never creates a ready version.
     this.db.exec('BEGIN IMMEDIATE');
